@@ -1,6 +1,8 @@
 ---
 title: Course Units
 permalink: /units.html
+sidebar:
+        nav: "units" 
 ---
 
 ## Unit 01

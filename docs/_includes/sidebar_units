@@ -1,25 +1,26 @@
+<nav class="nav__list">
+  {% if page.sidebar.title %}<h3 class="nav__title" style="padding-left: 0;">{{ page.sidebar.title }}</h3>{% endif %}
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label | default: "Toggle Menu" }}</label>
+  <ul class="nav__items">
     {% for collection in site.collections %}
-    <nav class="nav__list">
-      <input id="ac-toc" name="accordion-toc" type="checkbox">
-	  <label for="ac-toc">Toggle Menu</label>
-  	    <ul class="nav__items">
-	      {% assign mydocs = site[collection.label] | group_by: 'category' %}
-          {% for cat in mydocs %}
-            <li>
-	          <span class="nav__sub-title">{{ cat.name}}</span>
-              <ul>
-                {% assign items = cat.items | sort: 'order' %}
-                {% for item in items %}
-				  {% if item.url == page.url %}
-                    {% assign active = "active" %}
-                  {% else %}
-                    {% assign active = "" %}
-                  {% endif %}
-					<li><a href="{{ item.url  | prepend: site.baseurl}}" class="{{ active }}">{{ item.title }}</a></li>
-                {% endfor %}
-              </ul>
-            </li>
-          {% endfor %}
-        </ul>
-    </nav>
-  {% endfor %}
+      {% assign mydocs = site[collection.label] | group_by: 'category' %}
+      {% for cat in mydocs %}
+        <li>
+          <span class="nav__sub-title">{{ cat.name }}</span>
+          <ul>
+            {% assign items = cat.items | sort: 'order' %}
+            {% for item in items %}
+              {% if item.url == page.url %}
+                {% assign active = "active" %}
+              {% else %}
+                {% assign active = "" %}
+              {% endif %}
+              <li><a href="{{ item.url  | prepend: site.baseurl}}" class="{{ active }}">{{ item.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+	  {% endfor %}
+    {% endfor %}
+  </ul>
+</nav>

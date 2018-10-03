@@ -1,0 +1,1 @@
+<object data="{{ site.baseurl }}/assets/pdfs/{{ include.pdf }}" width="160" height="80" type='application/pdf'/>
