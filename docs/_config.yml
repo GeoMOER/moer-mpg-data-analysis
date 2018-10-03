@@ -1,0 +1,197 @@
+# Marburg Open Educational Resources
+#
+# This config file is meant for settings that affect the whole course space.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server
+# process.
+
+# Site settings 
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+# Adjust title etc. Depending on serving the site on GitHub or OER, different
+# url and baseurl settings have to be used.
+
+
+##### URL #####################################################################
+# Serve on OER
+#url: "https://oer.uni-marburg.de"
+#baseurl: "/data/mriliasmooc/lm_data/lm_2422"
+
+# Serve on GitHub
+url: https://marburg-open-courseware.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+baseurl: "/moer-msc-remote-sensing"
+
+
+##### Title ###################################################################
+title: Lab of Environmental Informatics
+name: &name "Lab of Environmental Informatics" # &name is a YAML anchor which can be *referenced later
+email: nauss@geo.uni-marburg.de
+description: >- # this means to ignore newlines until next item
+  course course-materials geography remote-sensing marburg-open-educational-resource 
+  physical-geography environmental-science nature-conservation r
+
+##### Social Sharing ##########################################################
+twitter:
+  username         : &twitter "EnvIn_UMR"
+
+##### Lecturer settings #######################################################
+author:
+  name             : "Thomas Nauss"
+  avatar           : "/assets/images/tnauss.jpg"
+  bio              : "Marburg University"
+  location         : "Marburg, DE"
+  email            : "nauss@geo.uni-marburg.de"
+  uri              : "https://www.uni-marburg.de/fb19/fachgebiete/umweltinformatik/"
+  home             : "https://www.uni-marburg.de/fb19/fachgebiete/umweltinformatik/nausst/index.html"
+  bitbucket        :
+  codepen          :
+  dribbble         :
+  flickr           : "https://www.flickr.com/environmentalinformatics-marburg/"
+  facebook         : "https://www.facebook.com/GeographieMarburg/"
+  foursquare       :
+  github           : "github.com/marburg-open-courseware"
+  gitlab           :
+  google_plus      :
+  keybase          :
+  instagram        : 
+  lastfm           :
+  linkedin         :
+  pinterest        :
+  soundcloud       :
+  stackoverflow    : 
+  steam            :
+  tumblr           :
+  twitter          : "https://twitter.com/geographie_umr"
+  vine             :
+  weibo            :
+  xing             :
+  youtube          : "https://www.youtube.com/channel/UCGiwSv5KYjsNXl6-nZq0SDA"
+
+
+##### Site configuration ######################################################
+title_separator: "|"
+
+# Build settings
+markdown: kramdown
+# theme: minima
+remote_theme: "marburg-open-courseware/moer-template-jekyll"
+minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+auto_ids: true
+
+# Default Settings
+collections_dir: units
+
+# Includes
+include:
+  - _pages
+
+# Collections
+collections:
+  examples:
+    output: true
+    permalink: /:collection/:title.html
+  unit01:
+    output: true
+    permalink: /:collection/:title.html
+  unit02:
+    output: true
+    permalink: /:collection/:title.html
+  unit03:
+    output: true
+    permalink: /:collection/:title.html
+  unit04:
+    output: true
+    permalink: /:collection/:title.html
+  unit05:
+    output: true
+    permalink: /:collection/:title.html
+  worksheets:
+    output: true
+    permalink: /:collection/:title.html
+
+# Default settings
+defaults:
+  # examples
+  - scope:
+      path: ""
+      type: examples
+    values:
+      category: "examples"
+      layout: single
+      sidebar:
+        nav: "docs" 
+  # unit01
+  - scope:
+      path: ""
+      type: unit01
+    values:
+      category: "Unit 01"
+      layout: single
+      sidebar:
+        nav: "docs" 
+  # unit02
+  - scope:
+      path: ""
+      type: unit02
+    values:
+      category: "Unit 02"
+      layout: single
+      sidebar:
+        nav: "docs" 
+  # unit03
+  - scope:
+      path: ""
+      type: unit03
+    values:
+      category: "Unit 03"
+      layout: single
+      sidebar:
+        nav: "docs" 
+  # unit04
+  - scope:
+      path: ""
+      type: unit04
+    values:
+      category: "Unit 04"
+      layout: single
+      sidebar:
+        nav: "docs" 
+  # unit05
+  - scope:
+      path: ""
+      type: unit05
+    values:
+      category: "Unit 05"
+      layout: single
+      sidebar:
+        nav: "docs" 
+  # pages
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      sidebar:
+        nav: "docs"         
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
