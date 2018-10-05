@@ -23,7 +23,7 @@
 
 # Serve on GitHub
 url: https://marburg-open-courseware.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
-baseurl: "/moer-msc-remote-sensing"
+baseurl: "/moer-msc-data-analysis"
 
 
 ##### Title ###################################################################
@@ -81,6 +81,37 @@ markdown: kramdown
 remote_theme: "marburg-open-courseware/moer-template-jekyll"
 minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 auto_ids: true
+
+# Default Settings
+collections_dir: units
+
+# Includes
+include:
+  - _pages
+
+# Collections
+collections:
+  examples:
+    output: true
+    permalink: /:collection/:title.html
+  unit01:
+    output: true
+    permalink: /:collection/:title.html
+  unit02:
+    output: true
+    permalink: /:collection/:title.html
+  unit03:
+    output: true
+    permalink: /:collection/:title.html
+  unit04:
+    output: true
+    permalink: /:collection/:title.html
+  unit05:
+    output: true
+    permalink: /:collection/:title.html
+  worksheets:
+    output: true
+    permalink: /:collection/:title.html
 
 # Default settings
 defaults:
