@@ -12,9 +12,15 @@ dir.create(target_folder, showWarnings = FALSE)
 
 for(f in md_files){
   f_in = readLines(f)
+  title_line = grep("title:", f_in)
+  header_start = grep("---", f_in)[1]
   header_end = grep("---", f_in)[2]
+  
+  new_header = c(f_in[header_start], f_in[title_line], "toc: true", 
+                 "toc_label: In this example", f_in[header_end])
+
   if(!is.na(header_end)){
-    f_in = f_in[-seq(header_end)]
+    f_in = c(new_header, f_in[-seq(header_end)])
     fc = file(f, "w")
     writeLines(f_in, fc)
     close(fc)

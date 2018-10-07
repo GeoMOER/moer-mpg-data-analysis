@@ -1,0 +1,35 @@
+---
+title: "Examples: Coercing data types"
+author: "Thomas Nauss"
+date: "19 Oktober 2017"
+output: 
+  html_document: 
+    keep_md: yes
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
+```
+
+Coerting data elements into one of the basic R data types is straight forward.
+Just add "as." to the data type and you have the name of the respective function.
+```{r}
+x <- c(1.4, 2.5, 3.6, 4.0)
+class(x)
+as.character(x)
+as.integer(x)
+as.factor(x)
+```
+Please note that the `as.integer` function returns the floor of the floating
+point values and does not apply any rounding rules.
+
+So far, we have differentiated between data types and structures. Actually, a
+vector, list or data frame is nothing but another data type and the same logic of
+conversion functions can be used.
+```{r}
+x <- c(1.4, 2.5, 3.6, 4.0)
+class(x) # i.e. vector of type numeric
+as.list(x)
+as.data.frame(x)
+as.matrix(x)
+```
