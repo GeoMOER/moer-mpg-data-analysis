@@ -38,7 +38,7 @@ Do not use any spaces within your folder or filenames until you become an expert
 Now it's time for your first R code which will be put into an R markdown document.
 
 ## Programming assignment with GitHub submission
-Please write an R script (as an Rmd file with html output) for the following task and commit it to your GitHub-based learning log:
+Please write an R script as an Rmd file with html output for the following task and commit it to your GitHub-based learning log:
 
   * Assign the value of 2 to a variable called ''a'' and the value of 5 to a variable called ''b''.
   * Compute the sum, difference, product and ratio of a and b (a always in the first place) and store the results to four different variables called ''r1'', ''r2'', ''r3'', and ''r4''.

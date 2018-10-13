@@ -20,13 +20,13 @@ feature_row_ilos:
   
     * to organize a variety of datasets and (intermediate) analysis results in structured fashion,
 	
-	* to document your workflow in an understandable and transparent manner, collaborate in teams, and handle issues and task management using Git and GitHub as software management tool and plattform,
+	* to document your workflow in an understandable and transparent manner, collaborate in teams and handle issues and task management using Git and GitHub as software management tool and plattform,
 	
 	* to implement data analysis workflows using tailored R scripts along with readily available functions from third-party R packages,
 
 	* to model relationships between data variables and calculate reliable error estimates,
 
-	* to critically evaluate your software scripts for potential improvements.
+	* to critically evaluate your analysis.
 	"
 ---
 
