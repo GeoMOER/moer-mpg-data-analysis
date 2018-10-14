@@ -1,5 +1,5 @@
 ---
-title: "Examples: Data Frame Basics"
+title: "Example: Data Frame Basics"
 author: "Thomas Nauss"
 date: "19 Oktober 2017"
 output: 

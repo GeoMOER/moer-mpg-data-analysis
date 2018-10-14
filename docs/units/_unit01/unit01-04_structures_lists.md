@@ -1,5 +1,5 @@
 ---
-title: "Examples: List Basics"
+title: "Example: List Basics"
 toc: true
 toc_label: In this example
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Examples: R Markdown with html output"
+title: "Example: R Markdown with html output"
 author: "Thomas Nauss"
 date: "10 Oktober 2018"
 output: 

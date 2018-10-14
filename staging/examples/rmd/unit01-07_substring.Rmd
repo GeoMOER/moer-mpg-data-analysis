@@ -1,5 +1,5 @@
 ---
-title: "Examples: Extracting Substrings"
+title: "Example: Extracting Substrings"
 author: "Thomas Nauss"
 date: "19 Oktober 2017"
 output: 

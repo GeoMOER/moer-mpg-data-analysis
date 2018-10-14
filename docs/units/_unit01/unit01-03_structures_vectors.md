@@ -1,5 +1,5 @@
 ---
-title: "Examples: Vector Basics"
+title: "Example: Vector Basics"
 toc: true
 toc_label: In this example
 ---

@@ -1,49 +1,12 @@
 ---
-title: "Examples: R Markdown with HTML Output"
+title: "Example: R Markdown with html output"
 toc: true
 toc_label: In this example
 ---
 
-## Below is what the R markdown source looks like
-``````yaml
----
-title: "Example: R Markdown with html output"
-author: "Thomas Nauss"
-date: "10 Oktober 2018"
-output: html_document
----
+
 
 ## This is a header
-
-This is an R Markdown document. Markdown is a simple formatting syntax for 
-authoring HTML, PDF, and MS Word documents. 
-For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes 
-both content as well as the output of any embedded R code chunks within the 
-document. You can embed an R code chunk like this:
-
-```{r}
-summary(cars)
-```
-
-
-## This is another header
-
-You can also embed plots, for example:
-
-```{r, echo=FALSE}
-plot(cars)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent 
-printing of the R code that generated the plot.
-
-``````
-
-## Below is what the R markdown html output looks like
-
-### This is a header
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
@@ -65,7 +28,7 @@ summary(cars)
 ```
 
 
-### This is another header
+## This is another header
 
 You can also embed plots, for example:
 

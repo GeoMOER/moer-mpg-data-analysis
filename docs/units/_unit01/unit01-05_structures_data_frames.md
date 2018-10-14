@@ -1,5 +1,5 @@
 ---
-title: "Examples: Data Frame Basics"
+title: "Example: Data Frame Basics"
 toc: true
 toc_label: In this example
 ---

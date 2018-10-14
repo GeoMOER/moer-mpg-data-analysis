@@ -1,5 +1,5 @@
 ---
-title: "Examples: Extracting Substrings"
+title: "Example: Extracting Substrings"
 toc: true
 toc_label: In this example
 ---
