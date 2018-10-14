@@ -1,5 +1,5 @@
 ---
-title: "Example: R markdown with html output"
+title: "Examples: R Markdown with HTML Output"
 toc: true
 toc_label: In this example
 ---

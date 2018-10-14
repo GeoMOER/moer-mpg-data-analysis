@@ -1,5 +1,5 @@
 ---
-title: "Examples: Coercing data types"
+title: "Examples: Coercing Data Types"
 toc: true
 toc_label: In this example
 ---

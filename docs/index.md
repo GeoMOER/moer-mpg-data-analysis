@@ -60,7 +60,7 @@ The course provides a basis for the parallel [Geo Information Systems](https://o
 | 06 | Predict your data | Cross-validation |
 | 07 | Select your variables | Multiple linear models, feature selection |
 | 08 | Predict your non-linear data | Generalized additive models |
-| 09 | T-4 and holding | Build-in hold to finish up the explanation sessions |
+| 09 | T-6 and holding | Build-in hold to finish up the explanation sessions |
 | 10 | Predict your temporal data | Auto-correlation, AR and ARIMA models |
 | 11 |  Explain your temporal data | Decomposing time series |
 || **Visualization and wrap up** ||
@@ -71,9 +71,7 @@ The course provides a basis for the parallel [Geo Information Systems](https://o
 
 # Deliverables
 
-The course requires peer review activities as part of the workflow management and software development, the computation of two remote sensing products according to problem solving assignments and a scientific poster presentation that introduces, describes and discusses the delivered remote sensing products.
-
-
+The graded course certificate will be based on an individual portfolio hosted as a personal repository on GitHub. The individual portfolio items are defined in the respective course assignments along with the information if they will be marked or not.
 
 
 # Preparation and prerequisites

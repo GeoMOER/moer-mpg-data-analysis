@@ -1,5 +1,5 @@
 ---
-title: "Examples: Coercing data types"
+title: "Examples: Coercing Data Types"
 author: "Thomas Nauss"
 date: "19 Oktober 2017"
 output: 
