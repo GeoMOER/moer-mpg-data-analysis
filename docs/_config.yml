@@ -188,6 +188,12 @@ defaults:
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-admin
+  - jekyll-paginate
+  - jekyll-gist
+  - jemoji
+  - jekyll-include-cache
+  - jekyll-algolia
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
