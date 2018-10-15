@@ -8,7 +8,7 @@ header:
   overlay_image: "/assets/images/title_1600_500.jpg"
   caption: 'Photo: [**Environmental Informatics Marburg**](https://www.flickr.com/environmentalinformatics-marburg/)'
   cta_label: Go to course units
-  cta_url: "/units/index.html"
+  cta_url: "/units.html"
 excerpt: Handle geo-datasets, use R for data analysis and visualization, train models and estimate errors, and use GitHub for comprehensive documentation and task management.
 feature_row_intro:
 - excerpt: Master level course in [Physical Geography](https://www.uni-marburg.de/fb19/studium/studiengaenge/msc-phygeo) at Marburg University
