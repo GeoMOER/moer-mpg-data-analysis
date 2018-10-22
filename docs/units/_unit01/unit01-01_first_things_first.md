@@ -10,6 +10,9 @@ In this session we make a brute force introduction to R, R markdown, the RStudio
   * Sign in to the class assignment of this course at GitHub and clone and push your course repository between the GitHub server and your local computer
   * Put an R markdown (or any other) file into your Git repository, commit it locally and push it to the server
 
-## Slides
-{% include pdf pdf="MOER-DA Slides 01 - First-things-first.pdf" %}
+## Why data analysis, why R
+
+“Most scientific disciplines are finding the data deluge to be extremely challenging, and tremendous opportunities can be realized if we can better organize and access the data.” [(Science 331, 2011)](http://www.sciencemag.org/content/331/6018/692.full)
+
+Examples from a very large and fast growing cosmos: [R-bloggers](https://www.r-bloggers.com/).
 

@@ -16,18 +16,7 @@ feature_row_ilos:
 - image_path: "/assets/images/envobs_ilos.jpg"
   alt: PC monitor laying in the garden of the institute.
   title: Intended learning outcomes
-  excerpt: "At the end of this course you should be able
-  
-    * to organize a variety of datasets and (intermediate) analysis results in structured fashion,
-	
-	* to document your workflow in an understandable and transparent manner, collaborate in teams and handle issues and task management using Git and GitHub as software management tool and plattform,
-	
-	* to implement data analysis workflows using tailored R scripts along with readily available functions from third-party R packages,
-
-	* to model relationships between data variables and calculate reliable error estimates,
-
-	* to critically evaluate your analysis.
-	"
+  excerpt: "Template..."
 ---
 
 {% include feature_row id="feature_row_intro" type="center" %}
@@ -36,8 +25,14 @@ Data analysis is a key competence of professional geographers but it requires pr
 
 Data analysis requires a variety of skills related to the organizing, handling, analyzing and describing a diversity of datasets. Using R this course will not just open the door to a cosmos of data analysis functionality but also provide a domain specific and flexible (also not really ideal) tool for workflow automation.
 
-{% include feature_row id="feature_row_ilos" type="left" %}
-
+# Intended learning outcomes
+At the end of this course you should be able
+  
+* to organize a variety of datasets and (intermediate) analysis results in structured fashion,
+* to document your workflow in an understandable and transparent manner, collaborate in teams and handle issues and task management using Git and GitHub as software management tool and plattform,
+* to implement data analysis workflows using tailored R scripts along with readily available functions from third-party R packages,
+* to model relationships between data variables and calculate reliable error estimates,
+* to critically evaluate your analysis.
 
 # Course features
 
@@ -63,9 +58,10 @@ The course provides a basis for the parallel [Geo Information Systems](https://o
 | 09 | T-6 and holding | Build-in hold to finish up the explanation sessions |
 | 10 | Predict your temporal data | Auto-correlation, AR and ARIMA models |
 | 11 |  Explain your temporal data | Decomposing time series |
-|| **Visualization and wrap up** ||
+|| **Visualization** ||
 | 12 | Visualize your data | Publication quality graphics |
 | 13 | Visualize your map data | Publication quality graphics |
+|| **Wrap up** ||
 | 14 | Wrap up | Feedback, goodbye |
 
 
