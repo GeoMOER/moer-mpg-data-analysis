@@ -36,7 +36,7 @@ At the end of this course you should be able
 
 # Course features
 
-The course provides a basis for the parallel [Geo Information Systems](https://oer.uni-marburg.de/ilias.php?ref_id=327&cmdClass=ilrepositorygui&cmdNode=r5&baseClass=ilrepositorygui){:target="_blank"} and [Remote Sensing](https://oer.uni-marburg.de/ilias.php?ref_id=326&cmdClass=ilrepositorygui&cmdNode=r5&baseClass=ilrepositorygui){:target="_blank"} courses. It is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
+The course provides a basis for the parallel [Geo Information Systems](https://oer.uni-marburg.de/goto.php?target=crs_327&client_id=mriliasmooc){:target="_blank"} and [Remote Sensing](https://oer.uni-marburg.de/goto.php?target=crs_326&client_id=mriliasmooc){:target="_blank"} courses. It is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
 
 
 

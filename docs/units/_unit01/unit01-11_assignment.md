@@ -7,9 +7,9 @@ toc_label: In this worksheet
 This worksheet introduces you to R, R scripts and R markdown. Your submission will be pushed to your class repository at GitHub. After completion you should have gained some experience in running R commands within scripts, R markdown for running code and documentation within one file and Git/GitHub.
 
 ## Things you need for this worksheet
-  * [R](https://cran.r-project.org/) — the interpreter can be installed on any operation system.
-  * [RStudio](https://www.rstudio.com/) — we recommend to use R Studio for (interactive) programming with R.
-  * [Git](https://git-scm.com/downloads) environment for your operating system. For Windows users with little experience on the command line we recommend [GitHub Desktop](https://desktop.github.com/).
+  * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operation system.
+  * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend to use R Studio for (interactive) programming with R.
+  * [Git](https://git-scm.com/downloads){:target="_blank"} environment for your operating system. For Windows users with little experience on the command line we recommend [GitHub Desktop](https://desktop.github.com/){:target="_blank"}.
 
 ## Hello R and GitHub submission
 Please write an R script as an Rmd file with html output for the following task and commit it to your GitHub-based learning log:

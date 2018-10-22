@@ -12,7 +12,7 @@ In this session we make a brute force introduction to R, R markdown, the RStudio
 
 ## Why data analysis, why R
 
-“Most scientific disciplines are finding the data deluge to be extremely challenging, and tremendous opportunities can be realized if we can better organize and access the data.” [(Science 331, 2011)](http://www.sciencemag.org/content/331/6018/692.full)
+“Most scientific disciplines are finding the data deluge to be extremely challenging, and tremendous opportunities can be realized if we can better organize and access the data.” [(Science 331, 2011)](http://www.sciencemag.org/content/331/6018/692.full){:target="_blank"}
 
-Examples from a very large and fast growing cosmos: [R-bloggers](https://www.r-bloggers.com/).
+Examples from a very large and fast growing cosmos: [R-bloggers](https://www.r-bloggers.com/){:target="_blank"}.
 

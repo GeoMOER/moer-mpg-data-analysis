@@ -191,5 +191,5 @@ my_list
 ## [[1]]
 ## [1] 1 2 3 4 5
 ```
-For more information have a look at e.g. the respective [data type](http://www.statmethods.net/input/datatypes.html) site at Quick R. There you will also find an overview on how to get [information about an object](http://www.statmethods.net/input/contents.html). 
+For more information have a look at e.g. the respective [data type](http://www.statmethods.net/input/datatypes.html){:target="_blank"} site at Quick R. There you will also find an overview on how to get [information about an object](http://www.statmethods.net/input/contents.html){:target="_blank"}. 
 Of course, looking into the package documentation or search the web is always a good idea, too.

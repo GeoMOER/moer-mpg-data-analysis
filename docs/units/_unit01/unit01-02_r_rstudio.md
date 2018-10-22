@@ -6,17 +6,17 @@ To start with a clarification: R is the statistical programming language you wil
 
 ## R
 Some starting points for R:
-  * To get started with R, [download it from r-project.org](https://www.r-project.org/).
+  * To get started with R, [download it from r-project.org](https://www.r-project.org/){:target="_blank"}.
   * To get help for a function, use "?" (e.g. "?print for function print()).
-  * To see what one can do with R, become a regular fellow of the [R-bloggers](https://www.r-bloggers.com/) page.
-  * To find solutions for problems, search the web and look out especially for results hosted at [stackoverflow](https://stackoverflow.com).
+  * To see what one can do with R, become a regular fellow of the [R-bloggers](https://www.r-bloggers.com/){:target="_blank"} page.
+  * To find solutions for problems, search the web and look out especially for results hosted at [stackoverflow](https://stackoverflow.com){:target="_blank"}.
   
 Aside from that, the examples provided within this unit are also a good place to start with.
   
 ## RStudio
 Some starting points for RStudio:
-  * To get started with RStudio, [download it from rstudio.com](https://www.rstudio.com/).
-  * To get help, ask the web or have a look on the videos provided by [RStudio's webinars](https://resources.rstudio.com/webinars).
+  * To get started with RStudio, [download it from rstudio.com](https://www.rstudio.com/){:target="_blank"}.
+  * To get help, ask the web or have a look on the videos provided by [RStudio's webinars](https://resources.rstudio.com/webinars){:target="_blank"}.
 
 To get a brut force introduction to RStudio, this is the video you are looking for:
 

@@ -7,7 +7,7 @@ main:
   - title: "Course home"
     url: /index.html
   - title: "OER home"
-    url: https://oer.uni-marburg.de/ilias.php?ref_id=810&cmdClass=ilrepositorygui&cmdNode=r5&baseClass=ilRepositoryGUI
+    url: https://oer.uni-marburg.de/goto.php?target=cat_320&client_id=mriliasmooc
   - title: "Sitemap"
     url: /sitemap.html
     
@@ -20,4 +20,4 @@ docs:
       - title: "Course home"
         url: /index.html
       - title: "OER home"
-        url: https://oer.uni-marburg.de/ilias.php?ref_id=810&cmdClass=ilrepositorygui&cmdNode=r5&baseClass=ilRepositoryGUI
+        url: https://oer.uni-marburg.de/goto.php?target=cat_320&client_id=mriliasmooc

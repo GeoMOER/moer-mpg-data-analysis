@@ -14,9 +14,9 @@ After this kind of advertisement, let's listen to a more sober introduction to d
 
 ## More information on Git and GitHub
 To learn more about Git and GitHub, some starting points are
-  * [GitHub Guides provided by GitHub](https://guides.github.com/) which also includes a very comprehensive introduction to [Git](https://guides.github.com/introduction/git-handbook/).
-  * [GitHub youtube channel](https://www.youtube.com/user/GitHubGuides/)
-  * [GitHub learning lab](https://lab.github.com/)
+  * [GitHub Guides provided by GitHub](https://guides.github.com/){:target="_blank"} which also includes a very comprehensive introduction to [Git](https://guides.github.com/introduction/git-handbook/){:target="_blank"}.
+  * [GitHub youtube channel](https://www.youtube.com/user/GitHubGuides/){:target="_blank"}
+  * [GitHub learning lab](https://lab.github.com/){:target="_blank"}
   
  
-If you are more traditional, you could also start with the original [Git getting started guide at git-scm.com](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control). 
+If you are more traditional, you could also start with the original [Git getting started guide at git-scm.com](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control){:target="_blank"}. 
