@@ -32,13 +32,13 @@ Hence, your data structure could look like this:
 ```yaml
 <some-path-to-your-data-disk>\data_analysis
   |-- data
-    |-- assignment01
-    |-- assignment02
+    |-- assignment_01
+    |-- assignment_02
     |-- ...
     |-- tmp
   |-- <your-github-learning-log-repository>
-    |-- assignment01
-    |-- assignment02
+    |-- assignment_01
+    |-- assignment_02
     |-- ...
     |-- functions
 ```
@@ -49,4 +49,5 @@ Be aware that your git repository will ignore folders as long as there are no fi
 Do not use any spaces within your folder or filenames until you become an expert. **At no time**. **Never**. 
 {: .notice--danger}
 
+Be aware that a proper organization of the data is the basis for re-use of your data and code and reproducibility of your analysis. See this R-bloggers contribution by Matt.0 and references therein on [the "gold standard" of data science project management](https://www.r-bloggers.com/the-gold-standard-of-data-science-project-management/){:target="_blank"} (also there might not such a thing as *one* gold standard).
 

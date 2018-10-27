@@ -4,7 +4,7 @@ toc: true
 toc_label: In this example
 ---
 
-
+This page shows how a compiled R markdown file looks like (in fact, all code examples in this course are compiled using R markdown).
 
 ## This is a header
 
@@ -35,3 +35,43 @@ You can also embed plots, for example:
 ![]({{ site.baseurl }}/assets/images/rmd_images/e01-01/unnamed-chunk-2-1.png)<!-- -->
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+## Markdown source
+The above content of this page is the result from an R markdown file, which looks like that.
+``````yaml
+---
+title: "Example: R Markdown with html output"
+author: "Thomas Nauss"
+date: "10 Oktober 2018"
+output: 
+  html_document: 
+    keep_md: yes
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
+```
+
+
+## This is a header
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(cars)
+```
+
+
+## This is another header
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+``````

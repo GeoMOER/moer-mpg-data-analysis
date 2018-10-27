@@ -1,0 +1,51 @@
+---
+title: "While-loops"
+author: "Thomas Nauss"
+date: "19 Oktober 2017"
+output: 
+  html_document: 
+    keep_md: yes
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
+```
+As for loops, while loops are repeating structures which enable the execution of 
+certain code blocks for multiple times. The difference is that for while loops 
+the number of necessary repititions is not known at the starting time of the loop.
+
+
+While loops are executed until a termination condition is reached. In the 
+following example, this condition is given by `a > b`:
+```{r}
+a <- 7
+b <- 10
+while(a <= b){
+  print(a)
+  a <- a + 1
+}
+```
+Obviously, this condition is executed 4 times (i.e. a = 7, 8, 9, 10). After that
+`a + 1` gives 11 which is larger than b and the termination condition is reached.
+
+As for any other loop, nested loops are also possible.
+```{r}
+a <- 7
+b <- 10
+c <- 10
+while(a <= b){
+  print(paste0("Outer loop value of a: ", a))
+  while(c > a){
+    print(paste0("   Inner loop value of c: ", c))
+    c <- c - 1 
+  }
+  c <- 10
+  a <- a + 1
+  
+}
+```
+Variable `c` has to be reseted to its initial value every time the inner loop
+is completed. Otherwise it would not start a second time since the termination
+condition is already reached. Of course this behaviour can also be usefull for
+a variety of problems.
+
