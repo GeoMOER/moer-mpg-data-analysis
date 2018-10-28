@@ -6,9 +6,10 @@ After getting in contact with some variables and data structures already, we wil
 
 ## Learning objectives
 At the end of this unit you should be able to
-* tell the difference between data sets, data types and data structures
-* use logical and Boolean operators to make decisions
-* use loops for repeated tasks
+* tell the difference between data sets, data types and data structures,
+* use logical and boolean operators to make decisions,
+* use loops for repeated tasks,
+* consider some basic code styling rules in your scripts.
 
 ## Control structures
 Control structures are used to make decisions during runtime, i.e. while the code is executed. Such decisions can be 
