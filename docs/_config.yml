@@ -130,7 +130,7 @@ defaults:
       path: ""
       type: unit01
     values:
-      category: "Unit 01"
+      category: "01 First Things First"
       tags: "Unit|01"
       layout: single
       sidebar:
@@ -140,7 +140,7 @@ defaults:
       path: ""
       type: unit02
     values:
-      category: "Unit 02"
+      category: "02 First Things Second"
       tags: "Unit|02"
       layout: single
       sidebar:
@@ -150,7 +150,7 @@ defaults:
       path: ""
       type: unit03
     values:
-      category: "Unit 03"
+      category: "03 Look at Your Data"
       tags: "Unit|03"
       layout: single
       sidebar:

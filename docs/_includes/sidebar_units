@@ -6,17 +6,21 @@
     {% for collection in site.collections %}
       {% assign mydocs = site[collection.label] | group_by: 'category' %}
       {% for cat in mydocs %}
+        {% assign items = cat.items | sort: 'order' %}
         <li>
-          <span class="nav__sub-title">{{ cat.name }}</span>
+          <span class="nav__sub-title">
+		     <a href="{{ items[0].url | prepend: site.baseurl}}" class="">{{ cat.name }}</a>
+		  </span>
           <ul>
-            {% assign items = cat.items | sort: 'order' %}
             {% for item in items %}
               {% if item.url == page.url %}
                 {% assign active = "active" %}
               {% else %}
                 {% assign active = "" %}
               {% endif %}
-              <li><a href="{{ item.url  | prepend: site.baseurl}}" class="{{ active }}">{{ item.title }}</a></li>
+			  {% if page.url contains collection.label %}
+			    <li><a href="{{ item.url  | prepend: site.baseurl}}" class="{{ active }}">{{ item.title }}</a></li>
+			  {% endif %}
             {% endfor %}
           </ul>
         </li>

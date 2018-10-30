@@ -5,27 +5,17 @@ sidebar:
         nav: "units" 
 ---
 
-## Unit 01
+## 01 First Things First
 {% for item in site.unit01 %}
   <p><a href="{{ item.url | prepend: site.baseurl}}">{{ item.title }}</a></p>
 {% endfor %}
 
-## Unit 02
+## 02 First Things Second
 {% for item in site.unit02 %}
   <p><a href="{{ item.url | prepend: site.baseurl}}">{{ item.title }}</a></p>
 {% endfor %}
 
-## Unit 03
+## 03 Look at Your Data
 {% for item in site.unit03 %}
-  <p><a href="{{ item.url | prepend: site.baseurl}}">{{ item.title }}</a></p>
-{% endfor %}
-
-## Unit 04
-{% for item in site.unit04 %}
-  <p><a href="{{ item.url | prepend: site.baseurl}}">{{ item.title }}</a></p>
-{% endfor %}
-
-## Unit 05
-{% for item in site.unit05 %}
   <p><a href="{{ item.url | prepend: site.baseurl}}">{{ item.title }}</a></p>
 {% endfor %}
