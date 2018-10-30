@@ -1,0 +1,87 @@
+---
+title: "Example: Aggregation Statistics"
+author: "Thomas Nauss"
+date: "19 Oktober 2017"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
+source("C:/Users/tnauss/permanent/edu/mpg-data-analysis/moer-mpg-data-analysis/staging/examples/000_set_environment.R")
+```
+
+## Summarizing a data set
+
+The most straight forward function which returns some aggregated statistical
+information about a data set is `summary`.
+```{r}
+a <- c("A", "B", "C", "A", "B", "A", "A")
+b <- c("X", "X", "X", "X", "Y", "Y", "Y")
+c <- c(1, 2, 3, 4, 5, 6, 7)
+d <- c(10, 20, 30, 40, 50, 60, 70)
+df <- data.frame(Cat1 = a, Cat2 = b, Val1 = c, Val2 = d)
+summary(df)
+```
+It provides the minimum, maximum, mean and median value of each numerical column
+along with the first and third quartile (i.e. the values separating 25% from 75%
+and 75% from 100% of the data). Non-numeric columns are summarized by counting
+the individual values (which will be ommitted after the first few rows so it
+is only informative for columns with just a few different character values).
+
+The information of `summary` can also be obtained by specific functions but these
+will return only the same numbers if applied to a single column. For example the
+`min` function will return the minimum value of all values supplied to it. This
+leads to a return of 1 no matter if it is applied to column Val1 or to columns
+Val1 and Val2:
+```{r}
+min(df[,3])
+min(df[,3:4])
+```
+The other functions included in summary are
+```{r}
+max(df$Val1)
+quantile(df$Val1,  probs = c(0.25, 0.75))
+mean(df$Val1)
+median(df$Val1)
+```
+
+
+## Aggregated statistics
+If you are interested in aggregated statistics in terms of sums or means across
+columns or rows, you can use one of the `rowSums`, `rowMeans`, `colSums`, or 
+`colMeans` functions.
+```{r}
+df  # Just print the data frame so you can easily understand the results
+rowSums(df[,3:4])
+rowMeans(df[,3:4])
+colSums(df[,3:4])
+colMeans(df[,3:4])
+```
+
+For other summary statistics across rows or if you want to define a grouping
+variable which controls the summary statistics, the `aggregate` function is very
+helpfull.
+```{r}
+aggregate(df[,3:4], by = list(df$Cat1), FUN = median)
+```
+Please note that the grouping elements (parameter "by") have to supplied as list
+so if you want to use a column of a data frame, use the `list` function to convert
+the factor to a list.
+
+Of course, one can also use more than one grouping variable.
+```{r}
+aggregate(df[,3:4], by = list(df$Cat1, df$Cat2), FUN = sum)
+```
+
+In some cases it is usefull to construct a specific aggregation key, so think of
+that easy possibility if you run into problems. As one example: imagine that the
+aggregate function can not use more than one grouping variable. To get the same
+result as in the line above, one can define a key consisting of the entries of
+column Cat1 and Cat2 (sorting is different but who cares):
+```{r}
+df$key <- paste0(df$Cat1, df$Cat2)
+aggregate(df[,3:4], by = list(df$key), FUN = sum)
+```

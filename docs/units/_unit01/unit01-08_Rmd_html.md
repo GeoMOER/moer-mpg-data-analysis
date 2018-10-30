@@ -32,7 +32,7 @@ summary(cars)
 
 You can also embed plots, for example:
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e01-01/unnamed-chunk-2-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/rmd_html_out/unnamed-chunk-2-1.png)<!-- -->
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
@@ -50,7 +50,7 @@ output:
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/rmd_html_out/')
 ```
 
 

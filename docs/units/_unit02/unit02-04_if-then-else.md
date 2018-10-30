@@ -1,5 +1,5 @@
 ---
-title: "If-then-else"
+title: "Example: If-then-else"
 toc: true
 toc_label: In this example
 ---

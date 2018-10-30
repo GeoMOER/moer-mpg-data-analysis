@@ -1,5 +1,5 @@
 ---
-title: "For-loops"
+title: "Example: For-loops"
 toc: true
 toc_label: In this example
 ---

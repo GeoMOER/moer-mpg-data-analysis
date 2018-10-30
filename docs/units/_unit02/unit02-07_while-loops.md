@@ -1,5 +1,5 @@
 ---
-title: "While-loops"
+title: "Example: While-loops"
 toc: true
 toc_label: In this example
 ---
