@@ -1,0 +1,47 @@
+---
+title: "Documentation template"
+author: "Thomas Nauss"
+date: "19 Oktober 2017"
+output: 
+  html_document: 
+    keep_md: yes
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
+```
+
+```{r}
+#' Mandatory: One short line that summarizes for what the script or function is.
+#'
+#' @description Optional: One to three lines describing a little more about the
+#' script or function.
+#' 
+#' @param Mandatory if function: One param at at time.
+#'
+#' @name Mandatory: Name of the script or function.
+#'
+#' @export Mandatory if function: Name of the function.
+#' 
+#' @details Optional: Whatever you need to describe regarding the functionality
+#' and/or theoretical background of your script or function.
+#' 
+#' @references  Optional: If you use something from somebody else, handle it
+#' like any other scientific reference/literature list.
+#' 
+#' @examples
+#' \dontrun{
+#' # Mandatory if part of R package.
+#' }
+#' 
+
+<start here with your R code>
+
+  
+# Header for lager section e.g. read datasets ----------------------------------
+<your R code>
+
+# Short comment for a code snipet e.g. a complicated loop
+<your R code>
+
+```
