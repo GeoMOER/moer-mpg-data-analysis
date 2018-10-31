@@ -2,7 +2,7 @@
 title: Look at Your Data
 ---
 
-Reading and writing data, computing summary statistics and heavily use visual data exploration are basics of data analysis.
+Become familiar with reading and writing data, computing summary statistics and visual data exploration as the basics of data analysis.
 
 <!--more-->
 

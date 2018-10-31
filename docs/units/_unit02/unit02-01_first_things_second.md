@@ -2,7 +2,7 @@
 title: First Things Second
 ---
 
-A closer look on data sets and data types before we introduce the most important feature of programming languages, namely run-time control and loop structures.
+Look closer on data sets and data types before focusing on the most important features of programming languages, namely run-time control and loop structures.
 
 <!--more-->
 

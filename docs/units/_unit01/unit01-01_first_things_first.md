@@ -2,7 +2,7 @@
 title: First Things First
 ---
 
-A brute force introduction to R, R markdown, the RStudio IDE, version management with Git and GitHub's classroom functionality. While - from a learning theory point of view - this does not really represent anything but a worst case example, these are the things you need to know to solve the upcoming assignment problems and submit your solutions.
+Go through a brute force introduction into R, R markdown, the RStudio IDE, version management with Git and GitHub's classroom functionality to get ready for solving the upcoming assignment problems and submitting your solutions.
 
 <!--more-->
 
