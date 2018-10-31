@@ -2,8 +2,9 @@
 title: Look at Your Data
 ---
 
-This unit shifts the focus from a technical to a content oriented perspective. Since data analysis requires some kind of data and since data is often provided in a digital way, reading and writing data is a standard operation. Typically, the next steps involve the computation of some kind of summary statistic and some visual data exploration.
+Reading and writing data, computing summary statistics and heavily use visual data exploration are basics of data analysis.
 
+<!--more-->
 
 ## Learning objectives
 At the end of this unit you should be able to

@@ -74,6 +74,7 @@ author:
 
 ##### Site configuration ######################################################
 title_separator: "|"
+excerpt_separator: <!--more-->
 
 # Build settings
 markdown: kramdown
@@ -131,7 +132,7 @@ defaults:
       type: unit01
     values:
       category: "01 First Things First"
-      tags: "Unit|01"
+      tags: "Unit 01"
       layout: single
       sidebar:
         nav: "units" 
@@ -141,7 +142,7 @@ defaults:
       type: unit02
     values:
       category: "02 First Things Second"
-      tags: "Unit|02"
+      tags: "Unit 02"
       layout: single
       sidebar:
         nav: "units" 
@@ -151,7 +152,7 @@ defaults:
       type: unit03
     values:
       category: "03 Look at Your Data"
-      tags: "Unit|03"
+      tags: "Unit 03"
       layout: single
       sidebar:
         nav: "units" 
@@ -161,7 +162,7 @@ defaults:
       type: unit04
     values:
       category: "Unit 04"
-      tags: "Unit|04"
+      tags: "Unit 04"
       layout: single
       sidebar:
         nav: "units" 
@@ -171,7 +172,7 @@ defaults:
       type: unit05
     values:
       category: "Unit 05"
-      tags: "Unit|05"
+      tags: "Unit 05"
       layout: single
       sidebar:
         nav: "units" 

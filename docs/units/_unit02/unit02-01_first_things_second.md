@@ -2,7 +2,9 @@
 title: First Things Second
 ---
 
-After getting in contact with some variables and data structures already, we will make one step back and clarify such terms as data sets, data types etc. Afterwards, we will have a look at probably the most important feature of programming languages, namely run-time control structures.
+A closer look on data sets and data types before we introduce the most important feature of programming languages, namely run-time control and loop structures.
+
+<!--more-->
 
 ## Learning objectives
 At the end of this unit you should be able to
