@@ -7,7 +7,7 @@ main:
   - title: "Course home"
     url: /index.html
   - title: "OER home"
-    url: https://oer.uni-marburg.de/goto.php?target=cat_320&client_id=mriliasmooc
+    url: https://oer.uni-marburg.de/goto.php?target=crs_326&client_id=mriliasmooc
   - title: "Sitemap"
     url: /sitemap.html
     
@@ -20,4 +20,4 @@ docs:
       - title: "Course home"
         url: /index.html
       - title: "OER home"
-        url: https://oer.uni-marburg.de/goto.php?target=cat_320&client_id=mriliasmooc
+        url: https://oer.uni-marburg.de/goto.php?target=crs_326&client_id=mriliasmooc
