@@ -10,6 +10,7 @@ This worksheet will guide you in getting a first overview of the wood harvest in
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operation system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend to use R Studio for (interactive) programming with R.
   * [Git](https://git-scm.com/downloads){:target="_blank"} environment for your operating system. For Windows users with little experience on the command line we recommend [GitHub Desktop](https://desktop.github.com/){:target="_blank"}.
+  * Wood harvest data from Hessen provided by the course instructors.
 
 ## Harvest in Hessen
 We will use data on the wood harvest in Hessen since 1997 for this worksheet. The data has been published by the Hessische Ministerium für Umwelt, Klimaschutz, Landwirtschaft und Verbraucherschutz in 2015 in paper form but been typed into an Excel sheet already. Unfortunately, the one who did had never done it before.
