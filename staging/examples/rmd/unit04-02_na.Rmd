@@ -1,0 +1,33 @@
+---
+title: "Example: Missing Values"
+author: "Thomas Nauss"
+date: "19 Oktober 2017"
+output: 
+  html_document: 
+    keep_md: yes
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
+```
+
+Handling missing values is straight forward. Let's start with a vector with one
+NA value at position 3. Please note that NA is not inside quotation marks since
+it is not a string but a special type of logical data type.
+
+```{r}
+x <- c("A", "B", NA, "D")
+```
+To check, if the vector has one or more "not available" values, use the 
+`is.na` function.
+```{r}
+is.na(x)
+```
+It returns another vector which gives a TRUE/FALSE answer of the question for 
+each value in the data structure.
+
+If, for any reason, we want to assign the term "no value" to NAs, the scripting
+is quite simple and follows the standard logic.
+```{r}
+x[is.na(x)] <- "no value"
+```

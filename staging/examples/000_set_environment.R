@@ -1,12 +1,15 @@
-library(link2GI)
+library(envimaR)
 
-# Set path ---------------------------------------------------------------------
-filepath_base = "C:/Users/tnauss/permanent/edu/mpg-data-analysis/"
+root_folder = "~/edu/mpg-data-analysis/"
 
-# Set project specific subfolders
 project_folders = c("data/",
-                    "data/csv/", "data/tmp/")
+                    "data/csv/", "data/rdata", "data/tmp/")
 
-envrmt = initProj(projRootDir = filepath_base, GRASSlocation = "data/grass",
-                  projFolders = project_folders, path_prefix = "path_", 
-                  global = FALSE)
+libs = c("reshape2")
+
+envrmt = createEnvi(root_folder = root_folder, folders = project_folders, 
+                    path_prefix = "path_", libs = libs,
+                    alt_env_id = "COMPUTERNAME", alt_env_value = "PCRZP",
+                    alt_env_root_folder = "F:\\BEN\\edu")
+
+

@@ -161,7 +161,7 @@ defaults:
       path: ""
       type: unit04
     values:
-      category: "Unit 04"
+      category: "04 Clean Your Data"
       tags: "Unit 04"
       layout: single
       sidebar:

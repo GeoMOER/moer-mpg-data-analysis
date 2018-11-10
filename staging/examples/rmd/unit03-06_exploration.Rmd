@@ -19,10 +19,10 @@ Within this example, we will focus on basic R graphics. Of course, all of the ex
 
 ```{r, include=FALSE}
 # Read csv file ----------------------------------------------------------------
-lu <- read.table(paste0(envrmt$path_data_csv, "AI001_gebiet_flaeche_bereinigt.csv"),
+lu <- read.table(file.path(envrmt$path_csv, "AI001_gebiet_flaeche_bereinigt.csv"),
                  header = TRUE, sep = ";", dec = ",")
 
-cp <- read.table(paste0(envrmt$path_data_csv, "115-46-4_feldfruechte_bereinigt.csv"),
+cp <- read.table(file.path(envrmt$path_csv, "115-46-4_feldfruechte_bereinigt.csv"),
                  header = TRUE, sep = ";", dec = ",")
 
 # Clean data -------------------------------------------------------------------
