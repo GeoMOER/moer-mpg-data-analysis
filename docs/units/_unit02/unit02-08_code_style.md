@@ -1,5 +1,5 @@
 ---
-title: "Code styling"
+title: "Code Styling"
 toc: true
 toc_label: In this example
 ---

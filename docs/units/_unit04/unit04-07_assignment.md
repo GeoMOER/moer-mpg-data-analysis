@@ -19,7 +19,9 @@ The above data set provides information on crop yield.
 
 Please have look at the data and create a list of tasks you have to cope with  in order to clean the data.
 
-Please write an R markdown script which cleans the data set according to your list. The markdown script should roughly describe what you are doing and show the major code structure in addition to some actual data wherever appropriate. After cleaning, all your id variables should be in the left, your data variables in the right columns of the data frame. If the cleaning of a particular tasks requires more than a few lines of code, write a function that takes care of it and save this function in a separate R file (not R markdown) in order to keep the main markdown script clear.
+Please write an R markdown script which cleans the data set according to your list. The markdown script should roughly describe what you are doing and show the major code structure in addition to some actual data wherever appropriate. After cleaning, all your id variables should be in the left, your data variables in the right columns of the data frame. 
+
+Since the cleaning of the administrative area information requires quite a few lines of code, write a function for this takes and save this function in a separate R file (not R markdown) in order to keep the main markdown script clear.
 
 Save your R functions and Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub repository.
 

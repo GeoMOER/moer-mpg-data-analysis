@@ -1,5 +1,5 @@
 ---
-title: "Unmarked Assignment: Loop and conquer"
+title: "Unmarked Assignment: Loop and Conquer"
 toc: true
 toc_label: In this worksheet
 ---
