@@ -79,7 +79,7 @@ excerpt_separator: <!--more-->
 # Build settings
 markdown: kramdown
 # theme: minima
-remote_theme: "marburg-open-courseware/moer-template-jekyll"
+remote_theme: "GeoMOER/moer-jekyll-theme"
 minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 auto_ids: true
 
