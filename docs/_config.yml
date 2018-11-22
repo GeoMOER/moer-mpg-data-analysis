@@ -171,7 +171,7 @@ defaults:
       path: ""
       type: unit05
     values:
-      category: "Unit 05"
+      category: "05 Describe Your Linear Data"
       tags: "Unit 05"
       layout: single
       sidebar:

@@ -179,4 +179,5 @@ Since column "Place" is no longer needed, let's just delete it:
 ```{r, warning=FALSE}
 lu_long_final$Place <- NULL
 lu_long_final[c(1,50, 600),]
+write.table(lu_long_final, "clean.csv")
 ```
