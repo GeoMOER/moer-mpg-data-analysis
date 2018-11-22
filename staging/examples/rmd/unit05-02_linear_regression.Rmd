@@ -146,7 +146,6 @@ for(i in seq(4)){
   plot(anscombe[, i], anscombe[, i+4],
        xlab = names(anscombe[i]), ylab = names(anscombe[i+4]))
 }
-par(par_org)
 ```
 
 While x3/y3 might still justify a linear regression if we remove the outlier, the two plots on the right side do not. So what? Well, unfortunately, all of these data combinations result in almost the same regression statistics:
@@ -170,18 +169,20 @@ The normality of the residuals could be checked by normality tests but these tes
 
 Let's start with the most important assumption, the one of homogeneous variances in the residuals, aka the homoscedasticity:
 ```{r, warning=FALSE}
+par(par_org)
 par(mfrow = c(2,2))
 for(i in seq(4)){
   plot(lmodels[[i]], which = 1)
 }
-par(par_org)
 ```
+
 Except maybe for the upper left figure, this assumption is clearly violated as can be shown on residuals vs. fitted values plots. A better visualization might be the scale-location plot which standardizes the residuals and performs a square root transformation on them. In doing so, the variance of the residuals becomes more evident in the case of small deviations from the homoscedasticity assumption:
+
+```{r, warning=FALSE}
 par(mfrow = c(2,2))
 for(i in seq(4)){
   plot(lmodels[[i]], which = 3)
 }
-par(par_org)
 ```
 
 If you want to check the normality of the residuals, we could visualize their distribution as a QQ plot.
@@ -200,7 +201,6 @@ par(mfrow = c(2,2))
 for(i in seq(4)){
   plot(lmodels[[i]], which = 4)
 }
-par(par_org)
 ```
 
 

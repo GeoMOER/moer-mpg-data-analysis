@@ -20,14 +20,11 @@ hist(dep, main = "Dependend variable")
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-1-1.png)<!-- -->
 
-```r
-par(par_org)
-```
-
 A look at the relationship between the variables by using a scatterplot justifies a linear modelling attemp. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
 
 ```r
 library(car)
+par(par_org)
 plot(ind, dep)
 
 lmod <- lm(dep ~ ind) # Compute linear regression model
@@ -210,10 +207,6 @@ for(i in seq(4)){
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-12-1.png)<!-- -->
 
-```r
-par(par_org)
-```
-
 While x3/y3 might still justify a linear regression if we remove the outlier, the two plots on the right side do not. So what? Well, unfortunately, all of these data combinations result in almost the same regression statistics:
 
 ```r
@@ -322,6 +315,7 @@ The normality of the residuals could be checked by normality tests but these tes
 Let's start with the most important assumption, the one of homogeneous variances in the residuals, aka the homoscedasticity:
 
 ```r
+par(par_org)
 par(mfrow = c(2,2))
 for(i in seq(4)){
   plot(lmodels[[i]], which = 1)
@@ -330,16 +324,17 @@ for(i in seq(4)){
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-14-1.png)<!-- -->
 
-```r
-par(par_org)
-```
 Except maybe for the upper left figure, this assumption is clearly violated as can be shown on residuals vs. fitted values plots. A better visualization might be the scale-location plot which standardizes the residuals and performs a square root transformation on them. In doing so, the variance of the residuals becomes more evident in the case of small deviations from the homoscedasticity assumption:
+
+
+```r
 par(mfrow = c(2,2))
 for(i in seq(4)){
   plot(lmodels[[i]], which = 3)
 }
-par(par_org)
 ```
+
+![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-15-1.png)<!-- -->
 
 If you want to check the normality of the residuals, we could visualize their distribution as a QQ plot.
 
@@ -350,7 +345,7 @@ for(i in seq(4)){
 }
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-15-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-16-1.png)<!-- -->
 
 ```r
 par(par_org)
@@ -366,11 +361,7 @@ for(i in seq(4)){
 }
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-16-1.png)<!-- -->
-
-```r
-par(par_org)
-```
+![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-17-1.png)<!-- -->
 
 
 
