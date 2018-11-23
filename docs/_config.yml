@@ -110,6 +110,9 @@ collections:
   unit05:
     output: true
     permalink: /:collection/:title.html
+  unit06:
+    output: true
+    permalink: /:collection/:title.html
   worksheets:
     output: true
     permalink: /:collection/:title.html
@@ -173,6 +176,16 @@ defaults:
     values:
       category: "05 Describe Your Linear Data"
       tags: "Unit 05"
+      layout: single
+      sidebar:
+        nav: "units" 
+  # unit06
+  - scope:
+      path: ""
+      type: unit06
+    values:
+      category: "06 Predict Your Linear Data"
+      tags: "Unit 06"
       layout: single
       sidebar:
         nav: "units" 

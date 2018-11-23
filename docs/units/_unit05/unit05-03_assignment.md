@@ -14,7 +14,7 @@ After completing this worksheet you should be able to compute a linear regressio
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operation system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend to use R Studio for (interactive) programming with R.
   * [Git](https://git-scm.com/downloads){:target="_blank"} environment for your operating system. For Windows users with little experience on the command line we recommend [GitHub Desktop](https://desktop.github.com/){:target="_blank"}.
-  * Data on percentage fraction of land use con a community level provided by the course instructors.
+  * Data on percentage fraction of land use on a community level provided by the course instructors.
 
 
 ## Linear modeling and normal distribution of the residuals  
