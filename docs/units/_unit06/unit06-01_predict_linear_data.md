@@ -20,4 +20,6 @@ Use observation samples to build a model which predicts the dependent variable b
 
 The graphic above shows a scatter plot of data pairs between independent (X axis) and dependent (Y axis) variables. The red lines represent linear regression models each of them computed on a different subset of the data pairs where one data pair has been removed. The difference between the left out observation and it's prediction by the model provides an estimate for the error of the model predictions. Such an error estimation strategy is generally called (leave-one-out) cross-validation.
 
+For a deeper look into cross-validation strategies related to spatial and temporal dependent data, have a look at [Meyer et al. 2018](https://www.sciencedirect.com/science/article/pii/S1364815217310976?via%3Dihub){:target="_blank"}
+
 {% include figure image_path="https://imgs.xkcd.com/comics/extrapolating.png" alt="Comic illustrating extrapolation." caption_url="[CC-BY by xkcd.com](https://xkcd.com/605/){:target='_blank'}" %}

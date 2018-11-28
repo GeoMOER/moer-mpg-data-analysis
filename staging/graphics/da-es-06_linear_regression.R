@@ -8,12 +8,12 @@
 
 library(calibrate)
 
-independentendent <- anscombe$x1
+independent <- anscombe$x1
 dependent <- anscombe$y1
 
-plot(independentendent, dependent)
-for(i in seq(length(independentendent))){
-  abline(lm(dependent[-i] ~ independentendent[-i]), col = "red")
+plot(independent, dependent)
+for(i in seq(length(independent))){
+  abline(lm(dependent[-i] ~ independent[-i]), col = "red")
 }
 
 dev.copy(jpeg, "cross_validation.jpg", quality = 100)
