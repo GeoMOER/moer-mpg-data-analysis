@@ -113,6 +113,9 @@ collections:
   unit06:
     output: true
     permalink: /:collection/:title.html
+  unit07:
+    output: true
+    permalink: /:collection/:title.html
   worksheets:
     output: true
     permalink: /:collection/:title.html
@@ -186,6 +189,16 @@ defaults:
     values:
       category: "06 Predict Your Linear Data"
       tags: "Unit 06"
+      layout: single
+      sidebar:
+        nav: "units" 
+  # unit07
+  - scope:
+      path: ""
+      type: unit07
+    values:
+      category: "07 Select Your Variables"
+      tags: "Unit 07"
       layout: single
       sidebar:
         nav: "units" 
