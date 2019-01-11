@@ -14,7 +14,7 @@ At the end of this session you should be able to
 
 
 ## Basic idea of variable selection
-Use only those explanatory variables which best explain the dependent variable without overfitting the model to the sample
+Use only those explanatory variables which best explain the dependent variable without overfitting the model to the sample.
 
 
 {% include figure image_path="/assets/images/variable_selection.jpg" alt="Increasing and then decreasing R squared with increasing number of variables." caption="Influence of variables used for two regression models on model performance." %}

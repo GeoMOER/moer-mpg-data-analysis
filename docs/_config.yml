@@ -116,6 +116,9 @@ collections:
   unit07:
     output: true
     permalink: /:collection/:title.html
+  unit08:
+    output: true
+    permalink: /:collection/:title.html
   worksheets:
     output: true
     permalink: /:collection/:title.html
@@ -202,6 +205,16 @@ defaults:
       layout: single
       sidebar:
         nav: "units" 
+  # unit08
+  - scope:
+      path: ""
+      type: unit08
+    values:
+      category: "08 Tune Your Models"
+      tags: "Unit 08"
+      layout: single
+      sidebar:
+        nav: "units"         
   # pages
   - scope:
       path: "_pages"
