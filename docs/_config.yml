@@ -119,6 +119,12 @@ collections:
   unit08:
     output: true
     permalink: /:collection/:title.html
+  unit09:
+    output: true
+    permalink: /:collection/:title.html
+  unit10:
+    output: true
+    permalink: /:collection/:title.html
   worksheets:
     output: true
     permalink: /:collection/:title.html
@@ -212,6 +218,26 @@ defaults:
     values:
       category: "08 Tune Your Models"
       tags: "Unit 08"
+      layout: single
+      sidebar:
+        nav: "units" 
+  # unit09
+  - scope:
+      path: ""
+      type: unit09
+    values:
+      category: "09 Predict Time Series"
+      tags: "Unit 09"
+      layout: single
+      sidebar:
+        nav: "units"         
+  # unit10
+  - scope:
+      path: ""
+      type: unit10
+    values:
+      category: "10 Analyse Time Series"
+      tags: "Unit 10"
       layout: single
       sidebar:
         nav: "units"         

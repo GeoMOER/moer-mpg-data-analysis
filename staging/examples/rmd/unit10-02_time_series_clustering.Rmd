@@ -1,0 +1,64 @@
+---
+title: "Time series clustering"
+author: "Thomas Nauss"
+date: "19 Oktober 2017"
+output: 
+  html_document: 
+    keep_md: yes
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e09-01/')
+library(envimaR)
+root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/", 
+                              alt_env_id = "COMPUTERNAME",
+                              alt_env_value = "PCRZP", 
+                              alt_env_root_folder = "F:\\BEN\\edu")
+source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_environment.R"))
+path_dwd <- file.path(envrmt$path_dwd,"3164_coelbe/")
+```
+Just as one last example on time series analysis for this module and mainly to demonstrate that this module only tiped a very small set of analysis concepts out there, we will have a glimpse on time series clustering. To illustrate this, we will again use the (mean monthly) air temperature record of the weather station in Coelbe (which is closest to the Marburg university forest). The data has been supplied by the German weatherservice [German weather service](ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/). For simplicity, we will remove the first 6 entries (July to Dezember 2006 to have full years).
+```{r, warning=FALSE, echo=FALSE, message= FALSE}
+
+dwd <- read.table(file.path(path_dwd, "produkt_temp_Terminwerte_20060701_20151231_03164.txt"),
+                  header = TRUE, sep = ";", dec = ".")
+dwd$AGG_JM <- substr(dwd$MESS_DATUM, 1, 6)
+tam <- aggregate(dwd$LUFTTEMPERATUR, by = list(dwd$AGG_JM), FUN = mean)
+colnames(tam) <- c("Date", "Ta")
+```
+
+```{r, warning=FALSE}
+tam <- tam[-(1:6),]
+tam$Date <- strptime(paste0(tam$Date, "010000"), format = "%Y%m%d%H%M", tz = "UTC")
+plot(tam$Date, tam$Ta, type = "l")
+```
+
+The major risk in time series clustering (or any other clustering) is that one clusters something which actually does not show any kind of groups. Hence, the most important part to remember is that a cluster algorithm will always identify clusters no matter if they are really "exist". As a consequence: never use clustering if you are not sure that there is a grouping in the data. In addition, clustering is generally applied if you have more than one time series from more than one location. 
+
+Of course, there is no rule without exeption and the one exeption is: if you want to show some code and do not want to introduce a new dataset just for this last example, you can use it on a dataset where you have no glimps of a grouping as long as you are not the one who gets the grading in the end. 
+
+OK. Aside from having no idea if we have a grouping and aside that we have only a single station record, let's have a look at the above time series. There might be a difference between 2010 and the rest of the years since 2010 shows very warm summer and cold winter temperatures. To start with clustering, we have to look at the individual years as different time series by transforming our data into a matrix with 12 columns (i.e. one for each month) and the required number of years. Thereby we have to make sure that the original dataset is actually tranformed into the matrix format by rows and not by columns. This will result in a matrix with one year per row:
+```{r, warning=FALSE}
+tam_ta <- matrix(tam$Ta, ncol = 12, byrow = TRUE)
+row.names(tam_ta) <- paste0(seq(2007, 2015))
+tam_ta
+```
+
+This matrix can subsequently be used to compute the dissimilarity between the individual time series. In this example, we use the ``TSclust::diss`` function with method "DTWARP" (which is one of many, each leading to a different result; p gives the decaying of the auto-correlation coefficient to be considered).
+```{r, warning=FALSE}
+tam_dist <- TSclust::diss( tam_ta, "DTWARP", p=0.05)
+tam_dist
+```
+The resulting dissimilarity is larger if the different time series (i.e. years in this case) are less similar and smaller if they are more similar. This dissimillarity is now used for hirachical clustering which computes the distance between the individual samples. Plotting the result shows a cluster dendogram:
+```{r, warning=FALSE}
+tam_hc <- hclust(tam_dist)
+plot(tam_hc)
+rect.hclust(tam_hc, k = 3)
+```
+
+Just for completness, if you want to derive a certain number of clusters from it, you can use the following for the visualization of the clustres or getting the respective group IDs. In this example, we derive three clusters:
+```{r, warning=FALSE}
+plot(tam_hc)
+rect.hclust(tam_hc, k = 3)
+cutree(tam_hc, k = 3)
+```

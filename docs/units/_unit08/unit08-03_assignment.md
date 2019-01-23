@@ -1,5 +1,5 @@
 ---
-title: "Unmarked Assignment: Model tuning"
+title: "Unmarked Assignment: Model Tuning"
 toc: true
 toc_label: In this worksheet
 ---
