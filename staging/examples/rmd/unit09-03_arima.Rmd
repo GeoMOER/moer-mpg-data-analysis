@@ -8,7 +8,7 @@ output:
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e09-01/')
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e09-03/')
 library(envimaR)
 root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/", 
                               alt_env_id = "COMPUTERNAME",
@@ -46,17 +46,20 @@ While we can start with detrending and de-seasoning now, let's try a quick-and-d
 dTa <- diff(diff(tam$Ta))
 acf(dTa)
 ```
+
 Not perfect but good enough to be used in this example. Before we run the ARIMA, we run a simple auto-regressive (AR) model first:
 ```{r, warning=FALSE}
 armod <- ar(dTa, aic = TRUE, order.max = 20, method = "yule-walker")
 armod
 ```
+
 The ``ar`` function computes an AR Model and iterates over the lags to be included in the linear equation which predicts the monthly air temperature value for time t based on its value at time t-1, t-2, .... 
 
 The maximum number of lags (within a maximum of 20 as provided to the function) is determined based on an internal estimate of the AIC parameter. The number of lags with the minimum AIC are used:
 ```{r, warning=FALSE}
 plot(0:20, armod$aic, type = "o")
 ```
+
 Using the Yule-Walker method for estimating the AR parameters, a maximum lag of 10 is considered. Although the results will be quite different, if another method is used and although the following is of no use if one actually wants to use not just an auto-regressive (AR) or a moving average model (MA) but an ARIMA, a rule of thump states that if
 
 * the auto-correlation function declines exponentially or shows a sinus pattern and
@@ -109,6 +112,7 @@ Finding the right values for an arima model is not so easy. Basically, one has t
 arimamod <- arima(tam$Ta, c(6,2,2))
 summary(arimamod)
 ```
+
 We will not focus on optimal prediction in this example, so these results are just fine for the purpose of illustration. The arima model can be used to predict the time series in the future analogously to the AR model:
 ```{r, warning=FALSE}
 arima_predict <- predict(arimamod, n.ahead = 100)
@@ -137,12 +141,14 @@ Now, we can use the ``forecast::auto.arima`` function. We will extend the iterat
 arima_ns <- auto.arima(tam_ts, max.p = 20, max.q = 20, stationary = TRUE, seasonal=FALSE)
 summary(arima_ns)
 ```
+
 Actually, the arima comes with d = 0 whic means that the data values is not differentiated (which is a tough choice).
 
 To better estimate the quality of the ARIMA, we can use some diagnostic plots:
 ```{r, warning=FALSE}
 tsdiag(arima_ns)
 ```
+
 The last plot shows test results if the residuals are independently distributed. For time lags larger 4, this is maybe not the case which indicates that the arima model is not really well specified.
 
 The forecast will look like this:

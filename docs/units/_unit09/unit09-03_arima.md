@@ -32,7 +32,7 @@ In order to predict the time series just based on its observed dynamics, an auto
 acf(tam$Ta)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-3-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-3-1.png)<!-- -->
 
 ### Auto-regressive models (AR)
 While we can start with detrending and de-seasoning now, let's try a quick-and-dirty approach first and postbone the time series decomposition to the next sessiong. One thing one could try is to use not the original values but the difference between the consecutive value pairs (i.e. the difference between time t and t+1 etc.). And if one difference is not enough, we can compute the difference of the differences and the auto-correlation behaviour would look like that:
@@ -42,7 +42,8 @@ dTa <- diff(diff(tam$Ta))
 acf(dTa)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-4-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-4-1.png)<!-- -->
+
 Not perfect but good enough to be used in this example. Before we run the ARIMA, we run a simple auto-regressive (AR) model first:
 
 ```r
@@ -63,6 +64,7 @@ armod
 ## 
 ## Order selected 10  sigma^2 estimated as  8.501
 ```
+
 The ``ar`` function computes an AR Model and iterates over the lags to be included in the linear equation which predicts the monthly air temperature value for time t based on its value at time t-1, t-2, .... 
 
 The maximum number of lags (within a maximum of 20 as provided to the function) is determined based on an internal estimate of the AIC parameter. The number of lags with the minimum AIC are used:
@@ -71,7 +73,8 @@ The maximum number of lags (within a maximum of 20 as provided to the function) 
 plot(0:20, armod$aic, type = "o")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-6-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-6-1.png)<!-- -->
+
 Using the Yule-Walker method for estimating the AR parameters, a maximum lag of 10 is considered. Although the results will be quite different, if another method is used and although the following is of no use if one actually wants to use not just an auto-regressive (AR) or a moving average model (MA) but an ARIMA, a rule of thump states that if
 
 * the auto-correlation function declines exponentially or shows a sinus pattern and
@@ -86,7 +89,7 @@ acf(dTa)
 pacf(dTa)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-7-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-7-1.png)<!-- -->
 
 ```r
 par(par_org)
@@ -127,7 +130,7 @@ lines(arpred$pred + arpred$se, col = "grey")
 lines(arpred$pred - arpred$se, col = "grey")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-9-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-9-1.png)<!-- -->
 
 
 ### Auto-regressive integrated moving average models (ARIMA)
@@ -162,7 +165,7 @@ armod
 ##       -0.8586  -0.4031  -0.1428
 ## s.e.   0.2544   0.1781   0.0988
 ## 
-## sigma^2 estimated as 3.188:  log likelihood = -230.95,  aic = 497.91
+## sigma^2 estimated as 3.188:  log likelihood = -230.95,  aic = 495.91
 ```
 
 Finding the right values for an arima model is not so easy. Basically, one has to iterate over a variety of options. Let's try just one for illustration purposes.
@@ -182,14 +185,13 @@ summary(arimamod)
 ##       0.3197  0.0425  0.0449  -0.1024  -0.3006  -0.3669  -1.8782  0.8872
 ## s.e.  0.0985  0.0924  0.0932   0.0932   0.0935   0.1001   0.0649  0.0636
 ## 
-## sigma^2 estimated as 3.703:  log likelihood = -239.34,  aic = 496.67
+## sigma^2 estimated as 3.703:  log likelihood = -239.34,  aic = 494.67
 ## 
 ## Training set error measures:
-##                    ME     RMSE      MAE      MPE     MAPE      MASE
-## Training set 0.358757 1.907271 1.530914 55.39817 83.03696 0.4733532
-##                     ACF1
-## Training set -0.01430048
+##               ME RMSE MAE MPE MAPE
+## Training set NaN  NaN NaN NaN  NaN
 ```
+
 We will not focus on optimal prediction in this example, so these results are just fine for the purpose of illustration. The arima model can be used to predict the time series in the future analogously to the AR model:
 
 ```r
@@ -201,7 +203,7 @@ lines(arima_predict$pred + arima_predict$se, col = "grey")
 lines(arima_predict$pred - arima_predict$se, col = "grey")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-12-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-12-1.png)<!-- -->
 
 
 ### Finding the right parameters for ARIMA
@@ -246,6 +248,7 @@ summary(arima_ns)
 ##                     ACF1
 ## Training set -0.05493963
 ```
+
 Actually, the arima comes with d = 0 whic means that the data values is not differentiated (which is a tough choice).
 
 To better estimate the quality of the ARIMA, we can use some diagnostic plots:
@@ -254,7 +257,8 @@ To better estimate the quality of the ARIMA, we can use some diagnostic plots:
 tsdiag(arima_ns)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-15-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-15-1.png)<!-- -->
+
 The last plot shows test results if the residuals are independently distributed. For time lags larger 4, this is maybe not the case which indicates that the arima model is not really well specified.
 
 The forecast will look like this:
@@ -263,7 +267,7 @@ The forecast will look like this:
 plot(forecast(arima_ns))
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-16-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-16-1.png)<!-- -->
 
 If we allow a seasonal component, the results look like that:
 
@@ -295,10 +299,10 @@ summary(arima_s)
 tsdiag(arima_s)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-17-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-17-1.png)<!-- -->
 
 ```r
 plot(forecast(arima_s))
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-17-2.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-17-2.png)<!-- -->

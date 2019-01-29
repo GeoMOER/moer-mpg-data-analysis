@@ -14,7 +14,7 @@ tam$Date <- strptime(paste0(tam$Date, "010000"), format = "%Y%m%d%H%M", tz = "UT
 plot(tam$Date, tam$Ta, type = "l")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-2-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-03/unnamed-chunk-2-1.png)<!-- -->
 
 The major risk in time series clustering (or any other clustering) is that one clusters something which actually does not show any kind of groups. Hence, the most important part to remember is that a cluster algorithm will always identify clusters no matter if they are really "exist". As a consequence: never use clustering if you are not sure that there is a grouping in the data. In addition, clustering is generally applied if you have more than one time series from more than one location. 
 
@@ -78,6 +78,7 @@ tam_dist
 ## 2014         
 ## 2015 29.13347
 ```
+
 The resulting dissimilarity is larger if the different time series (i.e. years in this case) are less similar and smaller if they are more similar. This dissimillarity is now used for hirachical clustering which computes the distance between the individual samples. Plotting the result shows a cluster dendogram:
 
 ```r
@@ -86,7 +87,7 @@ plot(tam_hc)
 rect.hclust(tam_hc, k = 3)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-5-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-03/unnamed-chunk-5-1.png)<!-- -->
 
 Just for completness, if you want to derive a certain number of clusters from it, you can use the following for the visualization of the clustres or getting the respective group IDs. In this example, we derive three clusters:
 
@@ -95,7 +96,7 @@ plot(tam_hc)
 rect.hclust(tam_hc, k = 3)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-6-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-03/unnamed-chunk-6-1.png)<!-- -->
 
 ```r
 cutree(tam_hc, k = 3)

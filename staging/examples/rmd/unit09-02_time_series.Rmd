@@ -8,7 +8,7 @@ output:
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e09-01/')
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e09-02/')
 library(envimaR)
 root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/", 
                               alt_env_id = "COMPUTERNAME",
@@ -17,6 +17,7 @@ root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/",
 source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_environment.R"))
 
 ```
+
 While we had already got in contact with some temporal datasets, we did not have a closer formal look on time series analysis. Time series datasets often inhibit some kind of autocorrelation which is a no go for the models we have used so far. The first more formal contact with time series will therefore highlight these characteristics. The structure of this example follows Zuur et al. 2007 to a certain degree.
 
 To illustrate time series analysis, an air temperature record of the weather station in Coelbe (which is closest to the Marburg university forest) will be used. The data has been supplied by the German weatherservice [German weather service](ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/).
@@ -69,6 +70,7 @@ While one can have a look at the actual correlation values, a visualization is g
 ```{r, warning=FALSE}
 acf(dwd$LUFTTEMPERATUR, lag.max = 100)
 ```
+
 Since we have more than 80.000 values available, we can use a maximum lag of 100 although this is done mainly for illustration purposes. Obviously, we have highes correlations at lags of 24 (i.e the correlation between hourly temperatures is highest if the temperatures are meassured at the sime time of day). While this holds true, the absolute correlation decreases if the number of days between the observation increases. 
 
 Another example shows the auto-correlation of the monthly mean temperatures for which we define an aggregation variable like the one above but this time we include not only the month but also the year.
@@ -78,6 +80,7 @@ tam <- aggregate(dwd$LUFTTEMPERATUR, by = list(dwd$AGG_JM), FUN = mean)
 colnames(tam) <- c("Date", "Ta")
 acf(tam$Ta)
 ```
+
 Now the seasonal pattern becomse evident with negative correlations with a lag of arround 6 month (summer/winter, spring/autumn) and positive correlations with lags arround 12 month. The blue lines indicate the significance corresponding to a p value of 0.05 if normality can be assumed. The latter is generally the case for time series longer than 30 to 40 values for which the central limit theorem becomes effective. 
 
 Aside from the auto-correlation, we could also look at the partial auto-correlation. The difference between those is that in the partial auto-correlation, the correlation between time lag t=0 and e.g. time lag t=t+10 is computed in such a manner that the influence of the auto-correlations in between is eliminated. This leads to quite different results since e.g. if you have a strong auto-correlation with lag 5, than it is not surprising that t=0 is not only related to t=t+5 but also to t=t+5+5. The partial auto-correlation of the dataset looks like this:
@@ -91,6 +94,7 @@ One can also used test statistics like a Box-Pierce or Ljung-Box test:
 Box.test(tam$Ta, lag = 10, type = "Box-Pierce")
 Box.test(tam$Ta, lag = 10, type = "Ljung-Box")
 ```
+
 They both add up the correlation coefficients up to the given lag and compare them to a theoretical distribution.
 
 
@@ -101,6 +105,7 @@ colnames(rhm) <- c("Date", "rh")
 
 ccf(tam$Ta, rhm$rh)
 ```
+
 Similar. Air humidity is auto-correlated to air temperature. And this relationship is pretty much the same over all month (as you can find out if you still remember a plot type from the very begining of this course):
 ```{r, warning=FALSE}
 coplot(LUFTTEMPERATUR ~ REL_FEUCHTE | AGG_M, data = dwd)

@@ -8,7 +8,7 @@ output:
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e09-01/')
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e10-02/')
 library(envimaR)
 root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/", 
                               alt_env_id = "COMPUTERNAME",
@@ -43,6 +43,7 @@ spec <- spectrum(tam$Ta)
 plot(1/spec$freq, spec$spec, type = "h")
 1/spec$freq[spec$spe == max(spec$spec)]
 ```
+
 The frequency of 12 months dominates the spectral density.
 
 ### Decomposition of a time series
@@ -58,6 +59,7 @@ annual_trend <- zoo::rollapply(tam$Ta, 12, mean, align = "center", fill = NA)
 plot(tam$Date, tam$Ta, type = "l")
 lines(tam$Date, annual_trend, col = "red")
 ```
+
 The annual trend shows some fluctuations but it is certainly not very strong or even hardly different from zero.
 
 Once this trend is identified, we can substract it from the original time series in order to get a de-trended seasonal signal which will be averaged in a second step. The average of each  will finally form the seasonal signal:
@@ -68,6 +70,7 @@ seasonal_mean <- aggregate(seasonal, by = list(rep(seq(1,12), 9)),
 plot(tam$Date, seasonal, type = "l")
 lines(tam$Date, rep(seasonal_mean$x, 9), col = "blue")
 ```
+
 The blue line shows the average seasonal signal over the time series.
 
 The only thing remaining is the remainder, i.e. the component not explained by neither the trend nor the seasonal signal:

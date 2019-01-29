@@ -16,7 +16,7 @@ tam$Date <- strptime(paste0(tam$Date, "010000"), format = "%Y%m%d%H%M", tz = "UT
 plot(tam$Date, tam$Ta, type = "l")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-2-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-2-1.png)<!-- -->
 
 ### Seasonality of the time series
 The time series shows a clear seasonality. In this case, we know already that monthly mid-latitude temperature shows a seasonality of 12 month. In case we are not certain, we could also have a look at the spectrum using e.g. the ``spectrum`` functions which estimates the (seasonal) frequencies of a data set using an auto-regressive model. 
@@ -27,13 +27,13 @@ The smalest frequency which is checked is 1 divided by the length of the time se
 spec <- spectrum(tam$Ta)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-3-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-3-1.png)<!-- -->
 
 ```r
 plot(1/spec$freq, spec$spec, type = "h")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-3-2.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-3-2.png)<!-- -->
 
 ```r
 1/spec$freq[spec$spe == max(spec$spec)]
@@ -42,6 +42,7 @@ plot(1/spec$freq, spec$spec, type = "h")
 ```
 ## [1] 12
 ```
+
 The frequency of 12 months dominates the spectral density.
 
 ### Decomposition of a time series
@@ -59,7 +60,8 @@ plot(tam$Date, tam$Ta, type = "l")
 lines(tam$Date, annual_trend, col = "red")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-4-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-4-1.png)<!-- -->
+
 The annual trend shows some fluctuations but it is certainly not very strong or even hardly different from zero.
 
 Once this trend is identified, we can substract it from the original time series in order to get a de-trended seasonal signal which will be averaged in a second step. The average of each  will finally form the seasonal signal:
@@ -72,7 +74,8 @@ plot(tam$Date, seasonal, type = "l")
 lines(tam$Date, rep(seasonal_mean$x, 9), col = "blue")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-5-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-5-1.png)<!-- -->
+
 The blue line shows the average seasonal signal over the time series.
 
 The only thing remaining is the remainder, i.e. the component not explained by neither the trend nor the seasonal signal:
@@ -82,7 +85,7 @@ remainder <- tam$Ta - annual_trend - seasonal_mean$x
 plot(tam$Date, remainder, type = "l")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-6-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-6-1.png)<!-- -->
 
 As on can see, it is not auto-correlated:
 
@@ -90,7 +93,7 @@ As on can see, it is not auto-correlated:
 acf(remainder, na.action = na.pass)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-7-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-7-1.png)<!-- -->
 
 Alternatively to the workflow above, one could (and should) of course use existing functions, like ``decompose`` which handles the decomposition in one step. Since the functions requires a time series, this has to be done first. Remeber that the frequency parameter in the time series does not correspond to the seasonal component but to the number of sub-observations whithin each major time step (i.e. monthly values within annual major time steps in our case):
 
@@ -101,7 +104,7 @@ tam_ts_dec <- decompose(tam_ts)
 plot(tam_ts_dec$trend)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-8-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-8-1.png)<!-- -->
 
 While the above shows the plotting of the trend component, one can also plot everything in one plot:
 
@@ -109,7 +112,7 @@ While the above shows the plotting of the trend component, one can also plot eve
 plot(tam_ts_dec)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-9-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-9-1.png)<!-- -->
 
 
 But - again - it is not as static as it seems. While ``decompose`` computes the (annual/long-term) trend using a moving average, the ``stl`` function uses a loess smoother. Here's one realisation using "periodic" as the smoothing window, for which - according to the function description - "smoothing is effectively replaced by taking the mean" (the visualization shows the different long-term trends retrieved by the two approaches, there are more tuning parameters):
@@ -121,7 +124,7 @@ lines(tam_ts_stl$time.series[, 2], col = "blue")
 legend(2014, 9, c("decompose", "stl"), col = c("red", "blue"), lty=c(1,1))
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-10-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-10-1.png)<!-- -->
 
 The entire stl result would look like this:
 
@@ -129,7 +132,7 @@ The entire stl result would look like this:
 plot(tam_ts_stl)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-11-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-11-1.png)<!-- -->
 
 
 # Trend estimation
@@ -141,7 +144,7 @@ tam$Ta_ds <- tam$Ta - monthly_mean$x
 plot(tam$Date, tam$Ta_ds, type = "h")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-12-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-12-1.png)<!-- -->
 
 Once this is done, a linear model could be used. In this context, it is important to understand the meaning of the independent (i.e. time) variable. The following shows the slope of the trend per month since the time is just supplied as a sequence of natural numbers:
 
@@ -201,7 +204,7 @@ plot(ts, tam$Ta_ds, type = "l")
 abline(lmod, col = "red")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-14-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-14-1.png)<!-- -->
 
 A commonly used alternative or additional information is the Mann-Kendall trend which is a meassure of how often a time series dataset increases/decreases from one time step to the next. If you have a look in the literature, there is quite some discussion if and when the time series should be pre-whitened prior applying a Kendall test. For this example we follow [http://link.springer.com/chapter/10.1007%2F978-3-662-03167-4_2](von Storch(1995)) and use a auto-regression based pre-whitening for the time series. The Kendall trend can then be computed e.g. the ``Kendall::MannKendall`` function (but also e.g. ``cor`` - see the help of this function).
 
@@ -209,7 +212,7 @@ A commonly used alternative or additional information is the Mann-Kendall trend 
 acf_lag_01 <- acf(tam$Ta_ds)$acf[1]
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-15-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-15-1.png)<!-- -->
 
 ```r
 ta_ds_pw <- lapply(seq(2, length(tam$Ta_ds)), function(i){
@@ -221,7 +224,7 @@ plot(ta_ds_pw, type = "h")
 points(tam$Ta_ds, type = "h", col = "red")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-01/unnamed-chunk-15-2.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-15-2.png)<!-- -->
 
 ```r
 Kendall::MannKendall(ta_ds_pw)

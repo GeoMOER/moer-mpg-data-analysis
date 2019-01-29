@@ -1,5 +1,5 @@
 ---
-title: "Marked Assignment: Precipitatoin Forecast"
+title: "Unmarked Assignment: Precipitatoin Forecast"
 toc: true
 toc_label: In this worksheet
 ---
@@ -42,8 +42,7 @@ Save your Rmd file in your course repository, knitr it, update (i.e. commit) you
 You can of course use 6 lapply loops for iterating over the parameters or you can have a look at the expand.grid function which realizes any combination of the supplied parameters in a single data frame which can easily be used for this task.
 {: .notice--info}
 
-This assignment will be marked.
-{: .notice--info}
+
 
 
 

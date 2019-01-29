@@ -8,7 +8,7 @@ output:
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e09-01/')
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e10-03/')
 library(envimaR)
 root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/", 
                               alt_env_id = "COMPUTERNAME",
@@ -49,6 +49,7 @@ This matrix can subsequently be used to compute the dissimilarity between the in
 tam_dist <- TSclust::diss( tam_ta, "DTWARP", p=0.05)
 tam_dist
 ```
+
 The resulting dissimilarity is larger if the different time series (i.e. years in this case) are less similar and smaller if they are more similar. This dissimillarity is now used for hirachical clustering which computes the distance between the individual samples. Plotting the result shows a cluster dendogram:
 ```{r, warning=FALSE}
 tam_hc <- hclust(tam_dist)
