@@ -1,5 +1,5 @@
 ---
-title: "Date/time"
+title: "Example: Date/Time"
 toc: true
 toc_label: In this example
 ---

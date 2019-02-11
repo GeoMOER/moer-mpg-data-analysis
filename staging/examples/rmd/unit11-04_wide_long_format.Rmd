@@ -1,0 +1,75 @@
+---
+title: "Example: Wide and Long Format"
+author: "Thomas Nauss"
+date: "19 Oktober 2017"
+output: 
+  html_document: 
+    keep_md: yes
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e11-04/')
+```
+The following is a short note on converting wide to long format required e.g. for some lattice or ggplot visualizations. The following examples are based on the readily known data set showing the percentage fraction of settlement, recreational, agricultural, and forest areas for each rural district in Germany. The data has been provided through the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/).
+
+```{r, echo=FALSE, warning=FALSE}
+# Set path ---------------------------------------------------------------------
+library(envimaR)
+root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/", 
+                              alt_env_id = "COMPUTERNAME",
+                              alt_env_value = "PCRZP", 
+                              alt_env_root_folder = "F:\\BEN\\edu")
+source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_environment.R"))
+
+
+
+# Read csv file ----------------------------------------------------------------
+lu <- read.table(file.path(envrmt$path_csv, "AI001_gebiet_flaeche_bereinigt.csv"),
+                 header = TRUE, sep = " ", dec = ",")
+
+# Clean data -------------------------------------------------------------------
+# for(c in colnames(lu)[4:7]){
+# lu[, c][lu[, c] == "."] <- NA
+# lu[, c] <- as.numeric(sub(",", ".", as.character(lu[, c])))
+# }
+lu$value = as.numeric(as.character(lu$value))
+lu = dcast(lu, ID + Year + A + B + C ~ variable, value.var = "value")
+numc <- c("Settlement", "Recreation", "Agriculture", "Forest")
+library(latticeExtra)
+library(reshape2)
+```
+
+```{r, warning=FALSE, message = FALSE}
+library(latticeExtra)
+```
+
+
+We already know that a boxplot is probably the most fundamental way to perform a visual data exploration. Producing it is straight forward in generic plotting:
+Producing a boxplot is staright forward (the x-axis lables are just the column names):
+```{r, warning=FALSE}
+boxplot(lu[, c("Settlement", "Recreation", "Agriculture", "Forest")])
+```
+
+Producing a boxplot in lattice is not so staright forward as in generic plotting if you whish to have multiple variables shown in one plot. Before one can plot it, one has to transform the data into "long" format. In the case of our dataset, this implies to identify the ID variables (i.e. the ones who define the place and time of the measurement). After this is done, the long-format will duplicate them as often as it is required to fit in all values of the other columns (i.e. setellment, recreation, agriculture and forest) and add the respective values in a seperate column.
+
+That's what the data looks like in it's original format:
+```{r, warning=FALSE}
+head(lu)
+```
+
+And this is the data after conversion to long format using the ``reshape2::melt`` function:
+```{r, warning=FALSE}
+lul <- reshape2::melt(lu, id.vars = c("Year", "ID", "A", "B", "C"))
+head(lul)
+```
+
+Afterwards, the data can also be used e.g. for producing boxplots in lattice:
+```{r, warning=FALSE}
+bwplot(value ~ variable, data = lul)
+```
+
+Just in case, back to wide format.
+```{r, warning=FALSE}
+lul_wide_again = dcast(lul, ID + Year + A + B + C ~ variable, value.var = "value")
+head(lul)
+```

@@ -57,12 +57,11 @@ The course provides a basis for the parallel [Geo Information Systems](https://o
 | 08 | Predict your non-linear data | Generalized additive models |
 | 09 | T-6 and holding | Build-in hold to finish up the explanation sessions |
 | 10 | Predict your temporal data | Auto-correlation, AR and ARIMA models |
-| 11 |  Explain your temporal data | Decomposing time series |
+| 11 | Explain your temporal data | Decomposing time series |
 || **Visualization** ||
 | 12 | Visualize your data | Publication quality graphics |
-| 13 | Visualize your map data | Publication quality graphics |
 || **Wrap up** ||
-| 14 | Wrap up | Feedback, goodbye |
+| 13 | Wrap up | Feedback, goodbye |
 
 
 # Deliverables

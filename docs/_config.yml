@@ -125,6 +125,9 @@ collections:
   unit10:
     output: true
     permalink: /:collection/:title.html
+  unit11:
+    output: true
+    permalink: /:collection/:title.html
   worksheets:
     output: true
     permalink: /:collection/:title.html
@@ -238,6 +241,16 @@ defaults:
     values:
       category: "10 Analyse Time Series"
       tags: "Unit 10"
+      layout: single
+      sidebar:
+        nav: "units"         
+  # unit11
+  - scope:
+      path: ""
+      type: unit11
+    values:
+      category: "11 Publication quality graphics"
+      tags: "Unit 11"
       layout: single
       sidebar:
         nav: "units"         

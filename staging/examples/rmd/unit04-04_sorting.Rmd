@@ -1,5 +1,5 @@
 ---
-title: "Sorting"
+title: "Example: Sorting"
 author: "Thomas Nauss"
 date: "19 Oktober 2017"
 output: 
