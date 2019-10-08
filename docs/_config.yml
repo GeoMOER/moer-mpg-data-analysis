@@ -18,12 +18,16 @@
 
 ##### URL #####################################################################
 # Serve on OER
-url: "https://oer.uni-marburg.de"
-baseurl: "/data/mriliasmooc/lm_data/lm_2777"
+#url: "https://oer.uni-marburg.de"
+#baseurl: "/data/mriliasmooc/lm_data/lm_2777"
 
-# Serve on GitHub
+# Serve on GitHub (old)
 # url: https://marburg-open-courseware.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 # baseurl: "/moer-msc-data-analysis/"
+
+# Serve on GitHub
+url: https://geomoer.github.io
+baseurl: "/moer-mpg-data-analysis/"
 
 
 ##### Title ###################################################################
