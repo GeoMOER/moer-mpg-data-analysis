@@ -76,6 +76,8 @@ build-iPhoneSimulator/
 /.bundle/
 /vendor/bundle/
 /docs/vendor/
+/docs/.bundle/
+
 /lib/bundler/man/
 
 
