@@ -17,13 +17,9 @@
 
 
 ##### URL #####################################################################
-# Serve on OER
+# Serve on Ilias Uni Marburg OER
 url: "https://ilias.uni-marburg.de"
 baseurl: "/data/UNIMR/lm_data/lm_2287352"
-
-# Serve on GitHub (old)
-# url: https://marburg-open-courseware.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
-# baseurl: "/moer-msc-data-analysis/"
 
 # Serve on GitHub
 # url: https://geomoer.github.io
@@ -33,7 +29,7 @@ baseurl: "/data/UNIMR/lm_data/lm_2287352"
 ##### Title ###################################################################
 title: Lab of Environmental Informatics
 name: &name "Lab of Environmental Informatics" # &name is a YAML anchor which can be *referenced later
-email: nauss@geo.uni-marburg.de
+email: zeussd@uni-marburg.de
 description: >- # this means to ignore newlines until next item
   course course-materials geography remote-sensing marburg-open-educational-resource 
   physical-geography environmental-science nature-conservation r
@@ -44,35 +40,17 @@ twitter:
 
 ##### Lecturer settings #######################################################
 author:
-  name             : "Thomas Nauss"
-  avatar           : "/assets/images/tnauss.jpg"
-  bio              : "Marburg University"
+  name             : "Dirk Zeuss"
+  avatar           : "/assets/images/zeuss.jpg"
+  bio              : "University of Marburg"
   location         : "Marburg, DE"
-  email            : "nauss@geo.uni-marburg.de"
-  uri              : "https://www.uni-marburg.de/fb19/fachgebiete/umweltinformatik/"
-  home             : "https://www.uni-marburg.de/fb19/fachgebiete/umweltinformatik/nausst/index.html"
-  bitbucket        :
-  codepen          :
-  dribbble         :
+  email            : "dirk.zeuss@uni-marburg.de"
+  uri              : "https://www.uni-marburg.de/de/fb19/disciplines/physisch/umweltinformatik/umweltinformatik"
+  home             : "https://www.uni-marburg.de/de/fb19/disciplines/physisch/umweltinformatik/umweltinformatik"
+  researchgate     : "https://www.researchgate.net/profile/Dirk_Zeuss/stats" # to be included some day
   flickr           : "https://www.flickr.com/environmentalinformatics-marburg/"
-  facebook         : "https://www.facebook.com/GeographieMarburg/"
-  foursquare       :
   github           : "GeoMOER"
-  gitlab           :
-  google_plus      :
-  keybase          :
-  instagram        : 
-  lastfm           :
-  linkedin         :
-  pinterest        :
-  soundcloud       :
-  stackoverflow    : 
-  steam            :
-  tumblr           :
   twitter          : "https://twitter.com/geographie_umr"
-  vine             :
-  weibo            :
-  xing             :
   youtube          : "https://www.youtube.com/channel/UCGiwSv5KYjsNXl6-nZq0SDA"
 
 

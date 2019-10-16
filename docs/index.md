@@ -11,7 +11,7 @@ header:
   cta_url: "/units.html"
 excerpt: Handle geo-datasets, use R for data analysis and visualization, train models and estimate errors, and use GitHub for comprehensive documentation and task management.
 feature_row_intro:
-- excerpt: Master level course in [Physical Geography](https://www.uni-marburg.de/fb19/studium/studiengaenge/msc-phygeo) at Marburg University
+- excerpt: Master level course in [Physical Geography](https://www.uni-marburg.de/de/fb19/studium/studiengaenge/m-sc-physische-geographie/herzlich-willkommen-beim-master-physische-geographie){:target="_blank"} at Marburg University
 feature_row_ilos:
 - image_path: "/assets/images/envobs_ilos.jpg"
   alt: PC monitor laying in the garden of the institute.
@@ -26,17 +26,17 @@ Data analysis is a key competence of professional geographers but it requires pr
 Data analysis requires a variety of skills related to the organizing, handling, analyzing and describing a diversity of datasets. Using R this course will not just open the door to a cosmos of data analysis functionality but also provide a domain specific and flexible (also not really ideal) tool for workflow automation.
 
 # Intended learning outcomes
-At the end of this course you should be able
+At the end of this course you should be able to
   
-* to organize a variety of datasets and (intermediate) analysis results in structured fashion,
-* to document your workflow in an understandable and transparent manner, collaborate in teams and handle issues and task management using Git and GitHub as software management tool and plattform,
-* to implement data analysis workflows using tailored R scripts along with readily available functions from third-party R packages,
-* to model relationships between data variables and calculate reliable error estimates,
-* to critically evaluate your analysis.
+* organize a variety of datasets and (intermediate) analysis results in structured fashion,
+* document your workflow in an understandable and transparent manner, collaborate in teams and handle issues and task management using Git and GitHub as software management tool and plattform,
+* implement data analysis workflows using tailored R scripts along with readily available functions from third-party R packages,
+* model relationships between data variables and calculate reliable error estimates, and to
+* critically evaluate your analysis.
 
 # Course features
 
-The course provides a basis for the parallel [Geo Information Systems](https://oer.uni-marburg.de/goto.php?target=crs_327&client_id=mriliasmooc){:target="_blank"} and [Remote Sensing](https://oer.uni-marburg.de/goto.php?target=crs_326&client_id=mriliasmooc){:target="_blank"} courses. It is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
+The course provides a basis for the parallel [Geo Information Systems](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2092236/index.html){:target="_blank"} and [Remote Sensing](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2285471/index.html){:target="_blank"} courses. It is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
 
 
 
@@ -60,8 +60,10 @@ The course provides a basis for the parallel [Geo Information Systems](https://o
 | 11 | Explain your temporal data | Decomposing time series |
 || **Visualization** ||
 | 12 | Visualize your data | Publication quality graphics |
+|| **Evaluation** ||
+| 13 | Evaluation | Official course evaluation session |
 || **Wrap up** ||
-| 13 | Wrap up | Feedback, goodbye |
+| 14 | Wrap up | Time for questions, specific data analysis problems, goodbye |
 
 
 # Deliverables
