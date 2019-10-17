@@ -19,4 +19,5 @@ To learn more about Git and GitHub, some starting points are
   * [GitHub learning lab](https://lab.github.com/){:target="_blank"}
   
  
-If you are more traditional, you could also start with the original [Git getting started guide at git-scm.com](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control){:target="_blank"}. 
+If you are more traditional, you could also start with the original [Git getting started guide at git-scm.com](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control){:target="_blank"}
+ or with this [paper published in PLOS Computational Biology](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004668){:target="_blank"}. 
