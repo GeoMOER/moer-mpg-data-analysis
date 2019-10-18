@@ -2,7 +2,8 @@
 title: Git and GitHub
 ---
 
-To start with a clarification, again: Git is the version control system you will use in this course (and which is used by many other developers). With Git you will manage something called repository which is the place where you manage your software project (i.e. a folder on your hard disk per project). GitHub is an online software development platform which provides online hosted versions of your local Git repositories and much more collaborative functionality. 
+To start with a clarification: Git is the version control system you will use in this course (and which is used by many other developers all around the world). 
+With Git you will manage something called *repository* which is the place where you manage your software project (i.e. a folder on your hard disk per project). GitHub is an online software development platform which provides online hosted versions of your local Git repositories and much more collaborative functionality. 
 
 ## Some GitHub advertisement
 

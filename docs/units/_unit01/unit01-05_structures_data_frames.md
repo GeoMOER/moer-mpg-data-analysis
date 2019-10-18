@@ -8,7 +8,7 @@ toc_label: In this example
 Data frames are one of the most heavily used data structures in R.
 
 ## Creation of a data frame
-A data frame is created from scratch by supplying vectors to the the `data.frame`
+A data frame is created from scratch by supplying vectors to the `data.frame`
 function. Here are some examples:
 
 ```r
@@ -40,8 +40,7 @@ my_other_df
 ```
 The `colnames` function allows to supply column names to an existing data
 frame. Alternatively, the column names can be set within the `data.frame` 
-function by assign the vector elements to a variable (X and Y in the
-second example above).
+function by assign the vector elements to a variable (capital X and Y in the example above).
 
 
 ## Dimensions of a data frame
@@ -73,10 +72,13 @@ str(my_other_df)
 ##  $ X: num  2 3 4
 ##  $ Y: Factor w/ 3 levels "A","B","C": 1 2 3
 ```
+
+
 ## Displaying and accessing the content of a data frame
+
 The content of a data frame is accessed by either a position information 
 given in square brackets (e.g. `df[3,4]`) or a column name given after a $ sign
-(e.g. df$columnName). Here's an example:
+(e.g. `df$columnName`). Here is an example:
 
 
 
@@ -118,18 +120,18 @@ Higher dimensions follow the same logic.
 
 Here are some possible combinations:
 
- * Single row, all columns: `df[x,]` with $x \in \text{number of rows}$
- * Single column, all rows: `df[,y]` with $x \in \text{number of columns}$
- * Single row and column: `df[x,y]` with $x, y \in \text{number of rows, columns}$
- * All except one row, all columns: `df[-x,y]` with $x \in \text{number of rows}$
- * Selected rows, all columns: `df[c(x1, x2, x3),]` with $x1, x2, x3 \in \text{number of rows}$
- * Continous rows, all columns: `df[c(x1:x2),]` with $x1, x2 \in \text{number of rows}$
+ * Single row, all columns: `df[x,]`                <!--with $x \in \text{number of rows}$ IMPLEMENT LATEX MATH TO JEKYLL -->
+ * Single column, all rows: `df[,y]`                <!--with $x \in \text{number of columns}$ -->
+ * Single row and column: `df[x,y]`                 <!--with $x, y \in \text{number of rows, columns}$ -->
+ * All except one row, all columns: `df[-x,y]`      <!--with $x \in \text{number of rows}$ -->
+ * Selected rows, all columns: `df[c(x1, x2, x3),]` <!--with $x1, x2, x3 \in \text{number of rows}$ -->
+ * Continous rows, all columns: `df[c(x1:x2),]`     <!--with $x1, x2 \in \text{number of rows}$ -->
 
-In summary, dimensions like rows or columns that should be selected have positive 
-numbers, such that should be hidden have negative numbers and if all entries of
-a dimension should be selected, one just leaves the field empty. If more than
-one dimension should be shown/hidden, one has to supply this information by a 
-vector which is defined by the `c` function.
+In summary, dimensions like rows or columns which should be selected have positive 
+numbers, dimensions that should be hidden have negative numbers, and if all entries of
+a dimension should be selected one just leaves the field empty. If more than
+one dimension should be shown or hidden, one has to supply these information with a 
+vector defined by the `c` function.
 
 
 ```r
@@ -152,9 +154,9 @@ my_other_df[c(1,2),]  # Shows rows 1 to 2
 ## 2 3 B
 ```
 
-If you are interested in the first or last rows, you can also use the 'head' or
-'tail' command. The default number of lines is 5 but this can be changed by the
-second argument. Let's have a look at the first two rows:
+If you are interested in the first or last rows, you can also use the `head` or
+`tail` functions. The default number of lines to be displayed is five but this can be changed with the
+second argument. Let us have a look at the first two rows:
 
 ```r
 head(my_other_df, 2)
@@ -184,7 +186,7 @@ vectors like rows or columns), you have to access it following the logic above.
 To add or delete a column, you have to supply/remove a vector to the specified
 position.
 
-Other (more individual) changes or adding rows will be covered later. 
+Other more specific changes will be covered later. 
 
 ```r
 # overwrite an element

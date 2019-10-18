@@ -8,7 +8,7 @@ toc_label: In this example
 
 Vectors are the basis for many data types in R.
 
-## Createing a vector
+## Creating a vector
 A vector is created using the `c` function. Here are some examples:
 
 ```r
@@ -62,8 +62,8 @@ length(my_vector)
 ```
 
 ## Displaying and accessing the content of a vector
-In order access the value(s) of a vector, you have to supply the 
-position of the element in the vector within square brackets. Please note that
+In order to access the value(s) of a vector, you have to supply the 
+position of the element within the vector in square brackets. Please note that
 indexing starts with 1:
 
 ```r
@@ -96,7 +96,7 @@ To overwrite an element, you have to access
 it following the logic above. To add an element, you have to cut the existing 
 vector at the specified position and insert it. The result must be stored in
 a new variable (it will be new, even if you name it like the existing one). 
-The same structure applies for deleting an element which is the same as combining
+The same structure applies for deleting an element what is the same as combining
 the part of the vector before and after the value which should be deleted:
 
 ```r

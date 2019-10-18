@@ -5,9 +5,9 @@ toc_label: In this info
 ---
 
 ## A note on individual learning log assignments with GitHub
-Within this course, you will individually submit your personal solutions for the course assignments to your personal GitHub-hosted learning log, i.e. your personal classroom repository. Don't get confused about "your personal repository". Once you have a GitHub account, you can create as many repositories as you like at your account but for assignments within our courses, always use your respective classroom repository.  
+Within this course, you will individually submit your personal solutions for the course assignments to your personal GitHub-hosted learning log, i.e. your personal classroom repository. Don't get confused about "your personal repository". Once you have a GitHub account, you can create as many repositories as you like at your account, but for assignments within our courses always use your respective classroom repository.  
 
-The classroom repository will be created automatically by following a link to the respective classroom assignment which will be provided by the instructors. Your classroom repository will be hosted as part of GeoMOER, our learning log space at GitHub for Marburg Open Educational Ressources.
+The classroom repository will be created automatically by following a link to the respective classroom assignment which will be provided by the instructors. Your classroom repository will be hosted as part of GeoMOER, our learning log space at GitHub for Marburg Open Educational Resources.
 
 If not stated otherwise, the deadline for an assignment is the date and time of the next course session. The submissions generally encompass R or R markdown with compiled html files.
 
@@ -49,5 +49,5 @@ Be aware that your git repository will ignore folders as long as there are no fi
 Do not use any spaces within your folder or filenames until you become an expert. **At no time**. **Never**. 
 {: .notice--danger}
 
-Be aware that a proper organization of the data is the basis for re-use of your data and code and reproducibility of your analysis. See this R-bloggers contribution by Matt.0 and references therein on [the "gold standard" of data science project management](https://www.r-bloggers.com/the-gold-standard-of-data-science-project-management/){:target="_blank"} (also there might not such a thing as *one* gold standard).
+Be aware that a proper organization of the data is the basis for re-use of your data and code as well as for the reproducibility of your analysis. See this R-bloggers contribution by Matt.0 and references therein on [the "gold standard" of data science project management](https://www.r-bloggers.com/the-gold-standard-of-data-science-project-management/){:target="_blank"} (although there might not be such a thing as *one* gold standard).
 

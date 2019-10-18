@@ -1,5 +1,5 @@
 ---
-title: Select you variables
+title: Select your variables
 ---
 
 Evaluate the importance of your independent variables and select an optimal subset for your prediction model.

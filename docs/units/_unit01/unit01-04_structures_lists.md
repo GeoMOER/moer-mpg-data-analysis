@@ -7,8 +7,8 @@ toc_label: In this example
 
 Lists are one of the most flexible data structures in R.
 
-## Creation of a lilst
-A list is create using the `list` function. Here are some examples:
+## Creation of a list
+A list is created with the `list` function. Here are some examples:
 
 ```r
 my_list_1 <- list(c(1,2,3,4,5))
@@ -49,7 +49,7 @@ my_list_3
 ## [[2]]$y
 ## [1]  5 10
 ```
-List can also be structured (i.e. lists in lists) which looks like that:
+Lists can also be structured (i.e. lists in lists) which looks like that:
 
 ```r
 my_list_4 <- list(c(1,2,3,4,5), c("A", "B", "C"))
@@ -66,7 +66,7 @@ my_list_4
 
 
 ## Structure of a list
-To get the lenght of a list, use the `length` function as for vectors. For 
+To get the length of a list, use the `length` function as for vectors. For 
 information on the structure, use the `str` function:
 
 ```r
@@ -191,5 +191,6 @@ my_list
 ## [[1]]
 ## [1] 1 2 3 4 5
 ```
-For more information have a look at e.g. the respective [data type](http://www.statmethods.net/input/datatypes.html){:target="_blank"} site at Quick R. There you will also find an overview on how to get [information about an object](http://www.statmethods.net/input/contents.html){:target="_blank"}. 
+For more information have a look at e.g. the respective [data type](http://www.statmethods.net/input/datatypes.html){:target="_blank"} 
+site at Quick R. There you will also find an overview of how to get [information about an object](http://www.statmethods.net/input/contents.html){:target="_blank"}. 
 Of course, looking into the package documentation or search the web is always a good idea, too.

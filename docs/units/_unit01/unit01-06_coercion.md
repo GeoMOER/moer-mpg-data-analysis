@@ -1,12 +1,13 @@
 ---
-title: "Example: Coercing Data Types"
+title: "Example: Coercion"
 toc: true
 toc_label: In this example
 ---
 
+## Data types
 
-Coerting data elements into one of the basic R data types is straight forward.
-Just add "as." to the data type and you have the name of the respective function.
+Coercion of data elements into one of the basic R data types is straight forward.
+Just add "as." to the data type to obtain the respective function.
 
 ```r
 x <- c(1.4, 2.5, 3.6, 4.0)
@@ -43,6 +44,9 @@ as.factor(x)
 ```
 Please note that the `as.integer` function returns the floor of the floating
 point values and does not apply any rounding rules.
+
+
+## Data structures
 
 So far, we have differentiated between data types and structures. Actually, a
 vector, list or data frame is nothing but another data type and the same logic of
