@@ -18,12 +18,12 @@
 
 ##### URL #####################################################################
 # Serve on Ilias Uni Marburg OER
-url: "https://ilias.uni-marburg.de"
-baseurl: "/data/UNIMR/lm_data/lm_2287352"
+#url: "https://ilias.uni-marburg.de"
+#baseurl: "/data/UNIMR/lm_data/lm_2287352"
 
 # Serve on GitHub
-# url: https://geomoer.github.io
-# baseurl: "/moer-mpg-data-analysis/"
+url: https://geomoer.github.io
+baseurl: "/moer-mpg-data-analysis/"
 
 
 ##### Title ###################################################################
