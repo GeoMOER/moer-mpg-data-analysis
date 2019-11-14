@@ -5,13 +5,13 @@ title: Operators
 Control structures require logical or maybe also boolean operators which test simple relationships between two or more variables. Depending on the test results, control structures can be used to decide how the program should go on.
 
 ### Logical operators
-The basis for deciding between different options during runtime are logical operators. Such operators compare two variables and return *true* or *false* depending on the result of the comparison
+The basis for deciding between different options during runtime are logical operators. Such operators compare two variables and return *true* or *false* depending on the result of the comparison.
 
 The following logical operators are commonly used:
 * x < y: test if x is smaller than y
 * x > y: test if x is larger than y
 * x == y: test if x is exactly equal to y
-* x >= y: test if x is larger or egual than y
+* x >= y: test if x is larger or equal than y
 * x <= y: test if x is smaller or equal than y
 * x != y: test if x is not equal to y
 

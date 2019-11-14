@@ -2,7 +2,7 @@
 title: First Things First
 ---
 
-Go through a brute force introduction into R, R markdown, the RStudio IDE, version management with Git and GitHub's classroom functionality to get ready for solving the upcoming assignment problems and submitting your solutions.
+Go through a brute force introduction into R, R Markdown, the RStudio IDE, version management with Git and GitHub's classroom functionality to get ready for solving the upcoming assignment problems and submitting your solutions.
 
 <!--more-->
 
