@@ -30,7 +30,7 @@ plot(ind, dep)
 lmod <- lm(dep ~ ind) # Compute linear regression model
 
 regLine(lmod, col = "red") # Add regression line to plot (requires car package)
-text(10, 16, bquote(paste("y"["i"], " = ", .(round(lmod$coefficients[1], 3)), 
+text(10, 6, bquote(paste("y"["i"], " = ", .(round(lmod$coefficients[1], 3)), 
                           " + ", .(round(lmod$coefficients[2], 3)), "* x"["i"])))
 ```
 
@@ -55,7 +55,7 @@ The associated variances are:
 
 Together, model and residual variance equals the total variance. 
 
-Commonly, all variances are squared and summed up over all observations which gives us the sum of squares observed (or total), the sum of squares of the model and the sum of squares of residuals.
+Commonly, all variances are squared and summed up over all observations which gives us the _sum of squares_ observed (or total), the sum of squares of the model and the sum of squares of residuals.
 
 In order to calculate the variances, one can use the lm class of the model since - among others - it contains the original independent and dependent values as well as the predicted ones.
 
@@ -193,7 +193,7 @@ ss_model / ss_obsrv
 ```
 
 ### Finished?
-Well, the above looks like a real good example of linear regression analysis, right? And the r square of about 0.67 is also quite OK not to mentino the significance of the independent variable.
+Well, the above looks like a real good example of linear regression analysis, right? And the r square of about 0.67 is also quite OK not to mention the significance of the independent variable.
 
 Before we clap our hands, let's just have a look at the other variable combinations of the Anscombe data set.
 

@@ -6,7 +6,7 @@ toc_label: In this worksheet
 
 This worksheet revisits the settlement vs. recreation model and compares to which degree the results describing the performance of the model differ between the "internal" model evaluation and a test against independent samples.
 
-After completing this worksheet you should have gained some experience in applying cross-validation for estimating the model performance.
+After completing this worksheet you should have gained some experience in applying cross-validation for estimating the performance of a model.
 
 
 
@@ -18,9 +18,8 @@ After completing this worksheet you should have gained some experience in applyi
 
 
 ## Prediction error of a linear model
-Please write an R markdown script which helps you to statistically evaluate the performance of a simple linear model that predicts the percentage recreation area from the respective settlement area. Therefore, please choose an appropriate cross-validation procedure. The procedure should be implemented as a function. Include a plot in the end that provides information on the distribution of the root mean square error across the different cross-validation runs.
-
-Knitr your Rmd file, update (i.e. commit) it in and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your git repository.
+Please write an R markdown script which helps you to statistically evaluate the performance of a simple linear model that predicts the percentage recreation area from the respective settlement area. Therefore, please choose an appropriate cross-validation procedure. The procedure should be implemented as a function. 
+Include a plot in the end that provides information on the distribution of the root mean squared error across the different cross-validation runs.
 
 Please write exactly one sentence which summarizes the reliability of the model.
 

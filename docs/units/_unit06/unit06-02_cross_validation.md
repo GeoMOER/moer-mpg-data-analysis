@@ -4,14 +4,27 @@ toc: true
 toc_label: In this example
 ---
 
-Test statistics can describe the quality or accuracy of regression models if the assumptions of the models are met. However, the assessment would still be based on a model that is perfectly fitted to a given sample. To assess the prediction performance of a model in a more independent manner, the accuracy must be computed based on an independent (sub)-sample.
+Test statistics can describe the quality or accuracy of regression models if the assumptions of the models are met. 
+However, the assessment would still be based on a model that is perfectly fitted to a given sample. 
+To assess the prediction performance of a model in a more independent manner, the accuracy must be computed based on an independent (sub)-sample.
 
-The straight-forward way for a test on an independent sample is of course the one which actually fits the model on sample 1 and tests it on a completely different sample 2. However, in real-world applications, the required sample size is not givin in many cases. Therefore, cross-validation - althgough not entierly independent - is a good alternative to get an idea of the model performance for data values which have not been part of the model fitting. In principal, there are to strategies for cross-validation:
+The straight-forward way for a test on an independent sample is of course the one which actually fits the model on sample _A_ and tests it on a completely different sample _B_. 
+However, in real-world applications, the required sample size is not sufficient in many cases. 
+Therefore, cross-validation - althgough not entierly independent - is a good alternative to get an idea of the model performance for data values which have not been part of the fitted model. 
 
-* Leave-one-out cross-validation: in this case, one value pair of the sample data set is left out during the model fitting and the model accuracy is estimated based on the quality of the prediction of the left-out value. In order to get a sufficient sample size, this procedure is iterated over all value pairs of the data set (i.e. each value is left out once).
-* Leave-many-out cross-validation: in this case, more than one value pair of the sample data set is left out during the model fitting and the model accuracy is estimated based on the quality of the prediction of the left-out samples. This strategy is good for larger data sets, where e.g. 80% of the data can be used as training data for fitting the and 20% can be used as independent validation data. The procedure could of course be repeated by creating different training data sets by chance and testing them using the respective left-out samples. Please note that in the latter case, the independency is compromised to a small degree. On the other hand, one get's a better impression of the model performance especially if the different validation data sets are not averaged but used independently in order to get an idea of the performance variation.
+In principal, there are two strategies for cross-validation:
 
-To illustrate this concept, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) and use the variables x1 and y1 as independent and dependent variables.
+* **Leave-one-out cross-validation**: in this case, one value pair or data point of the sample data set is left out during model fitting and the model accuracy is estimated based on the quality of the prediction for the left-out value. 
+In order to obtain a sufficiently large sample size, this procedure is iterated over all value pairs of the data set (i.e. each data point is left out once).
+
+* **Leave-many-out cross-validation**: in this case, more than one value pair or data point of the sample data set is left out during model fitting and the model accuracy is estimated based on the quality of the prediction for the left-out samples. 
+This strategy is suitable for larger data sets, in which e.g. 80% of the data can be used as training data for fitting and 20% can be used as independent data for validation. 
+The procedure can of course be repeated by creating models for different random training data sets and testing them using the respective left-out samples. 
+Please note that independency is compromised to a small degree in the latter case. 
+On the other hand, one can get a better impression of the model performance, especially if the different validation data sets are not averaged but used independently for geting an idea of the _variation_ of the performance.
+
+To illustrate the concept of cross-validation, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html){:target='_blank'} 
+and use `x1` and `y1` as independent and dependent variable, respectively.
 
 The statistics of a linear regression model would be:
 
@@ -64,7 +77,7 @@ summary(lmod)
 ## F-statistic: 17.99 on 1 and 9 DF,  p-value: 0.00217
 ```
 
-### Leave-one-out cross-validation
+## Leave-one-out cross-validation
 For the leave-one-out cross-validation, the training sample is comprised by all but one value pairs of the data set and the left-out data pair is used as validation sample. The procedure is typically iterated over the entire data set, i.e. each value is left-out once.
 
 ```r
@@ -94,13 +107,14 @@ plot(cv$obsv, (cv$obsv - cv$pred))
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-2-1.png)<!-- -->
 
-Based on the above computation, one could compute something like the F value also used within the anova and estimate an r square. As compared to the "internal" F test of the anove from the original model and the r square, the cross-validation indicates a less accurate prediction.
+Based on this example, one could compute something like the F and r-squared values of an anova. 
+Notably, compared to the "internal" F-test of the anova from the original model and the r-squared value, the cross-validation indicates a less accurate prediction.
 
 ```r
 data.frame(NAME = c("cross-validation F value",
                     "linear model F value", 
-                    "cross-validatino r squared",
-                    "lienar model r squared"),
+                    "cross-validation r squared",
+                    "linear model r squared"),
            VALUE = c(round(mss_model / mss_resid, 2),
                      round(anova(lmod)$'F value'[1], 2),
                      round(1 - ss_resid / ss_obsrv, 2),
@@ -111,20 +125,21 @@ data.frame(NAME = c("cross-validation F value",
 ##                         NAME VALUE
 ## 1   cross-validation F value 12.43
 ## 2       linear model F value 17.99
-## 3 cross-validatino r squared  0.50
-## 4     lienar model r squared  0.67
+## 3 cross-validation r squared  0.50
+## 4     linear model r squared  0.67
 ```
+
+The range of r-squared values from the individual cross-validation models is computed by 
 
 ```r
-print("Range of r squared from the individual models computed in the cv:")
-```
-
-```
-## [1] "Range of r squared from the individual models computed in the cv:"
-```
-
-```r
+max(cv$model_r_squared) - min(cv$model_r_squared)
 summary(cv$model_r_squared)
+```
+
+and yields
+
+```
+## 0.219664
 ```
 
 ```
@@ -132,7 +147,7 @@ summary(cv$model_r_squared)
 ##  0.5640  0.6482  0.6640  0.6668  0.6915  0.7836
 ```
 
-Aside from that, a variety of different errors is commonly used to describe the predictive performance of the model (for regression based approaches):
+Aside from this error metric, a variety of different error metrics is commonly used to describe the predictive performance of a model (for regression-based approaches):
 
 ```r
 se <- function(x) sd(x, na.rm = TRUE)/sqrt(length(na.exclude(x)))
@@ -163,8 +178,9 @@ data.frame(NAME = c("Mean error (ME)", "Std. error of ME",
 ```
 
 
-### Leave-many-out cross-validation
-For the leave-many-out cross-validation, the following example computes 100 different models. For each model, a training sample of 80% of the data set is choosen randomly.
+
+## Leave-many-out cross-validation
+For the leave-many-out cross-validation, the following example computes 100 different models. For each model, a training sample of 80% of the data set is randomly chosen.
 
 
 ```r
@@ -179,7 +195,7 @@ cv_sample <- lapply(seq(100), function(i){
   lmod <- lm(y1 ~ x1, data = train)
   pred <- predict(lmod, newdata = test)
   obsv <- test$y1
-  resid <- obsv-pred
+  resid <- obsv - pred
   ss_obsrv <- sum((obsv - mean(obsv))**2)
   ss_model <- sum((pred - mean(obsv))**2)
   ss_resid <- sum((obsv - pred)**2)
@@ -209,13 +225,13 @@ mss_model <- ss_model / 1
 mss_resid <- ss_resid / (length(cv_sample$obsv) - 2)
 ```
 
-Again, an overview of other errors used to descirbe the prediction performance:
+Other error metrics for describing the performance of the prediction:
 
 ```r
 data.frame(NAME = c("cross-validation F value",
                     "linear model F value", 
-                    "cross-validatino r squared",
-                    "lienar model r squared"),
+                    "cross-validation r squared",
+                    "linear model r squared"),
            VALUE = c(round(mss_model / mss_resid, 2),
                      round(anova(lmod)$'F value'[1], 2),
                      round(1 - ss_resid / ss_obsrv, 2),
@@ -226,26 +242,28 @@ data.frame(NAME = c("cross-validation F value",
 ##                         NAME  VALUE
 ## 1   cross-validation F value 403.81
 ## 2       linear model F value  17.99
-## 3 cross-validatino r squared   0.48
-## 4     lienar model r squared   0.67
+## 3 cross-validation r squared   0.48
+## 4     linear model r squared   0.67
 ```
+
+
+<!--
+Das ist seltsam hier und sollte gecheckt werden. Warmum gibt es r-squareds > 1 in cv_sample$r_squared?
+
+The range of r-squared values from the individual cross-validation models is computed by 
 
 ```r
-print("Range of r squared from the individual models computed in the cv:")
-```
-
-```
-## [1] "Range of r squared from the individual models computed in the cv:"
-```
-
-```r
-summary(cv$model_r_squared)
-```
-
+max(cv_sample$r_squared) - min(cv_sample$r_squared)
+summary(cv_sample$r_squared)
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.5640  0.6482  0.6640  0.6668  0.6915  0.7836
 ```
+```
+-->
+
+
+
 
 Aside from that, a variety of different errors is commonly used to describe the predictive performance of the model (for regression based approaches):
 
