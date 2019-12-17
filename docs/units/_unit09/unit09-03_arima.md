@@ -4,9 +4,10 @@ toc: true
 toc_label: In this example
 ---
 
-Time-series analysis can generally be divided into forecasting future dynamics or describing and potentially explaining past patterns. Since the later often requires continous i.e. gap-free observations, we start with a simple forecasting procedure which can also be used for gap-filling in some cases.
+Time-series analyses can generally be divided into forecasting future dynamics and describing and potentially explaining past patterns. 
+Since the later often requires continuous i.e. gap-free observations, we start with a simple forecasting procedure which can also be used for gap-filling in some cases.
 
-To illustrate the forecasting, we will again use the (mean monthly) air temperature record of the weather station in Coelbe (which is closest to the Marburg university forest). The data has been supplied by the German weatherservice [German weather service](ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/). 
+To illustrate forecasting, we will again use the (mean monthly) air temperature records of the weather station in Coelbe (which is closest to the Marburg university forest). The data has been supplied by the [German Weather Service](ftp://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}. 
 
 
 
@@ -26,7 +27,9 @@ head(tam)
 ```
 
 ### Auto-regressive and moving average models for predicting time series
-In order to predict the time series just based on its observed dynamics, an auto-regressive inegrated moving average model (ARIMA) can be used. ARIMA is not a diagnostic model for the identification e.g. of seasonal components etc. On the contrary, it requires a stationary time series which we alread know is not the case for the monthly mean air temperature values between July 1st 2006 and December 31st 2015. 
+In order to predict the time series just based on its observed dynamics, an auto-regressive integrated moving average model (ARIMA) can be used. 
+ARIMA is not a diagnostic model for the identification of seasonal or other periodic components. 
+On the contrary, it requires a stationary time series, which is a prerequisite we already know is not true for the monthly mean air temperature values between July 1st 2006 and December 31st 2015. 
 
 ```r
 acf(tam$Ta)
@@ -35,7 +38,9 @@ acf(tam$Ta)
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-3-1.png)<!-- -->
 
 ### Auto-regressive models (AR)
-While we can start with detrending and de-seasoning now, let's try a quick-and-dirty approach first and postbone the time series decomposition to the next sessiong. One thing one could try is to use not the original values but the difference between the consecutive value pairs (i.e. the difference between time t and t+1 etc.). And if one difference is not enough, we can compute the difference of the differences and the auto-correlation behaviour would look like that:
+While we can start with de-trending and de-seasoning now, let us try a quick-and-dirty approach first and postpone the time series decomposition to the next session. 
+One thing one could try is to not use the original values but the difference between the consecutive value pairs (i.e. the difference between time t and t+1 etc.). 
+And if one difference is not enough, we can compute the differences of the differences and the auto-correlation behaviour would look like that:
 
 ```r
 dTa <- diff(diff(tam$Ta))
@@ -44,7 +49,7 @@ acf(dTa)
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-4-1.png)<!-- -->
 
-Not perfect but good enough to be used in this example. Before we run the ARIMA, we run a simple auto-regressive (AR) model first:
+Not perfect but good enough to be used in this example. Before we run the ARIMA model, we run a simple AR model first:
 
 ```r
 armod <- ar(dTa, aic = TRUE, order.max = 20, method = "yule-walker")
@@ -65,7 +70,7 @@ armod
 ## Order selected 10  sigma^2 estimated as  8.501
 ```
 
-The ``ar`` function computes an AR Model and iterates over the lags to be included in the linear equation which predicts the monthly air temperature value for time t based on its value at time t-1, t-2, .... 
+The ``ar`` function computes an AR model and iterates over the lags to be included in the linear equation which predicts the monthly air temperature values for time t based on its value at time t-1, t-2, and so on.
 
 The maximum number of lags (within a maximum of 20 as provided to the function) is determined based on an internal estimate of the AIC parameter. The number of lags with the minimum AIC are used:
 
@@ -75,12 +80,14 @@ plot(0:20, armod$aic, type = "o")
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-6-1.png)<!-- -->
 
-Using the Yule-Walker method for estimating the AR parameters, a maximum lag of 10 is considered. Although the results will be quite different, if another method is used and although the following is of no use if one actually wants to use not just an auto-regressive (AR) or a moving average model (MA) but an ARIMA, a rule of thump states that if
+Using the Yule-Walker method for estimating the AR parameters, a maximum lag of 10 is considered. 
+Although the results will be quite different if another method is used and although the following is of no use if one actually wants to use not just an AR or a MA but an ARIMA model, a rule of thumb states that if
 
 * the auto-correlation function declines exponentially or shows a sinus pattern and
 * the partial auto-correlation function shows only p significant lags in the beginning,
 
-an AR(p) model (i.e. an AR model with p considered lags) is a good starting point. For moving average models it is vice versa and the lags q considered in the model would be taken from the auto-correlation function. In the auto- and partial auto-correlation function of the two-timdes differentiated dataset, we might see exatly this:
+an AR(p) model (i.e. an AR model with p considered lags) is a good starting point. For moving average models it is vice versa and the lags q considered in the model would be taken from the auto-correlation function. 
+In the auto- and partial auto-correlation function of the two-times differentiated dataset, we might see exactly this:
 
 ```r
 par_org <- par()
@@ -95,7 +102,7 @@ pacf(dTa)
 par(par_org)
 ```
 
-Nice, but generally although pretty much useless since if we change the parameter estimation method, the results look like that (17 is the optiomum):
+Nice, but pretty useless since if we change the parameter estimation method, the results look like this (17 is the optimum):
 
 ```r
 armod <- ar(dTa, aic = TRUE, order.max = 20, method = "mle")
@@ -119,7 +126,7 @@ armod
 ```
 
 
-The AR model can now be used to predict the time series (although 100 month in the future is way to much; grey lines indicate the standard error):
+The AR model can now be used to predict the time series (although 100 months in the future is way to much; grey lines indicate the standard error):
 
 ```r
 arpred <- predict(armod, n.ahead = 100)
@@ -134,15 +141,16 @@ lines(arpred$pred - arpred$se, col = "grey")
 
 
 ### Auto-regressive integrated moving average models (ARIMA)
-Since the auto-correlation and partial auto-correlation function might slightly demand for an auto-regressive model and not a moving average model, we will skip the later and jump directly to the combined version - ARIMA.
+Since the auto-correlation and partial auto-correlation function might slightly demand for an auto-regressive model and not for a moving average model, 
+we will skip the later and jump directly to the combined version - ARIMA.
 
 In the ARIMA world, three parameters are generally required: 
 
-* p which is the number of time lags considered in the AR model
-* d which is the number of differnces taken from the dataset (to reach stationarity)
-* q which is the number of time lags considered in the MA model
+* p which is the number of time lags considered in the AR model,
+* d which is the number of differences taken from the dataset (to reach stationarity), and
+* q which is the number of time lags considered in the MA model.
 
-Hence, if we want to compute an ARIMA compareable to the AR above (the second one), we call it with:
+Hence, if we want to compute an ARIMA comparable to the AR above (the second one), we call it with:
 
 ```r
 armod <- arima(tam$Ta, order = c(17,2,0), method = "ML")  # the order is p, d, q
@@ -168,7 +176,8 @@ armod
 ## sigma^2 estimated as 3.188:  log likelihood = -230.95,  aic = 495.91
 ```
 
-Finding the right values for an arima model is not so easy. Basically, one has to iterate over a variety of options. Let's try just one for illustration purposes.
+Finding the right values for an ARIMA model is not trivial. 
+Basically, one has to iterate over a variety of options. Let us try just one for illustration purposes.
 
 ```r
 arimamod <- arima(tam$Ta, c(6,2,2))
@@ -192,7 +201,8 @@ summary(arimamod)
 ## Training set NaN  NaN NaN NaN  NaN
 ```
 
-We will not focus on optimal prediction in this example, so these results are just fine for the purpose of illustration. The arima model can be used to predict the time series in the future analogously to the AR model:
+We will not focus on optimal prediction in this example, so these results are just fine for the purpose of illustration. 
+The ARIMA model can be used to predict the time series in the future analogously to the AR model:
 
 ```r
 arima_predict <- predict(arimamod, n.ahead = 100)
@@ -207,10 +217,13 @@ lines(arima_predict$pred - arima_predict$se, col = "grey")
 
 
 ### Finding the right parameters for ARIMA
-Finding the right number of lags p for the AR model, number of differentiations d, and number of lags q for the MA model requires some iteration. You now already everything you need to e.g. iterate over a bunch of values for each parameter and select the appropriate combination by minimizing e.g. cross-validation errors. An alternative approach could be the ``forecast::auto.arima`` function. It will iterate over the parameters (see defaults of the function) and apply some statistical tests for stationarity etc. It will also inlcude seasonal components in the ARIMA (wich is basically the same as a time lag but with respect to the seasonal difference, e.g. a seasonal component [12] with a lag of 1 skips 12 month, one for [4] skips a quater of a year).
+Finding the right number of lags p for the AR model, number of differentiations d, and number of lags q for the MA model requires several iterations. 
+You now already know everything you need to e.g. iterate over a bunch of values for each parameter and select the appropriate combination by minimizing e.g. cross-validation errors. An alternative approach could be the ``forecast::auto.arima`` function. It will iterate over the parameters (see defaults of the function) and apply some statistical tests for e.g. stationarity. 
+It will also include seasonal components in the ARIMA model (which is basically the same as a time lag but with respect to the seasonal difference, e.g. a seasonal component [12] with a lag of 1 skips 12 months, one for [4] would skip a quarter of a year).
 
 ### Finding the right parameters for ARIMA with the auto.arima function
-The forecast package generally works on time series data of class ts which is easy to generate if you actually have a complete (i.e. gap-free) time series. The time series is defined by the values, the starting point in time (e.g. year and month), the end point in time, the frequency of obsrevations per main time unit and the time step deltat. For monthly data starting in July 2006 and ending in December 2015, the creation of a time series will look like this:
+The forecast package generally works on time series data of class ``ts``, which is easy to generate if you actually have a complete (i.e. gap-free) time series. The time series is defined by the values, the starting point in time (e.g. year and month), the end point in time, the frequency of observations per main time unit and the time step delta t. 
+For monthly data starting in July 2006 and ending in December 2015, the creation of a time series will look like this:
 
 ```r
 tam_ts <- ts(tam$Ta, start = c(2006, 7), end = c(2015, 12), 
@@ -222,7 +235,7 @@ str(tam_ts)
 ##  Time-Series [1:114] from 2006 to 2016: 21.75 15.57 16.68 12.12 7.33 ...
 ```
 
-Now, we can use the ``forecast::auto.arima`` function. We will extend the iteration over p and q to 20 to be compatible with the above example but not include a seasonal component for the moment:
+Now, we can use the ``forecast::auto.arima`` function. We will extend the iteration over p and q to 20 to be compatible with the above example but we will not include a seasonal component for the moment:
 
 ```r
 # library(forecast)
@@ -249,9 +262,9 @@ summary(arima_ns)
 ## Training set -0.05493963
 ```
 
-Actually, the arima comes with d = 0 whic means that the data values is not differentiated (which is a tough choice).
+Actually, the ARIMA model comes with d = 0 which means that the data values are not differentiated (which is a tough choice).
 
-To better estimate the quality of the ARIMA, we can use some diagnostic plots:
+To better estimate the quality of the ARIMA model, we can use some diagnostic plots:
 
 ```r
 tsdiag(arima_ns)
@@ -259,9 +272,10 @@ tsdiag(arima_ns)
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-15-1.png)<!-- -->
 
-The last plot shows test results if the residuals are independently distributed. For time lags larger 4, this is maybe not the case which indicates that the arima model is not really well specified.
+The last plot shows test results if the residuals are independently distributed. 
+For time lags larger 4, this is maybe not the case, which indicates that the ARIMA model is not really well specified.
 
-The forecast will look like this:
+The forecast looks like this:
 
 ```r
 plot(forecast(arima_ns))
@@ -269,7 +283,7 @@ plot(forecast(arima_ns))
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-16-1.png)<!-- -->
 
-If we allow a seasonal component, the results look like that:
+If we include a seasonal component, the results look like this:
 
 ```r
 arima_s <- auto.arima(tam_ts, max.p = 20, max.q = 20, seasonal=TRUE)
