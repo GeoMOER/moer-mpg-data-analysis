@@ -110,6 +110,9 @@ collections:
   unit11:
     output: true
     permalink: /:collection/:title.html
+  unit12:
+    output: true
+    permalink: /:collection/:title.html
   worksheets:
     output: true
     permalink: /:collection/:title.html
@@ -231,11 +234,21 @@ defaults:
       path: ""
       type: unit11
     values:
-      category: "11 Publication quality graphics"
+      category: "11 MOHA"
       tags: "Unit 11"
       layout: single
       sidebar:
-        nav: "units"         
+        nav: "units"
+  # unit12
+  - scope:
+      path: ""
+      type: unit12
+    values:
+      category: "12 Publication quality graphics"
+      tags: "Unit 12"
+      layout: single
+      sidebar:
+        nav: "units"             
   # pages
   - scope:
       path: "_pages"
