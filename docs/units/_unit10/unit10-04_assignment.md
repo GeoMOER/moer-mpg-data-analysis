@@ -12,7 +12,7 @@ After completing this worksheet you should have gained some deeper experience wi
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operation system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend to use R Studio for (interactive) programming with R.
   * [Git](https://git-scm.com/downloads){:target="_blank"} environment for your operating system. For Windows users with little experience on the command line we recommend [GitHub Desktop](https://desktop.github.com/){:target="_blank"}.
-  * [German Weather Service (DWD) data](ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/climate/hourly/){:target="_blank"} for the station Coelbe.
+  * [German Weather Service (DWD) data](ftp://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"} for the station Coelbe.
   * [NOAA data](http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml){:target="_blank"} for the North Atlantic Oscillation (NAO).
 
 
