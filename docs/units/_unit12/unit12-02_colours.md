@@ -6,7 +6,12 @@ toc_label: In this example
 
 
 Before we expand our plotting capabilities, we want to spend a bit more time 
-thinking about colours and colour spaces. A careful study of colour-spaces (e.g., [here](http://statmath.wu.ac.at/~zeileis/papers/Zeileis+Hornik+Murrell-2009.pdf), [here](http://hclwizard.org/hcl-color-scheme/), [here](http://vis4.net/blog/posts/avoid-equidistant-hsv-colors/) or [here](https://en.wikipedia.org/wiki/HSL_and_HSV)) leads to the conclusion that the ```hcl``` colour space is preferable when mapping a variable to colour (be it factorial or continuous).
+thinking about colours and colour spaces. A careful study of colour-spaces 
+(e.g. [Zeileis et al. 2009](http://statmath.wu.ac.at/~zeileis/papers/Zeileis+Hornik+Murrell-2009.pdf){:target="_blank"}; 
+[www.hclwizard.org](http://hclwizard.org/hcl-color-scheme/){:target="_blank"}; 
+[www.vis4.net](http://vis4.net/blog/posts/avoid-equidistant-hsv-colors/){:target="_blank"} or 
+[wikipedia](https://en.wikipedia.org/wiki/HSL_and_HSV){:target="_blank"}) 
+lead us to the conclusion that the ```hcl``` colour space is preferable when mapping a variable to colour (be it factorial or continuous).
 
 This colour space is readily available in R through the function `hcl()`.
 
@@ -49,9 +54,9 @@ pal(desaturate(rainbow(100)))
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
-I hope it becomes evident that such a color scale is a bad idea for any continuous data.
+Such a color scale does not linearily represent continuous data.
 There have been numerous attempts to produce perceptually consistent, yet visually pleasing
-colour palettes. One very good example of this is [colorbrewer2.org](http://www.colorbrewer2.org)
+colour palettes. One very good example of this is [colorbrewer2.org](http://www.colorbrewer2.org){:target="_blank"}
 These palettes can be assessed through the R package `RColorBrewer`
 
 
@@ -75,7 +80,7 @@ pal(desaturate(brewer_rainbow(100)))
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 Not bad at all, though there is a distiguishable increase in lightness towards the middle of the scale.
-This is accepted in this case as this colour scale is a diverging colour scale. This means it should only be used for visualising deviations from a central value (e.g. zero). Do not use this colour scale representing sequential data (i.e. change only in one direction)!!
+This is accepted in this case as this colour scale is a diverging colour scale. This means it should only be used for visualising deviations from a central value (e.g. zero). Do not use this colour scale representing sequential data (i.e. data changing only in one direction)!!
 
 In order to create truely perceptually uniform colour scale we need to use the hcl colour space. As mentioned above, this can be done using `hcl()`. Here, we create ourselves a function that produces a colour palette of a user supplied length n based on hcl colour space:
 

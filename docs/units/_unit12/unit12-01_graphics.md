@@ -2,7 +2,7 @@
 title: Publication Quality Graphics
 ---
 
-Visualize your data  your time series data and have a look on some hints and other libraries.
+Visualize your data, get some hints for publication quality graphics, and learn about some packages specifically made for visualizations.
 
 <!--more-->
 
@@ -14,4 +14,6 @@ At the end of this session you should be able to
 
 
 ## More on this topic
-The examples in this unit are specifically related to the assignment. To get a much broader idea on visualization, please refer to our online book on [Creating Publication Quality Graphics in R](https://oer.uni-marburg.de/data/mriliasmooc/lm_data/lm_1901/index.html) by our former group members Tim Appelhans and Florian Detsch which is also available at Marburg Open Educational Ressources.
+The examples in this unit are specifically related to the course assignments. 
+To get a much broader idea about visualizations, 
+please refer to our online book on [Creating Publication Quality Graphics in R](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2092231/index.html){:target="_blank"} by our former group members Tim Appelhans and Florian Detsch which is also available at Marburg Open Educational Ressources.
