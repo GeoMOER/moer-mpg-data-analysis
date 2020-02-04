@@ -75,7 +75,7 @@ The graded course certificate will be based on an individual portfolio hosted as
 
 # Preparation and prerequisites
 
-The courses assumes basic knowledge and skills in geo-information science.
+The course assumes basic knowledge and skills in R and geo-information science.
 
 
 
