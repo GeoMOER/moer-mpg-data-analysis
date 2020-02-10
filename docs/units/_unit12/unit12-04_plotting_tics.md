@@ -1,7 +1,5 @@
 ---
 title: "Example: Tics"
-toc: true
-toc_label: In this example
 ---
 
 

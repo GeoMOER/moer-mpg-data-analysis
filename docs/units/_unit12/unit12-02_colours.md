@@ -1,7 +1,5 @@
 ---
 title: "Example: Colours"
-toc: true
-toc_label: In this example
 ---
 
 

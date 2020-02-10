@@ -1,7 +1,5 @@
 ---
 title: "Example: Wide and Long Format"
-toc: true
-toc_label: In this example
 ---
 
 The following is a short note on converting wide to long format required e.g. for some lattice or ggplot visualizations. The following examples are based on the readily known data set showing the percentage fraction of settlement, recreational, agricultural, and forest areas for each rural district in Germany. The data has been provided through the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/).
