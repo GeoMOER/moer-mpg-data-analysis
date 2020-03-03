@@ -1,4 +1,4 @@
-# moer-mpg-data-analyis
+# moer-mpg-data-analysis
 Master level course in Physical Geography at the University of Marburg.  
 
 The HTML Version currently resides at 
