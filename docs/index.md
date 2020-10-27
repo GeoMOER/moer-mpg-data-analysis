@@ -5,7 +5,7 @@ date: '2018-02-06 13:00:00 +0100'
 header:
   overlay_color: "#000"
   overlay_filter: 0.6
-  overlay_image: "/assets/images/title_1600_500.jpg"
+  overlay_image: "/assets/images/title/RSDB4.png"
   caption: 'Photo: [**Environmental Informatics Marburg**](https://www.flickr.com/environmentalinformatics-marburg/)'
   cta_label: Go to course units
   cta_url: "/units.html"
@@ -39,6 +39,10 @@ At the end of this course you should be able to
 
 The course provides a basis for the parallel [Geo Information Systems](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2092236/index.html){:target="_blank"} and [Remote Sensing](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2285471/index.html){:target="_blank"} courses. It is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
 
+<!--
+ Information aufgrund der **Coronavirus-Pandemie**: Aus Gründen des Infektionsschutzes sind Präsenzveranstaltung derzeit nicht möglich. Der Kurs findet deshalb in der digitalen Welt statt. Studierende, die den Kurs im Sommersemester 2020 besuchen, finden alle notwendigen Informationen im Bereich How-to MeKo auf dieser Webseiten oder im geschlossenen [Kursbereich der Ilias-Lernplattform](https://ilias.uni-marburg.de/ilias.php?ref_id=1858892&cmd=frameset&cmdClass=ilrepositorygui&cmdNode=ts&baseClass=ilRepositoryGUI).
+{: .notice--info}
+-->
 
 
 # Syllabus
