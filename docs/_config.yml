@@ -45,13 +45,13 @@ author:
   bio              : "University of Marburg"
   location         : "Marburg, DE"
   email            : "dirk.zeuss@uni-marburg.de"
-  uri              : "https://www.uni-marburg.de/de/fb19/disciplines/physisch/umweltinformatik/umweltinformatik"
-  home             : "https://www.uni-marburg.de/de/fb19/disciplines/physisch/umweltinformatik/umweltinformatik"
+  uri              : "https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics"
+  home             : "https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics"
   researchgate     : "https://www.researchgate.net/profile/Dirk_Zeuss/stats" # to be included some day
-  flickr           : "https://www.flickr.com/environmentalinformatics-marburg/"
+#  flickr           : "https://www.flickr.com/environmentalinformatics-marburg/"
   github           : "GeoMOER"
-  twitter          : "https://twitter.com/geographie_umr"
-  youtube          : "https://www.youtube.com/channel/UCGiwSv5KYjsNXl6-nZq0SDA"
+#  twitter          : "https://twitter.com/geographie_umr"
+#  youtube          : "https://www.youtube.com/channel/UCGiwSv5KYjsNXl6-nZq0SDA"
 
 
 ##### Site configuration ######################################################

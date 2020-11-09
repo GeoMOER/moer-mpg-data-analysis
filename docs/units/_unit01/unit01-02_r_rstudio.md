@@ -23,5 +23,6 @@ Some starting points for RStudio:
 
 To get a brute force introduction to RStudio, this is the video you are looking for:
 
-<p><a href="https://resources.rstudio.com/wistia-rstudio-essentials-2/rstudioessentialsprogrammingpart1-2?wvideo=k8kz4e0p2v"><img src="https://embedwistia-a.akamaihd.net/deliveries/85f90f89c20cf329c8e6091508fe44c045e70167.jpg?image_play_button_size=2x&amp;image_crop_resized=960x585&amp;image_play_button=1&amp;image_play_button_color=4287c7e0" width="400" height="243.75" style="width: 400px; height: 243.75px;"></a></p><p><a href="https://resources.rstudio.com/wistia-rstudio-essentials-2/rstudioessentialsprogrammingpart1-2?wvideo=k8kz4e0p2v">RStudio Essentials Programming Part 1</a></p>
+<p><a href="https://rstudio.com/resources/webinars/programming-part-1-writing-code-in-rstudio/"><img src="https://embedwistia-a.akamaihd.net/deliveries/85f90f89c20cf329c8e6091508fe44c045e70167.jpg?image_play_button_size=2x&amp;image_crop_resized=960x585&amp;image_play_button=1&amp;image_play_button_color=4287c7e0" width="400" height="243.75" style="width: 400px; height: 243.75px;"></a></p><p><a href="https://rstudio.com/resources/webinars/programming-part-1-writing-code-in-rstudio/">RStudio Essentials Programming Part 1</a></p>
+
 

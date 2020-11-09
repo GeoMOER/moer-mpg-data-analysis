@@ -35,17 +35,21 @@ At the end of this course you should be able to
 * model relationships between data variables and calculate reliable error estimates, and to
 * critically evaluate your analysis.
 
-# Course features
 
-The course provides a basis for the parallel [Geo Information Systems](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2092236/index.html){:target="_blank"} and [Remote Sensing](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2285471/index.html){:target="_blank"} courses. It is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
 
-<!--
- Information aufgrund der **Coronavirus-Pandemie**: Aus Gründen des Infektionsschutzes sind Präsenzveranstaltung derzeit nicht möglich. Der Kurs findet deshalb in der digitalen Welt statt. Studierende, die den Kurs im Sommersemester 2020 besuchen, finden alle notwendigen Informationen im Bereich How-to MeKo auf dieser Webseiten oder im geschlossenen [Kursbereich der Ilias-Lernplattform](https://ilias.uni-marburg.de/ilias.php?ref_id=1858892&cmd=frameset&cmdClass=ilrepositorygui&cmdNode=ts&baseClass=ilRepositoryGUI).
+# Coronavirus
+
+Due to the ongoing Corona pandemic this course will take place in a digital classroom with up to ten students being additionally present in person in the physical classroom.
+Details on this synchronous hybrid classroom format will be provided in the first session, which will take place online only on Tuesday 10.11.2020 at 9:15 am.
+The link to the digital classroom of the first session is provided in the [Ilias course environment](https://ilias.uni-marburg.de/goto.php?target=crs_2111013&client_id=UNIMR) (only accessible for members of the course who are logged-in into Ilias). 
+Please also seriously check the hygiene policy for the course, which can be found on Ilias, and the regularly updated [Information on the Coronavirus](https://www.uni-marburg.de/de/universitaet/administration/sicherheit/coronavirus) of the University of Marburg.
 {: .notice--info}
--->
+
 
 
 # Syllabus
+
+The course encompassed 13 sessions from 10.11.2020 to 23.02.2021 with a Christmas break between 19.12.2020 and 10.01.2021.
 
 | Session | Topic | Content |
 |-------|--------|---------|
@@ -66,10 +70,8 @@ The course provides a basis for the parallel [Geo Information Systems](https://i
 | 11 | MOHA session                 | Marked assignment |
 || **Visualization** ||
 | 12 | Visualize your data          | Publication quality graphics |
-|| **Evaluation** ||
-| 13 | Evaluation                   | Official course evaluation session |
 || **Wrap up** ||
-| 14 | Wrap up                      | Time for questions, addressing potential individual data analysis problems, goodbye |
+| 13 | Wrap up                      | Time for questions, addressing potential individual data analysis problems, goodbye |
 
 
 # Deliverables
@@ -80,6 +82,13 @@ The graded course certificate will be based on an individual portfolio hosted as
 # Preparation and prerequisites
 
 The course assumes basic knowledge and skills in R and geo-information science.
+A pre-course for learning basic R skills is currently under construction [here](https://geomoer.github.io//moer-base-r/), which you can check out and help improving.
+
+
+
+# Parallel courses
+
+The course provides a basis for the parallel [Geo Information Systems](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2092236/index.html){:target="_blank"} and [Remote Sensing](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2285471/index.html){:target="_blank"} courses. It is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
 
 
 
