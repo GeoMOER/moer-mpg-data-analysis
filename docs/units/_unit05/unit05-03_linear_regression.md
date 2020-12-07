@@ -6,7 +6,9 @@ toc_label: In this example
 
 Linear regression modelling is one of the more common tasks in data analysis and the following example will cover the very basic topic of bivariate linear regression. The storyline follows the one from Zuur et al. (2007) to a certain degree.
 
-While one could use actual data sets, we keep it controled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet). The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as bart of base R. For now, we will use variables x1 and y1 as independent and dependent variables.
+While one could use actual data sets, we keep it controled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet). 
+The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as bart of base R. 
+For now, we will use x1 as independent variable and y1 as dependent variable.
 
 ```r
 ind <- anscombe$x1
@@ -49,15 +51,15 @@ data value = fitted value + residual value (or y = y' + res)
 
 The associated variances are:
 
-* The variance of the observed values, i.e. the difference between the individual observation y values and the mean over all observations of y. This will be called the total observed variance.
-* The variance of the fitted values, i.e. the difference between the predicted values of y' and the mean over all observations of y. This will be called the model variance.
-* The variance of the residual values, i.e. the difference between the predicted values y' and the observed values y. This will be called residual variance.
+* The variance of the observed values, i.e. the difference between the individual observation y values and the mean over all observations of y. This will be called the total *observed variance*.
+* The variance of the fitted values, i.e. the difference between the predicted values of y' and the mean over all observations of y. This will be called the *model variance*.
+* The variance of the residual values, i.e. the difference between the predicted values y' and the observed values y. This will be called *residual variance*.
 
 Together, model and residual variance equals the total variance. 
 
 Commonly, all variances are squared and summed up over all observations which gives us the _sum of squares_ observed (or total), the sum of squares of the model and the sum of squares of residuals.
 
-In order to calculate the variances, one can use the lm class of the model since - among others - it contains the original independent and dependent values as well as the predicted ones.
+In order to calculate the variances, one can use the lm class of the model since - among others - it contains the original independent and dependent values as well as the predicted ones:
 
 
 ```r
@@ -69,7 +71,7 @@ ss_resid <- sum((lmod$model$dep - lmod$fitted.values)**2)
 Since the sum increases with increasing numbers of observations, the resulting sum of squares are normalized by the respective degrees of freedom. This gives us:
 * the mean observation sum of squares
 * the mean model sum of squares
-* the mean residual sum of squares, i.e. the mean square error if the model is a simple linear regression model.
+* the mean residual sum of squares, i.e. the mean squares error if the model is a simple linear regression model.
 
 
 ```r
@@ -78,12 +80,12 @@ mss_model <- ss_model / 1
 mss_resid <- ss_resid / (length(lmod$model$dep) - 2)
 ```
 
-It can be shown that for large sample sizes, the mean square error (mss_resid) equals the squared variance of the population. In this case, the mean square model error (mss_model) also equals the squared variance but additionally considers the sum of squares over all x values multiplied by the slope of the regression model. In other words, 
+It can be shown that for large sample sizes, the mean squared error (mss_resid) equals the squared variance of the population. In this case, the mean squared model error (mss_model) also equals the squared variance but additionally considers the sum of squares over all x values multiplied by the slope of the regression model. In other words, 
 
-* if the slope is zero, then mean square and model error are equal and the ration of both is 1.
-* if the slope is not zero, then mean square model error is larger than the mean square error and the ratio is larger than 1. 
+* if the slope is zero, then mean squared and model error are equal and the ration of both is 1.
+* if the slope is not zero, then mean squared model error is larger than the mean squared error and the ratio is larger than 1. 
 
-This provides us the test statistic for the null-hypothesis that the the true slope is not different from 0.
+This provides us the test statistic for the *null-hypothesis* that the the true slope is not different from 0.
 
 ```r
 f_value <- mss_model / mss_resid
@@ -121,6 +123,11 @@ anova(lmod)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
+
+
+**Exercise**. Now you can check your knowledge and strengthen your plotting skills by writing code to rebuild the linear regression scaterplot from the previous page.
+When coding, think about the meaning of slope, intercept, observed variance, model variance, residual variance, and the different types of sum of squares.
+{: .notice--success}
 
 
 
@@ -192,8 +199,16 @@ ss_model / ss_obsrv
 ## [1] 0.6665425
 ```
 
+
+**Convention**. p and r-squared often denote results of bivariate linear regressions while P and R-squared (capital letters) often denote results of multiple linear regressions.
+The letters *p* (*P*) and *r<sup>2</sup>* (*R*<sup>2</sup>) are often written in *italics*.
+{: .notice--info}
+
+
+
+
 ### Finished?
-Well, the above looks like a real good example of linear regression analysis, right? And the r square of about 0.67 is also quite OK not to mention the significance of the independent variable.
+Well, the above looks like a real good example of linear regression analysis, right? And the r-squared of about 0.67 is also quite OK not to mention the significance of the independent variable.
 
 Before we clap our hands, let's just have a look at the other variable combinations of the Anscombe data set.
 
@@ -207,7 +222,7 @@ for(i in seq(4)){
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-12-1.png)<!-- -->
 
-While x3/y3 might still justify a linear regression if we remove the outlier, the two plots on the right side do not. So what? Well, unfortunately, all of these data combinations result in almost the same regression statistics:
+While x3/y3 might still justify a linear regression if we remove the outlier, the two plots on the right side do not. So what to do? Unfortunately, all of these data combinations result in almost the same regression statistics:
 
 ```r
 lmodels <- lapply(seq(4), function(i){
@@ -301,12 +316,20 @@ lapply(lmodels, summary)
 ## F-statistic:    18 on 1 and 9 DF,  p-value: 0.002165
 ```
 
-### Minimum assumption(s) for bivariate linear regression models
-The above example illustrates why it is important to understand a concept and not just to know how something is computed. In the present example, we have to make some additional checks which gives us some information about the distribution of some variables in order to actually decide if we want to do some assessments based on e.g. the retrieved r square. 
+So be careful when interpreting p and R-squared values! 
+We will learn how to treat non-linear relationships in the subsequent units.
+{: .notice--info}
 
-The following checks are what should at least be considerd in bivariate linear regression (for multiple linear regression, multicollinearity of the independent variables is crucial but this is checked prior the linear modelling):
+
+
+
+### Minimum assumption(s) for bivariate linear regression models
+The above example illustrates why it is important to understand a concept and not just to know how something is computed. 
+In the present example, we have to make some additional checks, which give us information about the distribution of variables in order to actually decide if we want to do some assessments based on e.g. the retrieved r-squared value. 
+
+The following checks are what should at least be considerd in bivariate linear regression (for multiple linear regression, multicollinearity of the independent variables is crucial):
   
-* homogeneity of the variance of residuals
+* homogeneity of the variance of residuals (homoscedasticity)
 * normality of the residuals (much less important, but handy for small samples)
 
 
@@ -324,7 +347,7 @@ for(i in seq(4)){
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-14-1.png)<!-- -->
 
-Except maybe for the upper left figure, this assumption is clearly violated as can be shown on residuals vs. fitted values plots. A better visualization might be the scale-location plot which standardizes the residuals and performs a square root transformation on them. In doing so, the variance of the residuals becomes more evident in the case of small deviations from the homoscedasticity assumption:
+Except maybe for the upper left figure, this assumption is clearly violated as can be shown on residuals vs. fitted values plots. A better visualization might be the scale-location plot which standardizes the residuals and performs a square-root transformation on them. In doing so, the variance of the residuals becomes more evident in the case of small deviations from the homoscedasticity assumption:
 
 
 ```r
@@ -350,9 +373,13 @@ for(i in seq(4)){
 ```r
 par(par_org)
 ```
-Also there are deviations from a straight line, the deviations except for the lower left plot are not really crucial (and there it is only for the data pair labled with 3). The lower left plot is also the only plot where the Shapiro-Wilk test rejects the normal distribution hypothesis on a p<0.05 level.
+Also there are deviations from a straight line, the deviations except for the lower left plot are not really crucial (and there it is only for the data pair labled with 3). 
+The lower left plot is also the only plot where the Shapiro-Wilk test rejects the normal distribution hypothesis on a p < 0.05 level.
 
-You might wonder why some of the points in the above figures are labled (e.g. 3, 9, 10 in the upper left plots). This "feature" results from a influential points analysis using Cook's distance which is a measure of how strong the regression parameters change if a certain observation is not considered. Hence, the larger this change, the larger the influence of this particular observation. For the above data, Cook's distance looks like that:
+You might wonder why some of the points in the above figures are labled (e.g. 3, 9, 10 in the upper left plots).
+These numbers in the plots refer to the observation number in the original dataset.
+This feature results from an "influential points analysis" using Cook's distance, which is a measure of how strong the regression parameters change if a certain observation is not considered. 
+Hence, the larger this change, the larger the influence of this particular observation. For the above data, Cook's distance looks like that:
 
 ```r
 par(mfrow = c(2,2))
@@ -368,9 +395,15 @@ for(i in seq(4)){
 ### No alternatives?
 In case that your linear regression assessment shows some violations, the end is not to come, yet. According to Zuur et al. (2007), the solutions to common problems are the following:
 
-* Violation of homogeneity (residuals vs. fitted values plot) without a pattern in the residual vs. observations (i.e. x values) plot: transform the y values or use generalised models
+* Violation of homogeneity (residuals vs. fitted values plot) without a pattern in the residual vs. observations (i.e. x values) plot: transform the y values or use generalized models
 * Violation of homogeneity (residuals vs. fitted values plot) with a pattern in the residual vs. observations (i.e. x values) plot: add non-linear terms of the independent variable
 * No violation of homogeneity (residuals vs. fitted values plot) but a pattern in the residual vs. observations (i.e. x values) plot: transform the x values or use additive modelling
 
-In general, adding interaction terms (more than one explanatory variable is required) might also be a solution. 
+Before transforming your variables beyond recognition think about if you really need a linear regression for your data analysis task.
+In doubt use some other statistical method like generalized additive models.
+{: .notice--info}
+
+
+
+
 
