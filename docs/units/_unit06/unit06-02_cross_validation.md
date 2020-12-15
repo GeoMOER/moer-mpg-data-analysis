@@ -18,7 +18,7 @@ In principal, there are two strategies for cross-validation:
 In order to obtain a sufficiently large sample size, this procedure is iterated over all value pairs of the data set (i.e. each data point is left out once).
 
 * **Leave-many-out cross-validation**: in this case, more than one value pair or data point of the sample data set is left out during model fitting and the model accuracy is estimated based on the quality of the prediction for the left-out samples. 
-This strategy is suitable for larger data sets, in which e.g. 80% of the data can be used as training data for fitting and 20% can be used as independent data for validation. 
+This strategy is suitable for larger data sets, in which e.g. 80% of the data can be used as _training_ data for fitting and 20% can be used as independent data for _validation_ (aka _testing_). 
 The procedure can of course be repeated by creating models for different random training data sets and testing them using the respective left-out samples. 
 Please note that independency is compromised to a small degree in the latter case. 
 On the other hand, one can get a better impression of the model performance, especially if the different validation data sets are not averaged but used independently for geting an idea of the _variation_ of the performance.
