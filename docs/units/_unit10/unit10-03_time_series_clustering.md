@@ -4,7 +4,10 @@ toc: true
 toc_label: In this example
 ---
 
-Just as one last example on time series analysis for this module and mainly to demonstrate that this module only tiped a very small set of analysis concepts out there, we will have a glimpse on time series clustering. To illustrate this, we will again use the (mean monthly) air temperature record of the weather station in Coelbe (which is closest to the Marburg university forest). The data has been supplied by the German weatherservice [German weather service](ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/). For simplicity, we will remove the first 6 entries (July to Dezember 2006 to have full years).
+Just as one last example on time series analysis for this module and mainly for demonstrating that this module only tipped a very small set of analysis concepts out there, we will have a glimpse on time series clustering. 
+To illustrate this concept, we will again use the (mean monthly) air temperature record of the weather station in Cölbe (which is closest to the Marburg university forest). 
+The data has been supplied by the [German Weather Service](ftp://opendata.dwd.de/climate_environment/CDC/observations_germany). 
+For simplicity, we will remove the first six entries (July to December 2006 to have full years).
 
 
 
@@ -16,11 +19,17 @@ plot(tam$Date, tam$Ta, type = "l")
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e10-03/unnamed-chunk-2-1.png)<!-- -->
 
-The major risk in time series clustering (or any other clustering) is that one clusters something which actually does not show any kind of groups. Hence, the most important part to remember is that a cluster algorithm will always identify clusters no matter if they are really "exist". As a consequence: never use clustering if you are not sure that there is a grouping in the data. In addition, clustering is generally applied if you have more than one time series from more than one location. 
+The major risk in time series clustering (or any other clustering) is that we cluster something, which actually does not have any kind of "real" groups. 
+Hence, the most important part to remember is that cluster algorithms will always identify clusters no matter if they really exist. 
+As a consequence: never use clustering if you are not sure that there definitively are groups in the data. 
+Moreover, clustering is generally applied only if you have more than one time series from more than one location. 
 
-Of course, there is no rule without exeption and the one exeption is: if you want to show some code and do not want to introduce a new dataset just for this last example, you can use it on a dataset where you have no glimps of a grouping as long as you are not the one who gets the grading in the end. 
+Of course there is no rule without exception and the one exception here is: if you want to show some code and do not want to introduce a new dataset just for this last example, you can use it on a dataset where you have no glimps of a grouping as long as you are not the one who gets the grading in the end. 
 
-OK. Aside from having no idea if we have a grouping and aside that we have only a single station record, let's have a look at the above time series. There might be a difference between 2010 and the rest of the years since 2010 shows very warm summer and cold winter temperatures. To start with clustering, we have to look at the individual years as different time series by transforming our data into a matrix with 12 columns (i.e. one for each month) and the required number of years. Thereby we have to make sure that the original dataset is actually tranformed into the matrix format by rows and not by columns. This will result in a matrix with one year per row:
+Aside from having no idea if we have a grouping and aside that we have only one single station record, let's have a look at the above time series. 
+There might be a difference between 2010 and the rest of the years since 2010 shows very warm summer and cold winter temperatures. 
+To start with clustering, we will have to look at the individual years as different time series by transforming our data into a matrix with 12 columns (i.e. one for each month) and the required number of years. Thereby, we have to make sure that the original dataset is actually transformed into the matrix format by rows and not by columns. 
+This will result in a matrix with one year per row:
 
 ```r
 tam_ta <- matrix(tam$Ta, ncol = 12, byrow = TRUE)
@@ -79,7 +88,9 @@ tam_dist
 ## 2015 29.13347
 ```
 
-The resulting dissimilarity is larger if the different time series (i.e. years in this case) are less similar and smaller if they are more similar. This dissimillarity is now used for hirachical clustering which computes the distance between the individual samples. Plotting the result shows a cluster dendogram:
+The resulting dissimilarity is larger if the different time series (i.e. years in this case) are less similar and smaller if they are more similar. 
+This dissimilarity is now used for hierarchical clustering, which computes the distance between the individual samples. 
+Plotting the result shows a cluster dendrogram:
 
 ```r
 tam_hc <- hclust(tam_dist)
@@ -89,14 +100,10 @@ rect.hclust(tam_hc, k = 3)
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e10-03/unnamed-chunk-5-1.png)<!-- -->
 
-Just for completness, if you want to derive a certain number of clusters from it, you can use the following for the visualization of the clustres or getting the respective group IDs. In this example, we derive three clusters:
 
-```r
-plot(tam_hc)
-rect.hclust(tam_hc, k = 3)
-```
+In this example, we derived three clusters of years with similar mean monthly air temperatures.
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-03/unnamed-chunk-6-1.png)<!-- -->
+
 
 ```r
 cutree(tam_hc, k = 3)
