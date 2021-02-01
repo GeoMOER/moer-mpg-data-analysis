@@ -101,7 +101,8 @@ rect.hclust(tam_hc, k = 3)
 ![]({{ site.baseurl }}/assets/images/rmd_images/e10-03/unnamed-chunk-5-1.png)<!-- -->
 
 
-In this example, we derived three clusters of years with similar mean monthly air temperatures.
+In this example, we derived three clusters of years with similar mean monthly air temperatures. 
+The year 2010 forms a group on its own at the root of the dendrogram.
 
 
 

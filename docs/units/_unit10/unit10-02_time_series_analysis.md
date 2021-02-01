@@ -220,18 +220,27 @@ abline(lmod, col = "red")
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-14-1.png)<!-- -->
 
+No significant annual trend but a slightly positive slope.
+
+<!--
+## Bonus material
+
 A commonly used alternative or additional information is the Mann-Kendall trend, which is a measure of how often a time series dataset increases or decreases from one time step to the next. 
 If you have a look in the literature, there is quite some discussion if and how the time series should be pre-whitened prior to applying a Kendall test. 
 In this example, we follow [von Storch (1995)](http://link.springer.com/chapter/10.1007%2F978-3-662-03167-4_2) and use an auto-regression-based pre-whitening for the time series. 
 The Kendall trend can then be computed with e.g. the ``Kendall::MannKendall`` function (but also with ``cor`` - see the help of this function).
+-->
 
+<!--
 ```r
 acf_lag_01 <- acf(tam$Ta_ds)$acf[1]
-```
+```-->
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-15-1.png)<!-- -->
+<!--![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-15-1.png)-->
 
-```r
+
+
+<!--```r
 ta_ds_pw <- lapply(seq(2, length(tam$Ta_ds)), function(i){
   tam$Ta_ds[i] - acf_lag_01 * tam$Ta_ds[i-1]
 })
@@ -239,22 +248,24 @@ ta_ds_pw <- unlist(ta_ds_pw)
 
 plot(ta_ds_pw, type = "h")
 points(tam$Ta_ds, type = "h", col = "red")
-```
+```-->
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-15-2.png)<!-- -->
+<!--![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-15-2.png)-->
 
-```r
+<!--```r
 Kendall::MannKendall(ta_ds_pw)
-```
+```-->
 
-```
+<!--```
 ## tau = 0.0898, 2-sided pvalue =0.17146
-```
+```-->
 
-```r
+<!--```r
 Kendall::MannKendall(tam$Ta_ds)
-```
+```-->
 
-```
+
+<!--```
 ## tau = 0.0751, 2-sided pvalue =0.25033
-```
+```-->
+

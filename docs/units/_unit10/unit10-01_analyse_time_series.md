@@ -19,4 +19,4 @@ When analysing time series data, the decomposition into the respective component
 
 {% include figure image_path="/assets/images/time_series_decomposition.jpg" alt="Illustration of time series decomposition using the R CO2 dataset as an example." %}
 
-The above graphic shows the decomposition of the CO2 dataset from R's ``forecast`` library.
+The above graphic shows the decomposition of the CO2 dataset from R's ``forecast`` library (Mauna Loa atmospheric CO2 concentration).
