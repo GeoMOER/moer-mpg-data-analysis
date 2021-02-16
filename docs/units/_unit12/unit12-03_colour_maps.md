@@ -64,7 +64,7 @@ simple_world <- world
 ## Show the structure of the attribute table
 str(simple_world@data) # 241 features (=polygons) with 94 variables (=fields) each.
 
-Note that the @data slot of a spatial* vector object is a data.frame, so work with it like with a data.frame
+# Note that the @data slot of a spatial* vector object is a data.frame, so work with it like with a data.frame
 
 ## Clear the attribute table
 simple_world@data[] <- NULL

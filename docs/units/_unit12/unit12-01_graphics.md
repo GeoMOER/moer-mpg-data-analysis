@@ -1,5 +1,5 @@
 ---
-title: Publication Quality Graphics
+title: Graphics
 ---
 
 Visualize your data, get some hints for publication quality graphics, and learn about some packages specifically made for visualizations.
@@ -7,10 +7,11 @@ Visualize your data, get some hints for publication quality graphics, and learn 
 <!--more-->
 
 ## Learning objectives
-At the end of this session you should be able to
-* adapt axis labeling in plots
-* decide which library might be helpful for your task
-* create some visualizations using ggplot or lattice
+At the end of this session you should
+* know additional possibilities to create graphics,
+* decide which library might be helpful for your task,
+* choose an appropriate colour palette, and
+* apply your colour palette to features of a shapefile.
 
 
 ## More on this topic

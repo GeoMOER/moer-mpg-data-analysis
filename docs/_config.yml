@@ -244,7 +244,7 @@ defaults:
       path: ""
       type: unit12
     values:
-      category: "12 Publication quality graphics"
+      category: "12 Graphics"
       tags: "Unit 12"
       layout: single
       sidebar:
