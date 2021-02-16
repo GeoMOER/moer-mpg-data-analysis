@@ -71,7 +71,7 @@ The course encompassed 13 sessions from 10.11.2020 to 23.02.2021 with a Christma
 || **Visualization** ||
 | 12 | Visualize your data          | Publication quality graphics |
 || **Wrap up** ||
-| 13 | Wrap up                      | Time for questions, addressing potential individual data analysis problems, goodbye |
+| 13 | Wrap up                      | Time for questions and feedback, individual data analysis problems, goodbye |
 
 
 # Deliverables
@@ -88,7 +88,8 @@ A pre-course for learning basic R skills is currently under construction [here](
 
 # Parallel courses
 
-The course provides a basis for the parallel [Geo Information Systems](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2092236/index.html){:target="_blank"} and [Remote Sensing](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2285471/index.html){:target="_blank"} courses. It is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
+The course provides a basis for the parallel [Geo Information Science](https://geomoer.github.io/moer-mpg-gis/){:target="_blank"} 
+and [Remote Sensing](https://geomoer.github.io/moer-mpg-remote-sensing/){:target="_blank"} courses. It is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
 
 
 

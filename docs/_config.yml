@@ -27,7 +27,7 @@ baseurl: "/moer-mpg-data-analysis/"
 
 
 ##### Title ###################################################################
-title: Data analysis
+title: Data Analysis
 name: &name "Lab of Environmental Informatics" # &name is a YAML anchor which can be *referenced later
 email: zeussd@uni-marburg.de
 description: >- # this means to ignore newlines until next item

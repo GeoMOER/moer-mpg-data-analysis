@@ -2,12 +2,12 @@
 main:
   - title: "Course units"
     url: /units.html
+  - title: "OER home"
+    url: https://oer.uni-marburg.de/goto.php?target=cat_1651239&client_id=UNIMR
+  - title: "Lab Home"
+    url: https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics   
   - title: "About"
     url: /about.html
-  - title: "Course home"
-    url: /index.html
-  - title: "OER home"
-    url: https://oer.uni-marburg.de/goto.php?target=crs_326&client_id=mriliasmooc
   - title: "Sitemap"
     url: /sitemap.html
     
@@ -15,9 +15,11 @@ main:
 docs:
   - title: Ways out
     children:
+      - title: "Course home"
+        url: /index.html   
       - title: "Course units"
         url: /units.html
-      - title: "Course home"
-        url: /index.html
       - title: "OER home"
-        url: https://oer.uni-marburg.de/goto.php?target=crs_326&client_id=mriliasmooc
+        url: https://oer.uni-marburg.de/goto.php?target=cat_1651239&client_id=UNIMR
+      - title: "Lab Home"
+        url: https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics
