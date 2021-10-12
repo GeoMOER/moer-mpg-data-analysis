@@ -5,11 +5,11 @@ date: '2018-02-06 13:00:00 +0100'
 header:
   overlay_color: "#000"
   overlay_filter: 0.6
-  overlay_image: "/assets/images/title/RSDB4.png"
+  overlay_image: "/assets/images/title/curve.png"
   caption: 'Photo: [**Environmental Informatics Marburg**](https://www.flickr.com/environmentalinformatics-marburg/)'
   cta_label: Go to course units
   cta_url: "/units.html"
-excerpt: Use R for data analysis and visualization, handle geo-datasets, train models and estimate errors, and use GitHub for comprehensive documentation and task management.
+excerpt: Use R for data analysis and visualization, train models and estimate errors, and use GitHub for comprehensive documentation and task management.
 feature_row_intro:
 - excerpt: Master level course in [Physical Geography](https://www.uni-marburg.de/de/fb19/studium/studiengaenge/m-sc-physische-geographie/herzlich-willkommen-beim-master-physische-geographie){:target="_blank"} at Marburg University
 feature_row_ilos:
@@ -37,19 +37,20 @@ At the end of this course you should be able to
 
 
 
-# Coronavirus
+# Setting
 
-Due to the ongoing Corona pandemic this course will take place in a digital classroom with up to ten students being additionally present in person in the physical classroom.
-Details on this synchronous hybrid classroom format will be provided in the first session, which will take place online only on Tuesday 10.11.2020 at 9:15 am.
-The link to the digital classroom of the first session is provided in the [Ilias course environment](https://ilias.uni-marburg.de/goto.php?target=crs_2111013&client_id=UNIMR) (only accessible for members of the course who are logged-in into Ilias). 
-Please also seriously check the hygiene policy for the course, which can be found on Ilias, and the regularly updated [Information on the Coronavirus](https://www.uni-marburg.de/de/universitaet/administration/sicherheit/coronavirus) of the University of Marburg.
+This course will take place in a hybrid setting with a digital classroom and additional students being present in person in the physical classroom (**F 14 | 00A12**).
+Details on this synchronous hybrid classroom format will be provided in the first session, which will take place **online only on Tuesday 26.10.2021 at 9:15 am**.
+The link to the digital classroom of the first session is provided in the [Ilias course environment](xxx){:target="_blank"} (only accessible for members of the course who are logged-in into Ilias). 
+Please also seriously check and follow the [Information on the Coronavirus](https://www.uni-marburg.de/de/universitaet/administration/sicherheit/coronavirus){:target="_blank"} of the University of Marburg.
+This course is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
 {: .notice--info}
 
 
 
 # Syllabus
 
-The course encompassed 13 sessions from 10.11.2020 to 23.02.2021 with a Christmas break between 19.12.2020 and 10.01.2021.
+The course encompassed 13 sessions from 26.10.2021 to 15.02.2022 with a Christmas break between 20.12.2021 and 10.01.2022.
 
 | Session | Topic | Content |
 |-------|--------|---------|
@@ -64,8 +65,10 @@ The course encompassed 13 sessions from 10.11.2020 to 23.02.2021 with a Christma
 | 06 | Predict your data            | Cross-validation |
 | 07 | Select your variables        | Multiple linear models, feature selection |
 | 08 | Predict your non-linear data | Generalized additive models |
+| -- | Christmas break              | -- |
 | 09 | Predict your temporal data   | Auto-correlation, AR and ARIMA models |
 | 10 | Explain your temporal data   | Decomposing time series |
+| -- | Build-in hold                | No course  |
 || **Marburg Open Hackathon** ||
 | 11 | MOHA session                 | Marked assignment |
 || **Visualization** ||
@@ -82,14 +85,7 @@ The graded course certificate will be based on an individual portfolio hosted as
 # Preparation and prerequisites
 
 The course assumes basic knowledge and skills in R and geo-information science.
-A pre-course for learning basic R skills is currently under construction [here](https://geomoer.github.io//moer-base-r/), which you can check out and help improving.
-
-
-
-# Parallel courses
-
-The course provides a basis for the parallel [Geo Information Science](https://geomoer.github.io/moer-mpg-gis/){:target="_blank"} 
-and [Remote Sensing](https://geomoer.github.io/moer-mpg-remote-sensing/){:target="_blank"} courses. It is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
+Additional resources for learning basic R skills can be found [here](https://geomoer.github.io//moer-base-r/){:target="_blank"}.
 
 
 
