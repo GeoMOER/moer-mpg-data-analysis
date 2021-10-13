@@ -41,7 +41,7 @@ At the end of this course you should be able to
 
 This course will take place in a hybrid setting with a digital classroom and additional students being present in person in the physical classroom (**F 14 | 00A12**).
 Details on this synchronous hybrid classroom format will be provided in the first session, which will take place **online only on Tuesday 26.10.2021 at 9:15 am**.
-The link to the digital classroom of the first session is provided in the [Ilias course environment](xxx){:target="_blank"} (only accessible for members of the course who are logged-in into Ilias). 
+The link to the digital classroom of the first session is provided in the [Ilias course environment](https://ilias.uni-marburg.de/goto.php?target=crs_2593121&client_id=UNIMR){:target="_blank"} (only accessible for members of the course who are logged-in into Ilias). 
 Please also seriously check and follow the [Information on the Coronavirus](https://www.uni-marburg.de/de/universitaet/administration/sicherheit/coronavirus){:target="_blank"} of the University of Marburg.
 This course is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
 {: .notice--info}
@@ -52,29 +52,29 @@ This course is intended as a blended learning module in our study program althou
 
 The course encompassed 13 sessions from 26.10.2021 to 15.02.2022 with a Christmas break between 20.12.2021 and 10.01.2022.
 
-| Session | Topic | Content |
-|-------|--------|---------|
-|| **Data basics** ||
-| 01 | First things first           | Data and information, R, R Studio, R markdown, GitHub, GitHub classroom |
-| 02 | First things second          | Working environment, data sets, data types, data structures, logical operators, control structures |
-|| **Data exploration** ||
-| 03 | Look at your data            | Reading and writing (tabulated) data, visual data exploitation, descriptive statistics |
-| 04 | Clean your data              | Tailoring data sets, fill values and NA, aggregating, merging or sub-setting data sets |
-|| **Data modelling** ||
-| 05 | Explain your data            | Linear regression modelling, confidence intervals, sample tests, variance analysis |
-| 06 | Predict your data            | Cross-validation |
-| 07 | Select your variables        | Multiple linear models, feature selection |
-| 08 | Predict your non-linear data | Generalized additive models |
+| Session | Date | Topic | Content |
+|---------|------|-------|---------|
+||| **Data basics** |
+| 01 | 26.10.2021 | First things first           | Data and information, R, R Studio, R markdown, GitHub, GitHub classroom |
+| 02 | 01.11.2021 | First things second          | Working environment, data sets, data types, data structures, logical operators, control structures |
+||| **Data exploration** |
+| 03 | 09.11.2021 | Look at your data            | Reading and writing (tabulated) data, visual data exploitation, descriptive statistics |
+| 04 | 16.11.2021 | Clean your data              | Tailoring data sets, fill values and NA, aggregating, merging or sub-setting data sets |
+||| **Data modelling** |
+| 05 | 23.11.2021 | Explain your data            | Linear regression modelling, confidence intervals, sample tests, variance analysis |
+| 06 | 30.11.2021 | Predict your data            | Cross-validation |
+| 07 | 07.12.2021 | Select your variables        | Multiple linear models, feature selection |
+| 08 | 14.12.2021 | Predict your non-linear data | Generalized additive models |
 | -- | Christmas break              | -- |
-| 09 | Predict your temporal data   | Auto-correlation, AR and ARIMA models |
-| 10 | Explain your temporal data   | Decomposing time series |
-| -- | Build-in hold                | No course  |
-|| **Marburg Open Hackathon** ||
-| 11 | MOHA session                 | Marked assignment |
-|| **Visualization** ||
-| 12 | Visualize your data          | Publication quality graphics |
-|| **Wrap up** ||
-| 13 | Wrap up                      | Time for questions and feedback, individual data analysis problems, goodbye |
+| 09 | 11.01.2022 | Predict your temporal data   | Auto-correlation, AR and ARIMA models |
+| 10 | 18.01.2022 | Explain your temporal data   | Decomposing time series |
+| -- | 25.01.2022 | Build-in hold                | No course  |
+||| **Marburg Open Hackathon** |
+| 11 | 01.02.2022 | MOHA session                 | Marked assignment |
+||| **Visualization** |
+| 12 | 08.02.2022 | Visualize your data          | Publication quality graphics |
+||| **Wrap up** |
+| 13 | 15.02.2022 | Wrap up                      | Time for questions and feedback, individual data analysis problems, goodbye |
 
 
 # Deliverables
@@ -85,7 +85,7 @@ The graded course certificate will be based on an individual portfolio hosted as
 # Preparation and prerequisites
 
 The course assumes basic knowledge and skills in R and geo-information science.
-Additional resources for learning basic R skills can be found [here](https://geomoer.github.io//moer-base-r/){:target="_blank"}.
+Additional resources for learning basic R skills can be found [here](https://geomoer.github.io//moer-base-r/){:target="_blank"}, which are highly recommended.
 
 
 
