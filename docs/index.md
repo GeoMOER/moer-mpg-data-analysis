@@ -6,7 +6,7 @@ header:
   overlay_color: "#000"
   overlay_filter: 0.6
   overlay_image: "/assets/images/title/curve.png"
-  caption: 'Photo: [**Environmental Informatics Marburg**](https://www.flickr.com/environmentalinformatics-marburg/)'
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
   cta_label: Go to course units
   cta_url: "/units.html"
 excerpt: Use R for data analysis and visualization, train models and estimate errors, and use GitHub for comprehensive documentation and task management.

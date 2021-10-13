@@ -2,6 +2,9 @@
 title: "Marked Assignment: Hello R, Hello GitHub"
 toc: true
 toc_label: In this worksheet
+header:
+  image: "/assets/images/title/title_1600_500.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 This worksheet introduces you to R, R scripts and R markdown. Your submission will be pushed to your class repository at GitHub. After completion you should have gained some experience in running R commands within scripts, R markdown for running code and documentation within one file and Git/GitHub.

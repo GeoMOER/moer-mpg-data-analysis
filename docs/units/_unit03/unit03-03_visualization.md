@@ -1,5 +1,8 @@
 ---
 title: Visualization
+header:
+  image: "/assets/images/teaser/holz.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 Do not wait until the very final analysis stage to produce some publication quality graphics but produce fast (not necessarily nice) visualizations all the way through your data analysis. Otherwise you will not utilize the best neural network infrastructure you have available: your brain and it's ability to identify patterns.

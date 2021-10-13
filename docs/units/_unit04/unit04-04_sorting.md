@@ -2,6 +2,9 @@
 title: "Example: Sorting"
 toc: true
 toc_label: In this example
+header:
+  image: "/assets/images/teaser/holz.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 

@@ -1,5 +1,8 @@
 ---
 title: Clean Your Data
+header:
+  image: "/assets/images/teaser/holz.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 Check the integrity of datasets and clean them up to ensure that the data basis for your analysis is consistent.

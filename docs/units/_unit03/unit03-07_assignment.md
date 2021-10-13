@@ -2,6 +2,9 @@
 title: "Marked Assignment: Read and Plot"
 toc: true
 toc_label: In this worksheet
+header:
+  image: "/assets/images/teaser/holz.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 This worksheet will guide you in getting a first overview of the wood harvest in Hessen between 1997 and 2014 using a visual data exploration. After completing this worksheet you should be able read CSV datasets and select appropriate visualization types for some key tasks in preliminary data exploration.

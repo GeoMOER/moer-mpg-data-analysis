@@ -2,6 +2,9 @@
 title: "Cross-validation"
 toc: true
 toc_label: In this example
+header:
+  image: "/assets/images/teaser/linear_5_1.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 Test statistics can describe the quality or accuracy of regression models if the assumptions of the models are met. 

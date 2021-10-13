@@ -1,5 +1,8 @@
 ---
 title: Git and GitHub
+header:
+  image: "/assets/images/title/title_1600_500.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 To start with a clarification: Git is the version control system you will use in this course (and which is used by many other developers all around the world). 

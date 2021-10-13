@@ -2,6 +2,9 @@
 title: "Unmarked Assignment: Cleaning Crops"
 toc: true
 toc_label: In this worksheet
+header:
+  image: "/assets/images/teaser/holz.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 This assignment is the first in a series which use regional statistical data. While the wood harvest data from Hessen was (i) quite small and (ii) quite tidy already, this is not the case for this data set even though it is distributed by the federal statistical offices.

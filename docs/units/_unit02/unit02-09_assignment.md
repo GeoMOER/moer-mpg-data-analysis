@@ -2,6 +2,9 @@
 title: "Unmarked Assignment: Loop and Conquer"
 toc: true
 toc_label: In this worksheet
+header:
+  image: "/assets/images/title/title_1600_500.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 This worksheet provides some control structure and loop examples to help you getting familiar with these probably most important properties of any programming language.

@@ -2,6 +2,9 @@
 title: "Marked Assignment: Recreation vs. Settlement"
 toc: true
 toc_label: In this worksheet
+header:
+  image: "/assets/images/teaser/linear_5_1.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 This worksheet tackles the question, how the percentage share of settlement area is related to the share of recreation area in each community.

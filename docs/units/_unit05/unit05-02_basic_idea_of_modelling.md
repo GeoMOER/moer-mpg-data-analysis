@@ -1,5 +1,8 @@
 ---
 title: Basic idea of statistical modeling
+header:
+  image: "/assets/images/teaser/linear_5_1.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 

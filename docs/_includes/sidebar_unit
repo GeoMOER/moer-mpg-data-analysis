@@ -1,0 +1,44 @@
+<nav class="nav__list">
+
+  {% if page.sidebar.title %}<h3 class="nav__title" style="padding-left: 0;">{{ page.sidebar.title }}</h3>{% endif %}
+
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label | default: "Toggle Menu" }}</label>
+
+  <ul class="nav__items">
+
+  <li>
+      <span class="nav__sub-title">
+          <a href="{{ site.baseurl }}/units.html" class="">{{ site.data.ui-text[site.locale].back_to_units | default: "Back to course units" }}</a>
+    </span>
+      </li>
+
+  {% for collection in site.collections %}
+      {% assign mydocs = site[collection.label] | group_by: 'category' %}
+      {% for cat in mydocs %}
+          {% assign items = cat.items | sort: 'order' %}
+          {% if page.url contains collection.label %}
+          <li>
+              <span class="nav__sub-title">
+		              <a href="{{ items[0].url | prepend: site.baseurl}}" class="">{{ cat.name }}</a>
+		          </span>
+          <ul>
+          {% for item in items %}
+              {% if item.url == page.url %}
+                  {% assign active = "active" %}
+              {% else %}
+                  {% assign active = "" %}
+              {% endif %}
+			        {% if page.url contains collection.label %}
+			            <li><a href="{{ item.url  | prepend: site.baseurl}}" class="{{ active }}">{{ item.title }}</a></li>
+			        {% endif %}
+          {% endfor %}
+          </ul>
+          </li>
+          {% endif %}
+
+	    {% endfor %}
+  {% endfor %}
+
+  </ul>
+</nav>

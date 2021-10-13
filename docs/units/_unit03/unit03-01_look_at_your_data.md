@@ -1,5 +1,8 @@
 ---
 title: Look at Your Data
+header:
+  image: "/assets/images/teaser/holz.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 Become familiar with reading and writing data, computing summary statistics and visual data exploration as the basics of data analysis.

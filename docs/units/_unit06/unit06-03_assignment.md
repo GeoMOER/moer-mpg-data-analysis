@@ -2,6 +2,9 @@
 title: "Unmarked Assignment: Recreation vs. Settlement revisited"
 toc: true
 toc_label: In this worksheet
+header:
+  image: "/assets/images/teaser/linear_5_1.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 This worksheet revisits the settlement vs. recreation model and compares to which degree the results describing the performance of the model differ between the "internal" model evaluation and a test against independent samples.

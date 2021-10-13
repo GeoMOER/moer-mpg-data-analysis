@@ -1,5 +1,8 @@
 ---
 title: First Things First
+header:
+  image: "/assets/images/title/title_1600_500.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 Go through a brute force introduction into R, R Markdown, the RStudio IDE, version management with Git and GitHub's classroom functionality to get ready for solving the upcoming assignment problems and submitting your solutions.

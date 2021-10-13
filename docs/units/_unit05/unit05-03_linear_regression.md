@@ -2,6 +2,9 @@
 title: "Example: Simple Bivariate Linear Regression"
 toc: true
 toc_label: In this example
+header:
+  image: "/assets/images/teaser/linear_5_1.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 Linear regression modelling is one of the more common tasks in data analysis and the following example will cover the very basic topic of bivariate linear regression. The storyline follows the one from Zuur et al. (2007) to a certain degree.

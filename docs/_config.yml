@@ -41,7 +41,7 @@ twitter:
 ##### Lecturer settings #######################################################
 author:
   name             : "Dirk Zeuss"
-  avatar           : "/assets/images/zeuss.jpg"
+  avatar           : "/assets/images/instructors/zeuss.jpg"
   bio              : "University of Marburg"
   location         : "Marburg, DE"
   email            : "dirk.zeuss@uni-marburg.de"
@@ -128,7 +128,7 @@ defaults:
       tags: "Examples"
       layout: single
       sidebar:
-        nav: "units" 
+        nav: "course_unit" 
   # unit01
   - scope:
       path: ""
@@ -138,7 +138,7 @@ defaults:
       tags: "Unit 01"
       layout: single
       sidebar:
-        nav: "units" 
+        nav: "course_unit" 
   # unit02
   - scope:
       path: ""
@@ -148,7 +148,7 @@ defaults:
       tags: "Unit 02"
       layout: single
       sidebar:
-        nav: "units" 
+        nav: "course_unit" 
   # unit03
   - scope:
       path: ""
@@ -158,7 +158,7 @@ defaults:
       tags: "Unit 03"
       layout: single
       sidebar:
-        nav: "units" 
+        nav: "course_unit" 
   # unit04
   - scope:
       path: ""
@@ -168,7 +168,7 @@ defaults:
       tags: "Unit 04"
       layout: single
       sidebar:
-        nav: "units" 
+        nav: "course_unit" 
   # unit05
   - scope:
       path: ""
@@ -178,7 +178,7 @@ defaults:
       tags: "Unit 05"
       layout: single
       sidebar:
-        nav: "units" 
+        nav: "course_unit" 
   # unit06
   - scope:
       path: ""
@@ -188,7 +188,7 @@ defaults:
       tags: "Unit 06"
       layout: single
       sidebar:
-        nav: "units" 
+        nav: "course_unit" 
   # unit07
   - scope:
       path: ""
@@ -198,7 +198,7 @@ defaults:
       tags: "Unit 07"
       layout: single
       sidebar:
-        nav: "units" 
+        nav: "course_unit" 
   # unit08
   - scope:
       path: ""
@@ -208,7 +208,7 @@ defaults:
       tags: "Unit 08"
       layout: single
       sidebar:
-        nav: "units" 
+        nav: "course_unit" 
   # unit09
   - scope:
       path: ""
@@ -218,7 +218,7 @@ defaults:
       tags: "Unit 09"
       layout: single
       sidebar:
-        nav: "units"         
+        nav: "course_unit"         
   # unit10
   - scope:
       path: ""
@@ -228,7 +228,7 @@ defaults:
       tags: "Unit 10"
       layout: single
       sidebar:
-        nav: "units"         
+        nav: "course_unit"         
   # unit11
   - scope:
       path: ""
@@ -238,7 +238,7 @@ defaults:
       tags: "Unit 11"
       layout: single
       sidebar:
-        nav: "units"
+        nav: "course_unit"
   # unit12
   - scope:
       path: ""
@@ -248,7 +248,7 @@ defaults:
       tags: "Unit 12"
       layout: single
       sidebar:
-        nav: "units"             
+        nav: "course_unit"             
   # pages
   - scope:
       path: "_pages"

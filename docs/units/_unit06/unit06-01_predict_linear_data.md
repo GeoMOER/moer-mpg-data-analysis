@@ -1,5 +1,8 @@
 ---
 title: Predict your linear data
+header:
+  image: "/assets/images/teaser/linear_5_1.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 Compute simple linear models to predict dependent data  and assess the performance by independent test samples.

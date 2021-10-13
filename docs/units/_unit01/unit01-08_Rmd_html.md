@@ -2,6 +2,9 @@
 title: "Example: R Markdown with html output"
 toc: true
 toc_label: In this example
+header:
+  image: "/assets/images/title/title_1600_500.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 This page shows how a compiled R markdown file looks like (in fact, all code examples in this course were compiled with R markdown).
