@@ -9,7 +9,7 @@ main:
   - title: "Lab Home"
     url: https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics
   - title: "About"
-    url: /about.html
+    url: about.html
     
     
 docs:

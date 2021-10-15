@@ -43,7 +43,6 @@ This course will take place in a hybrid setting with a digital classroom and add
 Details on this synchronous hybrid classroom format will be provided in the first session, which will take place **online only on Tuesday 26.10.2021 at 9:15 am**.
 The link to the digital classroom of the first session is provided in the [Ilias course environment](https://ilias.uni-marburg.de/goto.php?target=crs_2593121&client_id=UNIMR){:target="_blank"} (only accessible for members of the course who are logged-in into Ilias). 
 Please also seriously check and follow the [Information on the Coronavirus](https://www.uni-marburg.de/de/universitaet/administration/sicherheit/coronavirus){:target="_blank"} of the University of Marburg.
-This course is intended as a blended learning module in our study program although the provided introductions, explanations and examples might be useful for self-study, too.
 {: .notice--info}
 
 

@@ -23,7 +23,7 @@
 
 # Serve on GitHub
 url: https://geomoer.github.io
-baseurl: "/moer-mpg-data-analysis/"
+baseurl: "/moer-mpg-data-analysis"
 
 
 ##### Title ###################################################################
@@ -74,7 +74,7 @@ include:
 
 # Collections
 collections:
-  examples:
+  unit00:
     output: true
     permalink: /:collection/:title.html
   unit01:
@@ -119,16 +119,16 @@ collections:
 
 # Default settings
 defaults:
-  # examples
+  # unit00
   - scope:
       path: ""
-      type: examples
+      type: unit00
     values:
-      category: "examples"
-      tags: "Examples"
+      category: "How-to Data Analysis"
+      tags: "Unit 00"
       layout: single
       sidebar:
-        nav: "course_unit" 
+        nav: "course_unit"
   # unit01
   - scope:
       path: ""
