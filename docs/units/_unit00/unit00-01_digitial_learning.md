@@ -17,7 +17,7 @@ Subsequent sessions will be in a hybrid format, meaning that parts of the studen
 ## Virtual classroom
 
 We will use [Big Blue Button](https://www.uni-marburg.de/en/hrz/services/web-conferences/web-conferencing-with-bigbluebutton){:target="_blank"} as virtual classroom for our synchronous (hybrid) sessions.
-The Link to our classroom will be provided by the instructor and can additionally be found in Ilias.
+The Link to our classroom will be provided by the instructor and can additionally be found in [Ilias](https://ilias.uni-marburg.de/goto.php?target=crs_2593121&client_id=UNIMR){:target="_blank"}.
 
 
 ## Ilias
@@ -33,14 +33,7 @@ Note that you have to log in with your student account.
 ## HTML learning environment
 
 Your primary learning environment is this public homepage, which was created on GitHub.
-Here you find all learning materials, assignment tasks and help.
+Here you find all learning materials, assignment tasks, and help.
 
 
-<!-- GeoAI add: 
 
-## Course server
-
-Larger files are provided for download on our course server, which you can find [here](http://85.214.102.111/geo_data/data/) {:target="_blank"}.
-The credentials will be provided by the instructors.
-
- -->
