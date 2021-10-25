@@ -81,3 +81,11 @@ You can also embed plots, for example:
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot (see below).
 
 ``````
+
+## More fancy layouts?
+
+If you want more styling options for your markdown documents, 
+check out [this page](https://geomoer.github.io/moer-base-r/unit99/sl03_css.html){:target="_blank"}.
+
+
+

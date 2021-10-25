@@ -84,9 +84,10 @@ The graded course certificate will be based on an individual portfolio hosted as
 # Preparation and prerequisites
 
 The course assumes basic knowledge and skills in R and geo-information science.
-Additional resources for learning basic R skills can be found [here](https://geomoer.github.io//moer-base-r/){:target="_blank"}, which are highly recommended.
 
-
+This course uses additionally provided material for teaching basic R skills, 
+which can be found [here](https://geomoer.github.io/moer-base-r/){:target="_blank"}.
+{: .notice--success}
 
 # Instructor
 {% include author-profile.html %}

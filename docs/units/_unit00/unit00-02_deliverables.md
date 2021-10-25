@@ -1,5 +1,6 @@
 ---
 title: Deliverables
+toc: true
 header:
   image: '/assets/images/title/curve2.png'
   caption: '[Environmental Informatics Marburg](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics){:target="_blank"}'
@@ -11,9 +12,10 @@ We distinguish between unmarked and marked deliverables ("Studien- und Prüfungs
 Both are required for passing the course but only the latter are marked.
 Students will need to deliver marked (4) and unmarked (6) assignments on a regular basis ("homework") within one week.
 Details on the assignments and whether they will be marked or not can be found in the respective units.
+The submissions generally encompass R or R markdown AND the compiled html files.
 
 
-### Overview assignments
+### Overview
 
 
 | Assignment | Name and link                                                                                    | marked / unmarked  |
@@ -33,6 +35,11 @@ Details on the assignments and whether they will be marked or not can be found i
 
 The deadlines for uploading your assignment solutions -- both marked and unmarked -- to GitHub Classroom is 12:00 o'clock in the night between Monday and Tuesday before the next course session.
 {: .notice--info}
+
+Be aware that it will NOT be sufficient to start working on the assignments the day before the deadline.
+It will be necessary to solve a lot of disturbing and time-consuming problems in the programming world.
+So start early!!!
+{: .notice--warning}
 
 
 
@@ -56,11 +63,8 @@ final_grade <- round(0.5 * (assignment_1 + assignment_2 + assignment_3 + assignm
 final_grade
 ```
 
-
-
-
 Note that you do not have to achieve five points in each assignment or the MOHA.
-However, passing the course requires at least five points in regard to your final grade.
+However, passing the course requires at least five points in regard to your final grade and submitting the unmarked assignments in time.
 {: .notice--info}
 
 

@@ -17,7 +17,7 @@ This worksheet introduces you to R, R scripts and R markdown. Your submission wi
 ## Hello R and GitHub submission
 Please write an R script as an Rmd file with html output for the following task and commit it to your GitHub-based learning log:
 
-1. Assign the value of 2 to a variable called `a` and the value of 5 to a variable called `b`.
+1. Assign the value of five to a variable called `a` and the value of two to a variable called `b`.
 1. Compute the sum, difference, product and ratio of a and b (a always in the first place) and store the results to four different variables called `r1`, `r2`, `r3`, and `r4`.
 1. Create a vector `v1` which contains the values stored within the four variables from step 2.
 1. Add a fifth entry to vector `v1` which represents `a` by the power of `b` (i.e. `a**b`).
@@ -27,7 +27,7 @@ Please write an R script as an Rmd file with html output for the following task 
 1. Combine the two vectors `v1` and `v2` into a data frame called `df`. Each vector should become one column of the data frame so you will end up with a data frame having 5 rows and 2 columns.
 1. Make sure that the column with the data of `v1` is named *Results* and `v2` is named *Operation*.
 1. Show the entire content of `df`.
-1. Show just the entry of the 3 row and 1 column.
+1. Show just the entry of the cell in the second row and first column.
 
 Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub repository.
 

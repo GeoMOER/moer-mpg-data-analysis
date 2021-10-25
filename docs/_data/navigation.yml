@@ -3,13 +3,15 @@ main:
   - title: "Units"
     url: /units.html
   - title: "FAQ"
-    url: /faq.html
+    url: /unit00/unit00-03_faq.html
   - title: "Courses"
     url: https://geomoer.github.io/moer-info-page/ 
   - title: "Lab Home"
     url: https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics
+  - title: "Base R"
+    url: https://geomoer.github.io/moer-base-r/
   - title: "About"
-    url: about.html
+    url: /about.html
     
     
 docs:
@@ -18,7 +20,7 @@ docs:
       - title: "Units"
         url: /units.html
       - title: "FAQ"
-        url: /faq.html  
+        url: /unit00/unit00-03_faq.html
       - title: "Courses"
         url: https://geomoer.github.io/moer-info-page/         
       - title: "Lab Home"
