@@ -31,6 +31,9 @@ Details on the assignments and whether they will be marked or not can be found i
 | 11         | [MOHA](/moer-mpg-data-analysis/unit11/unit11-01_link-MOHA.html)                                  | marked             |
 
 
+The deadlines for uploading your assignment solutions -- both marked and unmarked -- to GitHub Classroom is 12:00 o'clock in the night between Monday and Tuesday before the next course session.
+{: .notice--info}
+
 
 
 ## MOHA
