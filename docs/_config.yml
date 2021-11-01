@@ -55,6 +55,8 @@ author:
 
 
 ##### Site configuration ######################################################
+search: true
+
 title_separator: "|"
 excerpt_separator: <!--more-->
 

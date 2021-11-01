@@ -245,3 +245,15 @@ df$Y
 For more information have a look at e.g. the respective 
 [sorting](http://www.statmethods.net/management/sorting.html) site at Quick R, 
 have a look into the package documentation or search the web.
+
+
+
+### Comments?
+
+<script src="https://gist.github.com/dirkzeuss/ef98f0eae1a0a75d448dafadfe891bd7.js"></script>
+
+
+
+
+
+
