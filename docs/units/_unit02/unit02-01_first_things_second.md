@@ -5,7 +5,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-Look closer at data sets and data types before focusing on the most important features of programming languages, namely run-time control and loop structures.
+Look closer at data types and object types before focusing on the most important features of programming languages, namely operators and control structures.
 
 <!--more-->
 
