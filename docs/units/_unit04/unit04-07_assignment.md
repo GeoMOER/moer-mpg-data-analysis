@@ -26,7 +26,8 @@ Please write an R markdown script which cleans the data set according to your li
 
 Since the cleaning of the administrative area information requires quite a few lines of code, write a function for this takes and save this function in a separate R file (not R markdown) in order to keep the main markdown script clear.
 
-Save your R functions and Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub repository.
+Save your R functions and Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
+Make sure that the created html file is also part of your GitHub classroom repository.
 
 Make sure you keep the cleaned dataset. You will need it in the next unit.
 

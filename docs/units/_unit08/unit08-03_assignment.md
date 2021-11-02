@@ -21,7 +21,8 @@ For implementing a cross-validation-based and quite simple tuning of an additive
 
 Write an R markdown script which tunes the prediction of beech harvest based on oak harvest using an additive model. The tuning should run over the number of knots between 3 and 13 and the estimate of the model performance for each knot should be based on a 100 times cross validation with 80 percent of the data set as training and the rest as testing samples. The cross validation should be reproducible. Please visualize (i) the root mean square error, (ii) the root mean square error +/- it's standard deviation and (iii) the adjusted R squared as a function of increasing knots (i.e. knots should be on the x axis). Since the root mean square error is much larger than the R squared values, normalize the root mean square errors to its maximum.
 
-Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub repository.
+Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
+Make sure that the created html file is also part of your GitHub classroom repository.
 
 
 

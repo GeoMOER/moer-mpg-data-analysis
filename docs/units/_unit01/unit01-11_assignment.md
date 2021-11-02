@@ -29,7 +29,7 @@ Please write an R script as an Rmd file with html output for the following task 
 1. Show the entire content of `df`.
 1. Show just the entry of the cell in the second row and first column.
 
-Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub repository.
+Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub classroom repository.
 
 As you might become aware by reading this assignment, there is a great chance that you have to gather considerable more information to actually solve the given assignment. More precisely, once you have solved the R programming task you are not be off the hook since you have to familiarize yourself with Git and GitHub to actually submit your solution.
 {: .notice--warning}

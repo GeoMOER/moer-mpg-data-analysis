@@ -24,7 +24,8 @@ Test the function by predicting the winter wheat yield on the basis of any other
 Write an Rmd file with html output which tests the functionality of the above functions and graphically shows the performance of the individual models computed during the feature selection with an increasing order of variables used for the prediction. The Rmd file should also print the performance and the variables used within the final model in the end.
 
 
-Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub repository.
+Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
+Make sure that the created html file is also part of your GitHub classroom repository.
 
 This assignment will be marked.
 {: .notice--info}

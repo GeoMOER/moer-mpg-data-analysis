@@ -27,7 +27,8 @@ Please write exactly one sentence which summarizes the key message of both the h
 
 Once you have described your data, please have a closer look on the normal distribution assessment. For that, please evaluate how often a normal distribution test on the residuals would reject it's null-hypothesis if a regression model is not computed on the entire dataset but 100 regression models are computed on 100 sub-samples of the dataset. Each of the 100 sub-samples should contain 50 value pairs chosen randomly from the entire data set. Please state or visualize the result and discuss it with respect to sample design and the reliability of test results (three sentence max).
 
-Save your R functions and Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub repository.
+Save your R functions and Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
+Make sure that the created html file is also part of your GitHub classroom repository.
 
 
 This assignment will be marked.

@@ -31,7 +31,7 @@ For this task, divide the NAO index provided above into "positive" and "negative
 Finally, develop a strategy to cross-check the significance indicated by the linear model.
 
 Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
-Make sure that the created html file is also part of your GitHub repository.
+Make sure that the created html file is also part of your GitHub classroom repository.
 
 
 

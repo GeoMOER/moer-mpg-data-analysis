@@ -26,6 +26,7 @@ Please write an R script as an Rmd file with html output for the following task 
 1. Change the above modified loop in such a way, that the iteration is controlled by a `lapply` not by a for-loop. Save the returning information from the `lapply` function in a variable and print the content of this variable after the loop.
 1. Finally change the above variable (i.e. do not modify the loop anymore but just include one more line) in such a way that the content is not printed as a nested list but a vector (i.e. flatten the list).
 
-Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub repository.
+Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
+Make sure that the created html file is also part of your GitHub classroom repository.
 {: .notice--info}
 

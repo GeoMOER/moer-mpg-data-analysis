@@ -25,7 +25,8 @@ Please write an R script as an Rmd file with html output for the following task 
 1. Create another visualization which - in the same figure panel - shows how each beech harvest over the time span is related to each of the oak, pine, spruce and colored wood harvests in a 2 by 2 grid (i.e. arrange the figures in a 2 columns and 2 rows layout).
 1. Include your opinion on what could be the key message of these figures in two sentence max.
 
-Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub repository.
+Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
+Make sure that the created html file is also part of your GitHub classroom repository.
 
 This assignment will be marked.
 {: .notice--info}

@@ -43,7 +43,8 @@ Please write an Rmd file with html output in which the performance for predictin
 The performance should be tested using the RMSE between predicted and observed monthly precipitation for the last two full years of the dataset. 
 Please print the parameters (i.e. p, d, q...) as well as the AIC and RMSE of your optimal model and compare them with the corresponding values retrieved using the ``forecast::auto.arima`` function (for the later you can just use the summary function although it gives more information than necessary). Please also visualize the prediction of your model and the automatically retrieved one in a simple plot (one for each model) and add the actually observed values to the plot. Write a one-sentence-statement about the differences.
 
-Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub repository.
+Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
+Make sure that the created html file is also part of your GitHub classroom repository.
 
 You can of course use 6 lapply loops for iterating over the parameters or you can have a look at the expand.grid function which realizes any combination of the supplied parameters in a single data frame which can easily be used for this task.
 {: .notice--info}

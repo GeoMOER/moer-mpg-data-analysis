@@ -18,7 +18,8 @@ After completing this worksheet you should have gained some experience in search
 ## Graphics
 Please create a rather 1:1 copy of the tutorial on visual data exploration from unit 3 which is also based on a Rmd file with html output but this time use the functionality of the lattice or ggplot2 packages for this. Don't worry about copy rights: the course is published under the [Creative Commons "Attribution-ShareAlike"](https://creativecommons.org/licenses/by-sa/4.0/). Hence, you are already allowed to re-use it and you are allowed to change it.
 
-Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub repository.
+Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
+Make sure that the created html file is also part of your GitHub classroom repository.
 
 
 
