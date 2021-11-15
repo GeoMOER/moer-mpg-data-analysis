@@ -13,3 +13,7 @@ Follow the link to start the Marburg Open Hackathon (MOHA)
 
 
 
+## Questions?
+.. can be entered here
+
+<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit11" theme="github-light" crossorigin="anonymous" async> </script> 

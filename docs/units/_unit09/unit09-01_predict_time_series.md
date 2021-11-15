@@ -27,3 +27,10 @@ The above graphic shows the auto-correlation between the individual mean monthly
 {% include figure image_path="/assets/images/air_temperature_partial_auto-correlation.jpg" alt="Illustration of auto correlation of time series data." %}
 
 The above graphic shows the partial auto-correlation between the individual mean monthly air temperatures shown in the first graph.
+
+
+## Comments?
+You can leave comments below if you have questions or remarks about any of the text or code in this unit. 
+Please copy the corresponding line into your comment to make it easier to answer your question.
+
+<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit09" theme="github-light" crossorigin="anonymous" async> </script> 

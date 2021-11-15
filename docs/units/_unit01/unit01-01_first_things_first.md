@@ -22,3 +22,9 @@ At the end of this unit you should be able to
 
 Examples from a very large and fast growing cosmos: [R-bloggers](https://www.r-bloggers.com/){:target="_blank"}.
 
+
+## Comments?
+You can leave comments below if you have questions or remarks about any of the text or code in this unit. 
+Please copy the corresponding line into your comment to make it easier to answer your question.
+
+<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit01" theme="github-light" crossorigin="anonymous" async> </script> 

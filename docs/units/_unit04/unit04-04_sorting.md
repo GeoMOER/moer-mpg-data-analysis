@@ -248,10 +248,6 @@ have a look into the package documentation or search the web.
 
 
 
-### Comments?
-
-<script src="https://gist.github.com/dirkzeuss/ef98f0eae1a0a75d448dafadfe891bd7.js"></script>
-
 
 
 

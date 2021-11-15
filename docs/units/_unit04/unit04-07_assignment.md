@@ -30,4 +30,4 @@ Save your R functions and Rmd file in your course repository, knitr it, update (
 Make sure that the created html file is also part of your GitHub classroom repository.
 
 Make sure you keep the cleaned dataset. You will need it in the next unit.
-
+{: .notice--info}

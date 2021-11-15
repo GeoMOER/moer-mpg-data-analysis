@@ -22,4 +22,8 @@ Additional learning material can be found in the accompanying [Base R course](ht
 [simple visualizations](https://geomoer.github.io/moer-base-r/unit09/unit09-01_Intro.html){:target="_blank"}.
 
 
+## Comments?
+You can leave comments below if you have questions or remarks about any of the text or code in this unit. 
+Please copy the corresponding line into your comment to make it easier to answer your question.
 
+<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit03" theme="github-light" crossorigin="anonymous" async> </script> 

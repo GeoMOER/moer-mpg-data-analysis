@@ -29,3 +29,10 @@ Such an error estimation strategy is generally called (leave-one-out) _cross-val
 For a deeper look into cross-validation strategies related to spatially and temporally dependent data, have a look at [Meyer et al. 2018](https://www.sciencedirect.com/science/article/pii/S1364815217310976?via%3Dihub){:target="_blank"}
 
 {% include figure image_path="https://imgs.xkcd.com/comics/extrapolating.png" alt="Comic illustrating extrapolation." caption_url="[CC-BY by xkcd.com](https://xkcd.com/605/){:target='_blank'}" %}
+
+
+## Comments?
+You can leave comments below if you have questions or remarks about any of the text or code in this unit. 
+Please copy the corresponding line into your comment to make it easier to answer your question.
+
+<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit06" theme="github-light" crossorigin="anonymous" async> </script> 

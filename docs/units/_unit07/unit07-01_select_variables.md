@@ -24,3 +24,10 @@ The graphic above shows how the cross-validation performance of two regression m
 For a deeper look into variable selection have a look at [Meyer et al. 2016](https://www.mdpi.com/2072-4292/8/9/732){:target="_blank"}
 
 {% include figure image_path="https://imgs.xkcd.com/comics/seat_selection.png" alt="Comic illustrating the selection of a seat in a plane." caption_url="[CC-BY by xkcd.com](https://xkcd.com/726/){:target='_blank'}" %}
+
+
+## Comments?
+You can leave comments below if you have questions or remarks about any of the text or code in this unit. 
+Please copy the corresponding line into your comment to make it easier to answer your question.
+
+<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit07" theme="github-light" crossorigin="anonymous" async> </script> 

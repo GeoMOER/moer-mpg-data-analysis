@@ -20,3 +20,10 @@ When analysing time series data, the decomposition into the respective component
 {% include figure image_path="/assets/images/time_series_decomposition.jpg" alt="Illustration of time series decomposition using the R CO2 dataset as an example." %}
 
 The above graphic shows the decomposition of the CO2 dataset from R's ``forecast`` library (Mauna Loa atmospheric CO2 concentration).
+
+
+## Comments?
+You can leave comments below if you have questions or remarks about any of the text or code in this unit. 
+Please copy the corresponding line into your comment to make it easier to answer your question.
+
+<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit10" theme="github-light" crossorigin="anonymous" async> </script> 

@@ -21,3 +21,9 @@ Use the optimal model settings for a given set of explanatory variables in order
 The graphic above shows how a changing number of knots affects the result of a generalized additive model (GAM). With increasing knots, the model becomes more flexible to adapt itself to the dataset. By increasing the number of knots, the dataset provided to the model is fitted with increasing accuracy. However, overfitting to the sample dataset increases, too.
 
 
+## Comments?
+You can leave comments below if you have questions or remarks about any of the text or code in this unit. 
+Please copy the corresponding line into your comment to make it easier to answer your question.
+
+<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit08" theme="github-light" crossorigin="anonymous" async> </script> 
+
