@@ -88,7 +88,7 @@ It can be shown that for large sample sizes, the mean squared error (mss_resid) 
 * if the slope is zero, then mean squared and model error are equal and the ration of both is 1.
 * if the slope is not zero, then mean squared model error is larger than the mean squared error and the ratio is larger than 1. 
 
-This provides us the test statistic for the *null-hypothesis* that the the true slope is not different from 0.
+This provides us the test statistic for the *null-hypothesis* that the true slope is not different from 0.
 
 ```r
 f_value <- mss_model / mss_resid
