@@ -1,5 +1,5 @@
 ---
-title: "Cross-validation"
+title: "Cross validation"
 toc: true
 toc_label: In this example
 header:
@@ -13,20 +13,25 @@ To assess the prediction performance of a model in a more independent manner, th
 
 The straight-forward way for a test on an independent sample is of course the one which actually fits the model on sample _A_ and tests it on a completely different sample _B_. 
 However, in real-world applications, the required sample size is not sufficient in many cases. 
-Therefore, cross-validation - althgough not entierly independent - is a good alternative to get an idea of the model performance for data values which have not been part of the fitted model. 
+Therefore, cross validation - although not entirely independent - 
+is a good alternative to get an idea of the model performance for data values, which have not been part of the fitted model. 
 
-In principal, there are two strategies for cross-validation:
+In principal, there are two strategies for cross validation:
 
-* **Leave-one-out cross-validation**: in this case, one value pair or data point of the sample data set is left out during model fitting and the model accuracy is estimated based on the quality of the prediction for the left-out value. 
+* **Leave-one-out cross validation**: in this case, one value pair or data point of the sample data set is left out during model fitting 
+and the model accuracy is estimated based on the quality of the prediction for the left-out value. 
 In order to obtain a sufficiently large sample size, this procedure is iterated over all value pairs of the data set (i.e. each data point is left out once).
 
-* **Leave-many-out cross-validation**: in this case, more than one value pair or data point of the sample data set is left out during model fitting and the model accuracy is estimated based on the quality of the prediction for the left-out samples. 
-This strategy is suitable for larger data sets, in which e.g. 80% of the data can be used as _training_ data for fitting and 20% can be used as independent data for _validation_ (aka _testing_). 
+* **Leave-many-out cross validation**: in this case, more than one value pair or data point of the sample data set is left out during model fitting 
+and the model accuracy is estimated based on the quality of the prediction for the left-out samples. 
+This strategy is suitable for larger data sets, in which e.g. 80% of the data can be used as _training_ data for fitting 
+and 20% can be used as independent data for _validation_ (aka _testing_). 
 The procedure can of course be repeated by creating models for different random training data sets and testing them using the respective left-out samples. 
 Please note that independency is compromised to a small degree in the latter case. 
-On the other hand, one can get a better impression of the model performance, especially if the different validation data sets are not averaged but used independently for geting an idea of the _variation_ of the performance.
+On the other hand, one can get a better impression of the model performance, 
+especially if the different validation data sets are not averaged but used independently for getting an idea of the _variation_ of the performance.
 
-To illustrate the concept of cross-validation, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html){:target='_blank'} 
+To illustrate the concept of cross validation, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html){:target='_blank'} 
 and use `x1` and `y1` as independent and dependent variable, respectively.
 
 The statistics of a linear regression model would be:
@@ -80,11 +85,12 @@ summary(lmod)
 ## F-statistic: 17.99 on 1 and 9 DF,  p-value: 0.00217
 ```
 
-## Leave-one-out cross-validation
-For the leave-one-out cross-validation, the training sample is comprised by all but one value pairs of the data set and the left-out data pair is used as validation sample. The procedure is typically iterated over the entire data set, i.e. each value is left-out once.
+## Leave-one-out cross validation
+For the leave-one-out cross validation, the training sample is comprised by all but one value pairs of the data set and the left-out data pair is used as validation sample. 
+The procedure is typically iterated over the entire data set, i.e. each value is left-out once.
 
 ```r
-# Leave one out cross-validation
+# Leave one out cross validation
 cv <- lapply(seq(nrow(anscombe)), function(i){
   train <- anscombe[-i,]
   test <- anscombe[i,]
@@ -111,12 +117,12 @@ plot(cv$obsv, (cv$obsv - cv$pred))
 ![]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-2-1.png)<!-- -->
 
 Based on this example, one could compute something like the F and r-squared values of an anova. 
-Notably, compared to the "internal" F-test of the anova from the original model and the r-squared value, the cross-validation indicates a less accurate prediction.
+Notably, compared to the "internal" F-test of the anova from the original model and the r-squared value, the cross validation indicates a less accurate prediction.
 
 ```r
-data.frame(NAME = c("cross-validation F value",
+data.frame(NAME = c("cross validation F value",
                     "linear model F value", 
-                    "cross-validation r squared",
+                    "cross validation r squared",
                     "linear model r squared"),
            VALUE = c(round(mss_model / mss_resid, 2),
                      round(anova(lmod)$'F value'[1], 2),
@@ -126,13 +132,13 @@ data.frame(NAME = c("cross-validation F value",
 
 ```
 ##                         NAME VALUE
-## 1   cross-validation F value 12.43
+## 1   cross validation F value 12.43
 ## 2       linear model F value 17.99
-## 3 cross-validation r squared  0.50
+## 3 cross validation r squared  0.50
 ## 4     linear model r squared  0.67
 ```
 
-The range of r-squared values from the individual cross-validation models is computed by 
+The range of r-squared values from the individual cross validation models is computed by 
 
 ```r
 max(cv$model_r_squared) - min(cv$model_r_squared)
@@ -182,8 +188,8 @@ data.frame(NAME = c("Mean error (ME)", "Std. error of ME",
 
 
 
-## Leave-many-out cross-validation
-For the leave-many-out cross-validation, the following example computes 100 different models. For each model, a training sample of 80% of the data set is randomly chosen.
+## Leave-many-out cross validation
+For the leave-many-out cross validation, the following example computes 100 different models. For each model, a training sample of 80% of the data set is randomly chosen.
 
 
 ```r
@@ -231,9 +237,9 @@ mss_resid <- ss_resid / (length(cv_sample$obsv) - 2)
 Other error metrics for describing the performance of the prediction:
 
 ```r
-data.frame(NAME = c("cross-validation F value",
+data.frame(NAME = c("cross validation F value",
                     "linear model F value", 
-                    "cross-validation r squared",
+                    "cross validation r squared",
                     "linear model r squared"),
            VALUE = c(round(mss_model / mss_resid, 2),
                      round(anova(lmod)$'F value'[1], 2),
@@ -243,9 +249,9 @@ data.frame(NAME = c("cross-validation F value",
 
 ```
 ##                         NAME  VALUE
-## 1   cross-validation F value 403.81
+## 1   cross validation F value 403.81
 ## 2       linear model F value  17.99
-## 3 cross-validation r squared   0.48
+## 3 cross validation r squared   0.48
 ## 4     linear model r squared   0.67
 ```
 
@@ -253,7 +259,7 @@ data.frame(NAME = c("cross-validation F value",
 <!--
 Das ist seltsam hier und sollte gecheckt werden. Warmum gibt es r-squareds > 1 in cv_sample$r_squared?
 
-The range of r-squared values from the individual cross-validation models is computed by 
+The range of r-squared values from the individual cross validation models is computed by 
 
 ```r
 max(cv_sample$r_squared) - min(cv_sample$r_squared)
