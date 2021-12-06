@@ -2,6 +2,9 @@
 title: "Marked Assignment: Wheat vs. everything else"
 toc: true
 toc_label: In this worksheet
+header:
+  image: "/assets/images/teaser/ffs_beta2.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics){:target="_blank"}'
 ---
 
 This worksheet uses the crop dataset cleaned previously to extend the prediction of winter wheat to multiple variables using a forward feature selection approach.
@@ -17,7 +20,7 @@ After completing this worksheet you should have gained some experience in design
 
 
 ## Forward feature selection in multiple linear regression models
-Please write an R function which implements a forward feature selection approach for a multiple linear regression model. The function should have two options for the performance measure: (i) the Akaike information criteria (AIC) and (ii) a leave-many-out cross-validation strategy which uses three folds.
+Please write an R function which implements a forward feature selection approach for a multiple linear regression model. The function should have two options for the performance measure: (i) the Akaike information criteria (AIC) and (ii) a leave-many-out cross-validation strategy which uses four folds.
 
 Test the function by predicting the winter wheat yield on the basis of any other yield included in your crop dataset.
 

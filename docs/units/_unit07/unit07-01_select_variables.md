@@ -1,5 +1,8 @@
 ---
 title: Select your variables
+header:
+  image: "/assets/images/teaser/ffs_beta2.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics){:target="_blank"}'
 ---
 
 Evaluate the importance of your independent variables and select an optimal subset for your prediction model.
@@ -9,12 +12,12 @@ Evaluate the importance of your independent variables and select an optimal subs
 ## Learning objectives
 At the end of this session you should be able to
 * discuss the importance of feature selection strategies in multiple variable models,
-* decide which feature selection strategy to use in some standard cases,
+* decide, which feature selection strategy to use in some standard cases, and
 * implement some basic feature selection strategies.
 
 
 ## Basic idea of variable selection
-Use only those explanatory variables which best explain the dependent variable without overfitting the model to the sample.
+Use only those explanatory variables, which best explain the dependent variable without overfitting the model to the sample.
 
 
 {% include figure image_path="/assets/images/variable_selection.jpg" alt="Increasing and then decreasing R squared with increasing number of variables." caption="Influence of variables used for two regression models on model performance." %}
