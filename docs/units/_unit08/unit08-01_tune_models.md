@@ -1,5 +1,8 @@
 ---
-title: Tune your model
+title: "Tune your model"
+header:
+  image: "/assets/images/title/curve2.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 Evaluate model tuning strategies and find optimal settings for your prediction model.
@@ -8,13 +11,12 @@ Evaluate model tuning strategies and find optimal settings for your prediction m
 
 ## Learning objectives
 At the end of this session you should be able to
-* explain some basic principles of (general) additive models and the LOESS smoother
-* discuss the importance of model tuning and it's tripping hazards
-* implement some basic model tuning strategies
+* explain some basic principles of (general) additive models and the LOESS smoother,
+* discuss the importance of model tuning and its tripping hazards, and
+* implement some basic model tuning strategies.
 
 
 ## Basic idea of model tuning
-Use the optimal model settings for a given set of explanatory variables in order to best explain the dependent variable without overfitting the model to the sample.
 
 {% include figure image_path="/assets/images/gam.jpg" alt="Illustration of a generalized additive model with increasing knots." %}
 

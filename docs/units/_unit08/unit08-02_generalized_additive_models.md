@@ -1,14 +1,19 @@
 ---
 title: "Generalized additive models"
+header:
+  image: "/assets/images/title/curve2.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 toc: true
 toc_label: In this example
 ---
 
-So far, the models have only considered linear relationships. The corresponding model type to simple linear models would be an additive model and for poisson or logistic linear regression, it would be the generalized additive model (GAM). Since (all?) implementations of GAM also allow for additive models (i.e. using gaussian instead of e.g. poisson distribution functions), we will not distinguish between AM and GAM in the following.
+So far, the models we have seen only considered linear relationships. 
+The corresponding model type to simple linear models would be an additive model and for poisson or logistic linear regression, it would be the generalized additive model (GAM). 
+Since (all?) implementations of GAMs also allow for additive models (i.e. using gaussian instead of e.g. poisson distribution functions), we will not distinguish between AM and GAM in the following.
 
 To illustrate non-linear fittings, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) but modify variable x3 and use y1 and y2.
 
-Just for completeness, the following code shows the modification of the anscombe data set although it is not relevant to know anything about it for the examples below:
+Just for completeness, the following code shows the modification of the anscombe dataset although it is not relevant to know anything about it for the examples below:
 
 ```r
 library(mgcv)
@@ -42,7 +47,7 @@ df <- data.frame(y = y,
 ```
 
 ### From linear regression models to generalized additive models
-To start with, the following plots shows the data set used within this example and the result of a simple linear regression model.
+As a starter, the following plots show the dataset used in this example and the result of a simple linear regression model.
 
 ```r
 plot(df$x, df$y)
@@ -77,9 +82,11 @@ summary(lmod)
 ## Multiple R-squared:  0.6567,	Adjusted R-squared:  0.6395 
 ## F-statistic: 38.26 on 1 and 20 DF,  p-value: 4.833e-06
 ```
-Provided that all the assumptions relevant for linear models are met, x is significant and the model explains about 0.6567 percent of the variation in the data set.
+Provided that all the assumptions relevant for linear models are met, x is significant and the model explains about 0.6567 percent of the variation in the dataset.
 
-One might think that replacing `lm` with `mgcv:gam` (i.e. the gam function from the mgcv package) would be enough to turn our model in an additive model. However, this is not true. In fact, `gam` with (it's default) gaussian family acts exactly as the `lm` function if the same forumla is supplied. We will show this by plotting the gam-based regression line (dotted, red) on top of the one from the linear model above (grey).
+One might think that replacing `lm` with `mgcv:gam` (i.e. the gam function from the mgcv package) would be enough to turn our model in an additive model. 
+However, this is not true. In fact, `gam` with (its default) gaussian family acts exactly as the `lm` function if the same forumla is supplied. 
+We will show this by plotting the gam-based regression line (dotted, red) on top of the one from the linear model above (grey).
 
 ```r
 gammod <- gam(y ~ x, data = df, familiy = gaussian())
@@ -121,9 +128,12 @@ summary(gammod)
 ## R-sq.(adj) =   0.64   Deviance explained = 65.7%
 ## GCV = 1.5586  Scale est. = 1.4169    n = 22
 ```
-No surprise. All test statistics are equal (it is the same model!). The only difference is due to some wording since the R squared value in the linear model (0.6567) can no be found in the "deviance explained".
+No surprise. All test statistics are equal (it is the same model!). 
+The only difference is due to some wording since the R squared value in the linear model (0.6567) can now be found under "deviance explained".
 
-Obviously, there must be more than just swithing a function call to come from linear models to additive models. And there is: while for simple linear models, the equation would be something like y = a+bx, a smoothing term replace the slope b in additive models: y = a+s(x). By adding this term to the `gam` function and using a penalized regression spline (fx = FALSE which is the default), we finally get a first non-linear model:
+Obviously, there must be more than just switching a function call to come from linear models to additive models. 
+And there is: while for simple linear models the equation would be something like y = a + bx, a smoothing term replace the slope b in additive models: y = a+s(x). 
+By adding this term to the `gam` function and using a penalized regression spline (fx = FALSE, which is the default), we finally get a first non-linear model:
 
 ```r
 gammod <- gam(y ~ s(x, fx = FALSE), data = df)
@@ -164,7 +174,10 @@ summary(gammod)
 ## R-sq.(adj) =  0.751   Deviance explained = 77.8%
 ## GCV = 1.1471  Scale est. = 0.97807   n = 22
 ```
-A look on the model performance reveils that the explained deviance has increased. Assuming that all model assumptions, which are actually the same as for linear models (except the linear relationship) are met, the explained deviance has increased to almost 78 percent. In order to check the model assumptions, you can use e.g. the `gam.checked` function.
+A look on the model performance reveals that the explained deviance has increased. 
+Assuming that all model assumptions, which are actually the same as for linear models (except the linear relationship) are met, the explained deviance has increased to almost 78 percent. 
+
+In order to check the model assumptions, you can use e.g. the `gam.checked` function:
 
 
 ```r
@@ -198,7 +211,9 @@ plot(gammod)
 
 
 ### Optimal smoother selection and reducing the risk of overfitting
-One might wonder, why this and no other smoother has been found in the end. The reason relies in the way, the default penalized regression works (which is beyond the scope of this example but to sum it up: the regression penalizes each added smoothing term, i.e. each reduction in the resulting degrees of freedom of the model). To illustrate what would happen if no penalized but just a simple spline regression would be used, one can set the fx option to TRUE:
+One might wonder why this and no other smoother has been found in the end. 
+The reason lies in the way the default penalized regression works (which is beyond the scope of this example but to sum it up: the regression penalizes each added smoothing term, i.e. each reduction in the resulting degrees of freedom of the model). 
+To illustrate what would happen if no penalized but just a simple spline regression would be used, one can set the fx option to TRUE:
 
 ```r
 gammod <- gam(y ~ s(x, bs = "tp", fx = TRUE), data = df)
@@ -239,10 +254,12 @@ summary(gammod)
 ## R-sq.(adj) =   0.74   Deviance explained = 85.1%
 ## GCV = 1.8733  Scale est. = 1.0218    n = 22
 ```
-Now the function is highly non-linear and 9 degrees of freedom are used for the smooth terms. The explained deviance has increased but overfitting is very likely (the R squared has declined, too, but we should not give to much emphasis on that).
+Now the function is highly non-linear and 9 degrees of freedom are used for the smooth terms. 
+The explained deviance has increased but overfitting is very likely (the R squared has declined, too, but we should not give to much emphasis on that).
 
 
-If you do not want to use the standard (penalty) model selection, a feasible approach for the additive models might be to select the number of knots and iterate over them in e.g. a leave-many-out cross validation approach. For illustration purposes, the following will just show the iteration and visualize the different model results in one plot:
+If you do not want to use the standard (penalty) model selection, a feasible approach for the additive models might be to select the number of knots and iterate over them in e.g. a leave-many-out cross validation approach. 
+For illustration purposes, the following will just show the iteration and visualize the different model results in one plot:
 
 ```r
 knots <- seq(3, 19)
@@ -267,7 +284,10 @@ legend(13, 7.5, paste("knots", knots, sep = " "), col = cols, lty=2, cex=0.75)
 
 
 ### LOESS
-While the above examples are more straight forward if one comes from the implementation side of a linear model (i.e. `lm`), the locally weighted scatterplot smoothing (LOESS) is more straight forward from a conceptual point of view. It uses local linear regressions defined on moving subsets of the data set. For example, if the moving window is set to 21 pixels, than only the 10 left and right neighbours of the actually considered value (target) are considered and a linear regression is computed based on this subset. The term weighted indicates that not all of the neighbouring pixels are equally treated but the ones closer to the target are weighted higher. The following shows one example using 75 percent of all the data pairs in order to compute the local regression for each target value:
+While the above examples are more straight forward if one comes from the implementation side of a linear model (i.e. `lm`), the locally weighted scatterplot smoothing (LOESS) is more straight forward from a conceptual point of view. It uses local linear regressions defined on moving subsets of the dataset. 
+For example, if the moving window is set to 21, then only the 10 left and 10 right neighbors of the actually considered value (target) are considered and a linear regression is computed based on this subset. 
+The term "weighted" indicates that not all of the neighboring values are equally treated but the ones closer to the target are weighted higher. 
+The following shows one example using 75 percent of all the data pairs in order to compute the local regression for each target value:
 
 ```r
 loessmod <- loess(y ~ x, data = df, span = 0.75)
