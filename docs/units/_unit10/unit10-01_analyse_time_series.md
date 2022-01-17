@@ -1,5 +1,8 @@
 ---
 title: Analyse Your Temporal Data
+header:
+  image: "/assets/images/teaser/air_temperature.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 Analyse your time series data and decompose it into seasonal characteristics and long-term trends.
@@ -15,7 +18,7 @@ At the end of this session you should be able to
 
 ## Time series decomposition
 Dynamics of environmental variables are often composed of very short term, intermediate (seasonal) and long-term (trend) variations. 
-When analysing time series data, the decomposition into the respective components offers insights into driver-response relationships as basis for further analysis.
+When analysing time series data, the decomposition into the respective components offers insights into driver-response relationships as basis for further analyses.
 
 {% include figure image_path="/assets/images/time_series_decomposition.jpg" alt="Illustration of time series decomposition using the R CO2 dataset as an example." %}
 

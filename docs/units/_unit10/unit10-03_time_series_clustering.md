@@ -2,11 +2,14 @@
 title: "Time series clustering"
 toc: true
 toc_label: In this example
+header:
+  image: "/assets/images/teaser/air_temperature.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 Just as one last example on time series analysis for this module and mainly for demonstrating that this module only tipped a very small set of analysis concepts out there, we will have a glimpse on time series clustering. 
-To illustrate this concept, we will again use the (mean monthly) air temperature record of the weather station in Cölbe (which is closest to the Marburg university forest). 
-The data has been supplied by the [German Weather Service](ftp://opendata.dwd.de/climate_environment/CDC/observations_germany). 
+To illustrate this concept, we will again use the (mean monthly) air temperature record of the weather station in Cölbe (which is closest to Marburg). 
+The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany). 
 For simplicity, we will remove the first six entries (July to December 2006 to have full years).
 
 
@@ -24,7 +27,9 @@ Hence, the most important part to remember is that cluster algorithms will alway
 As a consequence: never use clustering if you are not sure that there definitively are groups in the data. 
 Moreover, clustering is generally applied only if you have more than one time series from more than one location. 
 
-Of course there is no rule without exception and the one exception here is: if you want to show some code and do not want to introduce a new dataset just for this last example, you can use it on a dataset where you have no glimps of a grouping as long as you are not the one who gets the grading in the end. 
+Of course there is no rule without exception and the one exception here is: 
+if you want to show some code and do not want to introduce a new dataset just for this last example, 
+you can use it on a dataset where you have no glimpse of a grouping as long as you are not the one who gets the grading in the end. 
 
 Aside from having no idea if we have a grouping and aside that we have only one single station record, let's have a look at the above time series. 
 There might be a difference between 2010 and the rest of the years since 2010 shows very warm summer and cold winter temperatures. 

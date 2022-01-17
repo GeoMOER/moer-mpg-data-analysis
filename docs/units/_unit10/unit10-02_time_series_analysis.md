@@ -2,12 +2,15 @@
 title: "Time Series Decomposition"
 toc: true
 toc_label: In this example
+header:
+  image: "/assets/images/teaser/air_temperature.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 
 After looking into time-series forecasting, we will now switch to some basics of describing time series. 
-To illustrate this, we will again use the (mean monthly) air temperature record of the weather station in Cölbe (which is closest to the Marburg university forest). 
-The data has been supplied by the [German Weather Service](ftp://opendata.dwd.de/climate_environment/CDC/observations_germany). 
+To illustrate this, we will again use the (mean monthly) air temperature record of the weather station in Cölbe (which is closest to Marburg). 
+The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany). 
 For simplicity, we will remove the first six entries (July to December 2006 to have full years).
 
 
@@ -149,7 +152,7 @@ plot(tam_ts_stl)
 
 # Trend estimation
 While the above helps us in decomposing a time series into several components, we are sometimes also interested in linear trends over time. 
-Since seasonal signals strongly influence such trends, we generally remove the seasonal signal and analyse the anomalies. 
+Since seasonal signals strongly influence such trends, we generally remove the seasonal signal and analyze the anomalies. 
 In order to remove the seasonal signal, we can average over all values for each month and subtract it from the original time series:
 
 ```r

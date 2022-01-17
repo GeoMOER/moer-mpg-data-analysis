@@ -2,6 +2,9 @@
 title: "Time Series"
 toc: true
 toc_label: In this example
+header:
+  image: "/assets/images/teaser/air_temperature.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 
@@ -9,8 +12,8 @@ Although we already had contact with some temporal datasets, we did not have a c
 Time series datasets often inhibit some kind of autocorrelation, which is a no go for the models we have used so far. 
 The first more formal contact with time series will therefore highlight these characteristics. The structure of this example follows Zuur et al. 2007 to a certain degree.
 
-To exemplarily illustrate a time series analysis, air temperature records of the weather station in Coelbe (which is closest to the Marburg university forest) will be used. 
-The data has been supplied by the [German Weather Service](ftp://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}.
+To exemplarily illustrate a time series analysis, air temperature records of the weather station in Cölbe (which is the one closest to Marburg) will be used. 
+The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}.
 
 
 
@@ -59,7 +62,8 @@ tail(dwd)
 ## 83302            4.5          99 eor
 ```
 
-In order to plot the dataset in a correct manner (i.e. without large gaps at the end of the year when e.g. 2006123123 switches to 2007010100), the data can either be tranformed to a timeseries ``ts`` object or the date column can be converted to some kind of date format. 
+In order to plot the dataset in a correct manner (i.e. without large gaps at the end of the year when e.g. 2006123123 switches to 2007010100), 
+the data can either be tranformed to a timeseries ``ts`` object or the date column can be converted to some kind of date format. 
 Since we will have a closer look on ``ts`` objects later, let us start with the date conversion. 
 For this purpose, it is necessary to additionally provide minutes to the given date/hour information.
 
@@ -85,7 +89,7 @@ plot(dwd$DATUM, dwd$LUFTTEMPERATUR)
 As one can see, there is a clear annual pattern (surprise, surprise). 
 To have a closer look on this pattern, one simple option would be a set of boxplots showing the variation within each month over the entire dataset. 
 To do so, the data in the boxplot has to be grouped by months, what requires a list indicating the class (i.e. month) each temperature record belongs to. 
-The easiest way is to create an additional column in the data frame and copy the characters which define the month in the original date column to it.
+The easiest way is to create an additional column in the data frame and copy the characters, which define the months in the original date column to it.
 
 ```r
 dwd$AGG_M <- substr(dwd$MESS_DATUM, 5, 6)
@@ -94,7 +98,7 @@ boxplot(dwd$LUFTTEMPERATUR ~ dwd$AGG_M)
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-5-1.png)<!-- -->
 
-If you wonder about the distribution, you can use what we learned so far:
+If you wonder about the distribution, you can use what we have learned so far:
 
 ```r
 par_org <- par()
@@ -114,7 +118,10 @@ par(par_org)
 So far, we always assumed that different observations are independent of each other - a concept which cannot be hold for many time series. 
 Understanding auto-correlation is rather easy. 
 It is the Pearson correlation we already know but not computed based on two different datasets/variables but computed using the same time-series dataset with a temporal lag. 
-For example, the auto-correlation for a lag of 1 would compare each original value observed at time t with the observed value at time t+1. A lag of 10 indicates that observation at time t is correlated with observation t+10 and so on. Please note that the number of available data pairs decreases (e.g. if the dataset has 30 observations, one has 29 pairs for lag 1 but only 1 pair for lag 30). Therefore, it does not make sense to try any possible lag but restrict it to a few lags or to lags which one expext to be highly correlated (e.g. lag 12 for the monthly temperatures above).
+For example, the auto-correlation for a lag of 1 would compare each original value observed at time t with the observed value at time t+1. 
+A lag of 10 indicates that observation at time t is correlated with observation t+10 and so on. 
+Please note that the number of available data pairs decreases (e.g. if the dataset has 30 observations, one has 29 pairs for lag 1 but only 1 pair for lag 30). 
+Therefore, it does not make sense to try any possible lag but restrict it to a few lags expected to be highly correlated (e.g. lag 12 for the monthly temperatures above).
 
 While one can have a look at the actual correlation values, a visualization generally gives a better overview: 
 
@@ -124,10 +131,11 @@ acf(dwd$LUFTTEMPERATUR, lag.max = 100)
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-7-1.png)<!-- -->
 
-Since we have more than 80.000 values available, we can use a maximum lag of 100 although this is done mainly for illustration purposes. 
-Obviously, we have strongest correlations at lags of 24 (i.e the correlation between hourly temperatures is highest if the temperatures are meassured at the sime time of day). While this holds true, the absolute correlation decreases if the number of days between the observations increases. 
+Since we have more than 80.000 values available, we use a maximum lag of 100 although this is done mainly for illustration purposes. 
+Obviously, we have strongest correlations at lags of 24 (i.e the correlation between hourly temperatures is highest if the temperatures are measured at the same time of day). 
+While this holds true, the absolute correlation decreases if the number of days between the observations increases. 
 
-Another example shows the auto-correlation of the monthly mean temperatures for which we define an aggregation variable like the one above but this time we include not only the month but also the year:
+Another example shows the auto-correlation of the monthly mean temperatures for which we define an aggregation variable like the one above but now we include not only the month but also the year:
 
 ```r
 dwd$AGG_JM <- substr(dwd$MESS_DATUM, 1, 6)
@@ -138,10 +146,12 @@ acf(tam$Ta)
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-8-1.png)<!-- -->
 
-Now the seasonal pattern becomes evident with negative correlations with a lag of around 6 months (summer/winter, spring/autumn) and positive correlations with lags around 12 month. 
-The blue lines indicate the significance corresponding to a p value of 0.05 if normality can be assumed. The latter is generally the case for time series longer than 30 to 40 values for which the central limit theorem becomes effective. 
+Now the seasonal pattern becomes evident with negative correlations with a lag of around 6 months (summer/winter, spring/autumn) and positive correlations with lags around 12 months. 
+The blue lines indicate the significance corresponding to a p value of 0.05 if normality can be assumed. 
+The latter is generally the case for time series longer than 30 to 40 values for which the central limit theorem becomes effective. 
 
-Aside from the auto-correlation, we could also look at the partial auto-correlation. The difference between those is that in the partial auto-correlation, the correlation between time lag t=0 and e.g. time lag t=t+10 is computed in such a manner that the influence of the auto-correlations in between is eliminated. 
+In addition to auto-correlation, we can also look at partial auto-correlation. 
+The difference between these is that in the partial auto-correlation, the correlation between time lag t=0 and e.g. time lag t=t+10 is computed in such a manner that the influence of the auto-correlations in between is eliminated. 
 This leads to quite different results. 
 For example, if you have a strong auto-correlation with lag 5, than it is not surprising that t=0 is not only related to t=t+5 but also to t=t+5+5. 
 The partial auto-correlation of our dataset looks like this:
@@ -183,7 +193,7 @@ Both tests add up the correlation coefficients until the given lag and compare t
 
 
 Of course, one can also have a look at cross-correlations including time lags. 
-As example, we use relative humidity which is also part of the dataset.
+As example, we use relative humidity, which is also part of the dataset.
 
 ```r
 rhm <- aggregate(dwd$REL_FEUCHTE, by = list(dwd$AGG_JM), FUN = mean)
@@ -195,7 +205,7 @@ ccf(tam$Ta, rhm$rh)
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-11-1.png)<!-- -->
 
 Similar. Air humidity is auto-correlated to air temperature. 
-And this relationship is pretty much the same over all months (as you can find out if you still remember a plot type from the very beginning of this course):
+And this relationship is pretty much the same over all months:
 
 ```r
 coplot(LUFTTEMPERATUR ~ REL_FEUCHTE | AGG_M, data = dwd)

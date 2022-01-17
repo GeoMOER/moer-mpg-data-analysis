@@ -1,5 +1,8 @@
 ---
 title: Predict Your Temporal Data
+header:
+  image: "/assets/images/teaser/air_temperature.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 Look into some specific characteristics of time series data and predict future observations based on past dynamics.
 
