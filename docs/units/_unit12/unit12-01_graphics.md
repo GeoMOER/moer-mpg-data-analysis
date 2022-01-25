@@ -1,5 +1,8 @@
 ---
 title: Graphics
+header:
+  image: "/assets/images/teaser/unnamed-chunk-8-1.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 Visualize your data, get some hints for publication quality graphics, and learn about some packages specifically made for visualizations.

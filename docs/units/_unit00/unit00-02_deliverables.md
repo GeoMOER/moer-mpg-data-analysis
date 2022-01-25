@@ -59,7 +59,7 @@ assignment_3 <- 7
 assignment_4 <- 8
 MOHA <- 9
 
-final_grade <- round(0.5 * (assignment_1 + assignment_2 + assignment_3 + assignment_4) / 4 + 0.5 * MOHA)
+final_grade <- round(mean(c(assignment_1, assignment_2, assignment_3, assignment_4, rep(MOHA, 2))))
 final_grade
 ```
 

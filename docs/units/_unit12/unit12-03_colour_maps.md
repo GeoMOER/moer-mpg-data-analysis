@@ -2,6 +2,9 @@
 title: "Example: Colours and maps"
 toc: true
 toc_label: In this example
+header:
+  image: "/assets/images/teaser/unnamed-chunk-8-1.png"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
 This is a short example on how to use the hcl colour palette for colouring features of a shapefile.
