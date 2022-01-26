@@ -7,7 +7,7 @@ Follow the link to start the Marburg Open Hackathon (MOHA)
 <!--more-->
 
 
-[Start MOHA](link_to_MOHA){:target="_blank"}
+[Start MOHA](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_3462030/index.html){:target="_blank"}
 (available 9:30 to 12:00 on Tuesday 01, 2022) 
 
 
