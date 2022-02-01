@@ -20,13 +20,15 @@ After completing this worksheet you will have gained deeper experiences with tim
 
 
 ## NAO and air temperature in Cölbe
-The required station data can be downloaded directly from the German Weather Service (DWD) via its [server](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/){:target="_blank"}. 
+The required station data can be downloaded directly from the 
+German Weather Service (DWD) via its [server](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/monthly/kl/historical/){:target="_blank"}. 
 In addition to Cölbe, you will also find all climate stations available for Germany.
 
 After working with a short time series of the DWD station in Cölbe as part of the last assignment, 
 we will now extent the time frame to the time between 1950 and 1990. 
-This dataset is also available directly from the [DWD Server](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/){:target="_blank"}. 
-In addition to analyzing the dynamics in the station record, we will explain parts of the dynamics by using a time series of the North Atlantic Oscillation provided by [NOAA](http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml){:target="_blank"}.
+This dataset is also available directly from the [DWD Server](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/monthly/kl/historical/){:target="_blank"}. 
+In addition to analyzing the dynamics in the station record, 
+we will explain parts of the dynamics by using a time series of the North Atlantic Oscillation provided by [NOAA](http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml){:target="_blank"}.
 
 Please write an Rmd file with html output, which computes the trend of the air temperature recorded in Cölbe based on monthly values between January 1950 and December 1990 (we stop here because afterwards, there is a gap in the time series, which could be filled in principle but not as part of this task).
 {: .notice--info}
