@@ -1,7 +1,7 @@
 ---
 title: Data Analysis
 layout: splash
-date: '2018-02-06 13:00:00 +0100'
+date: '2022-10-14 13:00:00 +0100'
 header:
   overlay_color: "#000"
   overlay_filter: 0.6
@@ -39,9 +39,11 @@ At the end of this course you should be able to
 
 # Setting
 
-This course will take place in a hybrid setting with a digital classroom and additional students being present in person in the physical classroom (**F 14 | 00A12**).
-Details on this synchronous hybrid classroom format will be provided in the first session, which will take place **online only on Tuesday 26.10.2021 at 9:15 am**.
+This course will take place in a hybrid setting with a digital classroom and additional students being present in person in the physical classroom (**F 14 | 00A19**).
+Details on this synchronous hybrid classroom format will be provided in the first session, which will take place **in presence only on Tuesday 25.10.2022 at 9:15 am**.
+<!--
 The link to the digital classroom of the first session is provided in the [Ilias course environment](https://ilias.uni-marburg.de/goto.php?target=crs_2593121&client_id=UNIMR){:target="_blank"} (only accessible for members of the course who are logged-in into Ilias). 
+-->
 Please also seriously check and follow the [Information on the Coronavirus](https://www.uni-marburg.de/de/universitaet/administration/sicherheit/coronavirus){:target="_blank"} of the University of Marburg.
 {: .notice--info}
 
@@ -54,26 +56,26 @@ The course encompassed 13 sessions from 26.10.2021 to 15.02.2022 with a Christma
 | Session | Date | Topic | Content |
 |---------|------|-------|---------|
 ||| **Data basics** |
-| 01 | 26.10.2021 | First things first           | Data and information, R, R Studio, R markdown, GitHub, GitHub classroom |
-| 02 | 01.11.2021 | First things second          | Working environment, data sets, data types, data structures, logical operators, control structures |
+| 01 | 25.10.2022 | First things first           | Data and information, R, R Studio, R markdown, GitHub, GitHub classroom |
+| 02 | 01.11.2022 | First things second          | Working environment, data sets, data types, data structures, logical operators, control structures |
 ||| **Data exploration** |
-| 03 | 09.11.2021 | Look at your data            | Reading and writing (tabulated) data, visual data exploitation, descriptive statistics |
-| 04 | 16.11.2021 | Clean your data              | Tailoring data sets, fill values and NA, aggregating, merging or sub-setting data sets |
+| 03 | 08.11.2022 | Look at your data            | Reading and writing (tabulated) data, visual data exploitation, descriptive statistics |
+| 04 | 15.11.2022 | Clean your data              | Tailoring data sets, fill values and NA, aggregating, merging or sub-setting data sets |
 ||| **Data modelling** |
-| 05 | 23.11.2021 | Explain your data            | Linear regression modelling, confidence intervals, sample tests, variance analysis |
-| 06 | 30.11.2021 | Predict your data            | Cross-validation |
-| 07 | 07.12.2021 | Select your variables        | Multiple linear models, feature selection |
-| 08 | 14.12.2021 | Predict your non-linear data | Generalized additive models |
+| 05 | 22.11.2022 | Explain your data            | Linear regression modelling, confidence intervals, sample tests, variance analysis |
+| 06 | 29.11.2022 | Predict your data            | Cross-validation |
+| 07 | 06.12.2022 | Select your variables        | Multiple linear models, feature selection |
+| 08 | 13.12.2022 | Predict your non-linear data | Generalized additive models |
+| 09 | 20.12.2022 | Predict your temporal data   | Auto-correlation, AR and ARIMA models |
 | -- | Christmas break              | -- |
-| 09 | 11.01.2022 | Predict your temporal data   | Auto-correlation, AR and ARIMA models |
-| 10 | 18.01.2022 | Explain your temporal data   | Decomposing time series |
-| -- | 25.01.2022 | Build-in hold                | No course  |
+| 10 | 10.01.2023 | Explain your temporal data   | Decomposing time series |
+| -- | 17.01.2023 | Build-in hold                | No course  |
 ||| **Marburg Open Hackathon** |
-| 11 | 01.02.2022 | MOHA session                 | Marked assignment |
+| 11 | 24.01.2023 | MOHA session                 | Marked assignment |
 ||| **Visualization** |
-| 12 | 08.02.2022 | Visualize your data          | Publication quality graphics |
+| 12 | 31.01.2023 | Visualize your data          | Publication quality graphics |
 ||| **Wrap up** |
-| 13 | 15.02.2022 | Wrap up                      | Time for questions and feedback, individual data analysis problems, goodbye |
+| 13 | 07.02.2023 | Wrap up                      | Time for questions and feedback, individual data analysis problems, goodbye |
 
 
 # Deliverables
