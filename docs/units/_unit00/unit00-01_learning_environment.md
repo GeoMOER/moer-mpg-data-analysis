@@ -10,7 +10,7 @@ This course is intended as a blended learning module, although the provided intr
 <!--more-->
 
 Our first course session will be virtual. Details on the virtual classroom and how to get there are provided on the front page and were send by email to all participants.
-Subsequent sessions will be in a hybrid format, meaning that parts of the students may attend the sessions in person at the [Department of Environmental Informatics](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics){:target="_blank"} in Marburg. The room number is 00A12.
+Subsequent sessions will be in a hybrid format, meaning that parts of the students may attend the sessions in person at the [Department of Environmental Informatics](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics){:target="_blank"} in Marburg.
 <!-- GeoAI change to: "00A19" -->
 
 
@@ -35,15 +35,15 @@ For details see the ["Deliverables*](/moer-mpg-data-analysis/unit00/unit00-02_de
 ## Virtual meeting rooms
 
 We will use [Big Blue Button](https://www.uni-marburg.de/en/hrz/services/web-conferences/web-conferencing-with-bigbluebutton){:target="_blank"} as main virtual classroom for our synchronous (hybrid) sessions.
-The link to our classroom can be found in [Ilias](https://ilias.uni-marburg.de/goto.php?target=crs_2593121&client_id=UNIMR){:target="_blank"}.
-Additionally, there are student meeting rooms in our course environment in Ilias, which you can freely use on your own for discussing the assignments.
+The link to our classroom can be found in Ilias.
+
 
 
 ## Ilias
 
 Ilias is the course space offered by the University of Marburg. 
 We will use Ilias mainly for the administration of the course and for providing small static documents.
-The link to the Ilias space for this course can be found [here](https://ilias.uni-marburg.de/goto.php?target=crs_2593121&client_id=UNIMR){:target="_blank"}.
+The link to the Ilias space for this course can be found [here](https://ilias.uni-marburg.de/goto.php?target=crs_3021392&client_id=UNIMR){:target="_blank"}.
 Note that you have to log in with your student account. There is also a forum in Ilias, which you can use for getting in touch with your fellow students.
 
 
