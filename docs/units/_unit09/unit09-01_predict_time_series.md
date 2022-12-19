@@ -27,10 +27,11 @@ This autocorrelation forms the basis for some kinds of _prediction_ or _gap fill
 
 The above graphic shows the auto-correlation between the individual mean monthly air temperatures shown in the first graph.
 
+<!--
 {% include figure image_path="/assets/images/air_temperature_partial_auto-correlation.jpg" alt="Illustration of auto correlation of time series data." %}
 
 The above graphic shows the partial auto-correlation between the individual mean monthly air temperatures shown in the first graph.
-
+-->
 
 ## Comments?
 You can leave comments below if you have questions or remarks about any of the text or code in this unit. 

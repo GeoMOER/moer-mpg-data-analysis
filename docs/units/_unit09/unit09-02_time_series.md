@@ -163,6 +163,7 @@ pacf(tam$Ta)
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-9-1.png)<!-- -->
 
 
+<!--
 One can also use test statistics like a Box-Pierce or Ljung-Box test:
 
 ```r
@@ -190,6 +191,7 @@ Box.test(tam$Ta, lag = 10, type = "Ljung-Box")
 ```
 
 Both tests add up the correlation coefficients until the given lag and compare them to a theoretical distribution.
+-->
 
 
 Of course, one can also have a look at cross-correlations including time lags. 
