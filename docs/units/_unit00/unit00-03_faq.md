@@ -20,7 +20,7 @@ This course gives 6 (ECTS) credit points, making up a total of 180 hours workloa
 
 ### Where can I find the url to my personal GitHub classroom repository?
 Follow the link to the GitHub classroom provided by the instructor and you will find something like this:
-https://github.com/GeoMOER-Students-Space/mpg-data-analysis-2021-YOURGITHUBUSERNAME.git
+https://github.com/GeoMOER-Students-Space/mpg-data-analysis-202x-YOURGITHUBUSERNAME.git
 
 ### How can I find out if my files were properly uploaded to the GitHub repository?
 Enter the url of your GitHub Classroom repository in a web browser and check if they are there.
