@@ -15,6 +15,11 @@ Details on the assignments and whether they will be marked or not can be found i
 The submissions generally encompass R or R markdown AND the compiled html files.
 
 
+You are allowed and encouraged to use ChatGPT or similar AIs to solve the assignments.
+However, you need to present the solutions to your assignements to make sure you understand what you have done.
+{: .notice--info}
+
+
 ### Overview
 
 
