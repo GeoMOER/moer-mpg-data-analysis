@@ -43,13 +43,16 @@ This course will take place in a synchronous setting in presence in room **F 14 
 In addition, there will be regular meetings with a tutor. 
 Details on the additional tutor sessions will be provided in the first regular session, 
 which will take place on **Tuesday 24.10.2023 at 9:15 am**.
+The tutor sessions are directly after the course in room 00A19 and Fridays 15:00 - 17:00 in room 00A12.
+Note that the tutor sessions are voluntary. 
+{: .notice--info}
+
 <!--
 This course will take place in a hybrid setting with a digital classroom and additional students being present in person in the physical classroom (**F 14 | 00A19**).
 Details on this synchronous hybrid classroom format will be provided in the first session, which will take place **in presence only on Tuesday 25.10.2022 at 9:15 am**.
 The link to the digital classroom of the first session is provided in the [Ilias course environment](https://ilias.uni-marburg.de/goto.php?target=crs_2593121&client_id=UNIMR){:target="_blank"} (only accessible for members of the course who are logged-in into Ilias). 
 Please also seriously check and follow the [Information on the Coronavirus](https://www.uni-marburg.de/de/universitaet/administration/sicherheit/coronavirus){:target="_blank"} of the University of Marburg.
 -->
-{: .notice--info}
 
 
 
