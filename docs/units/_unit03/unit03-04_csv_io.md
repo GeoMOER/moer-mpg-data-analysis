@@ -17,7 +17,8 @@ the text file.
 
 
 ```r
-df <- read.table(paste0(envrmt$path_data_csv, "/AI001_gebiet_flaeche.txt"),
+# adjust your working directory with setwd() or use absolute path
+df <- read.table("AI001_gebiet_flaeche.txt",
                  skip = 4, header = TRUE, sep = ";", dec = ",")
 ```
 
@@ -41,7 +42,7 @@ A quick way to check if everything is fine is to display the first few lines of
 the data file using the `head` function (without the 2, it will print 5 lines as a standard setting).
 
 ```r
-head(df,2)
+head(df, 2)
 ```
 
 ```
@@ -66,8 +67,7 @@ head(df,2)
 Writing data is as easy as reading it. Just use the `write.table` function.
 
 ```r
-write.table(df, file = paste0(envrmt$path_data_tmp, "new.csv"), 
-            sep = ",", dec = ".")
+write.table(df, file = "new.csv", sep = ",", dec = ".")
 ```
 As you can see, you can define any column or decimal separator.
 
@@ -79,8 +79,8 @@ documentation or search the web.
 If you stay within R for reading and writing R objects from and to data files, you could also use the serialization of readRDS and saveRDS.
 
 ```r
-saveRDS(df, file = paste0(envrmt$path_data_tmp, "new.rds"))
+saveRDS(df, file = "new.rds")
 
 # Read data to different variable
-df2 = readRDS(paste0(envrmt$path_data_tmp, "new.rds"))
+df2 <- readRDS("new.rds")
 ```
