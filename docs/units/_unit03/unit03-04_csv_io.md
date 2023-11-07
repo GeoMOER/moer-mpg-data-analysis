@@ -17,7 +17,7 @@ the csv file.
 
 
 ```r
-df <- read.table(paste0(envrmt$path_data_csv, "/AI001_gebiet_flaeche.csv"),
+df <- read.table(paste0(envrmt$path_data_csv, "/AI001_gebiet_flaeche.txt"),
                  skip = 4, header = TRUE, sep = ";", dec = ",")
 ```
 
