@@ -9,11 +9,11 @@ header:
 
 
 
-## Readading data from csv files
+## Reading data from text files
 
-Reading csv files is realized using the `read.table` function from R's utils
+Reading text files is realized using the `read.table` function from R's utils
 library. The function will return a data frame which contains the information of
-the csv file.
+the text file.
 
 
 ```r
