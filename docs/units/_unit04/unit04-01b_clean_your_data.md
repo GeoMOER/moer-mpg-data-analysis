@@ -9,11 +9,12 @@ header:
 ## Cleaning 101
 Cleaning dataset is a standard procedure in data analysis and the most annoying. It can be quite time consuming but it is the most important step in data analysis. If your data base is incorrect, the analysis results and your scientific study is not reliable. Hence, carefully check your data and clean it thoroughly.
 
-To start with, Hadley Wickham suggest the following:
+To start with, Hadley Wickham suggests the following:
 * separate column for each variable 
 * exactly one kind of information per variable
 * separate row for each observation
 * separate data set for each kind of observation
+
 See [Wickham (2012)](https://www.jstatsoft.org/article/view/v059i10){:target="_blank"} for more on these topics.
 
 Note that one cannot provide a complete list of check and cleaning tasks since the workflow always depends on the actual dataset.

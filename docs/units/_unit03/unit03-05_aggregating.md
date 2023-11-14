@@ -163,7 +163,7 @@ aggregate(df[,3:4], by = list(df$Cat1), FUN = median)
 ## 2       B  3.5   35
 ## 3       C  3.0   30
 ```
-Please note that the grouping elements (parameter "by") have to supplied as list
+Please note that the grouping elements (parameter "by") have to be supplied as list
 so if you want to use a column of a data frame, use the `list` function to convert
 the factor to a list.
 

@@ -10,7 +10,7 @@ header:
 Linear regression modelling is one of the more common tasks in data analysis and the following example will cover the very basic topic of bivariate linear regression. The storyline follows the one from Zuur et al. (2007) to a certain degree.
 
 While one could use actual data sets, we keep it controled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet). 
-The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as bart of base R. 
+The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as part of base R. 
 For now, we will use x1 as independent variable and y1 as dependent variable.
 
 ```r
@@ -20,12 +20,12 @@ dep <- anscombe$y1
 par_org <- par()
 par(mfrow = c(1,2))
 hist(ind, main = "Independent variable")
-hist(dep, main = "Dependend variable")
+hist(dep, main = "Dependent variable")
 ```
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-1-1.png)<!-- -->
 
-A look at the relationship between the variables by using a scatterplot justifies a linear modelling attemp. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
+A look at the relationship between the variables by using a scatterplot justifies a linear modelling attempt. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
 
 ```r
 library(car)
@@ -58,7 +58,7 @@ The associated variances are:
 * The variance of the fitted values, i.e. the difference between the predicted values of y' and the mean over all observations of y. This will be called the *model variance*.
 * The variance of the residual values, i.e. the difference between the predicted values y' and the observed values y. This will be called *residual variance*.
 
-Together, model and residual variance equals the total variance. 
+The sum of model and residual variance equals the total variance.
 
 Commonly, all variances are squared and summed up over all observations which gives us the _sum of squares_ observed (or total), the sum of squares of the model and the sum of squares of residuals.
 
@@ -83,9 +83,9 @@ mss_model <- ss_model / 1
 mss_resid <- ss_resid / (length(lmod$model$dep) - 2)
 ```
 
-It can be shown that for large sample sizes, the mean squared error (mss_resid) equals the squared variance of the population. In this case, the mean squared model error (mss_model) also equals the squared variance but additionally considers the sum of squares over all x values multiplied by the slope of the regression model. In other words, 
+It can be shown that for large sample sizes, the mean squared residual error (mss_resid) equals the squared variance of the population. In this case, the mean squared model error (mss_model) also equals the squared variance but additionally considers the sum of squares over all x values multiplied by the slope of the regression model. In other words, 
 
-* if the slope is zero, then mean squared and model error are equal and the ration of both is 1.
+* if the slope is zero, then mean squared residual error and mean squared model error are equal and the ration of both is 1.
 * if the slope is not zero, then mean squared model error is larger than the mean squared error and the ratio is larger than 1. 
 
 This provides us the test statistic for the *null-hypothesis* that the true slope is not different from 0.
@@ -128,7 +128,7 @@ anova(lmod)
 ```
 
 
-**Exercise**. Now you can check your knowledge and strengthen your plotting skills by writing code to rebuild the linear regression scaterplot from the previous page.
+**Exercise**. Now you can check your knowledge and strengthen your plotting skills by writing code to rebuild the linear regression scatterplot from the previous page.
 When coding, think about the meaning of slope, intercept, observed variance, model variance, residual variance, and the different types of sum of squares.
 {: .notice--success}
 

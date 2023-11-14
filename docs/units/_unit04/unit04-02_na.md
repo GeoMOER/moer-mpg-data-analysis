@@ -16,7 +16,7 @@ it is not a string but a special type of logical data type.
 ```r
 x <- c("A", "B", NA, "D")
 ```
-To check, if the vector has one or more "not available" values, use the 
+To check if the vector has one or more "not available" values, use the 
 `is.na` function.
 
 ```r

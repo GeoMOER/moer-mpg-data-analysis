@@ -53,8 +53,8 @@ as.POSIXlt("01.01.2014 13:30:35", format = "%m.%d.%Y %H:%M:%S")
 ```
 ## [1] "2014-01-01 13:30:35 CET"
 ```
-For an overview of the formatting syntax see the help pages of the `strptime`
-function which handles the conversion. The latter function can also be used
+For an overview of the formatting syntax, see the help pages of the `strptime`
+function, which handles the conversion. The latter function can also be used
 directly for converting character information to POSIXlt:
 
 ```r
@@ -74,7 +74,7 @@ class(lt)
 ## [1] "POSIXlt" "POSIXt"
 ```
 This function is faster than `as.POSIXlt` if the time format
-is supplied the ISO way. Otherwise (and maybe even in this case), just forget 
+is supplied in the ISO way. Otherwise (and maybe even in this case), just forget 
 about it.
 
 Aside from theory, a pratical difference between the POSIXct and POSIXlt class
@@ -103,7 +103,7 @@ lt
 ```
 
 To convert a POSIX information back to a character string, one can use the
-`strftime` function whichs allows precise formatting of the data/time string and
+`strftime` function which allows precise formatting of the data/time string and
 also has an option for time zone conversion.
 
 ```r
@@ -125,7 +125,7 @@ Please note that the time zone conversion only works for POSIXct.
 
 
 Finally, if you want to substract two date/time values, you can use the
-resoectuve arithmetic operation or the difftime function to control the layout of
+arithmetic operation or the difftime function to control the layout of
 the result (see the help pages of `strptime` for an overview of the layout 
 specifications).
 

@@ -11,7 +11,7 @@ header:
 
 Visual data exploration should be one of the first steps in data analysis. In fact, it should start right after reading a data set. The following examples are based on a data set showing the percentage fraction of settlement, recreational, agricultural, and forest areas for each rural district in Germany. The data has been provided through the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/).
 
-Within this example, we will focus on basic R graphics. Of course, all of the example could also be realized using more advanced plotting libraries like `lattice` or `ggplot`.
+Within this example, we will focus on basic R graphics. Of course, all of the examples could also be realized using more advanced plotting libraries like `lattice` or `ggplot`.
 
 
 
@@ -52,7 +52,7 @@ boxplot(lu[, numc])
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-3-1.png)<!-- -->
 
-As can be seen, outliers in terms of the box-plot logic are clearly identifieable although this logic does not actually proof if an observation is an outlier. Hence, one has to cross-check the data and if there is no actual sign for an outliers, then keep the data as is! However, since "outliers"" might have a strong influence on further analyisis, one could check some kind of transformation to reduce the value range. The following example shows a root and logarithmic transformation. In order to distinguish the plots, we add a title using the `main` parameter:
+As can be seen, outliers in terms of the box-plot logic are clearly identifiable although this logic does not actually proof if an observation is an outlier. Hence, one has to cross-check the data and if there is no actual sign for an outliers, then keep the data as is! However, since "outliers"" might have a strong influence on further analyisis, one could check some kind of transformation to reduce the value range. The following example shows a root and logarithmic transformation. In order to distinguish the plots, we add a title using the `main` parameter:
 
 ```r
 par_org <- par()
@@ -86,7 +86,7 @@ hist(lu$Settlement)
 ## QQ plots
 While historgramms just give an idea, QQ plots give a more reliable estimate if a data set follows a specific distribution.
 
-If you are just interested in a normal distribution, you can use `qqnorm` for this. In order to ease the interpretation, we will also add a theoretical line which runs through the 25% and 75% quartile. If your data does not deviate considerably from this line, chances are high that it actually follows the theoretical distributino used to compute the plot (in the following case, this is a normal distribution):
+If you are just interested in a normal distribution, you can use `qqnorm` for this. In order to ease the interpretation, we will also add a theoretical line which runs through the 25% and 75% quartile. If your data does not deviate considerably from this line, chances are high that it actually follows the theoretical distribution used to compute the plot (in the following case, this is a normal distribution):
 
 ```r
 qqnorm(lu$Agriculture)
@@ -161,14 +161,8 @@ plot(lu$Settlement, lu$Recreation)
 ```
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-10-1.png)<!-- -->
-The axis lables are just the column names of the data frame but for this stage of data analysis, this is more than fine. If you finally decide which graphic should be included in a final presentation (e.g. publication), then the right time for nice lables and other stuff has come. But priot to that, pimping is just a waste of time.
 
-
-```r
-plot(lu$Settlement, lu$Recreation)
-```
-
-![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-11-1.png)<!-- -->
+The axis lables are just the column names of the data frame but for this stage of data analysis, this is more than fine. If you finally decide which graphic should be included in a final presentation (e.g. publication), then the right time for nice lables and other stuff has come. But prior to that, pimping is just a waste of time.
 
 If you are interested in the relation between all (or many) variables in your dataset, just supply the entire data frame or a column subset of it to `plot`:
 

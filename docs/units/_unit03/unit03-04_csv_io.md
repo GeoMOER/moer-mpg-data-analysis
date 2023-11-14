@@ -35,11 +35,11 @@ then the sequence matters. To get information on the default sequence and of
 course the general application of the each R function, type `?<function name>`
 (e.g. `?read.table`) in an R console.
 
-After you executing the `read.table` function above, the content of the csv file is
+After you execute the `read.table` function above, the content of the csv file is
 stored into a two dimensional data frame called `df` in the example above. 
 
 A quick way to check if everything is fine is to display the first few lines of
-the data file using the `head` function (without the 2, it will print 5 lines as a standard setting).
+the data file using the `head` function (without the 2, it will print 6 lines as a standard setting).
 
 ```r
 head(df, 2)
