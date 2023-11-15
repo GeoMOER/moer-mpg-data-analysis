@@ -20,8 +20,9 @@ The following examples are based on a data set showing the percentage fraction o
 ### Reading data and first look
 
 ```r
-lu <- read.table(file.path(envrmt$path_csv, "AI001_gebiet_flaeche.txt"),
-                 skip = 4, header = TRUE, sep = ";", dec = ",")
+lu <- read.table("AI001_gebiet_flaeche.txt", skip = 4, header = TRUE, 
+                 sep = ";", dec = ",", encoding = "latin1",
+                 stringsAsFactors = TRUE)
 head(lu)
 ```
 
@@ -63,7 +64,7 @@ head(lu)
 ## 6                               3,4
 ```
 
-Let's have a closer look on the structure before we go on.
+Let's have a closer look at the structure before we go on.
 
 ```r
 str(lu)
@@ -83,10 +84,10 @@ str(lu)
 As one can see, 
 
 * the column names are far from optimal,
-* the numerical values are stored as factors because there are not numbers in each cell but also - and this can not be seen from the view rows printed above - some "." as the only cell content; as a consequence, the `data.frame` function uses factors during the initialization of the data frame which basically means that the values are reprsented by some kind of special character data type,
+* the numerical values are stored as factors because there are not only numbers in each cell, but also - and this can not be seen from the view rows printed above - some "." as the only cell content. As a consequence, the `data.frame` function uses factors during the initialization of the data frame which basically means that the values are represented by some kind of special character data type,
 * the "Anteil*" column names are actually values, not variable names.
 
-Please remember: this is just one example out of an almoust infinite amount of data sets. The following tasks might not be necessary at all for a specific data set. Of course, the following might also not be enough to clean a given data set.
+Please remember: this is just one example out of an almost infinite amount of data sets. The following tasks might not be necessary at all for a specific data set. Of course, the following might also not be enough to clean a given data set.
 
 ### Renaming columns
 Let's start with renaming the column names:
@@ -109,7 +110,7 @@ str(lu)
 ```
 
 ### Converting data types
-Once this is done, we can continoue with converting the numerical values to actual numerical data types. Factors work in such a way that a list of strings (i.e. factors) is referenced by an id (e.g. if the string we want to save in a cell is "test" and if "test" is on position three of the factor vector, not the character string "test" but the number 3 is stored in the respective cell and referenced to the string). Hence, we canot directly convert factors to numerical values because in this case we would just convert the reference id number but we have to convert the factor to a character first and then convert this character to a numeric values (if possible). Since in the present context, "." are also found in the columns, we will set each cell which contains just one "." to NA first and then convert the cell to numeric.
+Once this is done, we can continue with converting the numerical values to actual numerical data types. Factors work in such a way that a list of strings (i.e. factors) is referenced by an id (e.g. if the string we want to save in a cell is "test" and if "test" is on position three of the factor vector, not the character string "test" but the number 3 is stored in the respective cell and referenced to the string). Hence, we cannot directly convert factors to numerical values because in this case we would just convert the reference id number, but we have to convert the factor to a character first and then convert this character to a numeric values (if possible). Since in the present context, "." are also found in the columns, we will set each cell which contains just one "." to NA first and then convert the cell to numeric.
 
 
 ```r
@@ -133,11 +134,11 @@ str(lu)
 ```
 
 ### Converting wide to long format
-Finally, let's remove any column name which is actually not a variable name but a value from the header line and include it within the data frame. This is to be known as converting the data frame from "wide" to "long" format (you have to load the `reshape2` library for this example first):
+Finally, let's remove any column name which is actually not a variable name, but a value from the header line and include it within the data frame. This is to be known as converting the data frame from "wide" to "long" format (you have to load the `reshape2` library for this example first):
 
 
 ```r
-lu_long <- melt(lu, id.vars = c("Year", "ID", "Place"))
+lu_long <- reshape2::melt(lu, id.vars = c("Year", "ID", "Place"))
 head(lu_long)
 ```
 
@@ -157,10 +158,10 @@ head(lu_long)
 ## 5  30.2
 ## 6  46.4
 ```
-The column (i.e. variable) names passed to the parameter `id.vars` are those columns which represent actual variables within their names. The columns Stellement, Recreation, Agriculture or Forest can owever be summarized to one variable since they all represent land cover. The values which have been stored within these columns have been transfered to a seperate column (called `values` in this case).
+The column (i.e. variable) names passed to the parameter `id.vars` are those columns which represent actual variables within their names. The columns Settlement, Recreation, Agriculture or Forest can however be summarized to one variable since they all represent land cover. The values which have been stored within these columns have been transferred to a separate column (called `values` in this case).
 
 ### Split multiple information within one column
-The content of column "Place"" could be regarded as both human readable information or additional machine readable data source. If we go for the latter, mixing names (e.g. Flensburg, Kiel) and types (e.g. citiy, county) is not a good option. It seems that the different kinds of information are comma separated so let's split the column entries using "," as a separator and have a closer look on the results.
+The content of column "Place"" could be regarded as both human readable information or additional machine readable data source. If we go for the latter, mixing names (e.g. Flensburg, Kiel) and types (e.g. city, county) is not a good option. It seems that the different kinds of information are comma separated, so let's split the column entries using "," as a separator and have a closer look at the results.
 
 ```r
 place <- strsplit(as.character(lu$Place), ",")
@@ -194,7 +195,7 @@ max(sapply(place, length))
 ```
 ## [1] 3
 ```
-As one can see, splitting by comma is a good option to separate the content. However, the original information obvioulsy is comprised  by either one, two or three (see result of the `max` function) information parts. Hence, an appropriate next step would be the compilation of a data frame with three columns and a fill-up strategy which makes sure that if 
+As one can see, splitting by comma is a good option to separate the content. However, the original information obviously is comprised of either one, two or three (see result of the `max` function) information parts. Hence, an appropriate next step would be the compilation of a data frame with three columns and a fill-up strategy which makes sure that if 
 
 * one information part is stored in the cell, the part is saved in the first column of the target data frame,
 * two information parts are stored in the cell, they are saved in the first and second column of the target data frame,
@@ -236,7 +237,7 @@ head(place_df)
 ```
 We add the information from column ID and Year since we need it later for merging it with the long version of the land cover data frame.
 
-While column is filed in any case, let's have a look at the different entries in column B and C:
+While column is filled in any case, let's have a look at the different entries in column B and C:
 
 ```r
 unique(place_df[, 2])
@@ -268,12 +269,12 @@ unique(place_df$B[!is.na(place_df$C)])
 ```
 OK, if the place is one of "Landeshauptstadt", "Hansestadt" or "Universitaetsstadt", then the third column contains the information "Kreisfreie Stadt". Hence, if we want to group by "Kreisfreie Stadt", we actually would need the third column. 
 
-One strategy could be to make a structure which shows the name in the first column, the general type of the place in the second column and additional (not mandatory information) in the third column. If one follows this strategy, the content of column two and three has to be switched for the rows with a non-NA entry in the third column:
+One strategy could be to make a structure which shows the name in the first column, the general type of the place in the second column and additional (not mandatory) information in the third column. If one follows this strategy, the content of column two and three has to be switched for the rows with a non-NA entry in the third column:
 
 ```r
-place_df[!is.na(place_df$C),] <- place_df[!is.na(place_df$C), c(1,3,2, 4, 5)]
+place_df[!is.na(place_df$C), ] <- place_df[!is.na(place_df$C), c(1,3,2, 4, 5)]
 ```
-Although it might look a little weird, it is very easy and straight forward. We subset our data frame to rows which are not NA in the third column (i.e. column C) on both sides of the equal sign and defign the order of column entries to 1, 3, 2 and then 4 and 5 for ID and year. This gives us what we want.
+Although it might look a little weird, it is very easy and straightforward. We subset our data frame to rows which are not NA in the third column (i.e. column C) on both sides of the equal sign and define the order of column entries to 1, 3, 2 and then 4 and 5 for ID and year. This gives us what we want.
 
 ```r
 head(place_df)
@@ -288,7 +289,7 @@ head(place_df)
 ## 5             Lübeck Kreisfreie Stadt       Hansestadt 01003 1996
 ## 6         Neumünster Kreisfreie Stadt             <NA> 01004 1996
 ```
-Finished? No, There are at least some entries without any kind of type information in column B. In fact, there are quite many of them:
+Finished? No, there are at least some entries without any kind of type information in column B. In fact, there are quite many of them:
 
 ```r
 unique(lu$Place[is.na(place_df$B)])
@@ -536,7 +537,7 @@ sum(is.na(place_df$B))
 ## [1] 0
 ```
 
-As a last step, we have to merge the separated place information back into the original data frame. For this example, we use the one in long format.
+As the last step, we have to merge the separated place information back into the original data frame. For this example, we use the one in long format.
 
 ```r
 lu_long_final <- merge(lu_long, place_df, by = c("ID", "Year"))
