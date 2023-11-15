@@ -520,13 +520,6 @@ head(place_df)
 ## 6         Neumünster Kreisfreie Stadt             <NA> 01004 1996
 ```
 
-```r
-sum(is.na(place_df$B))
-```
-
-```
-## [1] 0
-```
 That's it, no more missing information in the second column.
 
 ```r
