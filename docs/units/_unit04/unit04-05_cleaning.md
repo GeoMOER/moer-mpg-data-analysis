@@ -19,7 +19,7 @@ The following examples are based on a data set showing the percentage fraction o
 
 ### Reading data and first look
 
-```{r}
+```r
 lu <- read.table("AI001_gebiet_flaeche.txt", skip = 4, header = TRUE, 
                  sep = ";", dec = ",", encoding = "latin1")
 head(lu)
@@ -65,7 +65,7 @@ head(lu)
 
 Let's have a closer look at the structure before we go on.
 
-```{r}
+```r
 str(lu)
 ```
 
@@ -91,7 +91,7 @@ Please remember: this is just one example out of an almost infinite amount of da
 ### Renaming columns
 Let's start with renaming the column names:
 
-```{r}
+```r
 names(lu) <- c("Year", "ID", "Place", "Settlement", "Recreation", 
                "Agriculture", "Forest")
 str(lu)
@@ -109,7 +109,7 @@ str(lu)
 ```
 
 ### Converting data types
-```{r}
+```r
 for(c in colnames(lu)[4:7]){
   print(head(unique(sort(lu[, c]))))
 }
@@ -125,7 +125,7 @@ for(c in colnames(lu)[4:7]){
 We see that "." is also present among the numerical values.
 We will set cells containing just one "." to NA first and then convert the data type to numeric.
 
-```{r}
+```r
 for(c in colnames(lu)[4:7]){
   lu[, c][lu[, c] == "."] <- NA  
   lu[, c] <- as.numeric(sub(",", ".", lu[, c]))
@@ -148,7 +148,7 @@ str(lu)
 ### Converting wide to long format
 Finally, let's remove any column name which is actually not a variable name, but a value from the header line and include it within the data frame. This is known as converting the data frame from "wide" to "long" format (you have to load the `reshape2` library for this example first):
 
-```{r}
+```r
 lu_long <- reshape2::melt(lu, id.vars = c("Year", "ID", "Place"))
 head(lu_long)
 ```
@@ -167,7 +167,7 @@ The column (i.e. variable) names passed to the parameter `id.vars` are those col
 ### Split multiple information within one column
 The content of column "Place" could be regarded as both human readable information or additional machine readable data source. If we go for the latter, mixing names (e.g. Flensburg, Kiel) and types (e.g. city, county) is not a good option. It seems that the different kinds of information are comma separated, so let's split the column entries using "," as a separator and have a closer look at the results.
 
-```{r}
+```r
 place <- strsplit(lu$Place, ",")
 head(place)
 ```
@@ -192,7 +192,7 @@ head(place)
 ## [1] "      Neumünster"  " Kreisfreie Stadt"
 ```
 
-```{r}
+```r
 max(sapply(place, length))
 ```
 
@@ -207,7 +207,7 @@ As one can see, splitting by comma is a good option to separate the content. How
 
 If the second or third column is not filled by an information part, NA is stored in the respective cells instead. Let's do it (the `gsub` function is used to delete leading white spaces):
 
-```{r}
+```r
 place_df <- lapply(place, function(i){
   p1 <- sub("^\\s+", "", i[1])  # Trim leading white spaces
   if(length(i) > 2){
@@ -243,7 +243,7 @@ We add the information from column ID and Year since we need it later for mergin
 
 While column is filled in any case, let's have a look at the different entries in column B and C:
 
-```{r}
+```r
 unique(place_df[, 2])
 ```
 
@@ -255,7 +255,7 @@ unique(place_df[, 2])
 ## [13] "NUTS 2-Region"     "krsfr. Stadt"
 ```
 
-```{r}
+```r
 unique(place_df[, 3])
 ```
 
@@ -264,7 +264,7 @@ unique(place_df[, 3])
 ```
 Obviously, the only information stored in the third column is "Kreisfreie Stadt". What is stored in the second column for these cases?
 
-```{r}
+```r
 unique(place_df$B[!is.na(place_df$C)])
 ```
 
@@ -275,12 +275,12 @@ OK, if the place is one of "Landeshauptstadt", "Hansestadt" or "Universitaetssta
 
 One strategy could be to make a structure which shows the name in the first column, the general type of the place in the second column and additional (not mandatory) information in the third column. If one follows this strategy, the content of column two and three has to be switched for the rows with a non-NA entry in the third column:
 
-```{r}
+```r
 place_df[!is.na(place_df$C), ] <- place_df[!is.na(place_df$C), c(1, 3, 2, 4, 5)]
 ```
 Although it might look a little weird, it is very easy and straightforward. We subset our data frame to rows which are not NA in the third column (i.e. column C) on both sides of the equal sign and define the order of column entries to 1, 3, 2 and then 4 and 5 for ID and year. This gives us what we want.
 
-```{r}
+```r
 head(place_df)
 ```
 
@@ -295,7 +295,7 @@ head(place_df)
 ```
 Finished? No, there are at least some entries without any kind of type information in column B. In fact, there are quite many of them:
 
-```{r}
+```r
 unique(lu$Place[is.na(place_df$B)])
 ```
 
@@ -417,7 +417,7 @@ unique(lu$Place[is.na(place_df$B)])
 ## [115] "      Saale-Orla-Kreis"
 ```
 
-```{r}
+```r
 sum(is.na(place_df$B))
 ```
 
@@ -427,7 +427,7 @@ sum(is.na(place_df$B))
 
 Let's take care of all the entries with "*kreis" first:
 
-```{r}
+```r
 for(r in seq(nrow(place_df))){
   if(is.na(place_df$B[r]) &
      grepl("kreis", tolower(place_df$A[r]))){
@@ -483,7 +483,7 @@ unique(lu$Place[is.na(place_df$B)])
 ## [42] "  Thüringen"
 ```
 
-```{r}
+```r
 sum(is.na(place_df$B))
 ```
 
@@ -494,7 +494,7 @@ This reduces the amount of missing type information considerably. What is left a
 
 Let's add the appropriate information in the second column:
 
-```{r}
+```r
 place_df$B[place_df$ID == "DG"] <- "Land"
 place_df$B[is.na(place_df$B) & nchar(place_df$ID) == 2] <- "Bundesland"
 place_df$B[is.na(place_df$B)] <- "Kreisfreie Stadt"
@@ -502,7 +502,7 @@ place_df$B[is.na(place_df$B)] <- "Kreisfreie Stadt"
 
 That's it, no more missing information in the second column.
 
-```{r}
+```r
 sum(is.na(place_df$B))
 ```
 
@@ -512,12 +512,12 @@ sum(is.na(place_df$B))
 
 As the last step, we have to merge the separated place information back into the original data frame. For this example, we use the one in long format.
 
-```{r}
+```r
 lu_long_final <- merge(lu_long, place_df, by = c("ID", "Year"))
 ```
 For illustration purposes, we just show some rows below:
 
-```{r}
+```r
 lu_long_final[c(1,50, 600),]
 ```
 
@@ -534,7 +534,7 @@ lu_long_final[c(1,50, 600),]
 
 Since column "Place" is no longer needed, let's just delete it:
 
-```{r}
+```r
 lu_long_final$Place <- NULL
 lu_long_final[c(1,50, 600),]
 ```
