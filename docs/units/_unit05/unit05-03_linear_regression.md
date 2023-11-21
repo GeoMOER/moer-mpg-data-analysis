@@ -85,7 +85,7 @@ mss_resid <- ss_resid / (length(lmod$model$dep) - 2)
 
 It can be shown that for large sample sizes, the mean squared residual error (mss_resid) equals the squared variance of the population. In this case, the mean squared model error (mss_model) also equals the squared variance but additionally considers the sum of squares over all x values multiplied by the slope of the regression model. In other words, 
 
-* if the slope is zero, then mean squared residual error and mean squared model error are equal and the ration of both is 1.
+* if the slope is zero, then mean squared residual error and mean squared model error are equal and the ratio of both is 1.
 * if the slope is not zero, then mean squared model error is larger than the mean squared error and the ratio is larger than 1. 
 
 This provides us the test statistic for the *null-hypothesis* that the true slope is not different from 0.
