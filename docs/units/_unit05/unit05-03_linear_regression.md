@@ -133,7 +133,7 @@ When coding, think about the meaning of slope, intercept, observed variance, mod
 {: .notice--success}
 
 
-
+<!--
 ### Testing a linear regression relationship by a t-test
 
 For simple linear bivariate regressions, a t-test can be used as an alternative to test if the true slope is not different from 0.
@@ -180,7 +180,7 @@ summary(lmod)
 ## Multiple R-squared:  0.6665,	Adjusted R-squared:  0.6295 
 ## F-statistic: 17.99 on 1 and 9 DF,  p-value: 0.00217
 ```
-
+-->
 
 ### R squared
 
