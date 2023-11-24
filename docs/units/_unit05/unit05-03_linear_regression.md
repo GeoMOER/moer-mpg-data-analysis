@@ -54,13 +54,13 @@ data value = fitted value + residual value (or y = y' + res)
 
 The associated variances are:
 
-* The variance of the observed values, i.e. the difference between the individual observation y values and the mean over all observations of y. This will be called the total *observed variance*.
+* The variance of the observed values, i.e. the difference between the individual observation y values and the mean over all observations of y. This will be called the *observed (or total) variance*.
 * The variance of the fitted values, i.e. the difference between the predicted values of y' and the mean over all observations of y. This will be called the *model variance*.
-* The variance of the residual values, i.e. the difference between the predicted values y' and the observed values y. This will be called *residual variance*.
+* The variance of the residual values, i.e. the difference between the predicted values y' and the observed values y. This will be called the *residual variance*.
 
-The sum of model and residual variance equals the total variance.
+The sum of model variance and residual variance equals the observed variance.
 
-Commonly, all variances are squared and summed up over all observations which gives us the _sum of squares_ observed (or total), the sum of squares of the model and the sum of squares of residuals.
+Commonly, all variances are squared and summed up over all observations which gives us the *observed sum of squares*, the *model sum of squares* and the *residual sum of squares*.
 
 In order to calculate the variances, one can use the lm class of the model since - among others - it contains the original independent and dependent values as well as the predicted ones:
 
@@ -72,9 +72,9 @@ ss_resid <- sum((lmod$model$dep - lmod$fitted.values)**2)
 ```
 
 Since the sum increases with increasing numbers of observations, the resulting sum of squares are normalized by the respective degrees of freedom. This gives us:
-* the mean observation sum of squares
+* the mean observed sum of squares
 * the mean model sum of squares
-* the mean residual sum of squares, i.e. the mean squares error if the model is a simple linear regression model.
+* the mean residual sum of squares, i.e. the mean squared error if the model is a simple linear regression model.
 
 
 ```r
@@ -83,10 +83,10 @@ mss_model <- ss_model / 1
 mss_resid <- ss_resid / (length(lmod$model$dep) - 2)
 ```
 
-It can be shown that for large sample sizes, the mean squared residual error (mss_resid) equals the squared variance of the population. In this case, the mean squared model error (mss_model) also equals the squared variance but additionally considers the sum of squares over all x values multiplied by the slope of the regression model. In other words, 
+It can be shown that for large sample sizes, the mean residual sum of squares equals the squared variance of the population. In this case, the mean model sum of squares equals the squared variance of the population plus the sum of squares over all x values multiplied by the slope of the regression model. In other words, 
 
-* if the slope is zero, then mean squared residual error and mean squared model error are equal and the ratio of both is 1.
-* if the slope is not zero, then mean squared model error is larger than the mean squared error and the ratio is larger than 1. 
+* if the slope is zero, then mean model sum of squares and mean residual sum of squares are equal and the ratio of both is 1.
+* if the slope is not zero, then mean model sum of squares is larger than the mean residual sum of squares and the ratio is larger than 1. 
 
 This provides us the test statistic for the *null-hypothesis* that the true slope is not different from 0.
 
@@ -184,7 +184,7 @@ summary(lmod)
 
 ### R squared
 
-The variance explained by the model is one of the most often used variables to explain the relationship in simple linear models. It is computed by normalizing either the model sum of squares by the observation sum of squares or by substracting the normalization of the residual sum of squares from 1.
+The variance explained by the model is one of the most often used variables to explain the relationship in simple linear models. It is computed by normalizing either the model sum of squares by the observed sum of squares or by substracting the normalization of the residual sum of squares from 1.
 
 ```r
 ss_model / ss_obsrv
