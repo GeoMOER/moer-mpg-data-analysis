@@ -93,23 +93,33 @@ This provides us the test statistic for the *null-hypothesis* that the true slop
 ```r
 f_value <- mss_model / mss_resid
 ```
-By comparing the computed F value with tabulated information, one can finally decided if the null-hypothesis should be rejected.
 
-In summary (and without the tabulated F value), this gives us the following:
+By comparing the computed F value to an F distribution with 1 numerator degree of freedom and (number of observations - 2) denominator degrees of freedom, the p value is determined. If the p value is very small, the null-hypothesis can be rejected.
+
+```r
+p_value <- pf(f_value, 1, length(dep) - 2, lower.tail = FALSE)
+```
+
+In summary, this gives us the following:
 
 ```r
 data.frame(Name = c("ind", "residuals"),
            Deg_of_freedom = c(1, length(lmod$model$dep) - 2),
            Sum_of_squares = c(ss_model, ss_resid),
            Mean_sum_of_squares = c(mss_model, mss_resid),
-           F_value = f_value)
+           F_value = f_value,
+           p_value = p_value)
 ```
 
 ```
 ##        Name Deg_of_freedom Sum_of_squares Mean_sum_of_squares  F_value
 ## 1       ind              1       27.51000           27.510001 17.98994
 ## 2 residuals              9       13.76269            1.529188 17.98994
+##       p_value
+## 1 0.002169629
+## 2 0.002169629
 ```
+
 Of course, one does not have to compute this every time. A simple call to the anova function will do it:
 
 ```r
@@ -126,7 +136,6 @@ anova(lmod)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
-
 
 **Exercise**. Now you can check your knowledge and strengthen your plotting skills by writing code to rebuild the linear regression scatterplot from the previous page.
 When coding, think about the meaning of slope, intercept, observed variance, model variance, residual variance, and the different types of sum of squares.
