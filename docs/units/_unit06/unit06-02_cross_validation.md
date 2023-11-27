@@ -303,3 +303,8 @@ data.frame(NAME = c("Mean error (ME)", "Std. error of ME",
 ## 5 Root mean square error (RMSE)  1.42
 ## 6            Std. error of RMSE  0.13
 ```
+
+## Further watching
+
+1. [Machine Learning Fundamentals: Cross Validation](https://youtu.be/fSytzGwwBVw?si=Es_FWEBZdwq4x0fB){:target="_blank"}
+
