@@ -13,7 +13,7 @@ If a dependent variable should be explained or predicted by more than one indepe
 In the following, we will start with a short example, which illustrates one of the problems of multi-variable models. Afterwards, the two major concepts of variable selection will be briefly introduced:
 
 * **Recursive aka backward feature selection**: in this case, a model is computed with all available explanatory variables. 
-Afterwards, the variable with the least explanatory power is excluded from the model and this procedure is repeated until a quality criteria, e.g. maximum adjusted r square or minimum AIC is reached.
+Afterwards, the variable with the least explanatory power is excluded from the model and this procedure is repeated until a quality criteria, e.g. maximum adjusted r squared or minimum AIC is reached.
 * **Forward feature selection**: in this case, a model is separately computed for each available/potential explanatory variable. The variable which has the best individual explanatory power is selected and added to the final model. Afterwards, all possible combinations between the selected and the remaining variables are tested and the variable is added to the final model, which leads to the largest increase of the explanatory power of the model. This procedure is repeated until a quality criteria is reached.
 
 To illustrate this concept, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) but modify variables x2, x3, and x4 (please note that the original variables x2 to x4 have of course not intended to be used for y1 in the anscombe data). 
@@ -56,8 +56,8 @@ mss_obsrv <- ss_obsrv / (length(lmod$model$y) - 1)
 mss_model <- ss_model / 2
 mss_resid <- ss_resid / (length(lmod$model$y) - 2 -1)
 
-r_square <- round(1 - ss_resid/ss_obsrv, 5)
-r_square_adjusted <- round(1 - 
+r_squared <- round(1 - ss_resid/ss_obsrv, 5)
+r_squared_adjusted <- round(1 - 
                              (ss_resid / 
                                 (length(lmod$model$y) - (2+1))) / 
                              (ss_obsrv / 
@@ -65,14 +65,14 @@ r_square_adjusted <- round(1 -
 
 f_value <- round(mss_model / mss_resid, 2)
 
-print(data.frame(Name = c("r square", "adj. r square", "f value"), 
-                 Value = c(r_square, r_square_adjusted, f_value)))
+print(data.frame(Name = c("r squared", "adj. r squared", "f value"), 
+                 Value = c(r_squared, r_squared_adjusted, f_value)))
 ```
 
 ```
 ##            Name    Value
-## 1      r square  0.74606
-## 2 adj. r square  0.68257
+## 1      r squared  0.74606
+## 2 adj. r squared  0.68257
 ## 3       f value 11.75000
 ```
 
@@ -168,7 +168,7 @@ summary(lmod)
 Obviously order matters for analysis of variance results! This is because the null-hypothesis is different to the one from the `summary` function. While the latter checks if the slope of the regression line is significantly different from zero for each individual variable, the anova approach only checks if the slope of the added variable is different from zero. This means that if only one explanatory variable is added to the very basic model y = intercept + error, the variable is marked as significant if its associated slope is different from zero. If a second variable is added, the "baseline" model is the one with the first variable already included. Hence, it is not checked if both the slopes of the explanatory variables are still different from zero but only the slope of the added variable. In the above case, this leads to the situation that if x1 is added after x2, both variables are marked as significant while only x1 is significant if it is added prior to x2.
 
 The above example illustrates that the composition of multiple (regression) models is by far not as trivial as it might look in the first place. 
-In general, there are two basic selection procedures to cope with this. Both are not targeting the significance of slopes but the overall predictive power, which can be estimated e.g. using an adjusted r square value, the Akaike information criteria (AIC) or the prediction error on an independent sample data set.
+In general, there are two basic selection procedures to cope with this. Both are not targeting the significance of slopes but the overall predictive power, which can be estimated e.g. using an adjusted r squared value, the Akaike information criteria (AIC) or the prediction error on an independent sample data set.
 
 ## Recursive feature selection
 The idea of recursive feature selection is to start with the full model and then leave out one variable after another until the quality of the model does not increase further. The variables are taken out from the equation depending on their predictive power in the multi-variable model. 
@@ -246,7 +246,7 @@ next_vars <- recursive_feature_selection(data = df, dep = "y", vars = next_vars)
 ## 4       x4     0.6826 38.6849 -0.8633
 ```
 
-This time, the model that uses all three variables (x1, x2, and x4) is the reference and the quality increases compared to this reference if x4 is left out (AIC drops by -0.8633 and the adjusted r square increases from 0.6728 to 0.6826). Hence, only x1 and x2 will be used in the next iteration:
+This time, the model that uses all three variables (x1, x2, and x4) is the reference and the quality increases compared to this reference if x4 is left out (AIC drops by -0.8633 and the adjusted r squared increases from 0.6728 to 0.6826). Hence, only x1 and x2 will be used in the next iteration:
 
 ```r
 next_vars
@@ -325,7 +325,7 @@ act_var <- forward_feature_selection(data = df, dep = "y", vars = next_vars)
 ## 4       x4     0.1987 48.1661
 ```
 Please note that this time, the variable column does not indicate which variable has been left out but which one has been included. 
-Obviously, x1 has the largest explanatory power (adjusted r square of 0.6295 and AIC of 39.6814). Hence, during the next run, x1 will be included into all models and x2 to x4 will be iterated. 
+Obviously, x1 has the largest explanatory power (adjusted r squared of 0.6295 and AIC of 39.6814). Hence, during the next run, x1 will be included into all models and x2 to x4 will be iterated. 
 Technically, this is realized by excluding x1 from the variable `next_vars` and adding it to the variable `selected_vars`.
 
 ```r
@@ -342,7 +342,7 @@ act_var <- forward_feature_selection(data = df, dep = "y", vars = next_vars,
 ## 3       x3     0.5939 41.3942
 ## 4       x4     0.6067 41.0438
 ```
-If x1 is already included in the model, adding x2 increases the model performance as documented by the increase in the adjusted r square or the decrease in AIC. 
+If x1 is already included in the model, adding x2 increases the model performance as documented by the increase in the adjusted r squared or the decrease in AIC. 
 Hence, x2 is added to the baseline model formula for the next run:
 
 ```r

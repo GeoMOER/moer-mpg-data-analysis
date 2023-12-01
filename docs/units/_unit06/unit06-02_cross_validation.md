@@ -86,8 +86,8 @@ summary(lmod)
 ```
 
 ## Leave-one-out cross validation
-For the leave-one-out cross validation, the training sample is comprised by all but one value pairs of the data set and the left-out data pair is used as validation sample. 
-The procedure is typically iterated over the entire data set, i.e. each value is left-out once.
+For the leave-one-out cross validation, the training sample is comprised of all but one value pairs of the data set and the left-out data pair is used as validation sample. 
+The procedure is typically iterated over the entire data set, i.e. each value is left out once.
 
 ```r
 # Leave one out cross validation
