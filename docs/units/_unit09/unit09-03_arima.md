@@ -13,9 +13,6 @@ Since the latter often requires continuous i.e. gap-free observations, we start 
 To illustrate forecasting, we will again use the (mean monthly) air temperature records of the weather station in Cölbe (which is closest to Marburg). 
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}. 
 
-
-
-
 ```r
 head(tam)
 ```
@@ -39,7 +36,7 @@ On the contrary, it requires a stationary time series, which is a prerequisite w
 acf(tam$Ta)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-3-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-2-1.png)<!-- -->
 
 ### Auto-regressive models (AR)
 While we could start with de-trending and de-seasoning now, let us try a quick-and-dirty approach first and postpone the time series decomposition to the next session. 
@@ -51,7 +48,7 @@ dTa <- diff(diff(tam$Ta))
 acf(dTa)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-4-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-3-1.png)<!-- -->
 
 Not perfect but good enough to be used in this example. Before we run the ARIMA model, we run a simple AR model first:
 
@@ -84,7 +81,7 @@ The number of lags with the minimum AIC are used:
 plot(0:20, armod$aic, type = "o")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-6-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-5-1.png)<!-- -->
 
 Using the Yule-Walker method for estimating the AR parameters, a maximum lag of 14 is considered. 
 Although the results will be quite different if another method is used and although the following is of no use if one actually wants to use not just an AR or a MA but an ARIMA model, 
@@ -103,7 +100,7 @@ acf(dTa)
 pacf(dTa)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-7-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-6-1.png)<!-- -->
 
 ```r
 par(par_org)
@@ -158,27 +155,24 @@ In the ARIMA world, three parameters are generally required:
 Hence, if we want to compute an ARIMA comparable to the AR above (the second one), we call it with:
 
 ```r
-armod <- arima(tam$Ta, order = c(17,2,0), method = "ML")  # the order is p, d, q
+armod <- arima(tam$Ta, order = c(16,2,0), method = "ML")  # the order is p, d, q
 armod
 ```
 
 ```
 ## 
 ## Call:
-## arima(x = tam$Ta, order = c(17, 2, 0), method = "ML")
+## arima(x = tam$Ta, order = c(16, 2, 0), method = "ML")
 ## 
 ## Coefficients:
 ##           ar1      ar2      ar3      ar4      ar5      ar6      ar7      ar8
-##       -1.6116  -2.1231  -2.4783  -2.7759  -3.0871  -3.3227  -3.4265  -3.4376
-## s.e.   0.0723   0.1355   0.1969   0.2506   0.2894   0.3210   0.3440   0.3539
+##       -1.5905  -2.0603  -2.3734  -2.6106  -2.8770  -3.0727  -3.1417  -3.1373
+## s.e.   0.0708   0.1274   0.1809   0.2178   0.2424   0.2597   0.2684   0.2715
 ##           ar9     ar10     ar11     ar12     ar13     ar14     ar15     ar16
-##       -3.3866  -3.2361  -2.8672  -2.4386  -1.9423  -1.2944  -0.8321  -0.3545
-## s.e.   0.3556   0.3529   0.3432   0.3203   0.2887   0.2500   0.1961   0.1355
-##          ar17
-##       -0.0952
-## s.e.   0.0726
+##       -3.0825  -2.9320  -2.5703  -2.1606  -1.6898  -1.0649  -0.6344  -0.2024
+## s.e.   0.2712   0.2677   0.2595   0.2416   0.2165   0.1797   0.1265   0.0707
 ## 
-## sigma^2 estimated as 3.362:  log likelihood = -404.22,  aic = 844.44
+## sigma^2 estimated as 3.394:  log likelihood = -405.08,  aic = 844.15
 ```
 
 Finding the right values for an ARIMA model is not trivial. 
@@ -320,10 +314,10 @@ summary(arima_s)
 tsdiag(arima_s)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-17-1.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-18-1.png)<!-- -->
 
 ```r
 plot(forecast::forecast(arima_s))
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-17-2.png)<!-- -->
+![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-19-1.png)<!-- -->
