@@ -20,6 +20,7 @@ The data has been supplied by the [German Weather Service](https://opendata.dwd.
 ## A first look at the time series
 The time series shows hourly recordings of 2m air temperature between July 1st 2006 and December 31st 2022.
 
+<!--
 ```{r, echo = FALSE}
 path <- file.path(
     "/home/alex/Desktop/hiwi",
@@ -29,6 +30,7 @@ path <- file.path(
 
 dwd <- read.table(path, header = TRUE, sep = ";", dec = ".")
 ```
+-->
 
 ```r
 head(dwd)
