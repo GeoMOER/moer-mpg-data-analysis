@@ -33,7 +33,7 @@ head(tam)
 ### Auto-regressive and moving average models for predicting time series
 In order to predict the time series just based on its observed dynamics, an auto-regressive integrated moving average model (ARIMA) can be used. 
 ARIMA is not a diagnostic model for the identification of seasonal or other periodic components. 
-On the contrary, it requires a stationary time series, which is a prerequisite we already know is not true for the monthly mean air temperature values between July 1st 2006 and December 31st 2015. 
+On the contrary, it requires a stationary time series, which is a prerequisite we already know is not true for the monthly mean air temperature values between July 1st 2006 and December 31st 2022. 
 
 ```r
 acf(tam$Ta)
@@ -67,11 +67,11 @@ armod
 ## 
 ## Coefficients:
 ##       1        2        3        4        5        6        7        8  
-## -0.7334  -0.5075  -0.2491  -0.2513  -0.3969  -0.6473  -0.5665  -0.5402  
-##       9       10  
-## -0.2995  -0.2997  
+## -0.8578  -0.5895  -0.3433  -0.2797  -0.4231  -0.5408  -0.5385  -0.4862  
+##       9       10       11       12       13       14  
+## -0.4245  -0.2970  -0.0344   0.0963   0.1368   0.2154  
 ## 
-## Order selected 10  sigma^2 estimated as  8.501
+## Order selected 14  sigma^2 estimated as  8.14
 ```
 
 The ``ar`` function computes an AR model and iterates over the lags to be included in the linear equation, 
@@ -86,7 +86,7 @@ plot(0:20, armod$aic, type = "o")
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-6-1.png)<!-- -->
 
-Using the Yule-Walker method for estimating the AR parameters, a maximum lag of 10 is considered. 
+Using the Yule-Walker method for estimating the AR parameters, a maximum lag of 14 is considered. 
 Although the results will be quite different if another method is used and although the following is of no use if one actually wants to use not just an AR or a MA but an ARIMA model, 
 a rule of thumb states that if
 
@@ -109,7 +109,7 @@ pacf(dTa)
 par(par_org)
 ```
 
-Nice, but pretty useless since if we change the parameter estimation method, the results look like this (17 is the optimum):
+Nice, but pretty useless since if we change the parameter estimation method, the results look like this (16 is the optimum):
 
 ```r
 armod <- ar(dTa, aic = TRUE, order.max = 20, method = "mle")
@@ -123,13 +123,11 @@ armod
 ## 
 ## Coefficients:
 ##       1        2        3        4        5        6        7        8  
-## -1.5341  -2.0412  -2.3315  -2.5476  -2.8204  -3.1504  -3.2904  -3.3489  
+## -1.5912  -2.0621  -2.3764  -2.6146  -2.8816  -3.0777  -3.1469  -3.1423  
 ##       9       10       11       12       13       14       15       16  
-## -3.1917  -3.0814  -2.6816  -2.2896  -1.8580  -1.2937  -0.8677  -0.4083  
-##      17  
-## -0.1449  
+## -3.0874  -2.9369  -2.5753  -2.1653  -1.6939  -1.0681  -0.6365  -0.2034  
 ## 
-## Order selected 17  sigma^2 estimated as  3.174
+## Order selected 16  sigma^2 estimated as  3.39
 ```
 
 
@@ -170,17 +168,17 @@ armod
 ## arima(x = tam$Ta, order = c(17, 2, 0), method = "ML")
 ## 
 ## Coefficients:
-##           ar1      ar2      ar3      ar4      ar5      ar6      ar7
-##       -1.5323  -2.0368  -2.3241  -2.5367  -2.8068  -3.1350  -3.2741
-## s.e.   0.0982   0.1783   0.2576   0.3215   0.3631   0.3981   0.4325
-##           ar8      ar9     ar10     ar11     ar12     ar13     ar14
-##       -3.3327  -3.1753  -3.0653  -2.6656  -2.2745  -1.8440  -1.2815
-## s.e.   0.4485   0.4604   0.4485   0.4321   0.3977   0.3619   0.3185
-##          ar15     ar16     ar17
-##       -0.8586  -0.4031  -0.1428
-## s.e.   0.2544   0.1781   0.0988
+##           ar1      ar2      ar3      ar4      ar5      ar6      ar7      ar8
+##       -1.6116  -2.1231  -2.4783  -2.7759  -3.0871  -3.3227  -3.4265  -3.4376
+## s.e.   0.0723   0.1355   0.1969   0.2506   0.2894   0.3210   0.3440   0.3539
+##           ar9     ar10     ar11     ar12     ar13     ar14     ar15     ar16
+##       -3.3866  -3.2361  -2.8672  -2.4386  -1.9423  -1.2944  -0.8321  -0.3545
+## s.e.   0.3556   0.3529   0.3432   0.3203   0.2887   0.2500   0.1961   0.1355
+##          ar17
+##       -0.0952
+## s.e.   0.0726
 ## 
-## sigma^2 estimated as 3.188:  log likelihood = -230.95,  aic = 495.91
+## sigma^2 estimated as 3.362:  log likelihood = -404.22,  aic = 844.44
 ```
 
 Finding the right values for an ARIMA model is not trivial. 
@@ -198,14 +196,16 @@ summary(arimamod)
 ## 
 ## Coefficients:
 ##          ar1     ar2     ar3      ar4      ar5      ar6      ma1     ma2
-##       0.3197  0.0425  0.0449  -0.1024  -0.3006  -0.3669  -1.8782  0.8872
-## s.e.  0.0985  0.0924  0.0932   0.0932   0.0935   0.1001   0.0649  0.0636
+##       0.3725  0.0823  0.0408  -0.1707  -0.3006  -0.2665  -1.9114  0.9152
+## s.e.  0.0739  0.0717  0.0715   0.0716   0.0726   0.0741   0.0376  0.0374
 ## 
-## sigma^2 estimated as 3.703:  log likelihood = -239.34,  aic = 494.67
+## sigma^2 estimated as 3.976:  log likelihood = -421.01,  aic = 860.01
 ## 
 ## Training set error measures:
-##               ME RMSE MAE MPE MAPE
-## Training set NaN  NaN NaN NaN  NaN
+##                     ME     RMSE      MAE      MPE     MAPE      MASE
+## Training set 0.2484168 1.983889 1.596457 33.56211 59.27694 0.4886506
+##                     ACF1
+## Training set -0.03297744
 ```
 
 We will not focus on optimal prediction in this example, so these results are just fine for the purpose of illustration. 
@@ -233,43 +233,40 @@ It will also include seasonal components in the ARIMA model
 
 ### Finding the right parameters for ARIMA with the auto.arima function
 The forecast package generally works on time series data of class ``ts``, which is easy to generate if you actually have a complete (i.e. gap-free) time series. The time series is defined by the values, the starting point in time (e.g. year and month), the end point in time, the frequency of observations per main time unit and the time step delta t. 
-For monthly data starting in July 2006 and ending in December 2015, the creation of a time series looks like this:
+For monthly data starting in July 2006 and ending in December 2022, the creation of a time series looks like this:
 
 ```r
-tam_ts <- ts(tam$Ta, start = c(2006, 7), end = c(2015, 12), 
+tam_ts <- ts(tam$Ta, start = c(2006, 7), end = c(2022, 12), 
              frequency = 12)
 str(tam_ts)
 ```
 
 ```
-##  Time-Series [1:114] from 2006 to 2016: 21.75 15.57 16.68 12.12 7.33 ...
+##  Time-Series [1:198] from 2006 to 2023: 21.75 15.57 16.68 12.12 7.33 ...
 ```
 
 Now we can use the ``forecast::auto.arima`` function. We will extend the iteration over p and q to 20 to be compatible with the above example but we will not include a seasonal component for the moment:
 
 ```r
-# library(forecast)
-arima_ns <- auto.arima(tam_ts, max.p = 20, max.q = 20, stationary = TRUE, seasonal=FALSE)
+arima_ns <- forecast::auto.arima(tam_ts, max.p = 20, max.q = 20, stationary = TRUE, seasonal=FALSE)
 summary(arima_ns)
 ```
 
 ```
 ## Series: tam_ts 
-## ARIMA(4,0,1) with non-zero mean 
+## ARIMA(5,0,0) with non-zero mean 
 ## 
 ## Coefficients:
-##          ar1      ar2     ar3      ar4      ma1    mean
-##       1.0643  -0.2341  0.0017  -0.3637  -0.5698  9.7454
-## s.e.  0.1083   0.1486  0.1433   0.1024   0.0816  0.1590
+##          ar1     ar2     ar3      ar4      ar5    mean
+##       0.5127  0.1307  0.0213  -0.2077  -0.4097  9.9924
+## s.e.  0.0658  0.0748  0.0751   0.0753   0.0665  0.1528
 ## 
-## sigma^2 estimated as 4.365:  log likelihood=-245.05
-## AIC=504.11   AICc=505.16   BIC=523.26
+## sigma^2 = 4.235:  log likelihood = -423.34
+## AIC=860.68   AICc=861.27   BIC=883.7
 ## 
 ## Training set error measures:
-##                      ME     RMSE      MAE      MPE     MAPE      MASE
-## Training set 0.06181951 2.033455 1.626722 57.91271 97.16354 0.8519967
-##                     ACF1
-## Training set -0.05493963
+##                     ME     RMSE      MAE     MPE    MAPE      MASE       ACF1
+## Training set 0.0246255 2.026541 1.597263 38.3537 71.5643 0.8362305 -0.0825803
 ```
 
 Actually, the ARIMA model comes with d = 0, which means that the data values are not differentiated (which is a tough choice).
@@ -283,12 +280,12 @@ tsdiag(arima_ns)
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-15-1.png)<!-- -->
 
 The last plot shows test results if the residuals were independently distributed. 
-For time lags larger 4, this is may not be the case, which indicates that the ARIMA model is not really well specified.
+For time lags larger than 4, this may not be the case, which indicates that the ARIMA model is not really well specified.
 
 The forecast looks like this:
 
 ```r
-plot(forecast(arima_ns))
+plot(forecast::forecast(arima_ns))
 ```
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-16-1.png)<!-- -->
@@ -296,27 +293,27 @@ plot(forecast(arima_ns))
 If we include a seasonal component, the results look like this:
 
 ```r
-arima_s <- auto.arima(tam_ts, max.p = 20, max.q = 20, seasonal=TRUE)
+arima_s <- forecast::auto.arima(tam_ts, max.p = 20, max.q = 20, seasonal=TRUE)
 summary(arima_s)
 ```
 
 ```
 ## Series: tam_ts 
-## ARIMA(1,0,0)(2,1,0)[12] 
+## ARIMA(1,0,0)(1,1,0)[12] with drift 
 ## 
 ## Coefficients:
-##          ar1     sar1     sar2
-##       0.1865  -0.6021  -0.3465
-## s.e.  0.0998   0.1006   0.1041
+##          ar1     sar1    drift
+##       0.1211  -0.5211  -0.0025
+## s.e.  0.0733   0.0637   0.0099
 ## 
-## sigma^2 estimated as 4.471:  log likelihood=-222.47
-## AIC=452.95   AICc=453.36   BIC=463.45
+## sigma^2 = 4.568:  log likelihood = -405.6
+## AIC=819.2   AICc=819.42   BIC=832.11
 ## 
 ## Training set error measures:
-##                      ME    RMSE      MAE       MPE     MAPE      MASE
-## Training set -0.1559868 1.97039 1.435267 -6.164647 46.61725 0.7517223
-##                      ACF1
-## Training set -0.009007497
+##                       ME    RMSE      MAE       MPE     MAPE      MASE
+## Training set -0.03883731 2.05483 1.544685 -2.425242 41.78898 0.8087037
+##                    ACF1
+## Training set 0.00160073
 ```
 
 ```r
@@ -326,7 +323,7 @@ tsdiag(arima_s)
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-17-1.png)<!-- -->
 
 ```r
-plot(forecast(arima_s))
+plot(forecast::forecast(arima_s))
 ```
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-17-2.png)<!-- -->
