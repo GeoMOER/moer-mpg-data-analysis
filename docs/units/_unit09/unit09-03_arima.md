@@ -8,7 +8,7 @@ header:
 ---
 
 Time-series analyses can generally be divided into forecasting future dynamics and describing and potentially explaining past patterns. 
-Since the later often requires continuous i.e. gap-free observations, we start with a simple forecasting procedure, which can also be used for gap-filling in some cases.
+Since the latter often requires continuous i.e. gap-free observations, we start with a simple forecasting procedure, which can also be used for gap-filling in some cases.
 
 To illustrate forecasting, we will again use the (mean monthly) air temperature records of the weather station in Cölbe (which is closest to Marburg). 
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}. 
@@ -44,7 +44,7 @@ acf(tam$Ta)
 ### Auto-regressive models (AR)
 While we could start with de-trending and de-seasoning now, let us try a quick-and-dirty approach first and postpone the time series decomposition to the next session. 
 One thing one could try is to not use the original values but the difference between the consecutive value pairs (i.e. the difference between time t and t+1 etc.). 
-And if one difference is not enough, we can compute the differences of the differences and the auto-correlation behaviour would look like that:
+And if one difference is not enough, we can compute the differences of the differences and the auto-correlation behaviour would look like this:
 
 ```r
 dTa <- diff(diff(tam$Ta))
@@ -149,7 +149,7 @@ lines(arpred$pred - arpred$se, col = "grey")
 
 ### Auto-regressive integrated moving average models (ARIMA)
 Since the auto-correlation and partial auto-correlation function might slightly demand for an auto-regressive model and not for a moving average model, 
-we will skip the later and jump directly to the combined version - ARIMA.
+we will skip the latter and jump directly to the combined version - ARIMA.
 
 In the ARIMA world, three parameters are generally required: 
 

@@ -133,7 +133,7 @@ The only difference is due to some wording since the R squared value in the line
 
 Obviously, there must be more than just switching a function call to come from linear models to additive models. 
 And there is: while for simple linear models the equation would be something like y = a + bx, a smoothing term replace the slope b in additive models: y = a+s(x). 
-By adding this term to the `gam` function and using a penalized regression spline (fx = FALSE, which is the default), we finally get a first non-linear model:
+By adding this term to the `gam` function and using a penalized regression spline (fx = FALSE, which is the default), we finally get our first non-linear model:
 
 ```r
 gammod <- gam(y ~ s(x, fx = FALSE), data = df)
@@ -213,7 +213,7 @@ plot(gammod)
 ### Optimal smoother selection and reducing the risk of overfitting
 One might wonder why this and no other smoother has been found in the end. 
 The reason lies in the way the default penalized regression works (which is beyond the scope of this example but to sum it up: the regression penalizes each added smoothing term, i.e. each reduction in the resulting degrees of freedom of the model). 
-To illustrate what would happen if no penalized but just a simple spline regression would be used, one can set the fx option to TRUE:
+To illustrate what would happen if no penalization, but just a simple spline regression would be used, one can set the fx option to TRUE:
 
 ```r
 gammod <- gam(y ~ s(x, bs = "tp", fx = TRUE), data = df)
