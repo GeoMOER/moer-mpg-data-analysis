@@ -22,8 +22,9 @@ knots <- seq(1, 19)
 palette <- colorRampPalette(colors=c("blue", "green", "red"))
 cols <- palette(length(knots))
 
-dev.copy(jpeg, file.path(dirname(rstudioapi::getActiveDocumentContext()$path),
-                         "gam.jpg"), quality = 100)
+# dev.copy(jpeg, file.path(dirname(rstudioapi::getActiveDocumentContext()$path),
+#                          "gam.jpg"), quality = 100)
+png("gam.png", width = 960, height = 960, pointsize = 24)
 
 plot(df$x, df$y)
 

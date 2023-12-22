@@ -18,7 +18,7 @@ At the end of this session you should be able to
 
 ## Basic idea of model tuning
 
-{% include figure image_path="/assets/images/gam.jpg" alt="Illustration of a generalized additive model with increasing knots." %}
+{% include figure image_path="/assets/images/gam.png" alt="Illustration of a generalized additive model with increasing knots." %}
 
 The graphic above shows how a changing number of knots affects the result of a generalized additive model (GAM). With increasing knots, the model becomes more flexible to adapt itself to the dataset. By increasing the number of knots, the dataset provided to the model is fitted with increasing accuracy. However, overfitting of the sample dataset increases, too.
 
