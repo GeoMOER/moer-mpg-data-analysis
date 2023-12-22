@@ -9,7 +9,7 @@ header:
 ## Basic idea of statistical modeling
 Use observation samples to describe the relationship between a dependent variable and one or more independent variables.
 
-{% include figure image_path="/assets/images/linear_regression.jpg" alt="Linear regression with residuals" caption="Linear regression with residuals." %}
+{% include figure image_path="/assets/images/linear_regression.png" alt="Linear regression with residuals" caption="Linear regression with residuals." %}
 
 The graphic above shows a scatter plot of data pairs between an independent (X axis) and a dependent (Y axis) variable. 
 The relationship is estimated by a linear regression model illustrated by a blue line. 

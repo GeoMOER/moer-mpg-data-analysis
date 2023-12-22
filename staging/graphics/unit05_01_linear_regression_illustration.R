@@ -13,6 +13,8 @@ dependent <- anscombe$y1
 
 lmod <- lm(dependent ~ independentendent)
 
+png("linear_regression.png", width = 960, height = 960, pointsize = 24)
+
 plot(independentendent, dependent, xlim=c(min(independentendent)-1, max(independentendent)+1), ylim=c(min(dependent)-1, max(dependent)+1))
 abline(lmod, lwd=2, col = "blue")
 
@@ -26,6 +28,6 @@ textxy(10, 4,
                     " + ", .(round(lmod$coefficients[2], 3)), "* x"["i"])),
        cex=1)
 
-dev.copy(jpeg, file.path(dirname(rstudioapi::getActiveDocumentContext()$path),
-                         "linear_regression.jpg"), quality = 100)
+# dev.copy(jpeg, file.path(dirname(rstudioapi::getActiveDocumentContext()$path),
+#                          "linear_regression.jpg"), quality = 100)
 dev.off()
