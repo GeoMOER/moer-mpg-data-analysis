@@ -20,7 +20,7 @@ At the end of this session you should be able to
 ## Basic idea of statistical prediction
 Use observation samples to build a model, which predicts the dependent variable based on one or more independent variables. 
 
-{% include figure image_path="/assets/images/cross_validation.jpg" alt="Cross validation example using linear regressions" caption="Linear regression models computed with left-out data pairs." %}
+{% include figure image_path="/assets/images/cross_validation.png" alt="Cross validation example using linear regressions" caption="Linear regression models computed with left-out data pairs." %}
 
 The graphic above shows a scatter plot of data pairs between an independent (X axis) and a dependent (Y axis) variable. 
 The red lines represent linear regression models, each computed on a different subset of the data pairs where one data pair has been removed. 

@@ -11,10 +11,12 @@ library(calibrate)
 independent <- anscombe$x1
 dependent <- anscombe$y1
 
+png("cross_validation.png", width = 960, height = 960, pointsize = 24)
+
 plot(independent, dependent)
 for(i in seq(length(independent))){
   abline(lm(dependent[-i] ~ independent[-i]), col = "red")
 }
 
-dev.copy(jpeg, "cross_validation.jpg", quality = 100)
+# dev.copy(jpeg, "cross_validation.jpg", quality = 100)
 dev.off()
