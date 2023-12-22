@@ -25,7 +25,7 @@ German Weather Service (DWD) via its [server](https://opendata.dwd.de/climate_en
 In addition to Cölbe, you will also find all climate stations available for Germany.
 
 After working with a short time series of the DWD station in Cölbe as part of the last assignment, 
-we will now extent the time frame to the time between 1950 and 1990. 
+we will now extend the time frame to the time between 1950 and 1990. 
 This dataset is also available directly from the [DWD Server](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/monthly/kl/historical/){:target="_blank"}. 
 In addition to analyzing the dynamics in the station record, 
 we will explain parts of the dynamics by using a time series of the North Atlantic Oscillation provided by [NOAA](http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml){:target="_blank"}.

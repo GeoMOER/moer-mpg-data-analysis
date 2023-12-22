@@ -44,7 +44,7 @@ plot(1/spec$freq, spec$spec, type = "h")
 ![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-3-2.png)<!-- -->
 
 ```r
-1/spec$freq[spec$spe == max(spec$spec)]
+1/spec$freq[spec$spec == max(spec$spec)]
 ```
 
 ```
@@ -73,7 +73,7 @@ lines(tam$Date, annual_trend, col = "red")
 
 The annual trend shows some fluctuations but it is certainly not very strong or even hardly different from zero.
 
-Once this trend is identified, we can subtract it from the original time series in order to get a de-trended seasonal signal, which will be averaged in a second step. 
+Once this trend is identified, we can subtract it from the original time series in order to get a de-trended seasonal signal, which will be averaged in the second step. 
 The average of each  will finally form the seasonal signal:
 
 ```r
@@ -105,7 +105,7 @@ acf(remainder, na.action = na.pass)
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-7-1.png)<!-- -->
 
-Alternatively to the workflow above, we could (and should) of course use existing functions, like ``decompose``, which handles the decomposition in one step. 
+As an alternative to the workflow above, we could (and should) of course use existing functions, like ``decompose``, which handles the decomposition in one step. 
 Since this function requires a time series, this data type has to be created first. 
 Note that the frequency argument in the time series function does not correspond to the seasonal component but to the number of sub-observations within each major time step (i.e. monthly values within annual major time steps in our case):
 
@@ -151,7 +151,7 @@ plot(tam_ts_stl)
 
 
 # Trend estimation
-While the above helps us in decomposing a time series into several components, we are sometimes also interested in linear trends over time. 
+While the above helps us decomposing a time series into several components, we are sometimes also interested in linear trends over time. 
 Since seasonal signals strongly influence such trends, we generally remove the seasonal signal and analyze the anomalies. 
 In order to remove the seasonal signal, we can average over all values for each month and subtract it from the original time series:
 
