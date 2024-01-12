@@ -83,7 +83,7 @@ pal(desaturate(brewer_rainbow(100)))
 Not bad at all, though there is a distiguishable increase in lightness towards the middle of the scale.
 This is accepted in this case as this colour scale is a diverging colour scale. This means it should only be used for visualising deviations from a central value (e.g. zero). Do not use this colour scale representing sequential data (i.e. data changing only in one direction)!!
 
-In order to create truely perceptually uniform colour scale we need to use the hcl colour space. As mentioned above, this can be done using `hcl()`. Here, we create ourselves a function that produces a colour palette of a user supplied length n based on hcl colour space:
+In order to create truely perceptually uniform colour scale we need to use the hcl colour space. As mentioned above, this can be done using `hcl()`. Here, we create a function that produces a colour palette of a user supplied length n based on hcl colour space:
 
 
 ```r
@@ -133,5 +133,5 @@ pal(desaturate(clrs_hcl2(100)))
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
-Perfect, a colour scale that is honest, still pleasing enough to not make you want to close your eyes and even in greyscale low and high values are readily discernable.
+Perfect, a colour scale that is honest, still pleasing enough to not make you want to close your eyes and even in greyscale low and high values are readily discernible.
 
