@@ -42,12 +42,12 @@ pal(rev(clrs_hcl2(10)))
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
-## As example data serve political boundaries of the world
+## World map as an example
 Download the data [here](https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_admin_0_countries.zip){:target="_blank"} or directly from within R.
 
 ```r
-#download.file("https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_admin_0_countries.zip", 
-#              destfile = "countries.zip")
+download.file("https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_admin_0_countries.zip", 
+              destfile = "countries.zip")
 ```
 [NaturalEarthData](https://www.naturalearthdata.com/){:target="_blank"} has a nice collection of other free GIS data, too.
 
@@ -65,10 +65,11 @@ plot(world)
 
 ```r
 ## Let's generate some random values for each feature for plotting later
-world$random <- sample(1:100, nrow(world), replace = TRUE) # note that no seed is set here, so every call will result in a different result
+## note that no seed is set here, so every call will result in a different result
+world$random <- sample(1:100, nrow(world), replace = TRUE)
 
 ## Use new field with random values for colour plotting
-plot(world, col = world$random) # fancy and meaningless, but works.
+plot(world, col = world$random)
 ```
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
@@ -80,13 +81,20 @@ If we want to do classified plotting, i.e. assign a particular colour to each cl
 ## Choose the number of desired classes
 n <- 10
 
-## Classify the randomly generated data (or any numeric attribute) with some method. In this case equaly spaces classed, i.e. all classed have equal widths. See ?classIntervals for more options.
+## Classify the randomly generated data (or any numeric attribute) with some method.
+## In this case equaly spaces classed, i.e. all classed have equal widths.
+## See ?classIntervals for more options.
 intervalls <- classInt::classIntervals(world$random, n = n, style = "equal")
 
 intervalls$brks # shows the calculated breaks
 
-## Assign each class within the feature the a colour according to the previous classification. The colours are produced with the self-defined clrs_hcl2() function from above. Execute all parts of the code line below to see what they do and what they contain.
-colours <- classInt::findColours(intervalls, rev(clrs_hcl2(n)), cutlabels = FALSE) # Noteworthy, the values of the object "colours" are the colours definded in the hexadecimal system and there are as many entries as there are values in the original data (attribute "random" in this case). One colour for each value. 
+## Assign each class within the feature the a colour according to the previous classification.
+## The colours are produced with the self-defined clrs_hcl2() function from above.
+## Execute all parts of the code line below to see what they do and what they contain.
+## Noteworthy, the values of the object "colours" are the colours definded in the hexadecimal
+## system and there are as many entries as there are values in the original data
+## (attribute "random" in this case). One colour for each value.
+colours <- classInt::findColours(intervalls, rev(clrs_hcl2(n)), cutlabels = FALSE)
 
 ## Add the colour code to the attribute table of the spatial object
 world$colours <- colours
