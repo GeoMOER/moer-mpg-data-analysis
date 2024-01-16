@@ -130,8 +130,7 @@ Since this function requires a time series, this data type has to be created fir
 Note that the frequency argument in the time series function does not correspond to the seasonal component but to the number of sub-observations within each major time step (i.e. monthly values within annual major time steps in our case):
 
 ```r
-tam_ts <- ts(tam$Ta, start = c(2007, 1), end = c(2022, 12), 
-             frequency = 12)
+tam_ts <- ts(tam$Ta, start = c(2007, 1), end = c(2022, 12), frequency = 12)
 tam_ts_dec <- decompose(tam_ts)
 plot(tam_ts_dec$trend)
 ```
@@ -178,7 +177,7 @@ In order to remove the seasonal signal, we can average over all values for each 
 ```r
 monthly_mean <- aggregate(tam$Ta, by = list(substr(tam$Date, 6, 7)), FUN = mean)
 tam$Ta_ds <- tam$Ta - monthly_mean$x
-plot(tam$Date, tam$Ta_ds, type = "h")
+plot(tam$Date, tam$Ta_ds, type = "l")
 ```
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-14-1.png)<!-- -->
