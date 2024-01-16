@@ -15,24 +15,21 @@ The first more formal contact with time series will therefore highlight these ch
 To exemplarily illustrate a time series analysis, air temperature records of the weather station in Cölbe (which is the one closest to Marburg) will be used.
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}.
 
+## Download the data
+We can download the data from the above link, or we can use the rdwd package.
 
+```r
+url <- selectDWD(id = "003164", res = "hourly", var = "air_temperature", per = "historial")
+file <- dataDWD(url, dir = getwd(), read = FALSE)
+```
 
 ## A first look at the time series
 The time series shows hourly recordings of 2m air temperature between July 1st 2006 and December 31st 2022.
 
-<!--
-```{r, echo = FALSE}
-path <- file.path(
-    "/home/alex/Desktop/hiwi",
-    "stundenwerte_TU_03164_20060701_20221231_hist",
-    "produkt_tu_stunde_20060701_20221231_03164.txt"
-)
-
-dwd <- read.table(path, header = TRUE, sep = ";", dec = ".")
-```
--->
-
 ```r
+# adapt path to where your file actually is
+path <- "produkt_tu_stunde_20060701_20221231_03164.txt"
+dwd <- read.table(path, header = TRUE, sep = ";", dec = ".")
 head(dwd)
 ```
 
