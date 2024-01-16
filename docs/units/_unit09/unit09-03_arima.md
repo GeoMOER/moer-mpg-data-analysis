@@ -14,6 +14,8 @@ To illustrate forecasting, we will again use the (mean monthly) air temperature 
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}. 
 
 ```r
+# read data we saved in the last session
+tam <- read.table("tam.txt", header = TRUE, sep = ";")
 head(tam)
 ```
 

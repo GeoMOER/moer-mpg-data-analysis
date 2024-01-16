@@ -165,6 +165,10 @@ Another example shows the auto-correlation of the monthly mean temperatures for 
 dwd$AGG_JM <- substr(dwd$MESS_DATUM, 1, 6)
 tam <- aggregate(dwd$TT_TU, by = list(dwd$AGG_JM), FUN = mean)
 colnames(tam) <- c("Date", "Ta")
+
+# save data for later use
+write.table(tam, file = "tam.txt", sep = ";", row.names = FALSE)
+
 acf(tam$Ta)
 ```
 
