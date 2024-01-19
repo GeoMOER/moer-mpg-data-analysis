@@ -19,7 +19,7 @@ The data has been supplied by the [German Weather Service](https://opendata.dwd.
 We can download the data from the above link, or we can use the [rdwd](https://cran.r-project.org/web/packages/rdwd/index.html) package.
 
 ```r
-url <- rdwd::selectDWD(id = "003164", res = "hourly", var = "air_temperature", per = "historial")
+url <- rdwd::selectDWD(id = "003164", res = "hourly", var = "air_temperature", per = "historical")
 rdwd::dataDWD(url, dir = getwd(), read = FALSE)
 ```
 
