@@ -16,11 +16,11 @@ To exemplarily illustrate a time series analysis, air temperature records of the
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}.
 
 ## Download the data
-We can download the data from the above link, or we can use the rdwd package.
+We can download the data from the above link, or we can use the [rdwd](https://cran.r-project.org/web/packages/rdwd/index.html) package.
 
 ```r
-url <- selectDWD(id = "003164", res = "hourly", var = "air_temperature", per = "historial")
-file <- dataDWD(url, dir = getwd(), read = FALSE)
+url <- rdwd::selectDWD(id = "003164", res = "hourly", var = "air_temperature", per = "historial")
+rdwd::dataDWD(url, dir = getwd(), read = FALSE)
 ```
 
 ## A first look at the time series
