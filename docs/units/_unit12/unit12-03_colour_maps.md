@@ -9,104 +9,120 @@ header:
 
 This is a short example on how to use the hcl colour palette for colouring features of a shapefile.
 
-
-## Load the required packages
+## Set up
 ```r
+# Load the required packages
 library("terra")
 library("classInt")
-```
 
-## Always clean the workspace first
-```r
+# Clean the workspace first
 rm(list=ls())
-```
 
-## Get helper functions (those from the previous page)
-```r
+# Get helper function from the previous page
 clrs_hcl2 <- function(n) {
   hcl(h = seq(0, 260, length.out = n), 
       c = 60, l = seq(10, 90, length.out = n), 
       fixup = TRUE)
 }
 
-pal <- function(col, border = "transparent", ...) {
-  n <- length(col)
-  plot(0, 0, type="n", xlim = c(0, 1), ylim = c(0, 1),
-       axes = FALSE, xlab = "", ylab = "", ...)
-  rect(0:(n-1)/n, 0, 1:n/n, 1, col = col, border = border)
-}
-
-# If you want to reverse the colour palette, do it like this
-pal(rev(clrs_hcl2(10)))
+## Set the seed to get the same results every time
+set.seed(42)
 ```
 
-<img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
-
-## World map as an example
+## Download world map as an example
 Download the data [here](https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_admin_0_countries.zip){:target="_blank"} or directly from within R.
 
-```r
+```r, eval = FALSE
 download.file("https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_admin_0_countries.zip", 
               destfile = "countries.zip")
 ```
 [NaturalEarthData](https://www.naturalearthdata.com/){:target="_blank"} has a nice collection of other free GIS data, too.
 
-
-## Example script for plotting with random colours
+## Plot with random colours
 ```r
 ## Read in shapefile
 world <- terra::vect("countries/ne_50m_admin_0_countries.shp")
 
-## Do the reality check and plot the map
-plot(world)
+## Generate random values that follow a normal distribution for each feature in the map
+randomNumbers <- as.integer(rnorm(nrow(world), 50, 16))
+
+## Plot using the random values as colours
+plot(world, col = randomNumbers)
+```
+
+<img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+
+There are so many colours in the map and it looks messy.
+```r
+length(unique(randomNumbers))
+```
+
+```
+## [1] 66
+```
+
+## Plot using hcl colours with equal interval classes
+If we want to do classified plotting, i.e. assign a particular colour to each class, we need to classify our data first and then assign colours to each class.
+
+```r
+# number of classes
+n <- 10
+
+# Classify the randomly generated data using 10 equal interval classes
+intervals <- classInt::classIntervals(randomNumbers, n = n, style = "equal")
+
+# assign colours to the intervals
+myColours <- classInt::findColours(intervals, rev(clrs_hcl2(n)), cutlabels = FALSE)
+
+# Plot using the new colours
+plot(world, col = myColours)
+add_legend(
+    "left", legend = names(attr(myColours, "table")), 
+    fill = attr(myColours, "palette"), 
+    border = attr(myColours, "palette"), 
+    bty = "n", title = "Legend", cex = 0.8, y.intersp = 0.7
+)
 ```
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
+We used 10 equal interval classes. The frequency of colours is shown below.
 ```r
-## Let's generate some random values for each feature for plotting later
-## note that no seed is set here, so every call will result in a different result
-world$random <- sample(1:100, nrow(world), replace = TRUE)
-
-## Use new field with random values for colour plotting
-plot(world, col = world$random)
+hist(randomNumbers, breaks = intervals$brks, col = attr(myColours, "palette"))
 ```
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
-## Example script for plotting with classified hcl colours
-If we want to do classified plotting, i.e. assign a particular colour to each class, we need to classify our data first and then assign colours to each class.
+## Plot using hcl colours with equal count classes
+In the above map, some colours appeared more often than others. If we want every colour to appear about the same number of times, we can divide the values into equal count classes.
 
 ```r
-## Choose the number of desired classes
-n <- 10
+# Classify the randomly generated data using 10 equal count classes
+intervals <- classInt::classIntervals(randomNumbers, n = n, style = "quantile")
 
-## Classify the randomly generated data (or any numeric attribute) with some method.
-## In this case equaly spaces classed, i.e. all classed have equal widths.
-## See ?classIntervals for more options.
-intervalls <- classInt::classIntervals(world$random, n = n, style = "equal")
+# assign colours to the intervals
+myColours <- classInt::findColours(intervals, rev(clrs_hcl2(n)), cutlabels = FALSE)
 
-intervalls$brks # shows the calculated breaks
-
-## Assign each class within the feature the a colour according to the previous classification.
-## The colours are produced with the self-defined clrs_hcl2() function from above.
-## Execute all parts of the code line below to see what they do and what they contain.
-## Noteworthy, the values of the object "colours" are the colours definded in the hexadecimal
-## system and there are as many entries as there are values in the original data
-## (attribute "random" in this case). One colour for each value.
-colours <- classInt::findColours(intervalls, rev(clrs_hcl2(n)), cutlabels = FALSE)
-
-## Add the colour code to the attribute table of the spatial object
-world$colours <- colours
-
-## Use the new field with the colour code for plotting
-plot(world, col = world$colours)
-add_legend("left", legend = names(attr(colours, "table")), 
-           fill = attr(colours, "palette"), 
-           border = attr(world$colours, "palette"), 
-           bty = "n", title = "Legend", cex = 0.45, y.intersp = 0.7)
+# Plot using the new colours
+plot(world, col = myColours)
+add_legend("left", legend = names(attr(myColours, "table")), 
+           fill = attr(myColours, "palette"), 
+           border = attr(myColours, "palette"), 
+           bty = "n", title = "Legend", cex = 0.8, y.intersp = 0.7)
 ```
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
-Clearly, the above examples are not ready for publication but intended to demonstrate a schematic workflow for classifying and colouring maps, be it vector or raster.
+We used 10 equal count classes. The frequency of colours is now about the same.
+```r
+hist(randomNumbers, breaks = intervals$brks, col = attr(myColours, "palette"), freq = TRUE)
+```
+
+<img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+
+## Save colours in map
+We can save the colour information in the map for later use.
+```r
+world$colours <- myColours
+terra::writeVector(world, "world with color.shp", overwrite = TRUE)
+```
