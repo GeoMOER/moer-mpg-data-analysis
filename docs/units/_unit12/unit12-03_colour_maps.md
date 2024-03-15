@@ -13,7 +13,6 @@ This is a short example on how to use the hcl colour palette for colouring featu
 ```r
 # Load the required packages
 library("terra")
-library("classInt")
 
 # Clean the workspace first
 rm(list=ls())
@@ -25,7 +24,7 @@ clrs_hcl2 <- function(n) {
       fixup = TRUE)
 }
 
-## Set the seed to get the same results every time
+## Set seed to get the same results every time
 set.seed(42)
 ```
 
@@ -38,91 +37,57 @@ download.file("https://www.naturalearthdata.com/http//www.naturalearthdata.com/d
 ```
 [NaturalEarthData](https://www.naturalearthdata.com/){:target="_blank"} has a nice collection of other free GIS data, too.
 
-## Plot with random colours
+## Plot with random numbers
 ```r
 ## Read in shapefile
 world <- terra::vect("countries/ne_50m_admin_0_countries.shp")
 
-## Generate random values that follow a normal distribution for each feature in the map
-randomNumbers <- as.integer(rnorm(nrow(world), 50, 16))
+## Generate random numbers that follow a normal distribution for each feature in the map
+randomNumbers <- rnorm(nrow(world), 50, 16)
 
-## Plot using the random values as colours
-plot(world, col = randomNumbers)
+## Plot using the random numbers
+plot(world, values = randomNumbers)
 ```
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
-There are so many colours in the map and it looks messy.
-```r
-length(unique(randomNumbers))
-```
-
-```
-## [1] 66
-```
-
-## Plot using hcl colours with equal interval classes
-If we want to do classified plotting, i.e. assign a particular colour to each class, we need to classify our data first and then assign colours to each class.
+## Plot with 10 hcl colour classes
+We would like to have 10 hcl colour classes. This can be achieved by adjusting the `breaks` and `col` parameters.
 
 ```r
-# number of classes
-n <- 10
+myColours <- rev(clrs_hcl2(10))
+map <- plot(world, values = randomNumbers, breaks = 10, col = myColours)
+```
 
-# Classify the randomly generated data using 10 equal interval classes
-intervals <- classInt::classIntervals(randomNumbers, n = n, style = "equal")
+<img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
-# assign colours to the intervals
-myColours <- classInt::findColours(intervals, rev(clrs_hcl2(n)), cutlabels = FALSE)
-
-# Plot using the new colours
-plot(world, col = myColours)
-add_legend(
-    "left", legend = names(attr(myColours, "table")), 
-    fill = attr(myColours, "palette"), 
-    border = attr(myColours, "palette"), 
-    bty = "n", title = "Legend", cex = 0.8, y.intersp = 0.7
-)
+Equal interval breaks are used by default. The frequency of observations within each colour class is shown below.
+```r
+hist(randomNumbers, breaks = map$breaks, col = myColours)
 ```
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
-We used 10 equal interval classes. The frequency of colours is shown below.
+## Plot with equal count breaks
+In the above map, some colours appear more often than others. If we want every colour to appear about the same number of times, we can adjust the `breakby` parameter.
+
 ```r
-hist(randomNumbers, breaks = intervals$brks, col = attr(myColours, "palette"))
+map <- plot(world, values = randomNumbers, breaks = 10, col = myColours, breakby = "cases")
 ```
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
-## Plot using hcl colours with equal count classes
-In the above map, some colours appeared more often than others. If we want every colour to appear about the same number of times, we can divide the values into equal count classes.
-
+The frequency of observations within each colour class is now about the same.
 ```r
-# Classify the randomly generated data using 10 equal count classes
-intervals <- classInt::classIntervals(randomNumbers, n = n, style = "quantile")
-
-# assign colours to the intervals
-myColours <- classInt::findColours(intervals, rev(clrs_hcl2(n)), cutlabels = FALSE)
-
-# Plot using the new colours
-plot(world, col = myColours)
-add_legend("left", legend = names(attr(myColours, "table")), 
-           fill = attr(myColours, "palette"), 
-           border = attr(myColours, "palette"), 
-           bty = "n", title = "Legend", cex = 0.8, y.intersp = 0.7)
+hist(randomNumbers, breaks = map$breaks, col = myColours, freq = TRUE)
 ```
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
-We used 10 equal count classes. The frequency of colours is now about the same.
+## Save information in map
+We can save the random numbers and the colour information in the map for later use.
 ```r
-hist(randomNumbers, breaks = intervals$brks, col = attr(myColours, "palette"), freq = TRUE)
-```
-
-<img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
-
-## Save colours in map
-We can save the colour information in the map for later use.
-```r
-world$colours <- myColours
-terra::writeVector(world, "world with color.shp", overwrite = TRUE)
+world$randomNumber <- randomNumbers
+world$randomNumberColour <- myColours
+terra::writeVector(world, "a whole new world.shp", overwrite = TRUE)
 ```
