@@ -52,7 +52,7 @@ plot(world, values = randomNumbers)
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 ## Plot with 10 hcl colour classes
-We would like to have 10 hcl colour classes. This can be achieved by adjusting the `breaks` and `col` parameters.
+We would like to have 10 hcl colour classes. This can be achieved by adjusting the `breaks` (number of breaks) and `col` (colour) parameters.
 
 ```r
 myColours <- rev(clrs_hcl2(10))
@@ -69,7 +69,7 @@ hist(randomNumbers, breaks = map$breaks, col = myColours)
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 ## Plot with equal count breaks
-In the above map, some colours appear more often than others. If we want every colour to appear about the same number of times, we can adjust the `breakby` parameter.
+In the above map, some colours appear more often than others. If we want every colour to appear about the same number of times, we can change the `breakby` parameter to get equal count breaks.
 
 ```r
 map <- plot(world, values = randomNumbers, breaks = 10, col = myColours, breakby = "cases")
