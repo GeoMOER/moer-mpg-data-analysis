@@ -27,7 +27,7 @@ Please also not that the HTML learning environment has a FAQ page for recurring 
 
 ## Flexible learning with deadlines
 
-You will use the learning material provided in the HTML learning environment(s) for solving the given assignment tasks.
+You will use the learning material provided in the HTML learning environment for solving the given assignment tasks.
 The synchronous sessions will be used for discussing the assignments.
 
 Note that you are flexible in solving your assignment tasks using the material provided in the HTML learning environment (and beyond), but the deadlines for submitting your solutions must be met.
@@ -42,12 +42,19 @@ The link to our classroom can be found in Ilias.
 -->
 
 
+## Hybid setting
+
+The course will take place in a synchronous hybrid setting on a weekly basis. 
+This means, that students can attend the course in the seminar room in presence (room 00A19) or online using the link provided in Ilias.
+
+
 ## Ilias
 
 Ilias is the course space offered by the University of Marburg. 
 We will use Ilias mainly for the administration of the course and for providing small static documents.
-The link to the Ilias space for this course can be found [here](https://ilias.uni-marburg.de/goto.php?target=crs_3388027&client_id=UNIMR){:target="_blank"}.
-Note that you have to log in with your student account. There is also a forum in Ilias, which you can use for getting in touch with your fellow students.
+The link to the Ilias space for this course can be found [here, to be updated](https://xxx){:target="_blank"}.
+Note that you have to log in with your student account. 
+In Ilias, you can also find the link to the online meeting room for the weekly session.
 
 
 

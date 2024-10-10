@@ -5,8 +5,8 @@ date: '2022-10-14 13:00:00 +0100'
 header:
   overlay_color: "#000"
   overlay_filter: 0.6
-  overlay_image: "/assets/images/title/curve.png"
-  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
+  overlay_image: "/assets/images/title/ChatGPT_1.jpg"
+  caption: 'Image generated using DALL·E by OpenAI'
   cta_label: Go to course units
   cta_url: "/units.html"
 excerpt: Use R for data analysis and visualization, train models and estimate errors, and use GitHub for comprehensive documentation and task management.
@@ -39,11 +39,11 @@ At the end of this course you should be able to
 
 # Setting
 
-This course will take place in a synchronous setting in presence in room **F 14 | 00A19**.
+This course will take place in a hybrid synchronous setting in presence in room **F 14 | 00A19**.
 In addition, there will be regular meetings with a tutor. 
 Details on the additional tutor sessions will be provided in the first regular session, 
-which will take place on **Tuesday 24.10.2023 at 9:15 am**.
-The tutor sessions are directly after the course in room 00A19 and Fridays 15:00 - 17:00 in room 00A12.
+which will take place on **Tuesday 22.10.2024 at 9:15 am** in room F 14 | 00A19.
+The virtual room for online participants will be announced by email.
 Note that the tutor sessions are voluntary. 
 {: .notice--info}
 
@@ -58,31 +58,31 @@ Please also seriously check and follow the [Information on the Coronavirus](http
 
 # Syllabus
 
-The course encompasses 14 sessions from 24.10.2023 to 06.02.2024 with a Christmas break between 27.12.2023 and 05.01.2024.
+The course encompasses 14 sessions from 22.10.2024 to 11.02.2024.
 
 | Session | Date | Topic | Content |
 |---------|------|-------|---------|
 ||| **Data basics** |
-| 01 | 24.10.2023 | First things first           | Data and information, R, R Studio, R markdown, GitHub, GitHub classroom |
-| 02 | 31.10.2023 | First things second          | Working environment, data sets, data types, data structures, logical operators, control structures |
+| 01 | 22.10.2024 | First things first           | Expectations. Data and information, R, R Studio, R markdown, GitHub, GitHub classroom |
+| 02 | 29.10.2024 | First things second          | Working environment, data sets, data types, data structures, logical operators, control structures |
 ||| **Data exploration** |
-| 03 | 07.11.2023 | Look at your data            | Reading and writing (tabulated) data, visual data exploitation, descriptive statistics |
-| 04 | 14.11.2023 | Clean your data              | Tailoring data sets, fill values and NA, aggregating, merging or sub-setting data sets |
+| 03 | 05.11.2024 | Look at your data            | Reading and writing (tabulated) data, visual data exploitation, descriptive statistics |
+| 04 | 12.11.2024 | Clean your data              | Tailoring data sets, fill values and NA, aggregating, merging or sub-setting data sets. Feedback |
 ||| **Data modelling** |
-| 05 | 21.11.2023 | Explain your data            | Linear regression modelling, confidence intervals, sample tests, variance analysis |
-| 06 | 28.11.2023 | Predict your data            | Cross-validation |
-| 07 | 05.12.2023 | Select your variables        | Multiple linear models, feature selection |
-| 08 | 12.12.2023 | Predict your non-linear data | Generalized additive models |
-| 09 | 19.12.2023 | Predict your temporal data   | Auto-correlation, AR and ARIMA models |
+| 05 | 19.11.2024 | Explain your data            | Linear regression modelling, confidence intervals, sample tests, variance analysis |
+| 06 | 26.11.2024 | Predict your data            | Cross-validation |
+| 07 | 03.12.2024 | Select your variables        | Multiple linear models, feature selection |
+| 08 | 10.12.2024 | Predict your non-linear data | Generalized additive models |
+| 09 | 17.12.2024 | Predict your temporal data   | Auto-correlation, AR and ARIMA models |
 | -- | Christmas break              | -- |
-| 10 | 09.01.2024 | Explain your temporal data   | Decomposing time series |
-| -- | 16.01.2024 | Build-in hold                | No course  |
+| 10 | 14.01.2025 | Explain your temporal data   | Decomposing time series |
+| -- | 21.01.2025 | Build-in hold                | No course, used as buffer  |
 ||| **Marburg Open Hackathon** |
-| 11 | 23.01.2024 | MOHA session                 | Marked assignment |
+| 11 | 28.01.2025 | MOHA session                 | Marked assignment |
 ||| **Visualization** |
-| 12 | 30.01.2024 | Visualize your data          | Publication quality graphics |
+| 12 | 04.02.2025 | Visualize your data          | Publication quality graphics |
 ||| **Wrap up** |
-| 13 | 06.02.2024 | Wrap up                      | Time for questions and feedback, individual data analysis problems, goodbye |
+| 13 | 11.02.2025 | Wrap up                      | Time for questions and feedback, individual data analysis problems, goodbye |
 
 
 # Deliverables
