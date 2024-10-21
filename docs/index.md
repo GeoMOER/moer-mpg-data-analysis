@@ -43,7 +43,7 @@ This course will take place in a hybrid synchronous setting in presence in room 
 In addition, there will be regular meetings with a tutor. 
 Details on the additional tutor sessions will be provided in the first regular session, 
 which will take place on **Tuesday 22.10.2024 at 9:15 am** in room F 14 | 00A19.
-The virtual room for online participants will be announced by email.
+The virtual room for online participants will be announced by email and must be accesses via ILIAS.
 Note that the tutor sessions are voluntary. 
 {: .notice--info}
 
