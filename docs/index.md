@@ -42,18 +42,10 @@ At the end of this course you should be able to
 This course will take place in a hybrid synchronous setting in presence in room **F 14 | 00A19**.
 In addition, there will be regular meetings with a tutor. 
 Details on the additional tutor sessions will be provided in the first regular session, 
-which will take place on **Tuesday 22.10.2024 at 9:15 am** in room F 14 | 00A19.
+which will take place on **Tuesday 22.10.2024 at 9:15 am** (German time) in room F 14 | 00A19.
 The virtual room for online participants will be announced by email and must be accesses via ILIAS.
 Note that the tutor sessions are voluntary. 
 {: .notice--info}
-
-<!--
-This course will take place in a hybrid setting with a digital classroom and additional students being present in person in the physical classroom (**F 14 | 00A19**).
-Details on this synchronous hybrid classroom format will be provided in the first session, which will take place **in presence only on Tuesday 25.10.2022 at 9:15 am**.
-The link to the digital classroom of the first session is provided in the [Ilias course environment](https://ilias.uni-marburg.de/goto.php?target=crs_2593121&client_id=UNIMR){:target="_blank"} (only accessible for members of the course who are logged-in into Ilias). 
-Please also seriously check and follow the [Information on the Coronavirus](https://www.uni-marburg.de/de/universitaet/administration/sicherheit/coronavirus){:target="_blank"} of the University of Marburg.
--->
-
 
 
 # Syllabus
