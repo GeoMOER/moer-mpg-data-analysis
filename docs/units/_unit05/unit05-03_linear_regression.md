@@ -94,6 +94,10 @@ This provides us the test statistic for the *null-hypothesis* that the true slop
 f_value <- mss_model / mss_resid
 ```
 
+The F-statistic quantifies how much larger the variation explained by the model is compared to the variation left unexplained (residuals).
+* A large F value indicates that the model explains a lot more variation than is left unexplained, suggesting that the slope is likely not 0.
+* A small F value indicates that the model doesn't explain much more variation than the residuals, suggesting that the slope might be 0.
+
 By comparing the computed F value to an F distribution with 1 numerator degree of freedom and (number of observations - 2) denominator degrees of freedom, the p value is determined. If the p value is very small, the null-hypothesis can be rejected.
 
 ```r
@@ -345,7 +349,7 @@ The following checks are what should at least be considerd in bivariate linear r
 * normality of the residuals (much less important, but handy for small samples)
 
 
-The normality of the residuals could be checked by normality tests but these tests do not prove normality but test the null-hypothesis that something is not normal. E.g. a Shapiro-Wilk normality test with an insignificant p value does not reject the hypothesis that the distribution is normal but it does not prove that the distribution is actually normal. In addition, for small data, such tests often fail to reject non-normal distributions while for large samples, even very small deviations with no fundamental implication on e.g. anova results lead to a rejection. Speaking about anova influences: anovas are quite robust against violations of normality. Regarding homoscedasticity, this robustness decreases a little so larger F-values should be defined as a threshold for significance. For now, we will restrict our evaluation of the model to a visual approach. 
+The normality of the residuals could be checked by normality tests but these tests do not prove normality but test the null-hypothesis that something is not normal. E.g. a Shapiro-Wilk normality test with an insignificant p value does not reject the hypothesis that the distribution is normal but it does not prove that the distribution is actually normal. In addition, for small data, such tests often fail to reject non-normal distributions while for large samples, even very small deviations with no fundamental implication on e.g. anova results lead to a rejection. Speaking about anova influences: anovas are quite robust against violations of normality. For now, we will restrict our evaluation of the model to a visual approach. 
 
 Let's start with the most important assumption, the one of homogeneous variances in the residuals, aka the homoscedasticity:
 
