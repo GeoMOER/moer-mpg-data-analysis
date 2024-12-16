@@ -8,7 +8,7 @@ header:
 ---
 
 
-Although we already had contact with some temporal datasets, we did not have a closer formal look on time series analysis.
+Although we already had contact with some temporal datasets, we did not have a closer formal look on time series.
 Time series datasets often inhibit some kind of autocorrelation, which is a no go for the models we have used so far.
 The first more formal contact with time series will therefore highlight these characteristics. The structure of this example follows Zuur et al. 2007 to a certain degree.
 
@@ -16,18 +16,19 @@ To exemplarily illustrate a time series analysis, air temperature records of the
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}.
 
 ## Download the data
-We can download the data from the above link, or we can use the [rdwd](https://cran.r-project.org/web/packages/rdwd/index.html) package.
+You can use the [rdwd](https://cran.r-project.org/web/packages/rdwd/index.html) package for downloading the data or (if the package does not work..) download the data from the above linked DWD server. 
 
 ```r
+library("rdwd")
 url <- rdwd::selectDWD(id = "003164", res = "hourly", var = "air_temperature", per = "historical")
 rdwd::dataDWD(url, dir = getwd(), read = FALSE)
 ```
 
 ## A first look at the time series
-The time series shows hourly recordings of 2m air temperature between July 1st 2006 and December 31st 2022.
+The time series shows hourly recordings of 2m air temperature between 1 July 2006 and 31 December 2022.
 
 ```r
-# adapt path to where your file actually is
+# adapt path to where your file actually is and filename to the downloaded time span
 path <- "produkt_tu_stunde_20060701_20221231_03164.txt"
 dwd <- read.table(path, header = TRUE, sep = ";", dec = ".")
 head(dwd)
@@ -145,9 +146,9 @@ It is the Pearson correlation we already know, but not computed based on two dif
 For example, the auto-correlation for a lag of 1 would compare each original value observed at time t with the observed value at time t+1.
 A lag of 10 indicates that observation at time t is correlated with that at t+10 and so on.
 Please note that the number of available data pairs decreases (e.g. if the dataset has 30 observations, one has 29 pairs for lag 1 but only 1 pair for lag 30).
-Therefore, it does not make sense to try any possible lag ,but restrict it to a few lags expected to be highly correlated (e.g. lag 12 for the monthly temperatures above).
+Therefore, it does not make sense to try any possible lag, but restrict it to a few lags expected to be highly correlated (e.g. lag 12 for the monthly temperatures above).
 
-While one can have a look at the actual correlation values, a visualization generally gives a better overview:
+While one can have a look at the actual correlation values, a visualization gives a better overview:
 
 ```r
 acf(dwd$TT_TU, lag.max = 100)

@@ -92,7 +92,7 @@ a rule of thumb states that if
 * the auto-correlation function declines exponentially or shows a sinus pattern and
 * the partial auto-correlation function shows only p significant lags in the beginning,
 
-an AR(p) model (i.e. an AR model with p considered lags) is a good starting point. For moving average models it is vice versa and the lags q considered in the model would be taken from the auto-correlation function. 
+an AR(p) model (i.e. an AR model with p considered lags) is a good starting point. 
 In the auto- and partial auto-correlation function of the two-times differentiated dataset, we might see exactly this:
 
 ```r
@@ -108,7 +108,7 @@ pacf(dTa)
 par(par_org)
 ```
 
-Nice, but pretty useless since if we change the parameter estimation method, the results look like this (16 is the optimum):
+If we change the parameter estimation method, the results look like this (16 instead of 14 is the optimum now):
 
 ```r
 armod <- ar(dTa, aic = TRUE, order.max = 20, method = "mle")
@@ -129,8 +129,10 @@ armod
 ## Order selected 16  sigma^2 estimated as  3.39
 ```
 
+So the optimal value for the lag parameter depends on the chosen method.
 
-The AR model can now be used to predict the time series (although 100 months in the future is way to much; grey lines indicate the standard error):
+Let us now use th AR model for predicting the time series into the future 
+(although 100 months in the future is way to much; grey lines indicate the standard error):
 
 ```r
 arpred <- predict(armod, n.ahead = 100)
@@ -145,8 +147,9 @@ lines(arpred$pred - arpred$se, col = "grey")
 
 
 ### Auto-regressive integrated moving average models (ARIMA)
-Since the auto-correlation and partial auto-correlation function might slightly demand for an auto-regressive model and not for a moving average model, 
-we will skip the latter and jump directly to the combined version - ARIMA.
+
+The above AR model examples are mainly for illustration purposes and have low predictive power.
+The predictive power increases with combining the AR model part with a moving average model (MA) - ARIMA.
 
 In the ARIMA world, three parameters are generally required: 
 
@@ -323,3 +326,9 @@ plot(forecast::forecast(arima_s))
 ```
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-19-1.png)<!-- -->
+
+
+So which parameter combination is the best? You will tackle this question with the assignment of this unit. 
+
+
+

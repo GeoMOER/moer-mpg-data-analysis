@@ -25,7 +25,7 @@ This autocorrelation forms the basis for some kinds of _prediction_ or _gap fill
 
 {% include figure image_path="/assets/images/air_temperature_auto-correlation.jpg" alt="Illustration of auto correlation of time series data." %}
 
-The above graphic shows the auto-correlation between the individual mean monthly air temperatures shown in the first graph.
+The above graphic shows the auto-correlation between the air temperatures shown in the first graph.
 
 <!--
 {% include figure image_path="/assets/images/air_temperature_partial_auto-correlation.jpg" alt="Illustration of auto correlation of time series data." %}
