@@ -7,7 +7,7 @@ Follow the link to start the Marburg Open Hackathon (MOHA)
 <!--more-->
 
 
-[Start MOHA](https://ilias.uni-marburg.de/ilias.php?baseClass=ilHTLMPresentationGUI&ref_id=3389686){:target="_blank"}
+[Start MOHA](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_5241167/index.html){:target="_blank"}
 (available 9:30 to 12:00 on Tuesday 28 January, 2025) 
 
 Save your solutions in your course repository in a folder called MOHA with subfolders for each exercise block, 
