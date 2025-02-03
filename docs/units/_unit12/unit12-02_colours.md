@@ -8,11 +8,10 @@ header:
 
 Before we expand our plotting capabilities, we want to spend a bit more time 
 thinking about colours and colour spaces. A careful study of colour-spaces 
-(e.g. [Zeileis et al. 2009](http://statmath.wu.ac.at/~zeileis/papers/Zeileis+Hornik+Murrell-2009.pdf){:target="_blank"}; 
-[www.hclwizard.org](http://hclwizard.org/hcl-color-scheme/){:target="_blank"}; 
-[www.vis4.net](http://vis4.net/blog/posts/avoid-equidistant-hsv-colors/){:target="_blank"} or 
-[wikipedia](https://en.wikipedia.org/wiki/HSL_and_HSV){:target="_blank"}) 
-lead us to the conclusion that the ```hcl``` colour space is preferable when mapping a variable to colour (be it factorial or continuous).
+(e.g. [Zeileis et al. 2009](http://statmath.wu.ac.at/~zeileis/papers/Zeileis+Hornik+Murrell-2009.pdf){:target="_blank"}) 
+and 
+[wikipedia](https://en.wikipedia.org/wiki/HSL_and_HSV){:target="_blank"} 
+could lead us to the conclusion that the ```hcl``` colour space is preferable when mapping a variable to colour (be it factorial or continuous).
 
 This colour space is readily available in R through the function `hcl()`.
 
@@ -107,9 +106,9 @@ pal(desaturate(clrs_hcl(100)))
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
-Nice! One evenly distrbuted greyscale without any changes in lightness along the palette. So this is truely a perceptually uniform colour palette where only the hue changes.
+Nice! One evenly distributed greyscale without any changes in lightness along the palette. So this is truely a perceptually uniform colour palette where only the hue changes.
 
-One obvious problem with this colour palette is that when printed in greyscale, all values will look exactly the same... To adress this, we can modify our clrs_hcl definition slightly by also varying the lightness (or better luminence) along the same length n along which we change the hue.
+One obvious problem with this colour palette is that when printed in greyscale, all values will look exactly the same... To address this, we can modify our clrs_hcl definition slightly by also varying the lightness (or better luminence) along the same length n along which we change the hue.
 
 
 ```r
