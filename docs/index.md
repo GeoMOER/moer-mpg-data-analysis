@@ -42,7 +42,7 @@ At the end of this course you should be able to
 This course will take place in a hybrid synchronous setting in presence in room **F 14 | 00A19**.
 In addition, there will be regular meetings with a tutor. 
 Details on the additional tutor sessions will be provided in the first regular session, 
-which will take place on **Tuesday 22.10.2024 at 9:15 am** (German time) in room F 14 | 00A19.
+which will take place on **Tuesday 21.10.2025 at 9:15 am** (German time) in room F 14 | 00A19.
 The virtual room for online participants will be announced by email and must be accesses via ILIAS.
 Note that the tutor sessions are voluntary. 
 {: .notice--info}
@@ -55,26 +55,26 @@ The course encompasses 14 sessions from 22.10.2024 to 11.02.2024.
 | Session | Date | Topic | Content |
 |---------|------|-------|---------|
 ||| **Data basics** |
-| 01 | 22.10.2024 | First things first           | Expectations. Data and information, R, R Studio, R markdown, GitHub, GitHub classroom |
-| 02 | 29.10.2024 | First things second          | Working environment, data sets, data types, data structures, logical operators, control structures |
+| 01 | 21.10.2025 | First things first           | Expectations. Data and information, R, R Studio, R markdown, GitHub, GitHub classroom |
+| 02 | 28.10.2025 | First things second          | Working environment, data sets, data types, data structures, logical operators, control structures |
 ||| **Data exploration** |
-| 03 | 05.11.2024 | Look at your data            | Reading and writing (tabulated) data, visual data exploitation, descriptive statistics |
-| 04 | 12.11.2024 | Clean your data              | Tailoring data sets, fill values and NA, aggregating, merging or sub-setting data sets. Feedback |
+| 03 | 04.11.2025 | Look at your data            | Reading and writing (tabulated) data, visual data exploitation, descriptive statistics |
+| 04 | 11.11.2025 | Clean your data              | Tailoring data sets, fill values and NA, aggregating, merging or sub-setting data sets. Feedback |
 ||| **Data modelling** |
-| 05 | 19.11.2024 | Explain your data            | Linear regression modelling, confidence intervals, sample tests, variance analysis |
-| 06 | 26.11.2024 | Predict your data            | Cross-validation |
-| 07 | 03.12.2024 | Select your variables        | Multiple linear models, feature selection |
-| 08 | 10.12.2024 | Predict your non-linear data | Generalized additive models |
-| 09 | 17.12.2024 | Predict your temporal data   | Auto-correlation, AR and ARIMA models |
+| 05 | 18.11.2025 | Explain your data            | Linear regression modelling, confidence intervals, sample tests, variance analysis |
+| 06 | 25.11.2025 | Predict your data            | Cross-validation |
+| 07 | 02.12.2025 | Select your variables        | Multiple linear models, feature selection |
+| 08 | 09.12.2025 | Predict your non-linear data | Generalized additive models |
+| 09 | 16.12.2025 | Predict your temporal data   | Auto-correlation, AR and ARIMA models |
 | -- | Christmas break              | -- |
-| 10 | 14.01.2025 | Explain your temporal data   | Decomposing time series |
-| -- | 21.01.2025 | Build-in hold                | No course, used as buffer  |
+| 10 | 13.01.2026 | Explain your temporal data   | Decomposing time series |
+| -- | 20.01.2026 | Build-in hold                | No course, used as buffer  |
 ||| **Marburg Open Hackathon** |
-| 11 | 28.01.2025 | MOHA session                 | Marked assignment |
+| 11 | 27.01.2026 | MOHA session                 | Marked assignment |
 ||| **Visualization** |
-| 12 | 04.02.2025 | Visualize your data          | Publication quality graphics |
+| 12 | 03.02.2026 | Visualize your data          | Publication quality graphics |
 ||| **Wrap up** |
-| 13 | 11.02.2025 | Wrap up                      | Time for questions and feedback, individual data analysis problems, goodbye |
+| 13 | 10.02.2026 | Wrap up                      | Time for questions and feedback, individual data analysis problems, goodbye |
 
 
 # Deliverables
