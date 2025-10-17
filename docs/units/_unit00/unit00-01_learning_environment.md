@@ -52,7 +52,7 @@ This means, that students can attend the course in the seminar room in presence 
 
 Ilias is the course space offered by the University of Marburg. 
 We will use Ilias mainly for the administration of the course and for providing small static documents.
-The link to the Ilias space for this course can be found [here](https://ilias.uni-marburg.de/goto.php?target=crs_4113838&client_id=UNIMR){:target="_blank"}.
+The link to the Ilias space for this course can be found [here](https://ilias.uni-marburg.de/goto.php/crs/4407826){:target="_blank"}.
 Note that you have to log in with your student account. 
 In Ilias, you can also find the links to the online meeting room for the weekly session and for the tutorium.
 

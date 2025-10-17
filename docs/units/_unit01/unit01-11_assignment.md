@@ -1,5 +1,5 @@
 ---
-title: "Marked Assignment: Hello R, Hello GitHub"
+title: "Unmarked Assignment: Hello R, Hello GitHub"
 toc: true
 toc_label: In this worksheet
 header:
@@ -30,9 +30,9 @@ Please write an R script as an Rmd file with html output for the following task 
 1. Show just the entry of the cell in the second row and first column.
 
 Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. Make sure that the created html file is also part of your GitHub classroom repository.
+{: .notice--info}
 
 As you might become aware by reading this assignment, there is a great chance that you have to gather considerable more information to actually solve the given assignment. More precisely, once you have solved the R programming task you are not be off the hook since you have to familiarize yourself with Git and GitHub to actually submit your solution.
 {: .notice--warning}
 
-This assignment will be marked.
-{: .notice--info}
+

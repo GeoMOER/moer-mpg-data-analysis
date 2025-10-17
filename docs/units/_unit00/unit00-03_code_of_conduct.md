@@ -10,7 +10,7 @@ header:
 
 Please
 
-* use your student mail account for sending and receiving university-related emails (username@students.uni-marburg.de),
+* use your student mail account for sending and receiving university-related emails (Username@students.uni-marburg.de),
 * be on time to the sessions,
 * submit your assignments on time,
 * excuse yourself if you cannot make it to a session,

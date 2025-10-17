@@ -10,7 +10,7 @@ header:
 ## Assignments
 We distinguish between unmarked and marked deliverables ("Studien- und Prüfungsleistung"). 
 Both are required for passing the course but only the latter are marked.
-Students will need to deliver marked (4) and unmarked (6) assignments on a regular basis ("homework") within one week.
+Students will need to deliver marked and unmarked assignments on a regular basis ("homework") within one week.
 Details on the assignments and whether they will be marked or not can be found in the respective units.
 The submissions generally encompass R or R markdown AND the compiled html files.
 
@@ -25,7 +25,7 @@ However, you need to present the solutions to your assignements in the weekly se
 
 | Assignment | Name and link                                                                                    | marked / unmarked  |
 |------------|--------------------------------------------------------------------------------------------------|--------------------|
-| 01         | [Hello R, Hello GitHub](/moer-mpg-data-analysis/unit01/unit01-11_assignment.html)                | marked             |
+| 01         | [Hello R, Hello GitHub](/moer-mpg-data-analysis/unit01/unit01-11_assignment.html)                | unmarked           |
 | 02         | [Loop and Conquer](/moer-mpg-data-analysis/unit02/unit02-09_assignment.html)                     | unmarked           |
 | 03         | [Read and Plot](/moer-mpg-data-analysis/unit03/unit03-07_assignment.html)                        | marked             |
 | 04         | [Cleaning Crops](/moer-mpg-data-analysis/unit04/unit04-07_assignment.html)                       | unmarked           |
