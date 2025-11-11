@@ -71,8 +71,7 @@ write.table(df, file = "new.csv", sep = ",", dec = ".")
 ```
 As you can see, you can define any column or decimal separator.
 
-For more information have a look at e.g. the respective [data importing](http://www.statmethods.net/input/importingdata.html) and [data exporting](http://www.statmethods.net/input/exportingdata.html) site at Quick R, have a look into the package 
-documentation or search the web.
+For more information have a look at e.g. the respective [data importing](https://www.datacamp.com/doc/r/importingdata) <!--(http://www.statmethods.net/input/importingdata.html) broken link? --> and [data exporting](https://www.datacamp.com/doc/r/exportingdata) <!--(http://www.statmethods.net/input/exportingdata.html)broken link? --> site at Quick R/DataCamp, have a look into the package documentation or search the web.
 
 
 ## Alternative data I/O using RDS
