@@ -28,4 +28,38 @@ Aside from submitting assignments, you should use your repository for everything
 
 Now it's time for your first R code, which will be put into an R markdown document.
 
+## How to connect RStudio with GitHub
+
+Once you worked through the [R/RStudio](https://geomoer.github.io/moer-base-r/unit01/unit01-01_Intro.html) and [Git/GitHub](https://geomoer.github.io/moer-base-r/unit99/sl02_github.html) installations, it's time to connect them.
+
+'1. Create a new project in RStudio.
+{% include figure image_path="/assets/images/units/u01/Step1.png" caption="" %}
+
+'2. Use the version control kind to allow a Git connection.
+{% include figure image_path="/assets/images/units/u01/Step2.png" caption="" %}
+
+'3. Choose Git.
+{% include figure image_path="/assets/images/units/u01/Step3.png" caption="" %}
+
+'4. Copy your personal repository URL from GitHub-Classroom and insert it into the project wizard in RStudio.
+{% include figure image_path="/assets/images/units/u01/Step4.png" caption="" %}
+
+'5. Your browser will open a window with environmental settings for GitHub. Accept those.
+
+'6. Create a new file of your choice in RStudio. In this course you might want to use a Markdown file (.Rmd).
+
+'7. To upload your file to GitHub, click the "GIT" button in the menu above your script and choose "Commit".
+{% include figure image_path="/assets/images/units/u01/Step7.png" caption="" %}
+
+'8. A Window will open. Select all files, which you want to upload (1) and leave a note (2) to later identify what you've done. Than commit (3).
+{% include figure image_path="/assets/images/units/u01/Step8.png" caption="" %}
+
+'9. Once you are done committing all the changes, click "Push" to load them into your online repository. A text message will confirm what just habbened.
+{% include figure image_path="/assets/images/units/u01/Step9.png" caption="" %}
+
+'10. Take a look at your repository on GitHub. The files will show up there.
+{% include figure image_path="/assets/images/units/u01/Step10.png" caption="" %}
+
+Additionally, the history of changes is saved in a change log in RStudio.
+{% include figure image_path="/assets/images/units/u01/Step11.png" caption="" %}
 
