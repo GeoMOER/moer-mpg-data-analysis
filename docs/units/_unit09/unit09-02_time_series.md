@@ -29,7 +29,7 @@ The time series shows hourly recordings of 2m air temperature between 1 July 200
 
 ```r
 # adapt path to where your file actually is and filename to the downloaded time span
-path <- "produkt_tu_stunde_20060701_20221231_03164.txt"
+path <- "produkt_tu_stunde_20060701_20241231_03164.txt"
 dwd <- read.table(path, header = TRUE, sep = ";", dec = ".")
 head(dwd)
 ```
@@ -63,14 +63,14 @@ the data can either be tranformed to a timeseries ``ts`` object or the date colu
 Since we will have a closer look on ``ts`` objects later, let us start with the date conversion.
 
 ```r
-dwd$DATUM <- strptime(dwd$MESS_DATUM, format = "%Y%m%d%H", tz = "CEST")
+dwd$DATUM <- strptime(dwd$MESS_DATUM, format = "%Y%m%d%H", tz = "UTC")
 head(dwd$DATUM)
 ```
 
 ```
-## [1] "2006-07-01 00:00:00 CEST" "2006-07-01 01:00:00 CEST"
-## [3] "2006-07-01 02:00:00 CEST" "2006-07-01 03:00:00 CEST"
-## [5] "2006-07-01 04:00:00 CEST" "2006-07-01 05:00:00 CEST"
+## [1] "2006-07-01 00:00:00 UTC" "2006-07-01 01:00:00 UTC"
+## [3] "2006-07-01 02:00:00 UTC" "2006-07-01 03:00:00 UTC"
+## [5] "2006-07-01 04:00:00 UTC" "2006-07-01 05:00:00 UTC"
 ```
 
 Have a look at data summary:
