@@ -72,10 +72,9 @@ The course encompasses 14 sessions from 22.10.2024 to 11.02.2024.
 ||| **Marburg Open Hackathon** |
 | 11 | 27.01.2026 | MOHA session                 | Marked assignment |
 ||| **Visualization** |
-| 12 | 03.02.2026 | Visualize your data          | Publication quality graphics |
-||| **Wrap up** |
-| 13 | 10.02.2026 | Wrap up                      | Time for questions and feedback, individual data analysis problems, goodbye |
-
+| 12 | 03.02.2026 | Visualize your data          | Last session: Data visualization overview, questions and feedback, goodbye |
+||| **~~Wrap up~~** |
+| ~~13~~ | ~~10.02.2026~~ | ~~Wrap up~~                      | ~~Time for questions and feedback, individual data analysis problems, goodbye~~ |
 
 # Deliverables
 
