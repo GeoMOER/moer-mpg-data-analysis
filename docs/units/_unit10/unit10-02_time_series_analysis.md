@@ -98,7 +98,7 @@ The average of each will finally form the seasonal signal:
 
 ```r
 seasonal <- tam$Ta - annual_trend
-seasonal_mean <- aggregate(seasonal, by = list(rep(seq(1,12), 16)), 
+seasonal_mean <- aggregate(seasonal, by = list(rep(seq(1,12), 18)), 
                            FUN = mean, na.rm = TRUE)
 plot(tam$Date, seasonal, type = "l")
 lines(tam$Date, rep(seasonal_mean$x, 16), col = "blue")
@@ -213,7 +213,7 @@ summary(lmod)
 If we were interested in annual trends, we could multiply the above slope of the time variable by 12 or define the time variable in such a way that each month is counted as a fraction of 1 (e.g. January 2006 = 2006; February 2006 = 2006.0084 etc.):
 
 ```r
-ts <- seq(from = 2007, to = 2022 + 11/12, by = 1/12)
+ts <- seq(from = 2007, to = 2024 + 11/12, by = 1/12)
 lmod <- lm(tam$Ta_ds ~ ts)
 summary(lmod)
 ```
