@@ -61,10 +61,9 @@ You may use the following lines of code for calculating your final grade, for ex
 assignment_1 <- 5
 assignment_2 <- 6
 assignment_3 <- 7
-assignment_4 <- 8
 MOHA <- 9
 
-final_grade <- round(mean(c(assignment_1, assignment_2, assignment_3, assignment_4, rep(MOHA, 2))))
+final_grade <- round(mean(c(assignment_1, assignment_2, assignment_3, rep(MOHA, 2))))
 final_grade
 ```
 
