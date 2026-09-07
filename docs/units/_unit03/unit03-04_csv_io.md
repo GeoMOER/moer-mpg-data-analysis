@@ -22,17 +22,17 @@ df <- read.table("AI001_gebiet_flaeche.txt",
                  skip = 4, header = TRUE, sep = ";", dec = ",")
 ```
 
-As you can see, the `read.table` function gets several arguments (which is common for many functions). The first one gives the filename inclducing the path to the file. 
+As you can see, the `read.table` function gets several arguments (which is common for many functions). The first one gives the filename including the path to the file.
 * `skip = 4` tells the function to skip the first four lines (which are plain text lines in this case and not tabulated values)
-* `header = TRUE` tells the function, that the csv file has a header line which is used by `read.table` to name the columns of the returning data frame
+* `header = TRUE` tells the function that the csv file has a header line which is used by `read.table` to name the columns of the returning data frame
 * `sep = ";"` defines the separator of the individual columns in the data frame
 * `dec = ","` defines the decimal separator used in the dataset
 
 A note on the sequence of the arguments: the sequence of the arguments does
-not matter as long as you name them explicetly. If you do not use the argument
-identfier as it is the case for the first argument, the filename, in the example 
+not matter as long as you name them explicitly. If you do not use the argument
+identifier as it is the case for the first argument, the filename, in the example
 then the sequence matters. To get information on the default sequence and of 
-course the general application of the each R function, type `?<function name>`
+course the general application of each R function, type `?<function name>`
 (e.g. `?read.table`) in an R console.
 
 After you execute the `read.table` function above, the content of the csv file is

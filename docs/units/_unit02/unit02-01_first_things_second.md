@@ -12,7 +12,7 @@ Look closer at data types and object types before focusing on the most important
 ## Learning objectives
 At the end of this unit you should be able to
 * tell the difference between data types and object types,
-* use logical and boolean operators to make decisions, and
+* use logical and Boolean operators to make decisions, and
 * use loops for repeated tasks.
 
 

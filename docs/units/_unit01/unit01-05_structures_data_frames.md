@@ -41,9 +41,9 @@ my_other_df
 ## 2 3 B
 ## 3 4 C
 ```
-The `colnames` function allows to supply column names to an existing data
+The `colnames` function allows you to supply column names to an existing data
 frame. Alternatively, the column names can be set within the `data.frame` 
-function by assign the vector elements to a variable (capital X and Y in the example above).
+function by assigning the vector elements to a variable (capital X and Y in the example above).
 
 
 ## Dimensions of a data frame
@@ -79,7 +79,7 @@ str(my_other_df)
 
 ## Displaying and accessing the content of a data frame
 
-The content of a data frame is accessed by either a position information 
+The content of a data frame is accessed by either position information
 given in square brackets (e.g. `df[3,4]`) or a column name given after a $ sign
 (e.g. `df$columnName`). Here is an example:
 
@@ -128,12 +128,12 @@ Here are some possible combinations:
  * Single row and column: `df[x,y]`                 <!--with $x, y \in \text{number of rows, columns}$ -->
  * All except one row, all columns: `df[-x,y]`      <!--with $x \in \text{number of rows}$ -->
  * Selected rows, all columns: `df[c(x1, x2, x3),]` <!--with $x1, x2, x3 \in \text{number of rows}$ -->
- * Continous rows, all columns: `df[c(x1:x2),]`     <!--with $x1, x2 \in \text{number of rows}$ -->
+ * Continuous rows, all columns: `df[c(x1:x2),]`     <!--with $x1, x2 \in \text{number of rows}$ -->
 
 In summary, dimensions like rows or columns which should be selected have positive 
 numbers, dimensions that should be hidden have negative numbers, and if all entries of
 a dimension should be selected one just leaves the field empty. If more than
-one dimension should be shown or hidden, one has to supply these information with a 
+one dimension should be shown or hidden, one has to supply this information with a
 vector defined by the `c` function.
 
 
@@ -171,7 +171,7 @@ head(my_other_df, 2)
 ## 2 3 B
 ```
 
-And now on the last two rows:
+And now let's look at the last two rows:
 
 ```r
 tail(my_other_df, 2)
@@ -244,4 +244,4 @@ my_other_df
 ```
 As for lists, to actually delete an element, it has to be set to `NULL`.
 
-For more information have a look at e.g. the respective [data type](http://www.statmethods.net/input/datatypes.html){:target="_blank"} site at Quick R. There you will also find an overview on how to get [information about an object](http://www.statmethods.net/input/contents.html){:target="_blank"}. Of course, looking into the package documentation or search the web is always a good idea, too.
+For more information have a look at e.g. the respective [data type](http://www.statmethods.net/input/datatypes.html){:target="_blank"} site at Quick R. There you will also find an overview on how to get [information about an object](http://www.statmethods.net/input/contents.html){:target="_blank"}. Of course, looking into the package documentation or searching the web is always a good idea, too.

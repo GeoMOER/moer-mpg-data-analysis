@@ -18,7 +18,7 @@ At the end of this unit you should be able to
 
 
 Additional learning material can be found in the accompanying [Base R course](https://geomoer.github.io//moer-base-r/){:target="_blank"}, e.g. 
-[in- and output of data](https://geomoer.github.io/moer-base-r/unit06/unit06-01_Intro.html){:target="_blank"} or 
+[input and output of data](https://geomoer.github.io/moer-base-r/unit06/unit06-01_Intro.html){:target="_blank"} or
 [simple visualizations](https://geomoer.github.io/moer-base-r/unit09/unit09-01_Intro.html){:target="_blank"}.
 
 

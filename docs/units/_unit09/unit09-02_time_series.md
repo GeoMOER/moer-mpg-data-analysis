@@ -8,15 +8,15 @@ header:
 ---
 
 
-Although we already had contact with some temporal datasets, we did not have a closer formal look on time series.
-Time series datasets often inhibit some kind of autocorrelation, which is a no go for the models we have used so far.
+Although we already had contact with some temporal datasets, we did not have a closer formal look at time series.
+Time series datasets often exhibit some kind of autocorrelation, which is a no-go for the models we have used so far.
 The first more formal contact with time series will therefore highlight these characteristics. The structure of this example follows Zuur et al. 2007 to a certain degree.
 
 To exemplarily illustrate a time series analysis, air temperature records of the weather station in Cölbe (which is the one closest to Marburg) will be used.
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}.
 
 ## Download the data
-You can use the [rdwd](https://cran.r-project.org/web/packages/rdwd/index.html) package for downloading the data or (if the package does not work..) download the data from the above linked DWD server. 
+You can use the [rdwd](https://cran.r-project.org/web/packages/rdwd/index.html) package for downloading the data or (if the package does not work...) download the data from the above linked DWD server.
 
 ```r
 library("rdwd")
@@ -59,8 +59,8 @@ tail(dwd)
 ```
 
 In order to plot the dataset in a correct manner (i.e. without large gaps at the end of the year when e.g. 2006123123 switches to 2007010100),
-the data can either be tranformed to a timeseries ``ts`` object or the date column can be converted to some kind of date format.
-Since we will have a closer look on ``ts`` objects later, let us start with the date conversion.
+the data can either be transformed to a time series ``ts`` object or the date column can be converted to some kind of date format.
+Since we will have a closer look at ``ts`` objects later, let us start with the date conversion.
 
 ```r
 dwd$DATUM <- strptime(dwd$MESS_DATUM, format = "%Y%m%d%H", tz = "UTC")
@@ -73,7 +73,7 @@ head(dwd$DATUM)
 ## [5] "2006-07-01 04:00:00 UTC" "2006-07-01 05:00:00 UTC"
 ```
 
-Have a look at data summary:
+Have a look at the data summary:
 
 ```r
 summary(dwd)
@@ -112,7 +112,7 @@ plot(dwd$DATUM, dwd$TT_TU)
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-4-1.png)<!-- -->
 
 As one can see, there is a clear annual pattern (surprise, surprise).
-To have a closer look on this pattern, one simple option would be a set of boxplots showing the variation within each month over the entire dataset.
+To have a closer look at this pattern, one simple option would be a set of boxplots showing the variation within each month over the entire dataset.
 To do so, the data in the boxplot has to be grouped by months, which requires a list indicating the class (i.e. month) each temperature record belongs to.
 The easiest way is to create an additional column in the data frame and copy the characters, which define the months in the original date column, to it.
 
@@ -140,7 +140,7 @@ par(par_org)
 ```
 
 ## Auto-correlation
-So far, we always assumed that different observations are independent of each other - a concept which cannot be hold for many time series.
+So far, we always assumed that different observations are independent of each other - a concept which cannot hold for many time series.
 Understanding auto-correlation is rather easy.
 It is the Pearson correlation we already know, but not computed based on two different datasets/variables. It is computed using the same time-series dataset with a temporal lag.
 For example, the auto-correlation for a lag of 1 would compare each original value observed at time t with the observed value at time t+1.
@@ -157,7 +157,7 @@ acf(dwd$TT_TU, lag.max = 100)
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-7-1.png)<!-- -->
 
 Since we have more than 143 thousand values available, we use a maximum lag of 100, although this is done mainly for illustration purposes.
-Obviously, we have strongest correlations at lags of 24 (i.e the correlation between hourly temperatures is highest if the temperatures are measured at the same time of day).
+Obviously, we have the strongest correlations at lags of 24 (i.e. the correlation between hourly temperatures is highest if the temperatures are measured at the same time of day).
 While this holds true, the absolute correlation decreases if the number of days between the observations increases.
 
 Another example shows the auto-correlation of the monthly mean temperatures for which we define an aggregation variable like the one above but now we include not only the month but also the year:

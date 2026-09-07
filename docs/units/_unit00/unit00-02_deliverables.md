@@ -16,7 +16,7 @@ The submissions generally encompass R or R markdown AND the compiled html files.
 
 
 You are allowed and encouraged to use ChatGPT or similar AIs to solve the assignments.
-However, you need to present the solutions to your assignements in the weekly sessions to make sure you understand what you have done.
+However, you need to present the solutions to your assignments in the weekly sessions to make sure you understand what you have done.
 {: .notice--info}
 
 
@@ -38,7 +38,7 @@ However, you need to present the solutions to your assignements in the weekly se
 | 11         | [MOHA](/moer-mpg-data-analysis/unit11/unit11-01_link-MOHA.html)                                  | marked             |
 
 
-The deadlines for uploading your assignment solutions -- both marked and unmarked -- to GitHub Classroom is 12:00 o'clock in the night between Monday and Tuesday before the next course session.
+The deadlines for uploading your assignment solutions -- both marked and unmarked -- to GitHub Classroom are 12:00 o'clock in the night between Monday and Tuesday before the next course session.
 {: .notice--info}
 
 Be aware that it will NOT be sufficient to start working on the assignments the day before the deadline.

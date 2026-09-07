@@ -20,7 +20,7 @@ At the end of this session you should
 ## More on this topic
 The examples in this unit are specifically related to the course assignments. 
 To get a much broader idea about visualizations, 
-please refer to our online book on [Creating Publication Quality Graphics in R](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2092231/index.html){:target="_blank"} by our former group members Tim Appelhans and Florian Detsch which is also available at Marburg Open Educational Ressources.
+please refer to our online book on [Creating Publication Quality Graphics in R](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2092231/index.html){:target="_blank"} by our former group members Tim Appelhans and Florian Detsch which is also available at Marburg Open Educational Resources.
 
 
 ## Comments?

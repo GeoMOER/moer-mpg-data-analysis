@@ -7,14 +7,14 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-This page shows how a compiled R markdown file looks like (in fact, all code examples in this course were compiled with R markdown).
+This page shows what a compiled R markdown file looks like (in fact, all code examples in this course were compiled with R markdown).
 
 ## This is a header
 
 This is an R Markdown document. Markdown is a simple formatting syntax for creating HTML, PDF, and MS Word documents. 
 For more details on using R Markdown see [rmarkdown.rstudio.com](http://rmarkdown.rstudio.com){:target="_blank"}.
 
-When you click the **Knit** button in RStudio, a document will be generated which includes both content as well as the output of any embedded R code chunks *within* the document.
+When you click the **Knit** button in RStudio, a document will be generated which includes both content and the output of any embedded R code chunks *within* the document.
 You can embed an R code chunk like this:
 
 
@@ -43,7 +43,7 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 
 ## Markdown source
-The above content of this page is the result from an R markdown file, which looks like that.
+The above content of this page is the result from an R markdown file, which looks like this:
 
 
 ``````yaml
@@ -65,7 +65,7 @@ knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/rmd_
 This is an R Markdown document. Markdown is a simple formatting syntax for creating HTML, PDF, and MS Word documents. 
 For more details on using R Markdown see [rmarkdown.rstudio.com](http://rmarkdown.rstudio.com){:target="_blank"}.
 
-When you click the **Knit** button in RStudio, a document will be generated which includes both content as well as the output of any embedded R code chunks *within* the document.
+When you click the **Knit** button in RStudio, a document will be generated which includes both content and the output of any embedded R code chunks *within* the document.
 You can embed an R code chunk like this:
 
 ```{r}

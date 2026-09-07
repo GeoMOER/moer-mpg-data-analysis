@@ -11,12 +11,12 @@ Test statistics can describe the quality or accuracy of regression models if the
 However, the assessment would still be based on a model that is perfectly fitted to a given sample. 
 To assess the prediction performance of a model in a more independent manner, the accuracy must be computed based on an independent (sub)-sample.
 
-The straight-forward way for a test on an independent sample is of course the one which actually fits the model on sample _A_ and tests it on a completely different sample _B_. 
+The straightforward way for a test on an independent sample is of course the one which actually fits the model on sample _A_ and tests it on a completely different sample _B_.
 However, in real-world applications, the required sample size is not sufficient in many cases. 
 Therefore, cross validation - although not entirely independent - 
 is a good alternative to get an idea of the model performance for data values, which have not been part of the fitted model. 
 
-In principal, there are two strategies for cross validation:
+In principle, there are two strategies for cross validation:
 
 * **Leave-one-out cross validation**: in this case, one value pair or data point of the sample data set is left out during model fitting 
 and the model accuracy is estimated based on the quality of the prediction for the left-out value. 
@@ -32,7 +32,7 @@ On the other hand, one can get a better impression of the model performance,
 especially if the different validation data sets are not averaged but used independently for getting an idea of the _variation_ of the performance.
 
 To illustrate the concept of cross validation, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html){:target='_blank'} 
-and use `x1` and `y1` as independent and dependent variable, respectively.
+and use `x1` and `y1` as independent and dependent variables, respectively.
 
 The statistics of a linear regression model would be:
 
@@ -257,7 +257,7 @@ data.frame(NAME = c("cross validation F value",
 
 
 <!--
-Das ist seltsam hier und sollte gecheckt werden. Warmum gibt es r-squareds > 1 in cv_sample$r_squared?
+Das ist seltsam hier und sollte gecheckt werden. Warum gibt es r-squareds > 1 in cv_sample$r_squared?
 
 The range of r-squared values from the individual cross validation models is computed by 
 

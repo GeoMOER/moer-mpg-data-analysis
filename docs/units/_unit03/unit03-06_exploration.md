@@ -44,7 +44,7 @@ head(lu)
 ## Boxplot
 A boxplot is probably the most fundamental way to perform a visual data exploration. It generally shows the median along with the 25% and 75% quartiles (box and line within) as well as the value range which is within a range of 1.5 times the inter-quartile range (i.e. the size of the box which is also called spread). Values outside the latter range are indicated as outliers. All those settings can be changed.
 
-Producing a boxplot is staright forward (the x-axis lables are just the column names):
+Producing a boxplot is straightforward (the x-axis labels are just the column names):
 
 ```r
 boxplot(lu[, numc])
@@ -52,7 +52,7 @@ boxplot(lu[, numc])
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-3-1.png)<!-- -->
 
-As can be seen, outliers in terms of the box-plot logic are clearly identifiable although this logic does not actually proof if an observation is an outlier. Hence, one has to cross-check the data and if there is no actual sign for an outliers, then keep the data as is! However, since "outliers"" might have a strong influence on further analyisis, one could check some kind of transformation to reduce the value range. The following example shows a root and logarithmic transformation. In order to distinguish the plots, we add a title using the `main` parameter:
+As can be seen, outliers in terms of the box-plot logic are clearly identifiable although this logic does not actually prove if an observation is an outlier. Hence, one has to cross-check the data and if there is no actual sign for an outlier, then keep the data as is! However, since "outliers" might have a strong influence on further analysis, one could check some kind of transformation to reduce the value range. The following example shows a root and logarithmic transformation. In order to distinguish the plots, we add a title using the `main` parameter:
 
 ```r
 par_org <- par()
@@ -74,7 +74,7 @@ par(par_org)
 
 
 ## Histograms
-Histograms are usefull for getting an idea of the distribution of the dataset. Visualization is straight forward:
+Histograms are useful for getting an idea of the distribution of the dataset. Visualization is straightforward:
 
 ```r
 hist(lu$Settlement)
@@ -84,9 +84,9 @@ hist(lu$Settlement)
 
 
 ## QQ plots
-While historgramms just give an idea, QQ plots give a more reliable estimate if a data set follows a specific distribution.
+While histograms just give an idea, QQ plots give a more reliable estimate if a data set follows a specific distribution.
 
-If you are just interested in a normal distribution, you can use `qqnorm` for this. In order to ease the interpretation, we will also add a theoretical line which runs through the 25% and 75% quartile. If your data does not deviate considerably from this line, chances are high that it actually follows the theoretical distribution used to compute the plot (in the following case, this is a normal distribution):
+If you are just interested in a normal distribution, you can use `qqnorm` for this. In order to ease the interpretation, we will also add a theoretical line which runs through the 25% and 75% quartiles. If your data does not deviate considerably from this line, chances are high that it actually follows the theoretical distribution used to compute the plot (in the following case, this is a normal distribution):
 
 ```r
 qqnorm(lu$Agriculture)
@@ -119,7 +119,7 @@ for(p in c(1, 0.5, 0.25, 0)){
 par(par_org)
 ```
 
-If you want to use any other distribution, use `qqplot` instead and provide the distribution to the function. For the line, compute the 25% and 75% quantile and add it with `abline`. Since the latter function requires an intercept and slope for drawing the line, you have to compute it by yourself or just compute a simple linear model for that using `lm`:
+If you want to use any other distribution, use `qqplot` instead and provide the distribution to the function. For the line, compute the 25% and 75% quantiles and add it with `abline`. Since the latter function requires an intercept and slope for drawing the line, you have to compute it by yourself or just compute a simple linear model for that using `lm`:
 
 ```r
 par(mfrow = c(2,2))
@@ -162,7 +162,7 @@ plot(lu$Settlement, lu$Recreation)
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-10-1.png)<!-- -->
 
-The axis lables are just the column names of the data frame but for this stage of data analysis, this is more than fine. If you finally decide which graphic should be included in a final presentation (e.g. publication), then the right time for nice lables and other stuff has come. But prior to that, pimping is just a waste of time.
+The axis labels are just the column names of the data frame but for this stage of data analysis, this is more than fine. If you finally decide which graphic should be included in a final presentation (e.g. publication), then the right time for nice labels and other stuff has come. But prior to that, pimping is just a waste of time.
 
 If you are interested in the relation between all (or many) variables in your dataset, just supply the entire data frame or a column subset of it to `plot`:
 
@@ -174,7 +174,7 @@ plot(lu[, numc])
 
 
 ## Coplot
-As a final example, a coplot might be of some value. It is as scatterplot but the visualized relationship is splitted in accordance to value ranges of (an)other variable(s). The call to `coplot` is again straight forward. Left of the `|` are the two variables which will be included in the actual scatterplots, to the right is the variable which is used for the splits. If more than one variable should be used, the variables are combined with a `+` (not included here because of figure margin restrictions):
+As a final example, a coplot might be of some value. It is a scatterplot but the visualized relationship is split in accordance with value ranges of (an)other variable(s). The call to `coplot` is again straightforward. Left of the `|` are the two variables which will be included in the actual scatterplots, to the right is the variable which is used for the splits. If more than one variable should be used, the variables are combined with a `+` (not included here because of figure margin restrictions):
 
 ```r
 coplot(Forest ~ Agriculture | Settlement, data = lu)

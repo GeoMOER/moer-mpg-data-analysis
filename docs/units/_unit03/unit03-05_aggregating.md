@@ -11,7 +11,7 @@ header:
 
 ## Summarizing a data set
 
-The most straight forward function which returns some aggregated statistical
+The most straightforward function which returns some aggregated statistical
 information about a data set is `summary`.
 
 ```r
@@ -35,7 +35,7 @@ summary(df)
 It provides the minimum, maximum, mean and median value of each numerical column
 along with the first and third quartile (i.e. the values separating 25% from 75%
 and 75% from 100% of the data). Non-numeric columns are summarized by counting
-the individual values (which will be ommitted after the first few rows so it
+the individual values (which will be omitted after the first few rows so it
 is only informative for columns with just a few different character values).
 
 The information of `summary` can also be obtained by specific functions but these
@@ -151,7 +151,7 @@ colMeans(df[,3:4])
 
 For other summary statistics across rows or if you want to define a grouping
 variable which controls the summary statistics, the `aggregate` function is very
-helpfull.
+helpful.
 
 ```r
 aggregate(df[,3:4], by = list(df$Cat1), FUN = median)
@@ -163,7 +163,7 @@ aggregate(df[,3:4], by = list(df$Cat1), FUN = median)
 ## 2       B  3.5   35
 ## 3       C  3.0   30
 ```
-Please note that the grouping elements (parameter "by") have to be supplied as list
+Please note that the grouping elements (parameter "by") have to be supplied as a list
 so if you want to use a column of a data frame, use the `list` function to convert
 the factor to a list.
 
@@ -182,11 +182,11 @@ aggregate(df[,3:4], by = list(df$Cat1, df$Cat2), FUN = sum)
 ## 5       B       Y    5   50
 ```
 
-In some cases it is usefull to construct a specific aggregation key, so think of
+In some cases it is useful to construct a specific aggregation key, so think of
 that easy possibility if you run into problems. As one example: imagine that the
 aggregate function can not use more than one grouping variable. To get the same
 result as in the line above, one can define a key consisting of the entries of
-column Cat1 and Cat2 (sorting is different but who cares):
+columns Cat1 and Cat2 (sorting is different but who cares):
 
 ```r
 df$key <- paste0(df$Cat1, df$Cat2)

@@ -77,7 +77,7 @@ The ``ar`` function computes an AR model and iterates over the lags to be includ
 which predicts the monthly air temperature values for time t based on its value at time t-1, t-2, and so on.
 
 The maximum number of lags (within a maximum of 20 as provided to the function) is determined based on an internal estimate of the AIC parameter. 
-The number of lags with the minimum AIC are used:
+The number of lags with the minimum AIC is used:
 
 ```r
 plot(0:20, armod$aic, type = "o")
@@ -86,10 +86,10 @@ plot(0:20, armod$aic, type = "o")
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-5-1.png)<!-- -->
 
 Using the Yule-Walker method for estimating the AR parameters, a maximum lag of 14 is considered. 
-Although the results will be quite different if another method is used and although the following is of no use if one actually wants to use not just an AR or a MA but an ARIMA model, 
+Although the results will be quite different if another method is used and although the following is of no use if one actually wants to use not just an AR or an MA but an ARIMA model,
 a rule of thumb states that if
 
-* the auto-correlation function declines exponentially or shows a sinus pattern and
+* the auto-correlation function declines exponentially or shows a sinusoidal pattern and
 * the partial auto-correlation function shows only p significant lags in the beginning,
 
 an AR(p) model (i.e. an AR model with p considered lags) is a good starting point. 
@@ -131,8 +131,8 @@ armod
 
 So the optimal value for the lag parameter depends on the chosen method.
 
-Let us now use th AR model for predicting the time series into the future 
-(although 100 months in the future is way to much; grey lines indicate the standard error):
+Let us now use the AR model for predicting the time series into the future
+(although 100 months in the future is way too much; grey lines indicate the standard error):
 
 ```r
 arpred <- predict(armod, n.ahead = 100)

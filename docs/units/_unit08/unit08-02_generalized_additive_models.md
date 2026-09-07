@@ -8,8 +8,8 @@ toc_label: In this example
 ---
 
 So far, the models we have seen only considered linear relationships. 
-The corresponding model type to simple linear models would be an additive model and for poisson or logistic linear regression, it would be the generalized additive model (GAM). 
-Since (all?) implementations of GAMs also allow for additive models (i.e. using gaussian instead of e.g. poisson distribution functions), we will not distinguish between AM and GAM in the following.
+The corresponding model type to simple linear models would be an additive model and for Poisson or logistic linear regression, it would be the generalized additive model (GAM).
+Since (all?) implementations of GAMs also allow for additive models (i.e. using Gaussian instead of e.g. Poisson distribution functions), we will not distinguish between AM and GAM in the following.
 
 To illustrate non-linear fittings, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) but modify variable x3 and use y1 and y2.
 
@@ -84,8 +84,8 @@ summary(lmod)
 ```
 Provided that all the assumptions relevant for linear models are met, x is significant and the model explains about 0.6567 percent of the variation in the dataset.
 
-One might think that replacing `lm` with `mgcv:gam` (i.e. the gam function from the mgcv package) would be enough to turn our model in an additive model. 
-However, this is not true. In fact, `gam` with (its default) gaussian family acts exactly as the `lm` function if the same forumla is supplied. 
+One might think that replacing `lm` with `mgcv:gam` (i.e. the gam function from the mgcv package) would be enough to turn our model into an additive model.
+However, this is not true. In fact, `gam` with (its default) Gaussian family acts exactly as the `lm` function if the same formula is supplied.
 We will show this by plotting the gam-based regression line (dotted, red) on top of the one from the linear model above (grey).
 
 ```r
@@ -132,7 +132,7 @@ No surprise. All test statistics are equal (it is the same model!).
 The only difference is due to some wording since the R squared value in the linear model (0.6567) can now be found under "deviance explained".
 
 Obviously, there must be more than just switching a function call to come from linear models to additive models. 
-And there is: while for simple linear models the equation would be something like y = a + bx, a smoothing term replace the slope b in additive models: y = a+s(x). 
+And there is: while for simple linear models the equation would be something like y = a + bx, a smoothing term replaces the slope b in additive models: y = a+s(x).
 By adding this term to the `gam` function and using a penalized regression spline (fx = FALSE, which is the default), we finally get our first non-linear model:
 
 ```r
@@ -174,7 +174,7 @@ summary(gammod)
 ## R-sq.(adj) =  0.751   Deviance explained = 77.8%
 ## GCV = 1.1471  Scale est. = 0.97807   n = 22
 ```
-A look on the model performance reveals that the explained deviance has increased. 
+A look at the model performance reveals that the explained deviance has increased.
 Assuming that all model assumptions, which are actually the same as for linear models (except the linear relationship) are met, the explained deviance has increased to almost 78 percent. 
 
 In order to check the model assumptions, you can use e.g. the `gam.checked` function:
@@ -255,7 +255,7 @@ summary(gammod)
 ## GCV = 1.8733  Scale est. = 1.0218    n = 22
 ```
 Now the function is highly non-linear and 9 degrees of freedom are used for the smooth terms. 
-The explained deviance has increased but overfitting is very likely (the R squared has declined, too, but we should not give to much emphasis on that).
+The explained deviance has increased but overfitting is very likely (the R squared has declined, too, but we should not place too much emphasis on that).
 
 
 If you do not want to use the standard (penalty) model selection, a feasible approach for the additive models might be to select the number of knots and iterate over them in e.g. a leave-many-out cross validation approach. 
@@ -284,7 +284,7 @@ legend(13, 7.5, paste("knots", knots, sep = " "), col = cols, lty=2, cex=0.75)
 
 
 ### LOESS
-While the above examples are more straight forward if one comes from the implementation side of a linear model (i.e. `lm`), the locally weighted scatterplot smoothing (LOESS) is more straight forward from a conceptual point of view. It uses local linear regressions defined on moving subsets of the dataset. 
+While the above examples are more straightforward if one comes from the implementation side of a linear model (i.e. `lm`), the locally weighted scatterplot smoothing (LOESS) is more straightforward from a conceptual point of view. It uses local linear regressions defined on moving subsets of the dataset.
 For example, if the moving window is set to 21, then only the 10 left and 10 right neighbors of the actually considered value (target) are considered and a linear regression is computed based on this subset. 
 The term "weighted" indicates that not all of the neighboring values are equally treated but the ones closer to the target are weighted higher. 
 The following shows one example using 75 percent of all the data pairs in order to compute the local regression for each target value:
@@ -301,7 +301,7 @@ lines(px, loesspred, col = "red")
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-10-1.png)<!-- -->
 
-Again, one could iterate over the window size in a e.g. cross-validation approach to identify the best fit. As for the gam model, the following just illustrates the different models:
+Again, one could iterate over the window size in, e.g., a cross-validation approach to identify the best fit. As for the gam model, the following just illustrates the different models:
 
 ```r
 window <- seq(0.3, 1, 0.01)

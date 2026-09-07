@@ -7,7 +7,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-Just as one last example on time series analysis for this module and mainly for demonstrating that this module only tipped a very small set of analysis concepts out there, we will have a glimpse on time series clustering. 
+Just as one last example on time series analysis for this module and mainly for demonstrating that this module only tipped a very small set of analysis concepts out there, we will have a glimpse of time series clustering.
 To illustrate this concept, we will again use the (mean monthly) air temperature record of the weather station in Cölbe (which is closest to Marburg). 
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany). 
 For simplicity, we will remove the first six entries (July to December 2006 to have full years).
@@ -49,7 +49,7 @@ Of course there is no rule without exception and the one exception here is:
 if you want to show some code and do not want to introduce a new dataset just for this last example, 
 you can use it on a dataset where you have no glimpse of a grouping as long as you are not the one who gets the grading in the end. 
 
-Aside from having no idea if we have a grouping and aside that we have only one single station record, let's have a look at the above time series. 
+Aside from having no idea if we have a grouping and aside from the fact that we have only one single station record, let's have a look at the above time series.
 There might be a difference between 2010 and the rest of the years since 2010 shows very warm summer and cold winter temperatures. 
 To start with clustering, we will have to look at the individual years as different time series by transforming our data into a matrix with 12 columns (i.e. one for each month) and the required number of years. Thereby, we have to make sure that the original dataset is actually transformed into the matrix format by rows and not by columns. 
 This will result in a matrix with one year per row:

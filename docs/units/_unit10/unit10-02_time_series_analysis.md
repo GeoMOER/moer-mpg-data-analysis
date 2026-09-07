@@ -46,7 +46,7 @@ plot(tam$Date, tam$Ta, type = "l")
 
 ### Seasonality of time series
 The time series shows clear seasonality. In this case, we already know that monthly mid-latitude temperature shows a seasonality of 12 months. 
-In case we are not certain, we could also have a look at the spectrum using e.g. the ``spectrum`` functions, which estimate the (seasonal) frequencies of a data set using an auto-regressive model. 
+In case we are not certain, we could also have a look at the spectrum using e.g. the ``spectrum`` function, which estimates the (seasonal) frequencies of a data set using an auto-regressive model.
 
 The smallest frequency which is checked is 1 divided by the length of the time series. 
 Hence, in order to convert frequency back to the original time units, we divide 1 by the frequency:
@@ -78,9 +78,9 @@ Once we are certain about the seasonal frequency, we can start with the decompos
 
 * an annual trend,
 * a seasonal component, and
-* a non-correlated reminder component (i.e. white noise).
+* a non-correlated remainder component (i.e. white noise).
 
-To start with the annual component or "trend", we could use a 12 months running mean filter. 
+To start with the annual component or "trend", we could use a 12-month running mean filter.
 In the following example, we will use the ``rollapply`` function for that:
 
 ```r
@@ -108,7 +108,7 @@ lines(tam$Date, rep(seasonal_mean$x, 16), col = "blue")
 
 The blue line shows the average seasonal signal of the time series.
 
-The only thing remaining is the remainder, i.e. the component not explained by neither the trend nor the seasonal signal:
+The only thing remaining is the remainder, i.e. the component explained by neither the trend nor the seasonal signal:
 
 ```r
 remainder <- tam$Ta - annual_trend - seasonal_mean$x

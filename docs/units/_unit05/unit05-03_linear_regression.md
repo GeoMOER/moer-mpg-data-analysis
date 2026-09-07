@@ -9,7 +9,7 @@ header:
 
 Linear regression modelling is one of the more common tasks in data analysis and the following example will cover the very basic topic of bivariate linear regression. The storyline follows the one from Zuur et al. (2007) to a certain degree.
 
-While one could use actual data sets, we keep it controled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet). 
+While one could use actual data sets, we keep it controlled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet).
 The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as part of base R. 
 For now, we will use x1 as independent variable and y1 as dependent variable.
 
@@ -41,7 +41,7 @@ text(10, 6, bquote(paste("y"["i"], " = ", .(round(lmod$coefficients[1], 3)),
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-2-1.png)<!-- -->
 
-While the visualization is illustrative, it does not provide any information on the actual significance of the parameters of the model, i.e. it does not answer the question after the existance of an actual linear relationship which - in the case of linear regression - requires a slope of the regression line which is actually different from 0. In principal, there are two ways to tackle this problem. Using an analysis of variance (ANOVA) or a t-test. 
+While the visualization is illustrative, it does not provide any information on the actual significance of the parameters of the model, i.e. it does not answer the question about the existence of an actual linear relationship which - in the case of linear regression - requires a slope of the regression line which is actually different from 0. In principle, there are two ways to tackle this problem: using an analysis of variance (ANOVA) or a t-test.
 
 
 ### Testing a linear regression relationship by an analysis of variance
@@ -71,7 +71,7 @@ ss_model <- sum((lmod$fitted.values - mean(lmod$model$dep))**2)
 ss_resid <- sum((lmod$model$dep - lmod$fitted.values)**2)
 ```
 
-Since the sum increases with increasing numbers of observations, the resulting sum of squares are normalized by the respective degrees of freedom. This gives us:
+Since the sum increases with increasing numbers of observations, the resulting sums of squares are normalized by the respective degrees of freedom. This gives us:
 * the mean observed sum of squares
 * the mean model sum of squares
 * the mean residual sum of squares, i.e. the mean squared error if the model is a simple linear regression model.
@@ -88,7 +88,7 @@ It can be shown that for large sample sizes, the mean residual sum of squares eq
 * if the slope is zero, then mean model sum of squares and mean residual sum of squares are equal and the ratio of both is 1.
 * if the slope is not zero, then mean model sum of squares is larger than the mean residual sum of squares and the ratio is larger than 1. 
 
-This provides us the test statistic for the *null-hypothesis* that the true slope is not different from 0.
+This provides us with the test statistic for the *null-hypothesis* that the true slope is not different from 0.
 
 ```r
 f_value <- mss_model / mss_resid
@@ -197,7 +197,7 @@ summary(lmod)
 
 ### R squared
 
-The variance explained by the model is one of the most often used variables to explain the relationship in simple linear models. It is computed by normalizing either the model sum of squares by the observed sum of squares or by substracting the normalization of the residual sum of squares from 1.
+The variance explained by the model is one of the most often used variables to explain the relationship in simple linear models. It is computed by normalizing either the model sum of squares by the observed sum of squares or by subtracting the normalization of the residual sum of squares from 1.
 
 ```r
 ss_model / ss_obsrv
@@ -224,7 +224,7 @@ The letters *p* (*P*) and *r<sup>2</sup>* (*R*<sup>2</sup>) are often written in
 
 
 ### Finished?
-Well, the above looks like a real good example of linear regression analysis, right? And the r-squared of about 0.67 is also quite OK not to mention the significance of the independent variable.
+Well, the above looks like a really good example of linear regression analysis, right? And the r-squared of about 0.67 is also quite OK not to mention the significance of the independent variable.
 
 Before we clap our hands, let's just have a look at the other variable combinations of the Anscombe data set.
 
@@ -343,7 +343,7 @@ We will learn how to treat non-linear relationships in the subsequent units.
 The above example illustrates why it is important to understand a concept and not just to know how something is computed. 
 In the present example, we have to make some additional checks, which give us information about the distribution of variables in order to actually decide if we want to do some assessments based on e.g. the retrieved r-squared value. 
 
-The following checks are what should at least be considerd in bivariate linear regression (for multiple linear regression, multicollinearity of the independent variables is crucial):
+The following checks are what should at least be considered in bivariate linear regression (for multiple linear regression, multicollinearity of the independent variables is crucial):
   
 * homogeneity of the variance of residuals (homoscedasticity)
 * normality of the residuals (much less important, but handy for small samples)
@@ -389,12 +389,12 @@ for(i in seq(4)){
 ```r
 par(par_org)
 ```
-Also there are deviations from a straight line, the deviations except for the lower left plot are not really crucial (and there it is only for the data pair labled with 3). 
+Although there are deviations from a straight line, the deviations except for the lower left plot are not really crucial (and there it is only for the data pair labelled with 3).
 The lower left plot is also the only plot where the Shapiro-Wilk test rejects the normal distribution hypothesis on a p < 0.05 level.
 
-You might wonder why some of the points in the above figures are labled (e.g. 3, 9, 10 in the upper left plots).
+You might wonder why some of the points in the above figures are labelled (e.g. 3, 9, 10 in the upper left plots).
 These numbers in the plots refer to the observation number in the original dataset.
-This feature results from an "influential points analysis" using Cook's distance, which is a measure of how strong the regression parameters change if a certain observation is not considered. 
+This feature results from an "influential points analysis" using Cook's distance, which is a measure of how strongly the regression parameters change if a certain observation is not considered.
 Hence, the larger this change, the larger the influence of this particular observation. For the above data, Cook's distance looks like that:
 
 ```r

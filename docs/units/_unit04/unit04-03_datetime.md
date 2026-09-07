@@ -28,14 +28,14 @@ as.Date("01.01.2014", "%m.%d.%Y")
 ```
 ## [1] "2014-01-01"
 ```
-While `as.Date` requires information on the year, month and day withouth any
+While `as.Date` requires information on the year, month and day without any
 exception, time information is not handled at all.
 
-If data and time or just time information is required to be handeled explicitly,
+If date and time or just time information is required to be handled explicitly,
 the temporal information can be converted to a POSIX data type. In general, there
 are two kinds of POSIX classes: (i) POSIXct which handles date/time information as
 seconds since a certain time (standard: 1970-01-01 00:00.00 UTC) and (ii)
-POSIXlt which stores date/time information as a list. Again, if the data/time
+POSIXlt which stores date/time information as a list. Again, if the date/time
 information is not supplied in standard format, one has to define it:
 
 ```r
@@ -77,8 +77,8 @@ This function is faster than `as.POSIXlt` if the time format
 is supplied in the ISO way. Otherwise (and maybe even in this case), just forget 
 about it.
 
-Aside from theory, a pratical difference between the POSIXct and POSIXlt class
-is the way one can add or substract a specific amount of time. For POSIXct, you
+Aside from theory, a practical difference between the POSIXct and POSIXlt classes
+is the way one can add or subtract a specific amount of time. For POSIXct, you
 have to supply the time interval as seconds:
 
 ```r
@@ -102,8 +102,8 @@ lt
 ## [1] "2014-01-02 13:30:35 CET"
 ```
 
-To convert a POSIX information back to a character string, one can use the
-`strftime` function which allows precise formatting of the data/time string and
+To convert POSIX information back to a character string, one can use the
+`strftime` function which allows precise formatting of the date/time string and
 also has an option for time zone conversion.
 
 ```r
@@ -124,7 +124,7 @@ strftime(ct, "%d. %b %y, %H:%M", tz = "UTC")
 Please note that the time zone conversion only works for POSIXct.
 
 
-Finally, if you want to substract two date/time values, you can use the
+Finally, if you want to subtract two date/time values, you can use the
 arithmetic operation or the difftime function to control the layout of
 the result (see the help pages of `strptime` for an overview of the layout 
 specifications).

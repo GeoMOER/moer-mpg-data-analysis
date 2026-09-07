@@ -49,11 +49,11 @@ print(my_vector_4)
 ```
 ## [1]  0 10 20 30
 ```
-You can skip the `print` function but just type the variable name if your 
+You can skip the `print` function and just type the variable name if your
 standard out is the console. We will assume that from now on.
 
 ## Length of a vector
-To get the lenght of a vector, use the `length` function:
+To get the length of a vector, use the `length` function:
 
 ```r
 my_vector <- c(1:10)
@@ -99,8 +99,8 @@ To overwrite an element, you have to access
 it following the logic above. To add an element, you have to cut the existing 
 vector at the specified position and insert it. The result must be stored in
 a new variable (it will be new, even if you name it like the existing one). 
-The same structure applies for deleting an element what is the same as combining
-the part of the vector before and after the value which should be deleted:
+The same structure applies to deleting an element, which is the same as combining
+the parts of the vector before and after the value which should be deleted:
 
 ```r
 # modify an element at position 3
@@ -128,7 +128,7 @@ my_deleted_vector
 ## Recycling of vectors
 If one combines a shorter with a longer vector in e.g. an arithmetic
 operation, the shorter vector is recycled until the length of the longer vector 
-is reached (i.e. the values are repeated over and over again)
+is reached (i.e. the values are repeated over and over again).
 
 ```r
 my_short_vector <- c(1,2,3)
@@ -141,4 +141,4 @@ my_sum_vector
 ## [1] 11 22 33 41 52 63
 ```
 For more information have a look at e.g. the respective [data type](http://www.statmethods.net/input/datatypes.html){:target="_blank"} site at Quick R. There you will also find an overview on how to get [information about an object](http://www.statmethods.net/input/contents.html){:target="_blank"}. 
-Of course, looking into the package documentation or search the web is always a good idea, too.
+Of course, looking into the package documentation or searching the web is always a good idea, too.

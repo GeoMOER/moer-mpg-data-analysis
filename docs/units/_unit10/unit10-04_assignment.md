@@ -9,11 +9,11 @@ header:
 
 This worksheet focuses on the analysis of meteorological time series data recorded at a station near Marburg University Forest and some global teleconnection indices related to the North Atlantic Oscillation (NAO).
 
-After completing this worksheet you will have gained deeper experiences with time series data analysis and will additionally have extended your case-study knowledge about global teleconnection indices.
+After completing this worksheet you will have gained deeper experience with time series data analysis and will additionally have extended your case-study knowledge about global teleconnection indices.
 
 ## Things you need for this worksheet
-  * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operation system.
-  * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend to use R Studio for (interactive) programming with R.
+  * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
+  * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
   * [Git](https://git-scm.com/downloads){:target="_blank"} environment for your operating system. For Windows users with little experience on the command line we recommend [GitHub Desktop](https://desktop.github.com/){:target="_blank"}.
   * [German Weather Service (DWD) data](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"} for the station Cölbe.
   * [NOAA data](http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml){:target="_blank"} for the North Atlantic Oscillation (NAO).
@@ -37,7 +37,7 @@ Please extend your Rmd file in such a manner that you can evaluate to which degr
 For this task, divide the NAO index provided above into "positive" and "negative" (i.e. use it as a factor, not as a numeric variable) and predict the temperature dynamics in a simple multiple linear model, which uses the NAO index classes as a factor and the first Fourier frequency (i.e. one sin and one cos) as independent variables. 
 Finally, develop a strategy to cross-check the significance indicated by the linear model.
 
-Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
+Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom.
 Make sure that the created html file is also part of your GitHub classroom repository.
 
 

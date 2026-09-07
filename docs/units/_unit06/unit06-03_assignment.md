@@ -14,8 +14,8 @@ After completing this worksheet you should have gained some experience in applyi
 
 
 ## Things you need for this worksheet
-  * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operation system.
-  * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend to use R Studio for (interactive) programming with R.
+  * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
+  * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
   * [Git](https://git-scm.com/downloads){:target="_blank"} environment for your operating system. 
   For Windows users with little experience on the command line we recommend [GitHub Desktop](https://desktop.github.com/){:target="_blank"}.
   * Data on percentage fraction of land use on a community level provided by the course instructors.
@@ -30,7 +30,7 @@ Include a plot in the end that provides information on the distribution of the r
 
 Please write exactly one sentence as a summary of the reliability of the model.
 
-Save your Rmd file in your course repository, knitr it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
+Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom.
 Make sure that the created html file is also part of your GitHub classroom repository.
 
 

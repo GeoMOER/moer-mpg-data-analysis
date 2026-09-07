@@ -9,7 +9,7 @@ header:
 
 
 Cleaning data frames involves quite different aspects like splitting cell entries, converting data types or the conversion of "wide" to "long" format. 
-In general, the aim is to come up with a data frame, that has [Wickham 2014](https://www.jstatsoft.org/article/view/v040i01):
+In general, the aim is to come up with a data frame that has [Wickham 2014](https://www.jstatsoft.org/article/view/v040i01):
 
 * a separate column for each variable (which has exactly one kind of information, e.g. not major and minor subject)
 * a separate row for each observation
@@ -165,7 +165,7 @@ head(lu_long)
 The column (i.e. variable) names passed to the parameter `id.vars` are those columns which represent actual variables within their names. The columns Settlement, Recreation, Agriculture and Forest can be summarized to one column since they all represent land cover. Their values which were stored in each column have been transferred to a separate column (called `value` in this case).
 
 ### Split multiple information within one column
-The content of column "Place" could be regarded as both human readable information or additional machine readable data source. If we go for the latter, mixing names (e.g. Flensburg, Kiel) and types (e.g. city, county) is not a good option. It seems that the different kinds of information are comma separated, so let's split the column entries using "," as a separator and have a closer look at the results.
+The content of column "Place" could be regarded as both human readable information and an additional machine readable data source. If we go for the latter, mixing names (e.g. Flensburg, Kiel) and types (e.g. city, county) is not a good option. It seems that the different kinds of information are comma separated, so let's split the column entries using "," as a separator and have a closer look at the results.
 
 ```r
 place <- strsplit(lu$Place, ",")
@@ -239,9 +239,9 @@ head(place_df)
 ## 5             Lübeck       Hansestadt Kreisfreie Stadt 01003 1996
 ## 6         Neumünster Kreisfreie Stadt             <NA> 01004 1996
 ```
-We add the information from column ID and Year since we need it later for merging it with the long version of the land cover data frame.
+We add the information from columns ID and Year since we need it later for merging it with the long version of the land cover data frame.
 
-While column is filled in any case, let's have a look at the different entries in column B and C:
+While column A is filled in any case, let's have a look at the different entries in columns B and C:
 
 ```r
 unique(place_df[, 2])
@@ -273,7 +273,7 @@ unique(place_df$B[!is.na(place_df$C)])
 ```
 OK, if the place is one of "Landeshauptstadt", "Hansestadt" or "Universitaetsstadt", then the third column contains the information "Kreisfreie Stadt". Hence, if we want to group by "Kreisfreie Stadt", we actually would need the third column. 
 
-One strategy could be to make a structure which shows the name in the first column, the general type of the place in the second column and additional (not mandatory) information in the third column. If one follows this strategy, the content of column two and three has to be switched for the rows with a non-NA entry in the third column:
+One strategy could be to make a structure which shows the name in the first column, the general type of the place in the second column and additional (not mandatory) information in the third column. If one follows this strategy, the content of columns two and three has to be switched for the rows with a non-NA entry in the third column:
 
 ```r
 place_df[!is.na(place_df$C), ] <- place_df[!is.na(place_df$C), c(1, 3, 2, 4, 5)]
@@ -293,7 +293,7 @@ head(place_df)
 ## 5             Lübeck Kreisfreie Stadt       Hansestadt 01003 1996
 ## 6         Neumünster Kreisfreie Stadt             <NA> 01004 1996
 ```
-Finished? No, there are at least some entries without any kind of type information in column B. In fact, there are quite many of them:
+Finished? No, there are at least some entries without any kind of type information in column B. In fact, there are quite a lot of them:
 
 ```r
 unique(lu$Place[is.na(place_df$B)])
@@ -490,7 +490,7 @@ sum(is.na(place_df$B))
 ```
 ## [1] 420
 ```
-This reduces the amount of missing type information considerably. What is left are federal states and some cities. To disentangle states from cities, we will make use of the ID column which we included in our place information. It looks like that the country has the ID "DG", federal states have a two-digit ID, and the rest are "Kreisfreie Stadt".
+This reduces the amount of missing type information considerably. What is left are federal states and some cities. To disentangle states from cities, we will make use of the ID column which we included in our place information. It looks like the country has the ID "DG", federal states have a two-digit ID, and the rest are "Kreisfreie Stadt".
 
 Let's add the appropriate information in the second column:
 
