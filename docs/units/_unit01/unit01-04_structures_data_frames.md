@@ -41,9 +41,7 @@ my_other_df
 ## 2 3 B
 ## 3 4 C
 ```
-The `colnames` function allows you to supply column names to an existing data
-frame. Alternatively, the column names can be set within the `data.frame` 
-function by assigning the vector elements to a variable (capital X and Y in the example above).
+The `colnames` function allows you to supply column names to an existing data frame. You can also set column names directly in `data.frame()`, as shown by the named arguments `X` and `Y` above.
 
 
 ## Dimensions of a data frame
@@ -73,17 +71,13 @@ str(my_other_df)
 ```
 ## 'data.frame':	3 obs. of  2 variables:
 ##  $ X: num  2 3 4
-##  $ Y: Factor w/ 3 levels "A","B","C": 1 2 3
+##  $ Y: chr  "A" "B" "C"
 ```
 
 
 ## Displaying and accessing the content of a data frame
 
-The content of a data frame is accessed by either position information
-given in square brackets (e.g. `df[3,4]`) or a column name given after a $ sign
-(e.g. `df$columnName`). Here is an example:
-
-
+Access values in a data frame using indices in square brackets (e.g., `df[3,4]`) or a column name after a `$` sign (e.g., `df$columnName`). Here is an example:
 
 
 ```r
@@ -100,8 +94,7 @@ my_other_df[,2]  # Shows second column
 ```
 
 ```
-## [1] A B C
-## Levels: A B C
+## [1] "A" "B" "C"
 ```
 
 ```r
@@ -109,33 +102,23 @@ my_other_df$Y  # Shows second column
 ```
 
 ```
-## [1] A B C
-## Levels: A B C
+## [1] "A" "B" "C"
 ```
 
-If position information is used, the ordering matters. If you think of a data
-frame like a table, then the following applies:
+A data frame has rows and columns. With two indices, use `df[rows, columns]`: the first index selects rows, and the second selects columns. Leaving an index empty selects all entries in that dimension. With a single index, `df[index]` selects columns.
 
- * In a 1-D data frame, the first dimension is the row
- * In a 2-D data frame, the first dimension is the row, the second the column
-
-Higher dimensions follow the same logic.
+In the examples below, `df` represents a data frame, `x` represents a row number, and `y` represents a column number.
 
 Here are some possible combinations:
 
- * Single row, all columns: `df[x,]`                <!--with $x \in \text{number of rows}$ IMPLEMENT LATEX MATH TO JEKYLL -->
- * Single column, all rows: `df[,y]`                <!--with $x \in \text{number of columns}$ -->
- * Single row and column: `df[x,y]`                 <!--with $x, y \in \text{number of rows, columns}$ -->
- * All except one row, all columns: `df[-x,y]`      <!--with $x \in \text{number of rows}$ -->
- * Selected rows, all columns: `df[c(x1, x2, x3),]` <!--with $x1, x2, x3 \in \text{number of rows}$ -->
- * Continuous rows, all columns: `df[c(x1:x2),]`     <!--with $x1, x2 \in \text{number of rows}$ -->
+ * Single row, all columns: `df[x,]`
+ * Single column, all rows: `df[,y]`
+ * Single row and column: `df[x,y]`
+ * All except one row, all columns: `df[-x,]`
+ * Selected rows, all columns: `df[c(x1, x2, x3),]`
+ * Consecutive rows, all columns: `df[c(x1:x2),]`
 
-In summary, dimensions like rows or columns which should be selected have positive 
-numbers, dimensions that should be hidden have negative numbers, and if all entries of
-a dimension should be selected one just leaves the field empty. If more than
-one dimension should be shown or hidden, one has to supply this information with a
-vector defined by the `c` function.
-
+Use positive indices to select rows or columns and negative indices to exclude them. To select or exclude several rows or columns, supply a vector of indices using `c()`.
 
 ```r
 my_other_df[c(1,3),]  # Shows rows 1 and 3
@@ -157,9 +140,7 @@ my_other_df[c(1,2),]  # Shows rows 1 to 2
 ## 2 3 B
 ```
 
-If you are interested in the first or last rows, you can also use the `head` or
-`tail` functions. The default number of lines to be displayed is five but this can be changed with the
-second argument. Let us have a look at the first two rows:
+To display the first or last rows, use `head` or `tail`. By default, these functions display six rows. You can change this number with the second argument. Let us look at the first two rows:
 
 ```r
 head(my_other_df, 2)
@@ -205,8 +186,8 @@ my_other_df
 ```
 
 ```r
-# change an entire dimension
-my_other_df[,1] <- c("200", "300", "401")  # same as my_other_df$X <- 400
+# change an entire column
+my_other_df[,1] <- c("200", "300", "401")  # same as my_other_df$X <- c("200", "300", "401")
 my_other_df
 ```
 
@@ -216,6 +197,8 @@ my_other_df
 ## 2 300 B
 ## 3 401 C
 ```
+
+The values are in quotation marks, so `X` becomes a character column.
 
 ```r
 # add a new column
@@ -244,4 +227,4 @@ my_other_df
 ```
 As for lists, to actually delete an element, it has to be set to `NULL`.
 
-For more information have a look at e.g. the respective [data type](http://www.statmethods.net/input/datatypes.html){:target="_blank"} site at Quick R. There you will also find an overview on how to get [information about an object](http://www.statmethods.net/input/contents.html){:target="_blank"}. Of course, looking into the package documentation or searching the web is always a good idea, too.
+For more information, see the accompanying Base R course on [data types](https://geomoer.github.io/moer-base-r/unit02/unit02-01_Intro.html){:target="_blank"} and [object types](https://geomoer.github.io/moer-base-r/unit03/unit03-01_Intro.html){:target="_blank"}. Package documentation is another useful resource.

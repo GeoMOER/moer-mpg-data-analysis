@@ -1,5 +1,5 @@
 ---
-title: "Example: R Markdown with html output"
+title: "Example: R Markdown with HTML output"
 author: "Thomas Nauss"
 date: "10 Oktober 2018"
 output: 
@@ -8,15 +8,18 @@ output:
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+# Website publishing path; use 'figures/' for a local document.
 knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/rmd_html_out/')
 ```
 
 
 ## This is a header
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This is an R Markdown document. Markdown is a simple formatting syntax for creating HTML, PDF, and MS Word documents.
+For more details, see the [R Markdown documentation](https://rmarkdown.rstudio.com).
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+When you click **Knit** in RStudio, the generated document includes your text and the output of embedded R code chunks.
+You can embed an R code chunk like this:
 
 ```{r}
 summary(cars)
@@ -27,8 +30,8 @@ summary(cars)
 
 You can also embed plots, for example:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.alt="Scatterplot of car speed against stopping distance from the cars dataset."}
 plot(cars)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+The `echo = FALSE` parameter hides the R code that generates the plot. The `fig.alt` parameter provides alternative text for the image.

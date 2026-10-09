@@ -12,57 +12,17 @@ This is a continuously updated collection of frequently asked questions.
 ## Course requirements
 
 ### What is the expected workload for this course?
-This course gives 6 (ECTS) credit points, making up a total of 180 hours of workload.
-180 hours in total minus the time spent during the course sessions divided by the number of weeks makes up a workload of 9.6 hours on average per week in addition to the time spent during the course sessions ((180-(13*3.5))/14). Note that this workload is intended to achieve an average grade according to the official European study system.
+This course gives 6 (ECTS) credit points, making up a total of 180 hours of workload. 180 hours in total minus the time spent during the course sessions divided by the number of weeks makes up a workload of 9.6 hours on average per week in addition to the time spent during the course sessions ((180-(13*3.5))/14). Note that this workload is intended to achieve an average grade according to the official European study system.
 
 
 ## Git and GitHub
 
-### Where can I find the URL to my personal GitHub classroom repository?
-Follow the link to the GitHub classroom provided by the instructor and you will find something like this:
+### Where can I find the URL of my personal GitHub Classroom repository?
+Follow the GitHub Classroom link provided by the instructor. Your repository URL will look similar to this:
 https://github.com/GeoMOER-Students-Space/mpg-data-analysis-202x-YOURGITHUBUSERNAME.git
 
-### How can I find out if my files were properly uploaded to the GitHub repository?
-Enter the URL of your GitHub Classroom repository in a web browser and check if they are there.
+### How can I check whether my files were uploaded to the GitHub repository?
+Open your GitHub Classroom repository in a web browser and check that the files are listed there.
 
-### How can I check if the HTML files in my GitHub repository have the right content?
-You can check the contents of your (HTML) files by downloading them from the remote repository to your local computer. 
-Therefore, press "code" (the green button) and then "download zip" in your repository using your internet browser.
-After downloading, you can open and render HTML files with your browser.
-
-
-
-
-<!--
-
-## Git and GitHub
-
-### Where can I find the URL to my personal GitHub classroom repository?
-Follow the link to the GitHub classroom provided by the instructor and you will find something like this:
-https://github.com/GeoMOER-Students-Space/bsc-species-distribution-modelling-2021-YOURGITHUBUSERNAME.git
-
-### How can I find out if my files were properly uploaded to the GitHub repository?
-Enter the URL of your GitHub Classroom repository in a web browser and check if they are there.
-
-### How can I check if the HTML files in my GitHub repository have the right content?
-You can check the contents of your (HTML) files by downloading them from the remote repository to your local computer. 
-Therefore, press "code" (the green button) and then "download zip" in your repository using your internet browser.
-After downloading, you can open and render HTML files with your browser.
-
--->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### How can I check whether the HTML files in my repository have the right content?
+Download a ZIP archive of your repository, extract it, and open the HTML files in a web browser.

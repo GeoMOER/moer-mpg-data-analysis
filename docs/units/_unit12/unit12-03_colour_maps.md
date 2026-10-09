@@ -29,7 +29,7 @@ set.seed(42)
 ```
 
 ## Download world map as an example
-Download the data [here](https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_admin_0_countries.zip){:target="_blank"} or directly from within R.
+Download the data [here](https://naciscdn.org/naturalearth/50m/cultural/ne_50m_admin_0_countries.zip){:target="_blank"} or directly from within R.
 
 ```r
 download.file("https://naciscdn.org/naturalearth/50m/cultural/ne_50m_admin_0_countries.zip", 

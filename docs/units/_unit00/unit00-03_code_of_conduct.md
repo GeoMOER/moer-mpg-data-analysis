@@ -1,6 +1,6 @@
 ---
 title: Code of Conduct
-toc: true
+toc: false
 header:
   image: '/assets/images/title/curve2.png'
   caption: '[Environmental Informatics Marburg](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics){:target="_blank"}'
@@ -8,13 +8,13 @@ header:
 <!--more-->
 
 
-Please
+Please:
 
-* use your student mail account for sending and receiving university-related emails (Username@students.uni-marburg.de),
-* be on time to the sessions,
+* use your University of Marburg student email account for university-related messages (`username@students.uni-marburg.de`),
+* arrive on time for course sessions,
 * submit your assignments on time,
-* excuse yourself if you cannot make it to a session,
-* prefer addressing everyone by first names ("Duzen") rather than using formal titles ("Siezen").
+* let the instructors know if you cannot attend a session, and
+* address one another by first name and use the informal form of address ("du").
 
 
 

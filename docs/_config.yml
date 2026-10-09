@@ -226,7 +226,7 @@ defaults:
       path: ""
       type: unit10
     values:
-      category: "10 Analyse Time Series"
+      category: "10 Analyze Time Series"
       tags: "Unit 10"
       layout: single
       sidebar:

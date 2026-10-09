@@ -8,15 +8,13 @@ header:
 
 
 ## Assignments
-We distinguish between unmarked and marked deliverables ("Studien- und Prüfungsleistung"). 
-Both are required for passing the course but only the latter are marked.
-Students will need to deliver marked and unmarked assignments on a regular basis ("homework") within one week.
-Details on the assignments and whether they will be marked or not can be found in the respective units.
-The submissions generally encompass R or R markdown AND the compiled html files.
+We distinguish between unmarked and marked assignments ("Studien- und Prüfungsleistung"). You must submit both types to pass the course; only marked assignments contribute to your grade.
+Submit assignments regularly, before the next course session. Each unit explains its assignments and whether they are marked.
+Submit the requested source files together with the rendered HTML output. Follow the file-format instructions in each assignment.
 
 
-You are allowed and encouraged to use ChatGPT or similar AIs to solve the assignments.
-However, you need to present the solutions to your assignments in the weekly sessions to make sure you understand what you have done.
+You may use ChatGPT or similar AI tools to help solve the assignments, and you are encouraged to do so.
+Present your solutions in the weekly sessions to demonstrate that you understand your work.
 {: .notice--info}
 
 
@@ -25,8 +23,8 @@ However, you need to present the solutions to your assignments in the weekly ses
 
 | Assignment | Name and link                                                                                    | marked / unmarked  |
 |------------|--------------------------------------------------------------------------------------------------|--------------------|
-| 01         | [Hello R, Hello GitHub](/moer-mpg-data-analysis/unit01/unit01-11_assignment.html)                | unmarked           |
-| 02         | [Loop and Conquer](/moer-mpg-data-analysis/unit02/unit02-09_assignment.html)                     | unmarked           |
+| 01         | [Hello R, Hello GitHub](/moer-mpg-data-analysis/unit01/unit01-08_assignment.html)                | unmarked           |
+| 02         | [Loop and Conquer](/moer-mpg-data-analysis/unit02/unit02-06_assignment.html)                     | unmarked           |
 | 03         | [Read and Plot](/moer-mpg-data-analysis/unit03/unit03-07_assignment.html)                        | marked             |
 | 04         | [Cleaning Crops](/moer-mpg-data-analysis/unit04/unit04-07_assignment.html)                       | unmarked           |
 | 05         | [Recreation vs. Settlement](/moer-mpg-data-analysis/unit05/unit05-04_assignment.html)            | marked             |
@@ -38,24 +36,20 @@ However, you need to present the solutions to your assignments in the weekly ses
 | 11         | [MOHA](/moer-mpg-data-analysis/unit11/unit11-01_link-MOHA.html)                                  | marked             |
 
 
-The deadlines for uploading your assignment solutions -- both marked and unmarked -- to GitHub Classroom are 12:00 o'clock in the night between Monday and Tuesday before the next course session.
+Submit your solutions for regular marked and unmarked assignments to GitHub Classroom by 23:59 (German time) on the Monday before the next course session. The MOHA has a separate deadline; see the MOHA section below.
 {: .notice--info}
 
-Be aware that it will NOT be sufficient to start working on the assignments the day before the deadline.
-It will be necessary to solve a lot of disturbing and time-consuming problems in the programming world.
-So start early!!!
+Do not leave the assignments until the day before the deadline. Programming tasks can involve unexpected, time-consuming problems, so start early.
 {: .notice--warning}
 
 
 
 ## MOHA
-Additionally, there will be a marked assignment, which needs to be submitted directly at the end of the respective session in the second half of the semester -- the MOHA (Marburg Open Hackathon).
-Tasks for the MOHA will be selected from all units.
+The MOHA (Marburg Open Hackathon) is a marked assignment in the second half of the semester. Submit it by 12:00 (German time) on Tuesday, 26 January 2027; see the [MOHA page](/moer-mpg-data-analysis/unit11/unit11-01_link-MOHA.html) for details. Its tasks cover material from the units completed before the MOHA. Unit 12 is not included.
 
 
 ## Final grade
-Your final grade will consist of the marked assignments and the MOHA.
-You may use the following lines of code for calculating your final grade, for example:
+Your final point score is based on the three marked assignments and the MOHA. The calculation below includes the MOHA result twice in the average and rounds the result to a whole number.
 
 ```r
 assignment_1 <- 5
@@ -67,8 +61,9 @@ final_grade <- round(mean(c(assignment_1, assignment_2, assignment_3, rep(MOHA, 
 final_grade
 ```
 
-Note that you do not have to achieve five points in each assignment or the MOHA.
-However, passing the course requires at least five points in regard to your final grade and submitting the unmarked assignments in time.
+In this example, the mean is 7.2 and the final point score is 7.
+
+You do not need to achieve five points in every marked assignment or in the MOHA. To pass, your final point score must be at least five points, and you must submit all unmarked assignments on time.
 {: .notice--info}
 
 

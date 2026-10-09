@@ -77,5 +77,5 @@ To actually delete an element, it has to be set to `NULL`.
 my_list[[2]] <- NULL
 my_list
 ```
-For more information have a look at e.g. the respective [data type](http://www.statmethods.net/input/datatypes.html) site at Quick R. There you will also find an overview on how to get [information about an object](http://www.statmethods.net/input/contents.html). 
+For more information, see the accompanying Base R course on [data types](https://geomoer.github.io/moer-base-r/unit02/unit02-01_Intro.html) and [object types](https://geomoer.github.io/moer-base-r/unit03/unit03-01_Intro.html).
 Of course, looking into the package documentation or search the web is always a good idea, too.

@@ -18,9 +18,8 @@ At the end of this session you should
 
 
 ## More on this topic
-The examples in this unit are specifically related to the course assignments. 
-To get a much broader idea about visualizations, 
-please refer to our online book on [Creating Publication Quality Graphics in R](https://ilias.uni-marburg.de/data/UNIMR/lm_data/lm_2092231/index.html){:target="_blank"} by our former group members Tim Appelhans and Florian Detsch which is also available at Marburg Open Educational Resources.
+The examples in this unit are specifically related to the course assignments.
+For a broader introduction, see [Creating publication quality graphs in R](https://rstudio-pubs-static.s3.amazonaws.com/9575_8a5dc0315e7d48ea94e0fd2546727041.html){:target="_blank"}, a tutorial developed for a University of Marburg workshop.
 
 
 ## Comments?

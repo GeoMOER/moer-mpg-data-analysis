@@ -5,22 +5,22 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-Go through a brute force introduction into R, R Markdown, the RStudio IDE, version management with Git and GitHub's classroom functionality to get ready for solving the upcoming assignment problems and submitting your solutions.
+This unit introduces R, R Markdown, RStudio, version control with Git, and GitHub's classroom functionality. You will use these tools to solve and submit course assignments.
 
 <!--more-->
 
 ## Learning objectives
 At the end of this unit you should be able to
-* tell the difference between an R and an R markdown script,
-* create an R and R markdown script and run and compile it respectively,
+* distinguish an R script from an R Markdown document,
+* create and run an R script, and knit an R Markdown document to HTML,
 * sign in to the class assignment of this course at GitHub and clone and push your course repository between the GitHub server and your local computer,
-* put an R markdown (or any other) file into your Git repository, commit it locally and push it to the server.
+* add an R Markdown document or another file to your Git repository, commit it locally, and push your changes to GitHub.
 
 ## Why data analysis, why R
 
 “Most scientific disciplines are finding the data deluge to be extremely challenging, and tremendous opportunities can be realized if we can better organize and access the data.” [(Science 331, 2011)](http://www.sciencemag.org/content/331/6018/692.full){:target="_blank"}
 
-Examples from a very large and fast growing cosmos: [R-bloggers](https://www.r-bloggers.com/){:target="_blank"}.
+Explore examples from the growing R community on [R-bloggers](https://www.r-bloggers.com/){:target="_blank"}.
 
 
 ## Comments?

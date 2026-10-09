@@ -6,62 +6,43 @@ header:
   caption: '[Environmental Informatics Marburg](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics){:target="_blank"}'
 ---
 
-This course is intended as a blended learning module, although the provided introductions, explanations and examples might be useful for self-study only, too.
+This course uses a blended-learning format. The introductions, explanations, and examples can also support independent study.
 <!--more-->
-
-<!--
-Our first course session will be virtual. Details on the virtual classroom and how to get there are provided on the front page and were sent by email to all participants.
-Subsequent sessions will be in a hybrid format, meaning that some of the students may attend the sessions in person at the [Department of Environmental Informatics](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics){:target="_blank"} in Marburg.
--->
-
 
 ## HTML learning environment
 
-Your primary learning environment is this public homepage, which was created on GitHub.
-Here you find all learning materials, assignment tasks, and help.
-The structure is linear, so just work your way through it. 
-Of course you can also jump freely between units, but this is not recommended for beginners.
+This public course website is your main learning environment. It contains the learning materials, assignment tasks, and help.
+Work through the units in order, especially if you are new to R. You can move between units freely, but following the sequence is recommended for beginners.
 
-Please also note that the HTML learning environment has a FAQ page for recurring questions and a comment functionality on the first page of each unit.
+The site also has a [FAQ page](/moer-mpg-data-analysis/unit00/unit00-05_faq.html) and a comment area on the first page of each teaching unit.
 
 
 ## Flexible learning with deadlines
 
-You will use the learning material provided in the HTML learning environment for solving the given assignment tasks.
-The synchronous sessions will be used for discussing the assignments.
+Use the course materials to complete the assignments. Synchronous sessions are used to discuss them.
 
-Note that you are flexible in solving your assignment tasks using the material provided in the HTML learning environment (and beyond), but the deadlines for submitting your solutions must be met.
-For details see the [Deliverables](/moer-mpg-data-analysis/unit00/unit00-02_deliverables.html) section.
+You may use the course materials and other resources to solve the assignments, but you must meet the submission deadlines. See [Deliverables](/moer-mpg-data-analysis/unit00/unit00-02_deliverables.html) for details.
 {: .notice--info}
 
-<!--
-## Virtual meeting room
-
-We will use [Big Blue Button](https://www.uni-marburg.de/en/hrz/services/web-conferences/web-conferencing-with-bigbluebutton){:target="_blank"} as main virtual classroom for our synchronous (hybrid) sessions.
-The link to our classroom can be found in Ilias.
--->
 
 
 ## Hybrid setting
 
-The course will take place in a synchronous hybrid setting on a weekly basis. 
-This means that students can attend the course in the seminar room in person (room 00A19) or online using the link provided in Ilias.
+The course meets weekly in a synchronous hybrid format. You can attend in person in room **F 14 &#124; 00A19** or online using the meeting link sent by email and provided in ILIAS.
 
 
-## Ilias
+## ILIAS
 
-Ilias is the course space offered by the University of Marburg. 
-We will use Ilias mainly for the administration of the course and for providing small static documents.
-The link to the Ilias space for this course can be found [here](https://ilias.uni-marburg.de/goto.php/crs/4407826){:target="_blank"}.
-Note that you have to log in with your student account. 
-In Ilias, you can also find the links to the online meeting room for the weekly session and for the tutorium.
+ILIAS is the University of Marburg's course platform. We use it to manage the course and share documents.
+Open the [ILIAS course space](https://ilias.uni-marburg.de/goto.php/crs/4717442){:target="_blank"} and sign in with your student account.
+The online meeting links for the weekly sessions and tutor sessions are available in ILIAS.
 
 
 
 ## GitHub Classroom
 
-You will use GitHub Classroom for uploading your assignments and for getting familiar with git.
-The link for joining our GitHub Classroom can be found in Ilias.
+Use GitHub Classroom to submit your assignments and learn Git.
+The link to join the classroom is available in ILIAS.
 Please add your full name or your student account name to your GitHub profile.
 This makes it easier for the course instructors to match the uploaded assignments to the students.
 

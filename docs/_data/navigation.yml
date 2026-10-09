@@ -15,7 +15,7 @@ main:
     
     
 docs:
-  - title: Ways out
+  - title: More resources
     children:
       - title: "Units"
         url: /units.html
