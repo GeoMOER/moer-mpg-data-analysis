@@ -17,12 +17,11 @@ This course gives 6 (ECTS) credit points, making up a total of 180 hours of work
 
 ## Git and GitHub
 
-### Where can I find the URL of my personal GitHub Classroom repository?
-Follow the GitHub Classroom link provided by the instructor. Your repository URL will look similar to this:
-https://github.com/GeoMOER-Students-Space/mpg-data-analysis-202x-YOURGITHUBUSERNAME.git
+### Where can I find the URL of my personal course repository?
+After accepting the Classroom 50 learning log assignment linked in ILIAS, open **My submission** in Classroom 50. Follow the link to your repository on GitHub and copy its URL from the **Code** menu. Use this repository for the entire course.
 
 ### How can I check whether my files were uploaded to the GitHub repository?
-Open your GitHub Classroom repository in a web browser and check that the files are listed there.
+Open your course repository on GitHub in a web browser and check that the files are listed there.
 
 ### How can I check whether the HTML files in my repository have the right content?
 Download a ZIP archive of your repository, extract it, and open the HTML files in a web browser.

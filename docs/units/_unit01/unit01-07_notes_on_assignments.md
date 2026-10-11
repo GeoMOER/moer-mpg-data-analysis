@@ -8,16 +8,16 @@ header:
 ---
 
 ## A note on individual learning log assignments with GitHub
-Within this course, you will individually submit your personal solutions for the course assignments to your personal GitHub-hosted learning log, i.e. your personal classroom repository. Don't get confused about "your personal repository". Once you have a GitHub account, you can create as many repositories as you like in your account, but for assignments within our courses always use your respective classroom repository.
+Within this course, you will submit your individual solutions to a personal GitHub-hosted learning log created through Classroom 50. You will use this one course repository for all assignments, even if you have other GitHub repositories.
 
-The classroom repository will be created automatically by following a link to the respective classroom assignment, which you can find in Ilias. 
-Your classroom repository will be hosted as part of GeoMOER, our learning log space at GitHub for Marburg Open Educational Resources.
+Your instructors will add your GitHub account to the course roster. Use the classroom onboarding link in ILIAS to accept the GitHub organization invitation. Then follow the learning log assignment link in ILIAS to create your course repository. Classroom 50 provides the repository link under **My submission**.
+Your course repository will be hosted in the teaching organization on GitHub.
 Submissions generally include the R script or R Markdown source AND the generated HTML files.
 For details see the [Deliverables](/moer-mpg-data-analysis/unit00/unit00-02_deliverables.html) section.
 
 
 
-To start with, get yourself a GitHub account if you do not already have one and create your personal learning log using the link provided by the course lecturers.
+To start with, get yourself a GitHub account if you do not already have one and create your personal learning log using the links provided by the course lecturers in ILIAS.
 Be aware that once the learning log repository is created, you will stick to this until the end of the course.
 Please also add your full name or your student account name to your GitHub profile.
 {: .notice--info}
@@ -41,7 +41,7 @@ Work through the [R and RStudio introduction](https://geomoer.github.io/moer-bas
 3. Choose **Git**.
 {% include figure image_path="/assets/images/units/u01/Step3.png" alt="RStudio version control wizard with Git selected." caption="" %}
 
-4. Copy your personal repository URL from GitHub-Classroom and insert it into the project wizard in RStudio.
+4. Open your repository on GitHub from **My submission** in Classroom 50. Copy its URL from the **Code** menu and insert it into the project wizard in RStudio.
 {% include figure image_path="/assets/images/units/u01/Step4.png" alt="RStudio Git project wizard with fields for the repository URL and local project directory." caption="" %}
 
 5. If prompted, authenticate using the method configured for your repository connection. See [GitHub's authentication documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github) for guidance.

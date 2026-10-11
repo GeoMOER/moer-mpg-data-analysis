@@ -33,8 +33,8 @@ Please visualize
 (iii) the adjusted R squared as a function of increasing knots (i.e. knots should be on the x axis). 
 Since the root mean square error is much larger than the R squared values, normalize the root mean square errors to their maximum for the visualization.
 
-Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom.
-Make sure that the created html file is also part of your GitHub classroom repository.
+Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
+Make sure that the created html file is also part of your course repository on GitHub.
 
 
 

@@ -11,7 +11,7 @@ Follow the link to start the Marburg Open Hackathon (MOHA)
 (available from 9:30 to 12:00 on Tuesday, 26 January 2027)
 
 Save your solutions in your course repository in a folder called MOHA with subfolders for each exercise block, 
-update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom. 
+update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
 **Make sure that the created html files are also part of your GitHub repository**. 
 Only your last published commit before the deadline passes will be considered.
 {: .notice--warning}

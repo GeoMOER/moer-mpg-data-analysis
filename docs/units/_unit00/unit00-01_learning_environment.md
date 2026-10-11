@@ -39,10 +39,10 @@ The online meeting links for the weekly sessions and tutor sessions are availabl
 
 
 
-## GitHub Classroom
+## Classroom 50 and GitHub
 
-Use GitHub Classroom to submit your assignments and learn Git.
-The link to join the classroom is available in ILIAS.
+Use Classroom 50 to create your personal GitHub course repository. You will use the same repository for your assignments throughout the course and practice Git as you work.
+Your instructors will provide the classroom onboarding link and the learning log assignment link in ILIAS. Accept the invitation to the GitHub organization before opening the assignment link.
 Please add your full name or your student account name to your GitHub profile.
 This makes it easier for the course instructors to match the uploaded assignments to the students.
 

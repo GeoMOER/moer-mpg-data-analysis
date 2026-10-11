@@ -29,7 +29,7 @@ Create an R Markdown (`.Rmd`) document with HTML output for the following task.
 1. Show the entire content of `df`.
 1. Show just the entry of the cell in the second row and first column.
 
-Save your `.Rmd` file in your course repository and knit it to HTML. Commit both the `.Rmd` source and the generated HTML file, then push your changes to the GitHub classroom. Check that both files are present in your GitHub classroom repository.
+Save your `.Rmd` file in your course repository and knit it to HTML. Commit both the `.Rmd` source and the generated HTML file, then push your changes to GitHub. Check that both files are present in your Classroom 50 course repository.
 {: .notice--info}
 
 Completing the R code is only part of the assignment. You must also knit the document, commit the source and HTML files, and push them to your course repository on GitHub.

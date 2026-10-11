@@ -5,7 +5,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-This unit introduces R, R Markdown, RStudio, version control with Git, and GitHub's classroom functionality. You will use these tools to solve and submit course assignments.
+This unit introduces R, R Markdown, RStudio, version control with Git, and Classroom 50 for GitHub assignments. You will use these tools to solve and submit course assignments.
 
 <!--more-->
 
@@ -13,7 +13,7 @@ This unit introduces R, R Markdown, RStudio, version control with Git, and GitHu
 At the end of this unit you should be able to
 * distinguish an R script from an R Markdown document,
 * create and run an R script, and knit an R Markdown document to HTML,
-* sign in to the class assignment of this course at GitHub and clone and push your course repository between the GitHub server and your local computer,
+* accept the Classroom 50 learning log assignment, then clone and push your course repository between GitHub and your local computer,
 * add an R Markdown document or another file to your Git repository, commit it locally, and push your changes to GitHub.
 
 ## Why data analysis, why R

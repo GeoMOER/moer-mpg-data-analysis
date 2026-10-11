@@ -37,8 +37,8 @@ Please extend your Rmd file in such a manner that you can evaluate to which degr
 For this task, divide the NAO index provided above into "positive" and "negative" (i.e. use it as a factor, not as a numeric variable) and predict the temperature dynamics in a simple multiple linear model, which uses the NAO index classes as a factor and the first Fourier frequency (i.e. one sin and one cos) as independent variables. 
 Finally, develop a strategy to cross-check the significance indicated by the linear model.
 
-Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom.
-Make sure that the created html file is also part of your GitHub classroom repository.
+Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
+Make sure that the created html file is also part of your course repository on GitHub.
 
 
 

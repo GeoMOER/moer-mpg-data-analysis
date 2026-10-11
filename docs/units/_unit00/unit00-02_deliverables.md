@@ -36,7 +36,7 @@ Present your solutions in the weekly sessions to demonstrate that you understand
 | 11         | [MOHA](/moer-mpg-data-analysis/unit11/unit11-01_link-MOHA.html)                                  | marked             |
 
 
-Submit your solutions for regular marked and unmarked assignments to GitHub Classroom by 23:59 (German time) on the Monday before the next course session. The MOHA has a separate deadline; see the MOHA section below.
+Submit your solutions for regular marked and unmarked assignments by committing the requested source files and rendered HTML to your Classroom 50 course repository and pushing them to GitHub by 23:59 (German time) on the Monday before the next course session. Keep using the same repository throughout the course. The MOHA has a separate deadline; see the MOHA section below.
 {: .notice--info}
 
 Do not leave the assignments until the day before the deadline. Programming tasks can involve unexpected, time-consuming problems, so start early.

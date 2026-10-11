@@ -30,8 +30,8 @@ Include a plot in the end that provides information on the distribution of the r
 
 Please write exactly one sentence as a summary of the reliability of the model.
 
-Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom.
-Make sure that the created html file is also part of your GitHub classroom repository.
+Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
+Make sure that the created html file is also part of your course repository on GitHub.
 
 
 

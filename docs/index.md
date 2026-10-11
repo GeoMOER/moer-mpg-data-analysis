@@ -47,7 +47,7 @@ The course consists of 13 sessions, running from 13 October 2026 to 9 February 2
 | Session | Date | Topic | Content |
 |---------|------|-------|---------|
 ||| **Data basics** |
-| [01](/moer-mpg-data-analysis/unit01/unit01-01_first_things_first.html) | 13.10.2026 | First things first           | Expectations; data and information; R, RStudio, R Markdown, GitHub, and GitHub Classroom |
+| [01](/moer-mpg-data-analysis/unit01/unit01-01_first_things_first.html) | 13.10.2026 | First things first           | Expectations; data and information; R, RStudio, R Markdown, GitHub, and Classroom 50 |
 | [02](/moer-mpg-data-analysis/unit02/unit02-01_first_things_second.html) | 20.10.2026 | First things second          | Working environment, datasets, data types and structures, logical operators, and control structures |
 ||| **Data exploration** |
 | [03](/moer-mpg-data-analysis/unit03/unit03-01_look_at_your_data.html) | 27.10.2026 | Look at your data            | Reading and writing tabular data, visual data exploration, and descriptive statistics |

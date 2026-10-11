@@ -50,8 +50,8 @@ Please print the parameters (i.e. p, d, q...) as well as the AIC and RMSE of you
 Please also visualize the prediction of your model and the automatically retrieved one in a simple plot (one for each model) and add the actually observed values to the plot.
 Write a one-sentence statement about the differences.
 
-Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to the GitHub classroom.
-Make sure that the created html file is also part of your GitHub classroom repository.
+Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
+Make sure that the created html file is also part of your course repository on GitHub.
 
 You can of course use 6 lapply loops for iterating over the parameters or you can have a look at the expand.grid function which realizes any combination of the supplied parameters in a single data frame which can easily be used for this task.
 {: .notice--info}
