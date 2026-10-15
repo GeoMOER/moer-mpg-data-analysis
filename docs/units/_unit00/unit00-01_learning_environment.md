@@ -41,10 +41,18 @@ The online meeting links for the weekly sessions and tutor sessions are availabl
 
 ## Classroom 50 and GitHub
 
-Use Classroom 50 to create your personal GitHub course repository. You will use the same repository for your assignments throughout the course and practice Git as you work.
-Your instructors will provide the classroom onboarding link and the learning log assignment link in ILIAS. Accept the invitation to the GitHub organization before opening the assignment link.
-Please add your full name or your student account name to your GitHub profile.
-This makes it easier for the course instructors to match the uploaded assignments to the students.
+Use Classroom 50 to create one personal GitHub repository for all your course assignments. You will practice Git as you work and keep using the same repository throughout the course.
+
+Your instructors must first add you to the course roster. Sign in to Classroom 50 with the GitHub account registered for the course. The invitation links do not add you to the roster automatically. If you see **Not a member yet**, contact your instructors with your GitHub username.
+
+Find both Classroom 50 invitation links in the [ILIAS course space](https://ilias.uni-marburg.de/goto.php/crs/4717442). Use them in this order:
+
+1. Open the classroom onboarding link. If you are not yet a member of **GeoMOER-Students-Space**, accept the invitation to join the GitHub organization.
+2. Open the course repository assignment link to create your personal repository. Complete step 1 before step 2.
+
+After step 2, open **My submission** in Classroom 50 and follow the link to your repository on GitHub. Copy its URL from the **Code** menu when you [connect RStudio with GitHub](/moer-mpg-data-analysis/unit01/unit01-07_notes_on_assignments.html#how-to-connect-rstudio-with-github). You do not need to accept a new Classroom 50 assignment each week.
+
+Please add your full name or your student account name to your GitHub profile. This makes it easier for the course instructors to match your assignments to you.
 
 
 

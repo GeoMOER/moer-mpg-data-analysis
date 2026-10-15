@@ -18,7 +18,7 @@ This course gives 6 (ECTS) credit points, making up a total of 180 hours of work
 ## Git and GitHub
 
 ### Where can I find the URL of my personal course repository?
-After accepting the Classroom 50 learning log assignment linked in ILIAS, open **My submission** in Classroom 50. Follow the link to your repository on GitHub and copy its URL from the **Code** menu. Use this repository for the entire course.
+After completing the [Classroom 50 setup steps](/moer-mpg-data-analysis/unit00/unit00-01_learning_environment.html#classroom-50-and-github), open **My submission** in Classroom 50. Follow the link to your repository on GitHub and copy its URL from the **Code** menu. Use this repository for the entire course.
 
 ### How can I check whether my files were uploaded to the GitHub repository?
 Open your course repository on GitHub in a web browser and check that the files are listed there.

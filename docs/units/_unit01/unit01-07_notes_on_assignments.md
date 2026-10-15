@@ -7,18 +7,18 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-## A note on individual learning log assignments with GitHub
-Within this course, you will submit your individual solutions to a personal GitHub-hosted learning log created through Classroom 50. You will use this one course repository for all assignments, even if you have other GitHub repositories.
+## Your course repository on GitHub
+Within this course, you will submit your individual solutions to one personal GitHub-hosted learning log created through Classroom 50. You will use this course repository for all assignments, even if you have other GitHub repositories.
 
-Your instructors will add your GitHub account to the course roster. Use the classroom onboarding link in ILIAS to accept the GitHub organization invitation. Then follow the learning log assignment link in ILIAS to create your course repository. Classroom 50 provides the repository link under **My submission**.
-Your course repository will be hosted in the teaching organization on GitHub.
+Find both invitation links in ILIAS and follow the two [Classroom 50 setup steps](/moer-mpg-data-analysis/unit00/unit00-01_learning_environment.html#classroom-50-and-github). Your instructors must add you to the course roster before the links will let you join. Accept the invitation to **GeoMOER-Students-Space**, then accept the course repository assignment. Classroom 50 provides the repository link under **My submission**.
+Your course repository will be hosted in GeoMOER-Students-Space on GitHub.
 Submissions generally include the R script or R Markdown source AND the generated HTML files.
 For details see the [Deliverables](/moer-mpg-data-analysis/unit00/unit00-02_deliverables.html) section.
 
 
 
-To start with, get yourself a GitHub account if you do not already have one and create your personal learning log using the links provided by the course lecturers in ILIAS.
-Be aware that once the learning log repository is created, you will stick to this until the end of the course.
+If you do not yet have a GitHub account, create one before following the setup steps above.
+Keep the same learning log repository until the end of the course.
 Please also add your full name or your student account name to your GitHub profile.
 {: .notice--info}
 

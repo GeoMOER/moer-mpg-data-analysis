@@ -13,7 +13,7 @@ This unit introduces R, R Markdown, RStudio, version control with Git, and Class
 At the end of this unit you should be able to
 * distinguish an R script from an R Markdown document,
 * create and run an R script, and knit an R Markdown document to HTML,
-* accept the Classroom 50 learning log assignment, then clone and push your course repository between GitHub and your local computer,
+* complete the [Classroom 50 setup steps](/moer-mpg-data-analysis/unit00/unit00-01_learning_environment.html#classroom-50-and-github), then clone your course repository and push your work to GitHub,
 * add an R Markdown document or another file to your Git repository, commit it locally, and push your changes to GitHub.
 
 ## Why data analysis, why R

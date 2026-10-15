@@ -11,6 +11,7 @@ header:
 We distinguish between unmarked and marked assignments ("Studien- und Prüfungsleistung"). You must submit both types to pass the course; only marked assignments contribute to your grade.
 Submit assignments regularly, before the next course session. Each unit explains its assignments and whether they are marked.
 Submit the requested source files together with the rendered HTML output. Follow the file-format instructions in each assignment.
+If you have not yet created your course repository, follow the [Classroom 50 setup steps](/moer-mpg-data-analysis/unit00/unit00-01_learning_environment.html#classroom-50-and-github) first.
 
 
 You may use ChatGPT or similar AI tools to help solve the assignments, and you are encouraged to do so.

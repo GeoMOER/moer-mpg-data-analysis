@@ -7,7 +7,9 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-This worksheet introduces you to R, R scripts, and R Markdown. You will run R commands in code chunks, combine code and explanations in one document, and use Git and GitHub to submit your work to your class repository.
+This worksheet introduces you to R, R scripts, and R Markdown. You will run R commands in code chunks, combine code and explanations in one document, and use Git and GitHub to submit your work to your course repository.
+
+Before submitting, follow the [Classroom 50 setup steps](/moer-mpg-data-analysis/unit00/unit00-01_learning_environment.html#classroom-50-and-github) to create your personal course repository.
 
 ## Things you need for this worksheet
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.

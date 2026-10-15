@@ -73,6 +73,8 @@ The course consists of 13 sessions, running from 13 October 2026 to 9 February 2
 
 The graded course certificate is based on an individual portfolio in your personal GitHub repository. Each assignment describes the portfolio item and indicates whether it will be graded.
 
+To create your repository, follow the [Classroom 50 setup steps](/moer-mpg-data-analysis/unit00/unit00-01_learning_environment.html#classroom-50-and-github). Use the same repository for all assignments.
+
 
 # Preparation and prerequisites
 
