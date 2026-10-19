@@ -10,9 +10,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
 ```
-As for loops, while loops are repeating structures which enable the execution of 
-certain code blocks for multiple times. The difference is that for while loops 
-the number of necessary repititions is not known at the starting time of the loop.
+Like for loops, while loops repeat a block of code. A while loop checks its
+condition before each iteration and is useful when the number of repetitions
+is not known in advance.
 
 
 While loops are executed until a termination condition is reached. In the 
@@ -44,8 +44,8 @@ while(a <= b){
   
 }
 ```
-Variable `c` has to be reseted to its initial value every time the inner loop
+Variable `c` has to be reset to its initial value every time the inner loop
 is completed. Otherwise it would not start a second time since the termination
-condition is already reached. Of course this behaviour can also be usefull for
+condition is already reached. Of course this behavior can also be useful for
 a variety of problems.
 

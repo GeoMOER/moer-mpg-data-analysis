@@ -7,8 +7,7 @@ output:
     keep_md: yes
 ---
 
-If-then-else statements are the controlling structures in each program. The most
-simplest form is:
+If-then-else statements are control structures in R. The simplest form is:
 ```{r}
 a <- 5.0
 b <- 10.0
@@ -28,9 +27,9 @@ if (a < b/2) {
   print("a equals b")
 } 
 ```
-In such a structure, the first if-statment is evaluated. If it is true, all 
-following else-if- (or else-)statements are skiped and the execution continues
-below the decission structure.
+In such a structure, the first `if` condition is evaluated. If it is true, all
+following `else if` (or `else`) branches are skipped and execution continues
+below the decision structure.
 
 The above example would not print anything if a is larger than b. For this case,
 other else-if-statements could be used but if no differentiation should be made
