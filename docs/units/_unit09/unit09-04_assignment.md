@@ -14,7 +14,7 @@ After completing this worksheet you should have gained some first experience wit
 ## Things you need for this worksheet
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
-  * [Git](https://git-scm.com/downloads){:target="_blank"} environment for your operating system. For Windows users with little experience on the command line we recommend [GitHub Desktop](https://desktop.github.com/){:target="_blank"}.
+  * [Git](https://git-scm.com/downloads){:target="_blank"} installed and available to RStudio. [GitHub Desktop](https://desktop.github.com/){:target="_blank"} is an optional graphical client.
   * [German Weather Service (DWD) data](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"} for the station Cölbe.
 
 
@@ -22,8 +22,7 @@ After completing this worksheet you should have gained some first experience wit
 The required station data can be downloaded directly from the German Weather Service (DWD) via its [Server](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/){:target="_blank"}.
 In addition to Cölbe, you will also find all stations available for Germany.
 
-The station recordings are divided by variable and by history (i.e. generally a time frame near the end of last year)
-and recent (i.e. generally a time frame starting from the end of the historic time frame and ending quite recently).
+The station recordings are divided by variable into historical and recent records. Historical records generally extend to near the end of the previous year; recent records cover the period since then.
 
 From the data provided, we will require the dataset starting from July 2006.
 
@@ -42,7 +41,7 @@ For the model selection, any ARIMA parameter combination of p, d, q and the corr
 * qs between 0 and 2.
 
 
-Please write an Rmd file with html output in which the performance for predicting monthly precipitation of an ARIMA model with all of the possible parameter combinations above is tested.
+Please write an R Markdown (.Rmd) document with HTML output in which the performance for predicting monthly precipitation of an ARIMA model with all of the possible parameter combinations above is tested.
 
 The performance should be tested using the RMSE between predicted and observed monthly precipitation for the last two full years of the dataset.
 Please print the parameters (i.e. p, d, q...) as well as the AIC and RMSE of your optimal model and compare them with the corresponding values retrieved using the ``forecast::auto.arima`` function
@@ -50,13 +49,13 @@ Please print the parameters (i.e. p, d, q...) as well as the AIC and RMSE of you
 Please also visualize the prediction of your model and the automatically retrieved one in a simple plot (one for each model) and add the actually observed values to the plot.
 Write a one-sentence statement about the differences.
 
-Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
-Make sure that the created html file is also part of your course repository on GitHub.
+Save your R Markdown (.Rmd) document in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
+Make sure that the created HTML file is also part of your course repository on GitHub.
 
 You can of course use 6 lapply loops for iterating over the parameters or you can have a look at the expand.grid function which realizes any combination of the supplied parameters in a single data frame which can easily be used for this task.
 {: .notice--info}
 
-Have a look at the respective meta information for details on the format of the German Weather Service data.
+Have a look at the respective metadata for details on the format of the German Weather Service data.
 {: .notice--info}
 
 

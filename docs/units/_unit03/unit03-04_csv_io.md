@@ -24,22 +24,22 @@ df <- read.table("AI001_gebiet_flaeche.txt",
 
 As you can see, the `read.table` function gets several arguments (which is common for many functions). The first one gives the filename including the path to the file.
 * `skip = 4` tells the function to skip the first four lines (which are plain text lines in this case and not tabulated values)
-* `header = TRUE` tells the function that the csv file has a header line which is used by `read.table` to name the columns of the returning data frame
+* `header = TRUE` tells the function that the csv file has a header line which is used by `read.table` to name the columns of the returned data frame
 * `sep = ";"` defines the separator of the individual columns in the data frame
 * `dec = ","` defines the decimal separator used in the dataset
 
 A note on the sequence of the arguments: the sequence of the arguments does
 not matter as long as you name them explicitly. If you do not use the argument
-identifier as it is the case for the first argument, the filename, in the example
+identifier as is the case for the first argument, the filename, in the example
 then the sequence matters. To get information on the default sequence and of 
 course the general application of each R function, type `?<function name>`
 (e.g. `?read.table`) in an R console.
 
 After you execute the `read.table` function above, the content of the csv file is
-stored into a two dimensional data frame called `df` in the example above. 
+stored into a two-dimensional data frame called `df` in the example above.
 
-A quick way to check if everything is fine is to display the first few lines of
-the data file using the `head` function (without the 2, it will print 6 lines as a standard setting).
+A quick way to check if everything is fine is to display the first few rows of
+the data frame using the `head` function (without the 2, it prints six rows by default).
 
 ```r
 head(df, 2)
@@ -71,7 +71,7 @@ write.table(df, file = "new.csv", sep = ",", dec = ".")
 ```
 As you can see, you can define any column or decimal separator.
 
-For more information have a look at e.g. the respective [data importing](https://www.datacamp.com/doc/r/importingdata) <!--(http://www.statmethods.net/input/importingdata.html) broken link? --> and [data exporting](https://www.datacamp.com/doc/r/exportingdata) <!--(http://www.statmethods.net/input/exportingdata.html)broken link? --> site at Quick R/DataCamp, have a look into the package documentation or search the web.
+For more information have a look at e.g. the respective [data importing](https://www.datacamp.com/doc/r/importingdata) <!--(http://www.statmethods.net/input/importingdata.html) broken link? --> and [data exporting](https://www.datacamp.com/doc/r/exportingdata) <!--(http://www.statmethods.net/input/exportingdata.html)broken link? --> pages at Quick-R/DataCamp, have a look into the package documentation or search the web.
 
 
 ## Alternative data I/O using RDS

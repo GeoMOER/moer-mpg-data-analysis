@@ -13,7 +13,7 @@ knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-
 source("C:/Users/tnauss/permanent/edu/mpg-data-analysis/moer-mpg-data-analysis/staging/examples/000_set_environment.R")
 ```
 
-## Readading data from csv files
+## Reading data from csv files
 
 Reading csv files is realized using the `read.table` function from R's utils
 library. The function will return a data frame which contains the information of
@@ -24,21 +24,21 @@ df <- read.table(paste0(envrmt$path_data_csv, "/AI001_gebiet_flaeche.csv"),
                  skip = 4, header = TRUE, sep = ";", dec = ",")
 ```
 
-As you can see, the `read.table` function gets several arguments (which is common for many functions). The first one gives the filename inclducing the path to the file. 
+As you can see, the `read.table` function gets several arguments (which is common for many functions). The first one gives the filename including the path to the file.
 * `skip = 4` tells the function to skip the first four lines (which are plain text lines in this case and not tabulated values)
-* `header = TRUE` tells the function, that the csv file has a header line which is used by `read.table` to name the columns of the returning data frame
+* `header = TRUE` tells the function, that the csv file has a header line which is used by `read.table` to name the columns of the returned data frame
 * `sep = ";"` defines the separator of the individual columns in the data frame
 * `dec = ","` defines the decimal separator used in the dataset
 
 A note on the sequence of the arguments: the sequence of the arguments does
-not matter as long as you name them explicetly. If you do not use the argument
-identfier as it is the case for the first argument, the filename, in the example 
+not matter as long as you name them explicitly. If you do not use the argument
+identifier as is the case for the first argument, the filename, in the example
 then the sequence matters. To get information on the default sequence and of 
 course the general application of the each R function, type `?<function name>`
 (e.g. `?read.table`) in an R console.
 
 After you executing the `read.table` function above, the content of the csv file is
-stored into a two dimensional data frame called `df` in the example above. 
+stored into a two-dimensional data frame called `df` in the example above.
 
 A quick way to check if everything is fine is to display the first few lines of
 the data file using the `head` function (without the 2, it will print 5 lines as a standard setting).

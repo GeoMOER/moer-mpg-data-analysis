@@ -12,11 +12,11 @@ Although we already had contact with some temporal datasets, we did not have a c
 Time series datasets often exhibit some kind of autocorrelation, which is a no-go for the models we have used so far.
 The first more formal contact with time series will therefore highlight these characteristics. The structure of this example follows Zuur et al. 2007 to a certain degree.
 
-To exemplarily illustrate a time series analysis, air temperature records of the weather station in Cölbe (which is the one closest to Marburg) will be used.
+To illustrate a time series analysis, air temperature records of the weather station in Cölbe (which is the one closest to Marburg) will be used.
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}.
 
 ## Download the data
-You can use the [rdwd](https://cran.r-project.org/web/packages/rdwd/index.html) package for downloading the data or (if the package does not work...) download the data from the above linked DWD server.
+You can use the [rdwd](https://cran.r-project.org/web/packages/rdwd/index.html) package for downloading the data or (if the package does not work...) download the data from the DWD server linked above.
 
 ```r
 library("rdwd")
@@ -25,7 +25,7 @@ rdwd::dataDWD(url, dir = getwd(), read = FALSE)
 ```
 
 ## A first look at the time series
-The time series shows hourly recordings of 2m air temperature between 1 July 2006 and 31 December 2022.
+The time series shows hourly recordings of air temperature measured at 2 m between 1 July 2006 and 31 December 2022.
 
 ```r
 # adapt path to where your file actually is and filename to the downloaded time span
@@ -145,7 +145,7 @@ Understanding auto-correlation is rather easy.
 It is the Pearson correlation we already know, but not computed based on two different datasets/variables. It is computed using the same time-series dataset with a temporal lag.
 For example, the auto-correlation for a lag of 1 would compare each original value observed at time t with the observed value at time t+1.
 A lag of 10 indicates that observation at time t is correlated with that at t+10 and so on.
-Please note that the number of available data pairs decreases (e.g. if the dataset has 30 observations, one has 29 pairs for lag 1 but only 1 pair for lag 30).
+Please note that the number of available data pairs decreases (e.g. if the dataset has 30 observations, one has 29 pairs for lag 1 but only 1 pair for lag 29).
 Therefore, it does not make sense to try any possible lag, but restrict it to a few lags expected to be highly correlated (e.g. lag 12 for the monthly temperatures above).
 
 While one can have a look at the actual correlation values, a visualization gives a better overview:
@@ -244,7 +244,7 @@ coplot(TT_TU ~ RF_TU | AGG_M, data = dwd)
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-12-1.png)<!-- -->
 
-Auto-correlation analysis gives also a hint on _stationarity_. Stationarity is essential if one e.g. wants to predict future time series values based on auto-regressive or moving average models.
+Auto-correlation analysis also provides an indication of _stationarity_. Stationarity is essential if one e.g. wants to predict future time series values based on auto-regressive or moving average models.
 Stationarity means that the time series has no trend and has similar variance over the entire time span.
-This is clearly not the case in the temperature data because of the strong seasonality regardless of any long term trend.
+This is clearly not the case in the temperature data because of the strong seasonality regardless of any long-term trend.
 

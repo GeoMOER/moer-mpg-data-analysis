@@ -14,20 +14,20 @@ After completing this worksheet you should be able to notice some common data se
 ## Things you need for this worksheet
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
-  * [Git](https://git-scm.com/downloads){:target="_blank"} environment for your operating system. For Windows users with little experience on the command line we recommend [GitHub Desktop](https://desktop.github.com/){:target="_blank"}.
-  * Data on crop yield on an administrative community level provided by the course instructors.
+  * [Git](https://git-scm.com/downloads){:target="_blank"} installed and available to RStudio. [GitHub Desktop](https://desktop.github.com/){:target="_blank"} is an optional graphical client.
+  * Data on crop yield at the municipal level provided by the course instructors.
 
 ## Cleaning crop data
 The above data set provides information on crop yield. 
 
 Please have a look at the data and create a list of tasks you have to cope with in order to clean the data.
 
-Please write an R markdown script which cleans the data set according to your list. The markdown script should roughly describe what you are doing and show the major code structure in addition to some actual data wherever appropriate. After cleaning, all your id variables should be in the left, your data variables in the right columns of the data frame. 
+Please write an R Markdown document which cleans the data set according to your list. The R Markdown document should roughly describe what you are doing and show the major code structure in addition to some actual data wherever appropriate. After cleaning, put identifier variables in the leftmost columns and data variables in the remaining columns of the data frame.
 
-Since the cleaning of the administrative area information requires quite a few lines of code, write a function for this task and save this function in a separate R file (not R markdown) in order to keep the main markdown script clear.
+Since the cleaning of the administrative area information requires quite a few lines of code, write a function for this task and save this function in a separate R script (.R file) in order to keep the main R Markdown document clear.
 
-Save your R functions and Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
-Make sure that the created html file is also part of your course repository on GitHub.
+Save your R functions and R Markdown (.Rmd) document in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
+Make sure that the created HTML file is also part of your course repository on GitHub.
 
 Make sure you keep the cleaned dataset. You will need it in the next unit.
 {: .notice--info}

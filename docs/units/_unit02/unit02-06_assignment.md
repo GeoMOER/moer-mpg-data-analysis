@@ -12,7 +12,7 @@ This worksheet lets you practice control structures and loops in R.
 ## Things you need for this worksheet
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
-  * [Git](https://git-scm.com/downloads){:target="_blank"} environment for your operating system. For Windows users with little experience on the command line we recommend [GitHub Desktop](https://desktop.github.com/){:target="_blank"}.
+  * [Git](https://git-scm.com/downloads){:target="_blank"} installed and available to RStudio. [GitHub Desktop](https://desktop.github.com/){:target="_blank"} is an optional graphical client.
 
 ## Loop till you drop
 Write an R Markdown (`.Rmd`) document with HTML output for the following tasks and commit it to your GitHub-based learning log. Set `n` to a value before testing the first three statements.
@@ -26,7 +26,7 @@ Write an R Markdown (`.Rmd`) document with HTML output for the following tasks a
 1. Replace the for loop in the preceding step with `lapply`. Save the returned list in a variable and print it.
 1. Add one more line to flatten that list into a vector and print the vector.
 
-Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
-Make sure that the created html file is also part of your course repository on GitHub.
+Save your R Markdown (.Rmd) document in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
+Make sure that the created HTML file is also part of your course repository on GitHub.
 {: .notice--info}
 

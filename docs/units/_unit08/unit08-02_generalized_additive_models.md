@@ -11,7 +11,7 @@ So far, the models we have seen only considered linear relationships.
 The corresponding model type to simple linear models would be an additive model and for Poisson or logistic linear regression, it would be the generalized additive model (GAM).
 Since (all?) implementations of GAMs also allow for additive models (i.e. using Gaussian instead of e.g. Poisson distribution functions), we will not distinguish between AM and GAM in the following.
 
-To illustrate non-linear fittings, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) but modify variable x3 and use y1 and y2.
+To illustrate nonlinear fits, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) but modify variable x3 and use y1 and y2.
 
 Just for completeness, the following code shows the modification of the anscombe dataset although it is not relevant to know anything about it for the examples below:
 
@@ -82,14 +82,14 @@ summary(lmod)
 ## Multiple R-squared:  0.6567,	Adjusted R-squared:  0.6395 
 ## F-statistic: 38.26 on 1 and 20 DF,  p-value: 4.833e-06
 ```
-Provided that all the assumptions relevant for linear models are met, x is significant and the model explains about 0.6567 percent of the variation in the dataset.
+Provided that all the assumptions relevant for linear models are met, x is significant and the model explains about 65.67 percent of the variation in the dataset.
 
-One might think that replacing `lm` with `mgcv:gam` (i.e. the gam function from the mgcv package) would be enough to turn our model into an additive model.
+One might think that replacing `lm` with `mgcv::gam` (i.e. the gam function from the mgcv package) would be enough to turn our model into an additive model.
 However, this is not true. In fact, `gam` with (its default) Gaussian family acts exactly as the `lm` function if the same formula is supplied.
-We will show this by plotting the gam-based regression line (dotted, red) on top of the one from the linear model above (grey).
+We will show this by plotting the gam-based regression line (dotted, red) on top of the one from the linear model above (gray).
 
 ```r
-gammod <- gam(y ~ x, data = df, familiy = gaussian())
+gammod <- gam(y ~ x, data = df, family = gaussian())
 
 px <- seq(min(df$x), max(df$x), 0.1)
 gampred <- predict(gammod, list(x = px))
@@ -101,7 +101,7 @@ lines(px, gampred, col = "red", lty=2)
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-3-1.png)<!-- -->
 
-No difference. Although we need some more code since we have to predict the model values before we can overlay them in the plot. Therefore, the vector `px` is used and initialized with a sequence between the minimum and maximum x value and a step of 0.1. This is also sufficient to visualize more "non-linear" model predictions later.
+There is no difference, although we need some more code since we have to predict the model values before we can overlay them in the plot. Therefore, the vector `px` is used and initialized with a sequence between the minimum and maximum x value and a step of 0.1. This is also sufficient to visualize more "non-linear" model predictions later.
 
 Let's have a look at the summary:
 
@@ -177,7 +177,7 @@ summary(gammod)
 A look at the model performance reveals that the explained deviance has increased.
 Assuming that all model assumptions, which are actually the same as for linear models (except the linear relationship) are met, the explained deviance has increased to almost 78 percent. 
 
-In order to check the model assumptions, you can use e.g. the `gam.checked` function:
+In order to check the model assumptions, you can use e.g. the `gam.check` function:
 
 
 ```r
@@ -213,7 +213,7 @@ plot(gammod)
 ### Optimal smoother selection and reducing the risk of overfitting
 One might wonder why this and no other smoother has been found in the end. 
 The reason lies in the way the default penalized regression works (which is beyond the scope of this example but to sum it up: the regression penalizes each added smoothing term, i.e. each reduction in the resulting degrees of freedom of the model). 
-To illustrate what would happen if no penalization, but just a simple spline regression would be used, one can set the fx option to TRUE:
+To illustrate what would happen if no penalization, but just a simple spline regression were used, one can set the fx option to TRUE:
 
 ```r
 gammod <- gam(y ~ s(x, bs = "tp", fx = TRUE), data = df)
@@ -258,7 +258,7 @@ Now the function is highly non-linear and 9 degrees of freedom are used for the 
 The explained deviance has increased but overfitting is very likely (the R squared has declined, too, but we should not place too much emphasis on that).
 
 
-If you do not want to use the standard (penalty) model selection, a feasible approach for the additive models might be to select the number of knots and iterate over them in e.g. a leave-many-out cross validation approach. 
+If you do not want to use the standard (penalty) model selection, a feasible approach for the additive models might be to select the number of knots and iterate over them in e.g. a leave-many-out cross-validation approach.
 For illustration purposes, the following will just show the iteration and visualize the different model results in one plot:
 
 ```r
@@ -286,7 +286,7 @@ legend(13, 7.5, paste("knots", knots, sep = " "), col = cols, lty=2, cex=0.75)
 ### LOESS
 While the above examples are more straightforward if one comes from the implementation side of a linear model (i.e. `lm`), the locally weighted scatterplot smoothing (LOESS) is more straightforward from a conceptual point of view. It uses local linear regressions defined on moving subsets of the dataset.
 For example, if the moving window is set to 21, then only the 10 left and 10 right neighbors of the actually considered value (target) are considered and a linear regression is computed based on this subset. 
-The term "weighted" indicates that not all of the neighboring values are equally treated but the ones closer to the target are weighted higher. 
+The term "weighted" indicates that not all of the neighboring values are treated equally but the ones closer to the target are weighted higher.
 The following shows one example using 75 percent of all the data pairs in order to compute the local regression for each target value:
 
 ```r

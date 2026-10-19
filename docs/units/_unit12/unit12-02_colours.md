@@ -1,5 +1,5 @@
 ---
-title: "Example: Colours"
+title: "Example: Colors"
 header:
   image: "/assets/images/teaser/unnamed-chunk-8-1.png"
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
@@ -7,21 +7,21 @@ header:
 
 
 Before we expand our plotting capabilities, we want to spend a bit more time 
-thinking about colours and colour spaces. A careful study of colour-spaces 
+thinking about colors and color spaces. A careful study of color-spaces
 (e.g. [Zeileis et al. 2009](http://statmath.wu.ac.at/~zeileis/papers/Zeileis+Hornik+Murrell-2009.pdf){:target="_blank"}) 
 and 
 [Wikipedia](https://en.wikipedia.org/wiki/HSL_and_HSV){:target="_blank"}
-could lead us to the conclusion that the ```hcl``` colour space is preferable when mapping a variable to colour (be it factorial or continuous).
+could lead us to the conclusion that the ```hcl``` color space is preferable when mapping a variable to color (be it factorial or continuous).
 
-This colour space is readily available in R through the function `hcl()`.
+This color space is readily available in R through the function `hcl()`.
 
-But before we dive into this, let's create a function that draws colour palettes:
+But before we dive into this, let's create a function that draws color palettes:
 
 
 ```r
 library(colorspace) # needed for function desaturate()
 
-### function to plot a colour palette
+### function to plot a color palette
 pal <- function(col, border = "transparent", ...) {
  n <- length(col)
  plot(0, 0, type="n", xlim = c(0, 1), ylim = c(0, 1),
@@ -30,8 +30,8 @@ pal <- function(col, border = "transparent", ...) {
 }
 ```
 
-Let's start with a particularly bad example of a colour palette, the rainbow colour palette,
-sometimes also referred to as jet-colours (that's MATLAB talk).
+Let's start with a particularly bad example of a color palette, the rainbow color palette,
+sometimes also referred to as jet-colors (that's MATLAB talk).
 
 
 ```r
@@ -43,9 +43,9 @@ pal(rainbow(100))
 We see that any change that may be happening in the green region will not be noticeable
 whereas changes that happen from red, via orange to yellow will be very prominent even though 
 the underlying data change (let's assume a change of 5 units) will be identical. This leads to 
-perceived edges in the visualisation which do not reflect real changes in the data.
+perceived edges in the visualization which do not reflect real changes in the data.
 
-This becomes even more evident when we plot the colors in greyscale:
+This becomes even more evident when we plot the colors in grayscale:
 
 
 ```r
@@ -56,8 +56,8 @@ pal(desaturate(rainbow(100)))
 
 Such a color scale does not linearly represent continuous data.
 There have been numerous attempts to produce perceptually consistent, yet visually pleasing
-colour palettes. One very good example of this is [colorbrewer2.org](http://www.colorbrewer2.org){:target="_blank"}
-These palettes can be accessed through the R package `RColorBrewer`
+color palettes. One very good example of this is [colorbrewer2.org](http://www.colorbrewer2.org){:target="_blank"}
+These palettes can be accessed through the R package `RColorBrewer`.
 
 
 ```r
@@ -70,7 +70,7 @@ pal(brewer_rainbow(100))
 
 Most of the edges are gone and the result looks quite pleasing too.
 To check how effectively this palette takes care of the above observed edges,
-let's again look at the greyscale version:
+let's again look at the grayscale version:
 
 
 ```r
@@ -80,9 +80,9 @@ pal(desaturate(brewer_rainbow(100)))
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 Not bad at all, though there is a distinguishable increase in lightness towards the middle of the scale.
-This is accepted in this case as this colour scale is a diverging colour scale. This means it should only be used for visualising deviations from a central value (e.g. zero). Do not use this colour scale to represent sequential data (i.e. data changing only in one direction)!!
+This is accepted in this case as this color scale is a diverging color scale. This means it should only be used for visualizing deviations from a central value (e.g. zero). Do not use this color scale to represent sequential data (i.e. data changing only in one direction)!!
 
-In order to create a truly perceptually uniform colour scale we need to use the hcl colour space. As mentioned above, this can be done using `hcl()`. Here, we create a function that produces a colour palette of a user supplied length n based on hcl colour space:
+In order to create a truly perceptually uniform color scale we need to use the hcl color space. As mentioned above, this can be done using `hcl()`. Here, we create a function that produces a color palette of a length n specified by the user, based on the hcl color space:
 
 
 ```r
@@ -97,7 +97,7 @@ pal(clrs_hcl(100))
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
-This looks a bit pale, yet there are no observable edges in the palette. Let's check the greyscale version.
+This looks a bit pale, yet there are no observable edges in the palette. Let's check the grayscale version.
 
 
 ```r
@@ -106,9 +106,9 @@ pal(desaturate(clrs_hcl(100)))
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
-Nice! One evenly distributed greyscale without any changes in lightness along the palette. So this is truly a perceptually uniform colour palette where only the hue changes.
+Nice! One evenly distributed grayscale without any changes in lightness along the palette. So this is truly a perceptually uniform color palette where only the hue changes.
 
-One obvious problem with this colour palette is that when printed in greyscale, all values will look exactly the same... To address this, we can modify our clrs_hcl definition slightly by also varying the lightness (or better luminance) along the same length n along which we change the hue.
+One obvious problem with this color palette is that when printed in grayscale, all values will look exactly the same... To address this, we can modify our clrs_hcl definition slightly by also varying the lightness (or better luminance) along the same length n along which we change the hue.
 
 
 ```r
@@ -123,7 +123,7 @@ pal(clrs_hcl2(100))
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
-... and in greyscale...
+... and in grayscale...
 
 
 ```r
@@ -132,5 +132,5 @@ pal(desaturate(clrs_hcl2(100)))
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
-Perfect, a colour scale that is honest, still pleasing enough to not make you want to close your eyes and even in greyscale low and high values are readily discernible.
+This color scale is visually pleasing and represents the data honestly. Low and high values are readily discernible even in grayscale.
 

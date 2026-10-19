@@ -17,9 +17,9 @@ root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/",
 source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_environment.R"))
 
 ```
-Linear regression modelling is one of the more common tasks in data analysis and the following example will cover the very basic topic of bivariate linear regression. The storyline follows the one from Zuur et al. (2007) to a certain degree.
+Linear regression modeling is one of the more common tasks in data analysis and the following example will cover the very basic topic of bivariate linear regression. The storyline follows the one from Zuur et al. (2007) to a certain degree.
 
-While one could use actual data sets, we keep it controled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet). The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as bart of base R. For now, we will use variables x1 and y1 as independent and dependent variables.
+While one could use actual data sets, we keep it controlled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet). The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as bart of base R. For now, we will use variables x1 and y1 as independent and dependent variables.
 ```{r, warning=FALSE}
 ind <- anscombe$x1
 dep <- anscombe$y1
@@ -30,7 +30,7 @@ hist(ind, main = "Independent variable")
 hist(dep, main = "Dependend variable")
 ```
 
-A look at the relationship between the variables by using a scatterplot justifies a linear modelling attemp. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
+A look at the relationship between the variables by using a scatterplot justifies a linear modeling attempt. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
 ```{r, warning=FALSE}
 library(car)
 par(par_org)
@@ -43,7 +43,7 @@ text(10, 16, bquote(paste("y"["i"], " = ", .(round(lmod$coefficients[1], 3)),
                           " + ", .(round(lmod$coefficients[2], 3)), "* x"["i"])))
 ```
 
-While the visualization is illustrative, it does not provide any information on the actual significance of the parameters of the model, i.e. it does not answer the question after the existance of an actual linear relationship which - in the case of linear regression - requires a slope of the regression line which is actually different from 0. In principal, there are two ways to tackle this problem. Using an analysis of variance (ANOVA) or a t-test. 
+While the visualization is illustrative, it does not provide any information on the actual significance of the parameters of the model, i.e. it does not answer the question after the existence of an actual linear relationship which - in the case of linear regression - requires a slope of the regression line which is actually different from 0. In principal, there are two ways to tackle this problem. Using an analysis of variance (ANOVA) or a t-test.
 
 
 ### Testing a linear regression relationship by an analysis of variance
@@ -130,14 +130,14 @@ summary(lmod)
 
 ### R squared
 
-The variance explained by the model is one of the most often used variables to explain the relationship in simple linear models. It is computed by normalizing either the model sum of squares by the observation sum of squares or by substracting the normalization of the residual sum of squares from 1.
+The variance explained by the model is one of the most often used variables to explain the relationship in simple linear models. It is computed by normalizing either the model sum of squares by the observation sum of squares or by subtracting the normalization of the residual sum of squares from 1.
 ```{r, warning=FALSE}
 ss_model / ss_obsrv
 1 - ss_resid / ss_obsrv
 ```
 
 ### Finished?
-Well, the above looks like a real good example of linear regression analysis, right? And the r square of about 0.67 is also quite OK not to mentino the significance of the independent variable.
+Well, the above looks like a real good example of linear regression analysis, right? And the r square of about 0.67 is also quite OK not to mention the significance of the independent variable.
 
 Before we clap our hands, let's just have a look at the other variable combinations of the Anscombe data set.
 ```{r, warning=FALSE}
@@ -159,13 +159,13 @@ lapply(lmodels, summary)
 ### Minimum assumption(s) for bivariate linear regression models
 The above example illustrates why it is important to understand a concept and not just to know how something is computed. In the present example, we have to make some additional checks which gives us some information about the distribution of some variables in order to actually decide if we want to do some assessments based on e.g. the retrieved r square. 
 
-The following checks are what should at least be considerd in bivariate linear regression (for multiple linear regression, multicollinearity of the independent variables is crucial but this is checked prior the linear modelling):
+The following checks are what should at least be considered in bivariate linear regression (for multiple linear regression, multicollinearity of the independent variables is crucial but this is checked prior the linear modeling):
   
 * homogeneity of the variance of residuals
 * normality of the residuals (much less important, but handy for small samples)
 
 
-The normality of the residuals could be checked by normality tests but these tests do not prove normality but test the null-hypothesis that something is not normal. E.g. a Shapiro-Wilk normality test with an insignificant p value does not reject the hypothesis that the distribution is normal but it does not proove that the distribution is actually normal. In addition, for small data, such tests often fail to reject non-normal distributions while for large samples, even very small deviations with no fundamental implication on e.g. anova results lead to a rejection. Speaking about anova influences: anovas are quite robust against violations of normality. Regarding homoscedasticity, this robustness decreases a little so larger F-values should be defined as a threshold for significance. For now, we will restrict our evaluation of the model to a visual approach. 
+The normality of the residuals could be checked by normality tests. These tests do not prove normality; a test such as Shapiro–Wilk tests the null hypothesis that the data follow a normal distribution. E.g. a Shapiro-Wilk normality test with an insignificant p value does not reject the hypothesis that the distribution is normal but it does not prove that the distribution is actually normal. In addition, for small data, such tests often fail to reject non-normal distributions while for large samples, even very small deviations with no fundamental implication on e.g. anova results lead to a rejection. Speaking about anova influences: anovas are quite robust against violations of normality. Regarding homoscedasticity, this robustness decreases a little so larger F-values should be defined as a threshold for significance. For now, we will restrict our evaluation of the model to a visual approach.
 
 Let's start with the most important assumption, the one of homogeneous variances in the residuals, aka the homoscedasticity:
 ```{r, warning=FALSE}
@@ -193,9 +193,9 @@ for(i in seq(4)){
 }
 par(par_org)
 ```
-Also there are deviations from a straight line, the deviations except for the lower left plot are not really crucial (and there it is only for the data pair labled with 3). The lower left plot is also the only plot where the Shapiro-Wilk test rejects the normal distribution hypothesis on a p<0.05 level.
+Also there are deviations from a straight line, the deviations except for the lower left plot are not really crucial (and there it is only for the data pair labeled with 3). The lower left plot is also the only plot where the Shapiro-Wilk test rejects the normal distribution hypothesis on a p<0.05 level.
 
-You might wonder why some of the points in the above figures are labled (e.g. 3, 9, 10 in the upper left plots). This "feature" results from a influential points analysis using Cook's distance which is a measure of how strong the regression parameters change if a certain observation is not considered. Hence, the larger this change, the larger the influence of this particular observation. For the above data, Cook's distance looks like that:
+You might wonder why some of the points in the above figures are labeled (e.g. 3, 9, 10 in the upper left plots). This "feature" results from a influential points analysis using Cook's distance which is a measure of how strong the regression parameters change if a certain observation is not considered. Hence, the larger this change, the larger the influence of this particular observation. For the above data, Cook's distance looks like that:
 ```{r, warning=FALSE}
 par(mfrow = c(2,2))
 for(i in seq(4)){
@@ -206,11 +206,11 @@ for(i in seq(4)){
 
 
 ### No alternatives?
-In case that your linear regression assessment shows some violations, the end is not to come, yet. According to Zuur et al. (2007), the solutions to common problems are the following:
+If your linear regression diagnostics reveal violations, several options remain. According to Zuur et al. (2007), the solutions to common problems are the following:
 
-* Violation of homogeneity (residuals vs. fitted values plot) without a pattern in the residual vs. observations (i.e. x values) plot: transform the y values or use generalised models
+* Violation of homogeneity (residuals vs. fitted values plot) without a pattern in the residual vs. observations (i.e. x values) plot: transform the y values or use generalized models
 * Violation of homogeneity (residuals vs. fitted values plot) with a pattern in the residual vs. observations (i.e. x values) plot: add non-linear terms of the independent variable
-* No violation of homogeneity (residuals vs. fitted values plot) but a pattern in the residual vs. observations (i.e. x values) plot: transform the x values or use additive modelling
+* No violation of homogeneity (residuals vs. fitted values plot) but a pattern in the residual vs. observations (i.e. x values) plot: transform the x values or use additive modeling
 
 In general, adding interaction terms (more than one explanatory variable is required) might also be a solution. 
 

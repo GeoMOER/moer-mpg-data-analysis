@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
 ```
 
-Coerting data elements into one of the basic R data types is straight forward.
+Coercing data elements into one of the basic R data types is straightforward.
 Just add "as." to the data type and you have the name of the respective function.
 ```{r}
 x <- c(1.4, 2.5, 3.6, 4.0)

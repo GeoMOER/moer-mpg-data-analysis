@@ -5,7 +5,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics){:target="_blank"}'
 ---
 
-Become familiar with reading and writing data, computing summary statistics and visual data exploration as the basics of data analysis.
+Become familiar with reading and writing data, computing summary statistics, and exploring data visually as the basics of data analysis.
 
 <!--more-->
 

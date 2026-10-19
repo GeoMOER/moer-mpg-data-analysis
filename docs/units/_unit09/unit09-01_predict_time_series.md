@@ -11,7 +11,7 @@ Look into some specific characteristics of time series data and predict future o
 ## Learning objectives
 At the end of this session you should be able to
 * explain some basic characteristics of time series information,
-* evaluate common requirements for predicting time series out of themselves, and
+* evaluate common requirements for predicting time series from their past values, and
 * use ARIMA models for short-term predictions of time series data.
 
 

@@ -19,10 +19,10 @@ source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_e
 ```
 Test statistics can describe the quality or accuracy of regression models if the assumptions of the models are met. However, the assessment would still be based on a model that is perfectly fitted to a given sample. To assess the prediction performance of a model in a more independent manner, the accuracy must be computed based on an independent (sub)-sample.
 
-The straight-forward way for a test on an independent sample is of course the one which actually fits the model on sample 1 and tests it on a completely different sample 2. However, in real-world applications, the required sample size is not givin in many cases. Therefore, cross-validation - althgough not entierly independent - is a good alternative to get an idea of the model performance for data values which have not been part of the model fitting. In principal, there are to strategies for cross-validation:
+The straight-forward way for a test on an independent sample is of course the one which actually fits the model on sample 1 and tests it on a completely different sample 2. However, in real-world applications, the required sample size is not given in many cases. Therefore, cross-validation - although not entirely independent - is a good alternative to get an idea of the model performance for data values which have not been part of the model fitting. In principal, there are to strategies for cross-validation:
 
 * Leave-one-out cross-validation: in this case, one value pair of the sample data set is left out during the model fitting and the model accuracy is estimated based on the quality of the prediction of the left-out value. In order to get a sufficient sample size, this procedure is iterated over all value pairs of the data set (i.e. each value is left out once).
-* Leave-many-out cross-validation: in this case, more than one value pair of the sample data set is left out during the model fitting and the model accuracy is estimated based on the quality of the prediction of the left-out samples. This strategy is good for larger data sets, where e.g. 80% of the data can be used as training data for fitting the and 20% can be used as independent validation data. The procedure could of course be repeated by creating different training data sets by chance and testing them using the respective left-out samples. Please note that in the latter case, the independency is compromised to a small degree. On the other hand, one get's a better impression of the model performance especially if the different validation data sets are not averaged but used independently in order to get an idea of the performance variation.
+* Leave-many-out cross-validation: in this case, more than one value pair of the sample data set is left out during the model fitting and the model accuracy is estimated based on the quality of the prediction of the left-out samples. This strategy is good for larger data sets, where e.g. 80% of the data can be used as training data for fitting the and 20% can be used as independent validation data. The procedure could of course be repeated by creating different training data sets by chance and testing them using the respective left-out samples. Please note that in the latter case, the independence is compromised to a small degree. On the other hand, one get's a better impression of the model performance especially if the different validation data sets are not averaged but used independently in order to get an idea of the performance variation.
 
 To illustrate this concept, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) and use the variables x1 and y1 as independent and dependent variables.
 
@@ -38,7 +38,7 @@ summary(lmod)
 ```
 
 ### Leave-one-out cross-validation
-For the leave-one-out cross-validation, the training sample is comprised by all but one value pairs of the data set and the left-out data pair is used as validation sample. The procedure is typically iterated over the entire data set, i.e. each value is left-out once.
+For the leave-one-out cross-validation, the training sample is comprised by all but one value pairs of the data set and the left-out data pair is used as a validation sample. The procedure is typically iterated over the entire data set, i.e. each value is left-out once.
 ```{r, warning=FALSE}
 # Leave one out cross-validation
 cv <- lapply(seq(nrow(anscombe)), function(i){
@@ -64,7 +64,7 @@ mss_resid <- ss_resid / (length(cv$obsv) - 2)
 plot(cv$obsv, (cv$obsv - cv$pred))
 ```
 
-Based on the above computation, one could compute something like the F value also used within the anova and estimate an r square. As compared to the "internal" F test of the anove from the original model and the r square, the cross-validation indicates a less accurate prediction.
+Based on the above computation, one could compute something like the F value also used within the anova and estimate an r square. As compared to the "internal" F test of the ANOVA from the original model and the r square, the cross-validation indicates a less accurate prediction.
 ```{r, warning=FALSE}
 data.frame(NAME = c("cross-validation F value",
                     "linear model F value", 
@@ -100,7 +100,7 @@ data.frame(NAME = c("Mean error (ME)", "Std. error of ME",
 
 
 ### Leave-many-out cross-validation
-For the leave-many-out cross-validation, the following example computes 100 different models. For each model, a training sample of 80% of the data set is choosen randomly.
+For the leave-many-out cross-validation, the following example computes 100 different models. For each model, a training sample of 80% of the data set is chosen randomly.
 
 ```{r, warning=FALSE}
 range <- nrow(anscombe)
@@ -144,7 +144,7 @@ mss_model <- ss_model / 1
 mss_resid <- ss_resid / (length(cv_sample$obsv) - 2)
 ```
 
-Again, an overview of other errors used to descirbe the prediction performance:
+Again, an overview of other errors used to describe the prediction performance:
 ```{r, warning=FALSE}
 data.frame(NAME = c("cross-validation F value",
                     "linear model F value", 

@@ -1,5 +1,5 @@
 ---
-title: "Example: Colours and maps"
+title: "Example: Colors and maps"
 toc: true
 toc_label: In this example
 header:
@@ -7,7 +7,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-This is a short example on how to use the hcl colour palette for colouring features of a shapefile.
+This is a short example on how to use the hcl color palette for coloring features of a shapefile.
 
 ## Set up
 ```r
@@ -51,8 +51,8 @@ plot(world, values = randomNumbers)
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
-## Plot with 10 hcl colour classes
-We would like to have 10 hcl colour classes. This can be achieved by adjusting the `breaks` (number of breaks) and `col` (colour) parameters.
+## Plot with 10 hcl color classes {#plot-with-10-hcl-colour-classes}
+We would like to have 10 hcl color classes. This can be achieved by adjusting the `breaks` (number of breaks) and `col` (color) parameters.
 
 ```r
 myColours <- rev(clrs_hcl2(10))
@@ -61,7 +61,7 @@ map <- plot(world, values = randomNumbers, breaks = 10, col = myColours)
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
-Equal interval breaks are used by default. The frequency of observations within each colour class is shown below.
+Equal interval breaks are used by default. The frequency of observations within each color class is shown below.
 ```r
 hist(randomNumbers, breaks = map$breaks, col = myColours)
 ```
@@ -69,7 +69,7 @@ hist(randomNumbers, breaks = map$breaks, col = myColours)
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 ## Plot with equal count breaks
-In the above map, some colours appear more often than others. If we want every colour to appear about the same number of times, we can change the `breakby` parameter to get equal count breaks.
+In the above map, some colors appear more often than others. If we want every color to appear about the same number of times, we can change the `breakby` parameter to get equal count breaks.
 
 ```r
 map <- plot(world, values = randomNumbers, breaks = 10, col = myColours, breakby = "cases")
@@ -77,7 +77,7 @@ map <- plot(world, values = randomNumbers, breaks = 10, col = myColours, breakby
 
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
-The frequency of observations within each colour class is now about the same.
+The frequency of observations within each color class is now about the same.
 ```r
 hist(randomNumbers, breaks = map$breaks, col = myColours, freq = TRUE)
 ```
@@ -85,7 +85,7 @@ hist(randomNumbers, breaks = map$breaks, col = myColours, freq = TRUE)
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 ## Save information in map
-We can save the random numbers and the colour information in the map for later use.
+We can save the random numbers and the color information in the map for later use.
 ```r
 world$randomNumber <- randomNumbers
 world$randomNumberColour <- myColours

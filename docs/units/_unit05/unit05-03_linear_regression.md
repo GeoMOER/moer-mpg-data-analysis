@@ -7,7 +7,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-Linear regression modelling is one of the more common tasks in data analysis and the following example will cover the very basic topic of bivariate linear regression. The storyline follows the one from Zuur et al. (2007) to a certain degree.
+Linear regression modeling is one of the more common tasks in data analysis and the following example will cover the very basic topic of bivariate linear regression. The storyline follows the one from Zuur et al. (2007) to a certain degree.
 
 While one could use actual data sets, we keep it controlled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet).
 The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as part of base R. 
@@ -25,7 +25,7 @@ hist(dep, main = "Dependent variable")
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-1-1.png)<!-- -->
 
-A look at the relationship between the variables by using a scatterplot justifies a linear modelling attempt. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
+A look at the relationship between the variables by using a scatterplot justifies a linear modeling attempt. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
 
 ```r
 library(car)
@@ -142,7 +142,7 @@ anova(lmod)
 ```
 
 **Exercise**. Now you can check your knowledge and strengthen your plotting skills by writing code to rebuild the linear regression scatterplot from the previous page.
-When coding, think about the meaning of slope, intercept, observed variance, model variance, residual variance, and the different types of sum of squares.
+When coding, think about the meaning of slope, intercept, observed variance, model variance, residual variance, and the different types of sums of squares.
 {: .notice--success}
 
 
@@ -349,7 +349,7 @@ The following checks are what should at least be considered in bivariate linear 
 * normality of the residuals (much less important, but handy for small samples)
 
 
-The normality of the residuals could be checked by normality tests but these tests do not prove normality but test the null-hypothesis that something is not normal. E.g. a Shapiro-Wilk normality test with an insignificant p value does not reject the hypothesis that the distribution is normal but it does not prove that the distribution is actually normal. In addition, for small data, such tests often fail to reject non-normal distributions while for large samples, even very small deviations with no fundamental implication on e.g. anova results lead to a rejection. Speaking about anova influences: anovas are quite robust against violations of normality. For now, we will restrict our evaluation of the model to a visual approach. 
+The normality of the residuals could be checked by normality tests. These tests do not prove normality; a test such as Shapiro–Wilk tests the null hypothesis that the data follow a normal distribution. E.g. a Shapiro-Wilk normality test with an insignificant p value does not reject the hypothesis that the distribution is normal but it does not prove that the distribution is actually normal. In addition, for small data, such tests often fail to reject non-normal distributions while for large samples, even very small deviations with no fundamental implication on e.g. anova results lead to a rejection. Speaking about anova influences: anovas are quite robust against violations of normality. For now, we will restrict our evaluation of the model to a visual approach.
 
 Let's start with the most important assumption, the one of homogeneous variances in the residuals, aka the homoscedasticity:
 
@@ -389,10 +389,10 @@ for(i in seq(4)){
 ```r
 par(par_org)
 ```
-Although there are deviations from a straight line, the deviations except for the lower left plot are not really crucial (and there it is only for the data pair labelled with 3).
+Although there are deviations from a straight line, the deviations except for the lower left plot are not really crucial (and there it is only for the data pair labeled with 3).
 The lower left plot is also the only plot where the Shapiro-Wilk test rejects the normal distribution hypothesis on a p < 0.05 level.
 
-You might wonder why some of the points in the above figures are labelled (e.g. 3, 9, 10 in the upper left plots).
+You might wonder why some of the points in the above figures are labeled (e.g. 3, 9, 10 in the upper left plots).
 These numbers in the plots refer to the observation number in the original dataset.
 This feature results from an "influential points analysis" using Cook's distance, which is a measure of how strongly the regression parameters change if a certain observation is not considered.
 Hence, the larger this change, the larger the influence of this particular observation. For the above data, Cook's distance looks like that:
@@ -409,14 +409,14 @@ for(i in seq(4)){
 
 
 ### No alternatives?
-In case that your linear regression assessment shows some violations, the end is not to come, yet. According to Zuur et al. (2007), the solutions to common problems are the following:
+If your linear regression diagnostics reveal violations, several options remain. According to Zuur et al. (2007), the solutions to common problems are the following:
 
 * Violation of homogeneity (residuals vs. fitted values plot) without a pattern in the residual vs. observations (i.e. x values) plot: transform the y values or use generalized models
 * Violation of homogeneity (residuals vs. fitted values plot) with a pattern in the residual vs. observations (i.e. x values) plot: add non-linear terms of the independent variable
-* No violation of homogeneity (residuals vs. fitted values plot) but a pattern in the residual vs. observations (i.e. x values) plot: transform the x values or use additive modelling
+* No violation of homogeneity (residuals vs. fitted values plot) but a pattern in the residual vs. observations (i.e. x values) plot: transform the x values or use additive modeling
 
-Before transforming your variables beyond recognition think about if you really need a linear regression for your data analysis task.
-In doubt use some other statistical method like generalized additive models.
+Before transforming your variables beyond recognition consider whether you really need a linear regression for your data analysis task.
+If in doubt, use some other statistical method like generalized additive models.
 {: .notice--info}
 
 

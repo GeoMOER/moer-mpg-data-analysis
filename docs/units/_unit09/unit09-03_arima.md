@@ -8,7 +8,7 @@ header:
 ---
 
 Time-series analyses can generally be divided into forecasting future dynamics and describing and potentially explaining past patterns. 
-Since the latter often requires continuous i.e. gap-free observations, we start with a simple forecasting procedure, which can also be used for gap-filling in some cases.
+Since the latter often requires continuous, i.e., gap-free observations, we start with a simple forecasting procedure, which can also be used for gap-filling in some cases.
 
 To illustrate forecasting, we will again use the (mean monthly) air temperature records of the weather station in Cölbe (which is closest to Marburg). 
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}. 
@@ -43,7 +43,7 @@ acf(tam$Ta)
 ### Auto-regressive models (AR)
 While we could start with de-trending and de-seasoning now, let us try a quick-and-dirty approach first and postpone the time series decomposition to the next session. 
 One thing one could try is to not use the original values but the difference between the consecutive value pairs (i.e. the difference between time t and t+1 etc.). 
-And if one difference is not enough, we can compute the differences of the differences and the auto-correlation behaviour would look like this:
+And if one difference is not enough, we can compute the differences of the differences and the auto-correlation behavior would look like this:
 
 ```r
 dTa <- diff(diff(tam$Ta))
@@ -93,7 +93,7 @@ a rule of thumb states that if
 * the partial auto-correlation function shows only p significant lags in the beginning,
 
 an AR(p) model (i.e. an AR model with p considered lags) is a good starting point. 
-In the auto- and partial auto-correlation function of the two-times differentiated dataset, we might see exactly this:
+In the auto- and partial auto-correlation function of the twice-differenced dataset, we might see exactly this:
 
 ```r
 par_org <- par()
@@ -132,7 +132,7 @@ armod
 So the optimal value for the lag parameter depends on the chosen method.
 
 Let us now use the AR model for predicting the time series into the future
-(although 100 months in the future is way too much; grey lines indicate the standard error):
+(although 100 months in the future is way too much; gray lines indicate the standard error):
 
 ```r
 arpred <- predict(armod, n.ahead = 100)
@@ -149,7 +149,7 @@ lines(arpred$pred - arpred$se, col = "grey")
 ### Auto-regressive integrated moving average models (ARIMA)
 
 The above AR model examples are mainly for illustration purposes and have low predictive power.
-The predictive power increases with combining the AR model part with a moving average model (MA) - ARIMA.
+The predictive power increases by combining the AR model part with a moving average model (MA) - ARIMA.
 
 In the ARIMA world, three parameters are generally required: 
 
@@ -223,7 +223,7 @@ lines(arima_predict$pred - arima_predict$se, col = "grey")
 
 
 ### Finding the right parameters for ARIMA
-Finding the right number of lags p for the AR model, number of differentiations d, and number of lags q for the MA model requires several iterations. 
+Finding the right number of lags p for the AR model, order of differencing d, and number of lags q for the MA model requires several iterations.
 You now already know everything you need to e.g. iterate over a bunch of values for each parameter and select the appropriate combination by minimizing e.g. cross-validation errors. 
 An alternative approach could be the ``forecast::auto.arima`` function. 
 It iterates over the parameters (see defaults of the function) and applies some statistical tests for e.g. stationarity. 
@@ -268,7 +268,7 @@ summary(arima_ns)
 ## Training set 0.0246255 2.026541 1.597263 38.3537 71.5643 0.8362305 -0.0825803
 ```
 
-Actually, the ARIMA model comes with d = 0, which means that the data values are not differentiated (which is a tough choice).
+Actually, the ARIMA model comes with d = 0, which means that the data values are not differenced (which is a tough choice).
 
 To better estimate the quality of the ARIMA model, we can use some diagnostic plots:
 

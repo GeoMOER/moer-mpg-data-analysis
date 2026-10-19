@@ -16,7 +16,7 @@ Within this example, we will focus on basic R graphics. Of course, all of the ex
 
 
 
-Pre-processing and reading of the data is not shown but the first five lines of the final data set are printed below. Just for simplicity, a variable `numc` is defined which will be used to subset the data frame to the relevant columns.
+Pre-processing and reading of the data is not shown but the first six rows of the final data set are printed below. Just for simplicity, a variable `numc` is defined which will be used to subset the data frame to the relevant columns.
 
 ```r
 numc <- c("Settlement", "Recreation", "Agriculture", "Forest")
@@ -98,7 +98,7 @@ abline(v=qnorm(c(0.25,0.75)), col="blue", lty = 3)
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-7-1.png)<!-- -->
 
-Again, using different transformations might be of advantage (or not in this case!, taken from Zuur et al. 2007):
+Different transformations may be helpful (although not in this case; example adapted from Zuur et al., 2007):
 
 ```r
 par(mfrow = c(2,2))

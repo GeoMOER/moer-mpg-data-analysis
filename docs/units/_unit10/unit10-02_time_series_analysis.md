@@ -98,10 +98,12 @@ The average of each will finally form the seasonal signal:
 
 ```r
 seasonal <- tam$Ta - annual_trend
-seasonal_mean <- aggregate(seasonal, by = list(rep(seq(1,12), 18)), 
+month <- as.integer(format(tam$Date, "%m"))
+seasonal_mean <- aggregate(seasonal, by = list(month),
                            FUN = mean, na.rm = TRUE)
+seasonal_cycle <- seasonal_mean$x[match(month, seasonal_mean$Group.1)]
 plot(tam$Date, seasonal, type = "l")
-lines(tam$Date, rep(seasonal_mean$x, 16), col = "blue")
+lines(tam$Date, seasonal_cycle, col = "blue")
 ```
 
 ![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-7-1.png)<!-- -->
@@ -111,7 +113,7 @@ The blue line shows the average seasonal signal of the time series.
 The only thing remaining is the remainder, i.e. the component explained by neither the trend nor the seasonal signal:
 
 ```r
-remainder <- tam$Ta - annual_trend - seasonal_mean$x
+remainder <- tam$Ta - annual_trend - seasonal_cycle
 plot(tam$Date, remainder, type = "l")
 ```
 
@@ -210,10 +212,11 @@ summary(lmod)
 ## F-statistic: 8.591 on 1 and 190 DF,  p-value: 0.003793
 ```
 
-If we were interested in annual trends, we could multiply the above slope of the time variable by 12 or define the time variable in such a way that each month is counted as a fraction of 1 (e.g. January 2006 = 2006; February 2006 = 2006.0084 etc.):
+If we were interested in annual trends, we could multiply the above slope of the time variable by 12 or define the time variable in such a way that each month is counted as a fraction of 1 (e.g. January 2007 = 2007; February 2007 ≈ 2007.0833 etc.):
 
 ```r
-ts <- seq(from = 2007, to = 2024 + 11/12, by = 1/12)
+ts <- as.numeric(format(tam$Date, "%Y")) +
+      (as.numeric(format(tam$Date, "%m")) - 1) / 12
 lmod <- lm(tam$Ta_ds ~ ts)
 summary(lmod)
 ```

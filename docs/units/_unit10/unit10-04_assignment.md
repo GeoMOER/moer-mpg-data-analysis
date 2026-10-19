@@ -14,7 +14,7 @@ After completing this worksheet you will have gained deeper experience with time
 ## Things you need for this worksheet
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
-  * [Git](https://git-scm.com/downloads){:target="_blank"} environment for your operating system. For Windows users with little experience on the command line we recommend [GitHub Desktop](https://desktop.github.com/){:target="_blank"}.
+  * [Git](https://git-scm.com/downloads){:target="_blank"} installed and available to RStudio. [GitHub Desktop](https://desktop.github.com/){:target="_blank"} is an optional graphical client.
   * [German Weather Service (DWD) data](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"} for the station Cölbe.
   * [NOAA data](http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml){:target="_blank"} for the North Atlantic Oscillation (NAO).
 
@@ -30,15 +30,15 @@ This dataset is also available directly from the [DWD Server](https://opendata.d
 In addition to analyzing the dynamics in the station record, 
 we will explain parts of the dynamics by using a time series of the North Atlantic Oscillation provided by [NOAA](http://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml){:target="_blank"}.
 
-Please write an Rmd file with html output, which computes the trend of the air temperature recorded in Cölbe based on monthly values between January 1950 and December 1990 (we stop here because afterwards, there is a gap in the time series, which could be filled in principle but not as part of this task).
+Please write an R Markdown (.Rmd) document with HTML output, which computes the trend of the air temperature recorded in Cölbe based on monthly values between January 1950 and December 1990 (we stop here because afterwards, there is a gap in the time series, which could be filled in principle but not as part of this task).
 {: .notice--info}
 
-Please extend your Rmd file in such a manner that you can evaluate to which degree the dynamics in the seasonal temperature over each year can be explained by fluctuations of the North Atlantic Oscillation. 
+Please extend your R Markdown (.Rmd) document in such a manner that you can evaluate to what extent the dynamics in the seasonal temperature over each year can be explained by fluctuations of the North Atlantic Oscillation.
 For this task, divide the NAO index provided above into "positive" and "negative" (i.e. use it as a factor, not as a numeric variable) and predict the temperature dynamics in a simple multiple linear model, which uses the NAO index classes as a factor and the first Fourier frequency (i.e. one sin and one cos) as independent variables. 
 Finally, develop a strategy to cross-check the significance indicated by the linear model.
 
-Save your Rmd file in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
-Make sure that the created html file is also part of your course repository on GitHub.
+Save your R Markdown (.Rmd) document in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
+Make sure that the created HTML file is also part of your course repository on GitHub.
 
 
 

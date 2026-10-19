@@ -7,7 +7,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-Just as one last example on time series analysis for this module and mainly for demonstrating that this module only tipped a very small set of analysis concepts out there, we will have a glimpse of time series clustering.
+As a final example, we will look at time series clustering. This module has only touched on a small subset of time series analysis methods.
 To illustrate this concept, we will again use the (mean monthly) air temperature record of the weather station in Cölbe (which is closest to Marburg). 
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany). 
 For simplicity, we will remove the first six entries (July to December 2006 to have full years).
@@ -42,12 +42,12 @@ plot(tam$Date, tam$Ta, type = "l")
 
 The major risk in time series clustering (or any other clustering) is that we cluster something, which actually does not have any kind of "real" groups. 
 Hence, the most important part to remember is that cluster algorithms will always identify clusters no matter if they really exist. 
-As a consequence: never use clustering if you are not sure that there definitively are groups in the data. 
+As a consequence: never use clustering if you are not sure that there definitely are groups in the data.
 Moreover, clustering is generally applied only if you have more than one time series from more than one location. 
 
 Of course there is no rule without exception and the one exception here is: 
 if you want to show some code and do not want to introduce a new dataset just for this last example, 
-you can use it on a dataset where you have no glimpse of a grouping as long as you are not the one who gets the grading in the end. 
+you can use it on a dataset where you have no indication of grouping as long as you are not the one who is being graded.
 
 Aside from having no idea if we have a grouping and aside from the fact that we have only one single station record, let's have a look at the above time series.
 There might be a difference between 2010 and the rest of the years since 2010 shows very warm summer and cold winter temperatures. 

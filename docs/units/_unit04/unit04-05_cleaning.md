@@ -9,13 +9,13 @@ header:
 
 
 Cleaning data frames involves quite different aspects like splitting cell entries, converting data types or the conversion of "wide" to "long" format. 
-In general, the aim is to come up with a data frame that has [Wickham 2014](https://www.jstatsoft.org/article/view/v040i01):
+The aim is a tidy data frame with the following structure ([Wickham, 2014](https://www.jstatsoft.org/article/view/v059i10)):
 
 * a separate column for each variable (which has exactly one kind of information, e.g. not major and minor subject)
 * a separate row for each observation
 * a separate data frame for each kind of observation
 
-The following examples are based on a data set showing the percentage fraction of settlement, recreational, agricultural, and forest areas for each district in Germany. The data is provided by the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/) and formed also the basis for the visual data exploration example.
+The following examples are based on a data set showing the percentage fraction of settlement, recreational, agricultural, and forest areas for each district in Germany. The data is provided by the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/) and also formed the basis for the visual data exploration example.
 
 ### Reading data and first look
 
@@ -86,7 +86,7 @@ As one can see,
 * the numerical values are stored as characters, and
 * the "Anteil*" column names are actually values, not variable names.
 
-Please remember: this is just one example out of an almost infinite amount of data sets. The following tasks might not be necessary at all for a specific data set. Of course, the following might also not be enough to clean a given data set.
+Please remember: this is just one example out of an almost infinite number of datasets. The following tasks might not be necessary at all for a specific data set. Of course, the following might also not be enough to clean a given data set.
 
 ### Renaming columns
 Let's start with renaming the column names:
@@ -164,7 +164,7 @@ head(lu_long)
 ```
 The column (i.e. variable) names passed to the parameter `id.vars` are those columns which represent actual variables within their names. The columns Settlement, Recreation, Agriculture and Forest can be summarized to one column since they all represent land cover. Their values which were stored in each column have been transferred to a separate column (called `value` in this case).
 
-### Split multiple information within one column
+### Split multiple pieces of information in one column {#split-multiple-information-within-one-column}
 The content of column "Place" could be regarded as both human readable information and an additional machine readable data source. If we go for the latter, mixing names (e.g. Flensburg, Kiel) and types (e.g. city, county) is not a good option. It seems that the different kinds of information are comma separated, so let's split the column entries using "," as a separator and have a closer look at the results.
 
 ```r
@@ -199,13 +199,13 @@ max(sapply(place, length))
 ```
 ## [1] 3
 ```
-As one can see, splitting by comma is a good option to separate the content. However, the original information obviously is comprised of either one, two or three (see result of the `max` function) information parts. Hence, an appropriate next step would be the compilation of a data frame with three columns and a fill-up strategy which makes sure that if 
+As one can see, splitting by comma is a good option to separate the content. However, the original information obviously consists of one, two, or three (see result of the `max` function) pieces of information. Hence, an appropriate next step would be the compilation of a data frame with three columns and a fill-up strategy which makes sure that if
 
-* one information part is stored in the cell, the part is saved in the first column of the target data frame,
-* two information parts are stored in the cell, they are saved in the first and second column of the target data frame,
-* three information parts are stored in the cell, they are saved in the first, second and third column of the target data frame.
+* one piece of information is stored in the cell, the part is saved in the first column of the target data frame,
+* two pieces of information are stored in the cell, they are saved in the first and second column of the target data frame,
+* three pieces of information are stored in the cell, they are saved in the first, second and third column of the target data frame.
 
-If the second or third column is not filled by an information part, NA is stored in the respective cells instead. Let's do it (the `gsub` function is used to delete leading white spaces):
+If the second or third column is not filled by a piece of information, NA is stored in the respective cells instead. Let's do it (the `sub` function is used to remove leading whitespace):
 
 ```r
 place_df <- lapply(place, function(i){

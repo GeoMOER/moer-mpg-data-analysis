@@ -14,11 +14,11 @@ In the following, we will start with a short example, which illustrates one of t
 
 * **Recursive aka backward feature selection**: in this case, a model is computed with all available explanatory variables. 
 Afterwards, the variable with the least explanatory power is excluded from the model and this procedure is repeated until a quality criterion, e.g. maximum adjusted r squared or minimum AIC is reached.
-* **Forward feature selection**: in this case, a model is separately computed for each available/potential explanatory variable. The variable which has the best individual explanatory power is selected and added to the final model. Afterwards, all possible combinations between the selected and the remaining variables are tested and the variable is added to the final model, which leads to the largest increase of the explanatory power of the model. This procedure is repeated until a quality criterion is reached.
+* **Forward feature selection**: in this case, a model is separately computed for each available/potential explanatory variable. The variable which has the best individual explanatory power is selected and added to the final model. Afterwards, all possible combinations between the selected and the remaining variables are tested and the variable that produces the largest increase in explanatory power is added to the final model. This procedure is repeated until a quality criterion is reached.
 
 To illustrate this concept, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) but modify variables x2, x3, and x4 (please note that the original variables x2 to x4 were of course not intended to be used for y1 in the anscombe data).
-The modification of x2 and x3 is necessary since x1 to x3 show a complete co-linearity, 
-which violates probably the most important restriction in multiple (linear) regression models.
+The modification of x2 and x3 is necessary since x1 to x3 show a complete collinearity,
+which probably violates the most important restriction in multiple (linear) regression models.
 
 Just for completeness, the following code shows the modification of the anscombe data set although it is not relevant to know anything about it for the examples below:
 
@@ -165,7 +165,7 @@ summary(lmod)
 ## Multiple R-squared:  0.7461,	Adjusted R-squared:  0.6826 
 ## F-statistic: 11.75 on 2 and 8 DF,  p-value: 0.004159
 ```
-Obviously order matters for analysis of variance results! This is because the null-hypothesis is different to the one from the `summary` function. While the latter checks if the slope of the regression line is significantly different from zero for each individual variable, the anova approach only checks if the slope of the added variable is different from zero. This means that if only one explanatory variable is added to the very basic model y = intercept + error, the variable is marked as significant if its associated slope is different from zero. If a second variable is added, the "baseline" model is the one with the first variable already included. Hence, it is not checked if both the slopes of the explanatory variables are still different from zero but only the slope of the added variable. In the above case, this leads to the situation that if x1 is added after x2, both variables are marked as significant while only x1 is significant if it is added prior to x2.
+Obviously order matters for analysis of variance results! This is because the null-hypothesis is different from the one from the `summary` function. While the latter checks if the slope of the regression line is significantly different from zero for each individual variable, the anova approach only checks if the slope of the added variable is different from zero. This means that if only one explanatory variable is added to the very basic model y = intercept + error, the variable is marked as significant if its associated slope is different from zero. If a second variable is added, the "baseline" model is the one with the first variable already included. Hence, it is not checked if both the slopes of the explanatory variables are still different from zero but only the slope of the added variable. In the above case, this leads to the situation that if x1 is added after x2, both variables are marked as significant while only x1 is significant if it is added prior to x2.
 
 The above example illustrates that the composition of multiple (regression) models is by far not as trivial as it might look in the first place. 
 In general, there are two basic selection procedures to cope with this. Both are not targeting the significance of slopes but the overall predictive power, which can be estimated e.g. using an adjusted r squared value, the Akaike information criterion (AIC) or the prediction error on an independent sample data set.
@@ -223,7 +223,7 @@ next_vars <- recursive_feature_selection(data = df, dep = "y", vars = variables)
 ```
 As one can see, the adjusted r squared value would increase from 0.6199 for all variables up to 0.6728 if variable x3 is left out. 
 This change is also noticeable in the AIC, which decreases from 41.5034 to 39.5482. 
-This decrease is also illustrated in the difference column and it was also the AIC criterion which is used as the basis for the decision in the function above.
+This decrease is also illustrated in the difference column and AIC is also the criterion used as the basis for the decision in the function above.
 The variable `next_vars` now contains only x1, x2 and x4 and we will use this variable to call the recursive feature selection function again:
 
 ```r
@@ -246,7 +246,7 @@ next_vars <- recursive_feature_selection(data = df, dep = "y", vars = next_vars)
 ## 4       x4     0.6826 38.6849 -0.8633
 ```
 
-This time, the model that uses all three variables (x1, x2, and x4) is the reference and the quality increases compared to this reference if x4 is left out (AIC drops by -0.8633 and the adjusted r squared increases from 0.6728 to 0.6826). Hence, only x1 and x2 will be used in the next iteration:
+This time, the model that uses all three variables (x1, x2, and x4) is the reference and the quality increases compared to this reference if x4 is left out (AIC decreases by 0.8633 and the adjusted r squared increases from 0.6728 to 0.6826). Hence, only x1 and x2 will be used in the next iteration:
 
 ```r
 next_vars

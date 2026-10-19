@@ -12,7 +12,7 @@ Check the integrity of datasets and clean them up to ensure that the data basis 
 ## Learning objectives
 At the end of this unit you should be able to
 * identify some common problems in the structure of data frames,
-* subset, merge, separate a data frame in order to clean it.
+* subset, merge, and split data frames to clean them.
 
 
 

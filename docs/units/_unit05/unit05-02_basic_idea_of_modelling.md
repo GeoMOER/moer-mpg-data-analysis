@@ -33,9 +33,9 @@ Note that the commonly computed test statistics do not have any meaning for usin
 {% include figure image_path="https://imgs.xkcd.com/comics/linear_regression.png" alt="Comic illustrating scatter plots with almost no linear relationship." caption_url="[CC-BY by xkcd.com](https://xkcd.com/1725/){:target='_blank'}" %}
 
 
-## Linear regression kick off
+## Linear regression kickoff {#linear-regression-kick-off}
 
-To get an overview about linear regression, you can watch the videos below or do some internet research on your own. There are some great tutorials out there.
+To get an overview of linear regression, you can watch the videos below or do some internet research on your own. There are some great tutorials out there.
 
 1. [Fitting a line to data](https://www.youtube.com/watch?v=PaFPbb66DxQ)
 2. [Linear Models Part 1](https://www.youtube.com/watch?v=nk2CQITm_eo)
@@ -45,5 +45,5 @@ To get an overview about linear regression, you can watch the videos below or do
 Try to answer the following questions:
 
 * What is a linear regression and how does it work?
-* What types of sum of squares can be calculated and why are they important?
+* What types of sums of squares can be calculated and why are they important?
 * What are *p* and *r*<sup>2</sup> values?

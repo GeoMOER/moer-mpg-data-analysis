@@ -2,7 +2,7 @@
 title: Marburg Open Hackathon
 ---
 
-Follow the link to start the Marburg Open Hackathon (MOHA)
+Follow the link to start the Marburg Open Hackathon (MOHA).
 
 <!--more-->
 
@@ -12,8 +12,8 @@ Follow the link to start the Marburg Open Hackathon (MOHA)
 
 Save your solutions in your course repository in a folder called MOHA with subfolders for each exercise block, 
 update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
-**Make sure that the created html files are also part of your GitHub repository**. 
-Only your last published commit before the deadline passes will be considered.
+**Make sure that the created HTML files are also part of your GitHub repository**.
+Only your last published commit before the deadline will be considered.
 {: .notice--warning}
 
 
@@ -23,7 +23,7 @@ Your mission in this session is to prepare a marked assignment similar to the pr
 But this time the deadline is today at High Noon (12:00).
 You will work on individual tasks and data but of the same level of difficulty.
 You must use your matriculation number as a seed leading to individual results for each participant.
-The single assignments within the MOHA must not be passed independently.
+You do not need to pass each MOHA exercise individually.
 
 
 # Rules
@@ -50,9 +50,9 @@ Deviations from the schedule will not be accepted. The deadline will be strictly
 
 # Guidelines
 
-* Add the text of each exercise prior to your solution and also include the name of the exercise sheet and the number of the particular tasks in order to create an easy-to-navigate html output.
-* Do not get lost in single exercises and have the remaining time in mind. 
-* The exercises are independent from each other and can be solved in any order.
+* Add the text of each exercise prior to your solution and also include the name of the exercise sheet and the number of the particular tasks in order to create an easy-to-navigate HTML output.
+* Avoid spending too long on individual exercises and keep track of the remaining time.
+* The exercises are independent of one another and can be solved in any order.
 * Alternative solutions deviating from those provided in the course are welcome.
 
 

@@ -5,7 +5,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-Visualize your data, get some hints for publication quality graphics, and learn about some packages specifically made for visualizations.
+Visualize your data, get some hints for publication-quality graphics, and learn about some packages specifically made for visualizations.
 
 <!--more-->
 
@@ -13,8 +13,8 @@ Visualize your data, get some hints for publication quality graphics, and learn 
 At the end of this session you should
 * know additional possibilities to create graphics,
 * decide which library might be helpful for your task,
-* choose an appropriate colour palette, and
-* apply your colour palette to features of a shapefile.
+* choose an appropriate color palette, and
+* apply your color palette to features of a shapefile.
 
 
 ## More on this topic
@@ -26,4 +26,4 @@ For a broader introduction, see [Creating publication quality graphs in R](https
 You can leave comments below if you have questions or remarks about any of the text or code in this unit. 
 Please copy the corresponding line into your comment to make it easier to answer your question.
 
-<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit11" theme="github-light" crossorigin="anonymous" async> </script> 
+<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit12" theme="github-light" crossorigin="anonymous" async> </script>

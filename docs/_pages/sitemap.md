@@ -6,7 +6,7 @@ permalink: /sitemap.html
 sidebar: false
 ---
 
-A list of all the posts and pages found on the site. For you robots out there is an [XML version]({{ "sitemap.xml" | absolute_url }}) available for digesting as well.
+A list of all the posts and pages found on the site. An [XML version]({{ "sitemap.xml" | absolute_url }}) is also available for automated tools.
 
 <h2>Pages</h2>
 {% for post in site.pages %}

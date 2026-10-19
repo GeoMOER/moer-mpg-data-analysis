@@ -12,7 +12,7 @@ knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e11-
 ```
 
 The following plotting examples will show R's generic plotting way. 
-The underlaying example data is taken from our crop yield dataset.
+The underlying example data is taken from our crop yield dataset.
 
 ```{r, echo=FALSE, warning=FALSE}
 library(envimaR)
@@ -33,7 +33,7 @@ cp <- readRDS(file.path(envrmt$path_rdata, "cp_clean.rds"))
 
 ##### Scatter plot
 Scatter plots are probably the most often produced plots since they visualize 
-the dependence between two variables in a straight forward manner.
+the dependence between two variables in a straightforward manner.
 
 In the following example, we will visualize the number of totally affected 
 people against the time line. The aggregation looks like this:
@@ -50,7 +50,7 @@ The x- and y-axis still show the variable names which is a good thing if you are
 not sure what information is plotted on which of the axis. For presenting this
 plot to someone else, it might be better to add custom labels and a title.
 
-To add custom lables, use the `xlab` and `ylab` arguments. For the title, use
+To add custom labels, use the `xlab` and `ylab` arguments. For the title, use
 the `main` argument:
 ```{r}
 plot(dfa$year, dfa$total_affected,
@@ -107,7 +107,7 @@ dfa <- aggregate(as.numeric(df$total_affected), by = list(df$region), FUN = sum)
 colnames(dfa) <- c("region", "total_affected")
 ```
 
-To produce a box whisker plot for the variablity of the number of affected 
+To produce a box whisker plot for the variability of the number of affected
 persons over all regions, use the `boxplot`function:
 ```{r}
 boxplot(dfa$total_affected, 
@@ -127,13 +127,13 @@ boxplot((dfa$total_affected^(0.5)^3),
 The individual parts of the plot show the following:
 
 The box includes the distribution of the values located in the second and third 
-quartil, thus of the 50% of values which are closest to the mean value.
+quartile, thus of the 50% of values which are closest to the mean value.
 
 The median is depicted by the line in the box. The whiskers and representation 
 of outliers represent the spread of the values.
 
 The Whiskers mark the remaining values which don't fall into the second and 
-third quartile. The length of the whiskers is not standardizized. Often they are
+third quartile. The length of the whiskers is not standardized. Often they are
 expanded to 1.5*the interquartile range (IQR).
 
 The interquartile range is the range between the lowest value falling into the 
@@ -142,7 +142,7 @@ second quartile and the highest value falling into the third quartile.
 All values which are higher than 1.5*IQR are considered as outliers and are 
 usually marked by points over or under the whiskers, respectively. 
 
-One nice feature of the `boxplot` function is that it can also handel the 
+One nice feature of the `boxplot` function is that it can also handle the
 aggregation of a variable. To do that, supply the aggregation variable in the
 function. The following example uses the original data frame and computes the
 distribution of the totally affected persons across all years for each region:
@@ -152,11 +152,11 @@ boxplot((total_affected^(0.5)^3) ~ region, data = df,
         main = "Persons affected by natural disasters from 1900 to 2013",
         las=2)
 ```
-The x labes are rotated by 90 degree using the las argument.
+The x labels are rotated by 90 degree using the las argument.
 
 
-##### Histogramm plots
-Histogramm plots show the frequency distribution of the data. 
+##### Histogram plots
+Histogram plots show the frequency distribution of the data.
 
 In the following example we will use the same aggregated data frame as above and
 have a look at the distribution of the affected persons.
@@ -168,16 +168,16 @@ hist(dfa$total_affected,
      main = "Persons affected by natural disasters from 1900 to 2013")
 ```
 As we know already from the plots above, the frequency distribution of the values
-is far from normaly distributed. Let's have a look at the log transformation we
+is far from normally distributed. Let's have a look at the log transformation we
 used for the scatter plot:
 ```{r}
 hist(log(dfa$total_affected),
      xlab = "Logarithm of affected persons",
      main = "Persons affected by natural disasters from 1900 to 2013")
 ```
-It obisouly results in something quite similar to a normal distribution.
+It obviously results in something quite similar to a normal distribution.
 
-Finally, let's check the square root transoformation used for the box whisker
+Finally, let's check the square root transformation used for the box whisker
 plots:
 ```{r}
 hist(dfa$total_affected^0.5,
@@ -185,7 +185,7 @@ hist(dfa$total_affected^0.5,
      main = "Persons affected by natural disasters from 1900 to 2013")
 ```
 That does not change much, but if we increase the power of the root, the resulting
-value distribution becomes more and more normaly distributed (except for the 
+value distribution becomes more and more normally distributed (except for the
 values:
 ```{r}
 hist(dfa$total_affected^(0.5)^3,

@@ -9,7 +9,7 @@ header:
 
 
 Coercing data types to date and/or time information is generally performed using
-`as.Date` or either `as.POSIXct` or `as.POSIXlt`. Let's start with `as.Date`:
+`as.Date`, `as.POSIXct`, or `as.POSIXlt`. Let's start with `as.Date`:
 
 ```r
 as.Date("2014-01-01 13:30:35")
@@ -31,8 +31,8 @@ as.Date("01.01.2014", "%m.%d.%Y")
 While `as.Date` requires information on the year, month and day without any
 exception, time information is not handled at all.
 
-If date and time or just time information is required to be handled explicitly,
-the temporal information can be converted to a POSIX data type. In general, there
+To handle date and time information explicitly,
+convert it to a POSIX data type. In general, there
 are two kinds of POSIX classes: (i) POSIXct which handles date/time information as
 seconds since a certain time (standard: 1970-01-01 00:00.00 UTC) and (ii)
 POSIXlt which stores date/time information as a list. Again, if the date/time

@@ -13,7 +13,7 @@ knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-
 
 Lists are one of the most flexible data structures in R.
 
-## Creation of a lilst
+## Creation of a list
 A list is create using the `list` function. Here are some examples:
 ```{r}
 my_list_1 <- list(c(1,2,3,4,5))
@@ -33,7 +33,7 @@ my_list_4
 
 
 ## Structure of a list
-To get the lenght of a list, use the `length` function as for vectors. For 
+To get the length of a list, use the `length` function as for vectors. For
 information on the structure, use the `str` function:
 ```{r}
 length(my_list_3)
@@ -48,7 +48,7 @@ str(my_list_4)
 ## Displaying and accessing the content of a list
 In order access elements of a list, you have to supply the  position of the 
 element in the vector within double square brackets (not in simple brackets 
-as it is the case for vectors). Think about it as if you have to access the list
+as is the case for vectors). Think about it as if you have to access the list
 and then the vector within the list element which contains the
 values. To finally access an element of the vector, one bracket pair is enough.
 ```{r}

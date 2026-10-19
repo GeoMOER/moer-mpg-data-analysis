@@ -44,13 +44,13 @@ library(latticeExtra)
 ```
 
 
-We already know that a boxplot is probably the most fundamental way to perform a visual data exploration. Producing it is straight forward in generic plotting:
-Producing a boxplot is staright forward (the x-axis lables are just the column names):
+We already know that a boxplot is probably the most fundamental way to perform a visual data exploration. Producing it is straightforward in generic plotting:
+Producing a boxplot is straightforward (the x-axis labels are just the column names):
 ```{r, warning=FALSE}
 boxplot(lu[, c("Settlement", "Recreation", "Agriculture", "Forest")])
 ```
 
-Producing a boxplot in lattice is not so staright forward as in generic plotting if you whish to have multiple variables shown in one plot. Before one can plot it, one has to transform the data into "long" format. In the case of our dataset, this implies to identify the ID variables (i.e. the ones who define the place and time of the measurement). After this is done, the long-format will duplicate them as often as it is required to fit in all values of the other columns (i.e. setellment, recreation, agriculture and forest) and add the respective values in a seperate column.
+Producing a boxplot in lattice is not so straightforward as in generic plotting if you which to have multiple variables shown in one plot. Before one can plot it, one has to transform the data into "long" format. In the case of our dataset, this implies to identify the ID variables (i.e. the ones who define the place and time of the measurement). After this is done, the long-format will duplicate them as often as it is required to fit in all values of the other columns (i.e. setellment, recreation, agriculture and forest) and add the respective values in a separate column.
 
 That's what the data looks like in it's original format:
 ```{r, warning=FALSE}
