@@ -67,7 +67,7 @@ Using the Yule-Walker method for estimating the AR parameters, a maximum lag of 
 
 an AR(p) model (i.e. an AR model with p considered lags) is a good starting point. For moving average models it is vice versa and the lags q considered in the model would be taken from the auto-correlation function. In the auto- and partial auto-correlation function of the two-times differentiated dataset, we might see exactly this:
 ```{r, warning=FALSE}
-par_org <- par()
+par_org <- par(no.readonly = TRUE)
 par(mfrow = c(1,2))
 acf(dTa)
 pacf(dTa)

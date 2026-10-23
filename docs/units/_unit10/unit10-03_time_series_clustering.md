@@ -33,7 +33,7 @@ head(tam)
 tam <- tam[-(1:6),]
 
 # convert Date column to POSIXlt Date; added day 01 for the conversion
-tam$Date <- strptime(paste0(tam$Date, "01"), format = "%Y%m%d", tz = "CEST")
+tam$Date <- strptime(paste0(tam$Date, "01"), format = "%Y%m%d", tz = "Europe/Berlin")
 
 plot(tam$Date, tam$Ta, type = "l")
 ```

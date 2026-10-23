@@ -96,7 +96,7 @@ an AR(p) model (i.e. an AR model with p considered lags) is a good starting poin
 In the auto- and partial auto-correlation function of the twice-differenced dataset, we might see exactly this:
 
 ```r
-par_org <- par()
+par_org <- par(no.readonly = TRUE)
 par(mfrow = c(1,2))
 acf(dTa)
 pacf(dTa)

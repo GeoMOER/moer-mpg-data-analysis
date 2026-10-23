@@ -15,7 +15,7 @@ After completing this worksheet you should be able to notice some common data se
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
   * [Git](https://git-scm.com/downloads){:target="_blank"} installed and available to RStudio. [GitHub Desktop](https://desktop.github.com/){:target="_blank"} is an optional graphical client.
-  * Data on crop yield at the municipal level provided by the course instructors.
+  * Data on crop yield for German reporting areas, including rural districts and independent cities (*Kreise und kreisfreie Städte*), provided by the course instructors.
 
 ## Cleaning crop data
 The above data set provides information on crop yield. 

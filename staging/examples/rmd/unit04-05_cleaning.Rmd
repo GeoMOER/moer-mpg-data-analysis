@@ -25,7 +25,7 @@ The aim is a tidy data frame with the following structure ([Wickham, 2014](https
 * a separate row for each observation
 * a separate data frame for each kind of observation
 
-The following examples are based on a data set showing the percentage fraction of settlement, recreational, agricultural, and forest areas for each rural district in Germany. The data has been provided through the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/) and also formed the basis for the visual data exploration example.
+The following examples are based on a data set showing the percentage shares of settlement, recreation, agriculture, and forest area for German reporting regions, including federal states and districts. The data has been provided through the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/) and also formed the basis for the visual data exploration example.
 
 ### Reading data and first look
 ```{r, warning=FALSE}

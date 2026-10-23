@@ -124,7 +124,7 @@ Please note that this time, only x1 is indicated as significant. What causes thi
 
 
 ```r
-lmod <- lmod <- lm(y ~ x1 + x2, data = df)
+lmod <- lm(y ~ x1 + x2, data = df)
 anova(lmod)
 ```
 

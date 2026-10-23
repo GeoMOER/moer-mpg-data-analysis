@@ -17,7 +17,7 @@ For now, we will use x1 as independent variable and y1 as dependent variable.
 ind <- anscombe$x1
 dep <- anscombe$y1
 
-par_org <- par()
+par_org <- par(no.readonly = TRUE)
 par(mfrow = c(1,2))
 hist(ind, main = "Independent variable")
 hist(dep, main = "Dependent variable")

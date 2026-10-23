@@ -2,6 +2,7 @@
 title: "Example: Aggregation Statistics"
 toc: true
 toc_label: In this example
+published: FALSE
 header:
   image: "/assets/images/teaser/holz.jpg"
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'

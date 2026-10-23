@@ -16,21 +16,26 @@ To illustrate a time series analysis, air temperature records of the weather sta
 The data has been supplied by the [German Weather Service](https://opendata.dwd.de/climate_environment/CDC/observations_germany){:target="_blank"}.
 
 ## Download the data
-You can use the [rdwd](https://cran.r-project.org/web/packages/rdwd/index.html) package for downloading the data or (if the package does not work...) download the data from the DWD server linked above.
+You can use the [rdwd](https://cran.r-project.org/web/packages/rdwd/index.html) package to locate the archive, or download it from the DWD server linked above. The archive's ending year changes when DWD publishes a new historical file. This example uses observations through 2022 so that its printed results and the following examples refer to the same period.
 
 ```r
-library("rdwd")
 url <- rdwd::selectDWD(id = "003164", res = "hourly", var = "air_temperature", per = "historical")
-rdwd::dataDWD(url, dir = getwd(), read = FALSE)
+url <- sub("^ftp://", "https://", url)
+archive <- basename(url)
+download.file(url, destfile = archive, mode = "wb")
+data_file <- grep("^produkt_tu_stunde_.*_03164\\.txt$",
+                  unzip(archive, list = TRUE)$Name, value = TRUE)
+stopifnot(length(data_file) == 1)
+unzip(archive, files = data_file, exdir = "dwd")
 ```
 
 ## A first look at the time series
 The time series shows hourly recordings of air temperature measured at 2 m between 1 July 2006 and 31 December 2022.
 
 ```r
-# adapt path to where your file actually is and filename to the downloaded time span
-path <- "produkt_tu_stunde_20060701_20241231_03164.txt"
+path <- file.path("dwd", data_file)
 dwd <- read.table(path, header = TRUE, sep = ";", dec = ".")
+dwd <- dwd[dwd$MESS_DATUM <= 2022123123, ]
 head(dwd)
 ```
 
@@ -126,7 +131,7 @@ boxplot(dwd$TT_TU ~ dwd$AGG_M)
 If you wonder about the distribution, you can use what we have learned so far:
 
 ```r
-par_org <- par()
+par_org <- par(no.readonly = TRUE)
 par(mfrow = c(1,2))
 hist(dwd$TT_TU, prob = TRUE)
 lines(density(dwd$TT_TU))

@@ -11,33 +11,51 @@ Become familiar with reading and writing data, computing summary statistics, and
 
 ## Learning objectives
 At the end of this unit you should be able to
-* read and write tabulated data,
-* compute some summary statistics, 
-* use R's basic plot functionality to quickly visualize your data.
+* import and export tabulated data while checking types, identifiers, and units,
+* explain how a prepared RDS file relates to its source data,
+* compute and interpret basic summary statistics,
+* choose and justify a plot for a distribution, category comparison, time course, or relationship.
 
+Additional material is available in the accompanying [Base R course](https://geomoer.github.io/moer-base-r/), particularly [data input/output](https://geomoer.github.io/moer-base-r/unit06/unit06-01_Intro.html) and [simple visualizations](https://geomoer.github.io/moer-base-r/unit09/unit09-01_Intro.html).
 
+## Data files {#data-files-on-ilias}
 
-Additional learning material can be found in the accompanying [Base R course](https://geomoer.github.io/moer-base-r/){:target="_blank"}, e.g.
-[input and output of data](https://geomoer.github.io/moer-base-r/unit06/unit06-01_Intro.html){:target="_blank"} or
-[simple visualizations](https://geomoer.github.io/moer-base-r/unit09/unit09-01_Intro.html){:target="_blank"}.
-
-## Data files on ILIAS
-
-The files provided on ILIAS cover different steps of the course workflow. Download the ones needed for an exercise, keep their original names, and put them in the folder from which you run your R Markdown document:
+For the Unit 03 land-use examples, create a `Data/` folder in your RStudio project and download the files linked below into it. Keep their original names. The [CSV I/O example]({{ site.baseurl }}/unit03/unit03-04_csv_io.html) shows the complete preparation; the [exploration example]({{ site.baseurl }}/unit03/unit03-06_exploration.html) then uses its saved result.
 
 | File | What it contains | How to use it |
 |---|---|---|
-| `AI001_gebiet_flaeche.txt` | German regional land-use shares, 1996–2014 | Raw semicolon-separated text for practicing import and cleaning. |
-| `115-46-4_feldfruechte.txt` | German regional crop yields, 1999–2015 | Raw text for the later cleaning assignment. |
-| `lu_clean.rds` and `cp_clean.rds` | Prepared land-use and crop-yield data | R objects for examples that start after cleaning; use `readRDS()`. |
-| `hessen_holzeinschlag_1997-2014.csv` | Annual timber harvest in Hesse, 1997–2014 | The CSV for Assignment 03; it includes introductory lines and a final note. |
-| `wald_und_forstwirtschaft_barrierefrei.pdf` | The German source report for the timber data | Background and provenance; the key column names are translated below. |
+| [destatis-land-use-2024.csv]({{ site.baseurl }}/assets/data/destatis-land-use-2024.csv) | Official table exported as UTF-8 CSV: Germany and 16 states, 64 source columns | Import semicolon-separated text with decimal commas; the first line is the header. |
+| [destatis-land-use-2024-states.rds]({{ site.baseurl }}/assets/data/destatis-land-use-2024-states.rds) | Prepared 2024 data for the 16 federal states; ten documented columns | Use `readRDS()` for visual exploration; this is generated from the CSV above. |
+| [prepare-land-use-2024.R]({{ site.baseurl }}/assets/data/prepare-land-use-2024.R) | Reproducible CSV-to-RDS preparation | Run the script or follow the steps in the CSV I/O example. |
+| [Original workbook]({{ site.baseurl }}/assets/data/destatis-land-use-2024.xlsx), [dictionary]({{ site.baseurl }}/assets/data/destatis-land-use-2024-dictionary.csv), [source notes]({{ site.baseurl }}/assets/data/destatis-land-use-2024-source.txt) | Original tables and definitions, bilingual column explanations, and export/preparation details | Consult these when interpreting the English names, units, unavailable cells, and categories. |
 
-In the filenames, *Gebiet und Fläche* means *region and area*, *Feldfrüchte* means *field crops*, and *Holzeinschlag* means *timber harvest*. In the timber CSV, `FWJ` is the reported forestry year, `Eiche` is oak, `Buche` is beech, `Fichte` is spruce, `Kiefer` is pine, and `Insgesamt` is the total. Keep the source label `Buntholz`. The CSV note and source report say that it is included with beech from **2000**; the values in that column become zero in 2000. A recorded zero in this category from 2000 onward does not mean that no such wood was harvested. The report gives the harvest unit as **1,000 m³ without bark** (*ohne Rinde*, `o.R.`). The land-use columns in `lu_clean.rds` are already named in English; values for `Settlement` (including transport area), `Recreation`, `Agriculture`, and `Forest` are percentages of total area. `cp_clean.rds` contains crop yields in decitonnes per hectare (`dt/ha`; 1 dt = 100 kg). German place names are identifiers, not terms you need to translate.
+Destatis is Germany's Federal Statistical Office. The land-use observations refer to **December 31, 2024**, and the report was published on **November 21, 2025**. We use its worksheet `csv-33111-03`. Germany's aggregate is excluded from the prepared RDS so that each row represents one state. State identifiers remain text, including leading zeros. `Area_ha` is total area in hectares; `Settlement`, `Transport`, `Vegetation`, `Agriculture`, `Forest`, and `Water` are percentages of each state's total area. Agriculture and forest are components of vegetation, so these columns must not all be summed together. The [official publication page](https://www.destatis.de/DE/Themen/Branchen-Unternehmen/Landwirtschaft-Forstwirtschaft-Fischerei/Flaechennutzung/_inhalt.html) and [methods report](https://www.destatis.de/DE/Methoden/Qualitaet/Qualitaetsberichte/Land-Forstwirtschaft-Fischerei/flaechenerhebung.pdf?__blob=publicationFile) explain the statistics.
 
-The prepared crop file retains two misspelled column names: `Potatos` means potatoes, and `Suggar_beets` means sugar beet. In the raw crop file, `Winterweizen` is winter wheat, `Roggen` is rye, `Wintergerste` is winter barley, `Sommergerste` is spring barley, `Hafer` is oats, `Winterraps` is winter rapeseed, and `Silomais` is silage maize.
+The `pressure` and `Orange` datasets used for plotting practice are included with R; no additional download is needed.
 
-These historical extracts remain the course exercise files so that the later assignments use the same data. For recent context, compare them with the Federal Statistical Office's [timber harvest by species group and federal state, 2024–2025 (English)](https://www.destatis.de/EN/Themes/Economic-Sectors-Enterprises/Agriculture-Forestry-Fisheries/Forestry-Wood/Tables/timber-cutting-according-to-types-of-timber.html), [land use by federal state in 2024 (English)](https://www.destatis.de/EN/Themes/Economic-Sectors-Enterprises/Agriculture-Forestry-Fisheries/Land-Use/Tables/areas-laender.html), and [crop yields in 2022–2024 (English)](https://www.destatis.de/EN/Themes/Economic-Sectors-Enterprises/Agriculture-Forestry-Fisheries/Field-Crops-Grassland/Tables/2-yield-hectare-of-selected-crops-in-a-time-comparison.html). These tables differ in geographic detail and category definitions, so do not append their rows to the course files.
+### Timber data on ILIAS
+
+Download `hessen_holzeinschlag_2003-2025.csv` from ILIAS for Assignments 03 and 08. Keep it beside your assignment's R Markdown document, or supply its folder in your import command.
+
+The timber CSV is prepared from [GENESIS-Online table 41261-0010](https://genesis.destatis.de/datenbank/online/statistic/41261/table/41261-0010), exported on October 23, 2026. Its values cover all forest ownership types in Hessen and are measured in **1,000 m³ without bark**. The file uses semicolon separators, decimal points, and Latin-1 encoding. The header is in line 5; the next 23 lines contain the observations. Read only these annual rows, so that the final notes do not become data rows. The selection starts in 2003 to use calendar years throughout: earlier observations refer to forestry years or, for Hessen in 2002, a mixture of reporting periods.
+
+| Column | Meaning |
+|---|---|
+| `Year` | Calendar year, 2003–2025. |
+| `Oak_red_oak` | Oak and red oak. |
+| `Beech_other_deciduous` | Beech and other deciduous trees. |
+| `Spruce_fir_Douglas_fir_other_conifers` | Spruce, fir, Douglas fir, and other coniferous trees. |
+| `Pine_larch` | Pine and larch. |
+| `Total` | Official total harvest over all four groups. |
+
+The harvest columns represent **wood type groups**, not individual species. Values and official totals retain the precision of the export; small differences between a total and the sum of the rounded group values are possible. The original quality codes are retained in the notes below the data.
+
+For the official data description, read the [Destatis quality report (PDF, German)](https://www.destatis.de/DE/Methoden/Qualitaet/Qualitaetsberichte/Land-Forstwirtschaft-Fischerei/holzeinschlagsstatistik.pdf?__blob=publicationFile). Its overview is on pages 3–4; section 6.2 on page 15 explains changes in survey frequency and timber assortment definitions before 2007. The course uses annual totals by wood type group, rather than the individual timber assortments discussed there. Starting in 2003 gives a consistent calendar-year window; it does not mean that every aspect of the survey method remained unchanged.
+
+
+### Data for later units
+
+The 2024 state table above is the Unit 03 example. Later cleaning and regression exercises use separate regional datasets with different observation counts and category definitions. Their [file guide is in Unit 04]({{ site.baseurl }}/unit04/unit04-01a_introduction.html#data-for-units-04-07); use the file specified by each exercise. Do not combine these datasets merely because some column names resemble each other.
 
 
 ## Comments?

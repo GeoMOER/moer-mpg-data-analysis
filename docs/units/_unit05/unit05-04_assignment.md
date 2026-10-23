@@ -7,7 +7,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-This worksheet tackles the question of how the percentage share of settlement area is related to the share of recreation area in each community.
+This worksheet tackles the question of how the percentage share of settlement area is related to the share of recreation area in German reporting regions.
 
 After completing this worksheet you should be able to compute a linear regression model and have a first idea of how variable model results could be if only a slightly different sample is used.
 
@@ -17,7 +17,7 @@ After completing this worksheet you should be able to compute a linear regressio
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
   * [Git](https://git-scm.com/downloads){:target="_blank"} installed and available to RStudio. [GitHub Desktop](https://desktop.github.com/){:target="_blank"} is an optional graphical client.
-  * Data on percentage fraction of land use on a community level provided by the course instructors.
+  * Data on percentage shares of land use at several administrative levels provided by the course instructors.
 
 
 ## Linear modeling and normal distribution of the residuals  

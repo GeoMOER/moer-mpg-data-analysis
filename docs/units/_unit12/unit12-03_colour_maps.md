@@ -34,6 +34,7 @@ Download the data [here](https://naciscdn.org/naturalearth/50m/cultural/ne_50m_a
 ```r
 download.file("https://naciscdn.org/naturalearth/50m/cultural/ne_50m_admin_0_countries.zip", 
              destfile = "countries.zip")
+unzip("countries.zip", exdir = "countries")
 ```
 [NaturalEarthData](https://www.naturalearthdata.com/){:target="_blank"} has a nice collection of other free GIS data, too.
 
@@ -85,9 +86,11 @@ hist(randomNumbers, breaks = map$breaks, col = myColours, freq = TRUE)
 <img src="{{ site.baseurl }}/assets/images/rmd_images/e12-03/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 ## Save information in map
-We can save the random numbers and the color information in the map for later use.
+We can save the random numbers and the colors assigned by the equal-count breaks in the map for later use. Each feature receives the color of its value's class.
 ```r
 world$randomNumber <- randomNumbers
-world$randomNumberColour <- myColours
+color_class <- cut(randomNumbers, breaks = map$breaks,
+                   include.lowest = TRUE, labels = FALSE)
+world$randomNumberColour <- myColours[color_class]
 terra::writeVector(world, "a whole new world.shp", overwrite = TRUE)
 ```

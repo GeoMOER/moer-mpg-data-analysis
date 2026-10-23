@@ -17,7 +17,7 @@ After completing this worksheet you should have gained some experience in applyi
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
   * [Git](https://git-scm.com/downloads){:target="_blank"} installed and available to RStudio. [GitHub Desktop](https://desktop.github.com/){:target="_blank"} is an optional graphical client.
-  * Data on percentage fraction of land use on a community level provided by the course instructors.
+  * Data on percentage shares of land use at several administrative levels provided by the course instructors.
 
 
 ## Prediction error of a linear model

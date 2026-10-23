@@ -19,10 +19,10 @@ as.Date("2014-01-01 13:30:35")
 ## [1] "2014-01-01"
 ```
 If the character string supplied to the function comes in the ISO standard format,
-`as.Date` will notice it automatically. Otherwise, we have to define the format:
+`as.Date` will notice it automatically. Otherwise, we have to define the format. For example, `%d.%m.%Y` means day, month, and year:
 
 ```r
-as.Date("01.01.2014", "%m.%d.%Y")
+as.Date("01.01.2014", "%d.%m.%Y")
 ```
 
 ```
@@ -39,7 +39,7 @@ POSIXlt which stores date/time information as a list. Again, if the date/time
 information is not supplied in standard format, one has to define it:
 
 ```r
-as.POSIXct("01.01.2014 13:30:35", format = "%m.%d.%Y %H:%M:%S")
+as.POSIXct("01.01.2014 13:30:35", format = "%d.%m.%Y %H:%M:%S")
 ```
 
 ```
@@ -47,7 +47,7 @@ as.POSIXct("01.01.2014 13:30:35", format = "%m.%d.%Y %H:%M:%S")
 ```
 
 ```r
-as.POSIXlt("01.01.2014 13:30:35", format = "%m.%d.%Y %H:%M:%S")
+as.POSIXlt("01.01.2014 13:30:35", format = "%d.%m.%Y %H:%M:%S")
 ```
 
 ```
@@ -58,7 +58,7 @@ function, which handles the conversion. The latter function can also be used
 directly for converting character information to POSIXlt:
 
 ```r
-lt <- strptime("01.01.2014 13:30:35", "%m.%d.%Y %H:%M:%S")
+lt <- strptime("01.01.2014 13:30:35", "%d.%m.%Y %H:%M:%S")
 lt
 ```
 
@@ -82,7 +82,7 @@ is the way one can add or subtract a specific amount of time. For POSIXct, you
 have to supply the time interval as seconds:
 
 ```r
-ct <- as.POSIXct("01.01.2014 13:30:35", format = "%m.%d.%Y %H:%M:%S")
+ct <- as.POSIXct("01.01.2014 13:30:35", format = "%d.%m.%Y %H:%M:%S")
 ct + 60 * 30  # add 30 minutes to ct
 ```
 
@@ -93,7 +93,7 @@ While this can also be used for POSIXlt, one can also access the individual
 time information directly:
 
 ```r
-lt <- as.POSIXlt("01.01.2014 13:30:35", format = "%m.%d.%Y %H:%M:%S")
+lt <- as.POSIXlt("01.01.2014 13:30:35", format = "%d.%m.%Y %H:%M:%S")
 lt$hour <- lt$hour + 24  # add 24 hours
 lt
 ```

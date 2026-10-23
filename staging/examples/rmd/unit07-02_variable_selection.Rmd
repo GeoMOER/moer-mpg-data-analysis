@@ -83,7 +83,7 @@ summary(lmod)
 Please note that this time, only x1 is indicated as significant. What causes this difference? Before we go into details, we will compute the model again but this time with a changed order (i.e. x1 and x2):
 
 ```{r, warning=FALSE}
-lmod <- lmod <- lm(y ~ x1 + x2, data = df)
+lmod <- lm(y ~ x1 + x2, data = df)
 anova(lmod)
 summary(lmod)
 ```

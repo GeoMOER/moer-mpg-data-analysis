@@ -7,88 +7,189 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-
-
 ## Reading data from text files
 
-Reading text files is realized using the `read.table` function from R's utils
-library. The function will return a data frame which contains the information of
-the text file.
+A successful import produces the right rows, columns, types, and units. We will follow a small official dataset from its source table to an R object used in the [exploration example]({{ site.baseurl }}/unit03/unit03-06_exploration.html).
+
+### Source and downloads
+
+Our source is Destatis's *Survey of land area by actual use, 2024*, published on November 21, 2025. Worksheet `csv-33111-03` contains **17 records**: Germany and its 16 federal states, all at December 31, 2024. It has 64 columns, including identifiers, descriptions, total area in hectares, and land-use percentages. These are state-level observations for one date, not districts or a time series.
+
+Create a `Data/` folder in your RStudio project. Download the [teaching CSV]({{ site.baseurl }}/assets/data/destatis-land-use-2024.csv) into it. Also available are the [original Destatis workbook]({{ site.baseurl }}/assets/data/destatis-land-use-2024.xlsx), [bilingual column dictionary]({{ site.baseurl }}/assets/data/destatis-land-use-2024-dictionary.csv), and [source and preparation notes]({{ site.baseurl }}/assets/data/destatis-land-use-2024-source.txt). The CSV retains all 17 source records and 64 headers; empty source cells remain empty. The dictionary's English explanations are teaching translations.
+
+The official [publication page](https://www.destatis.de/DE/Themen/Branchen-Unternehmen/Landwirtschaft-Forstwirtschaft-Fischerei/Flaechennutzung/_inhalt.html) and [methods report](https://www.destatis.de/DE/Methoden/Qualitaet/Qualitaetsberichte/Land-Forstwirtschaft-Fischerei/flaechenerhebung.pdf?__blob=publicationFile) provide the publisher's definitions.
+
+### Import and inspect
+
+This CSV starts with its header: inspect the file before choosing `skip`. It uses semicolons, decimal commas, and UTF-8 text. Read the columns as text initially so that identifiers such as `"01"` keep their leading zero:
 
 
 ```r
-# Place the ILIAS file beside your R Markdown document, or adjust the path.
-df <- read.table("AI001_gebiet_flaeche.txt",
-                 skip = 4, header = TRUE, sep = ";", dec = ",",
-                 na.strings = ".", fileEncoding = "latin1",
-                 colClasses = c("integer", "character", "character",
-                                rep("numeric", 4)))
+raw <- read.csv2("Data/destatis-land-use-2024.csv",
+                 colClasses = "character", na.strings = "",
+                 fileEncoding = "UTF-8", check.names = FALSE)
+dim(raw)
 ```
 
-As you can see, the `read.table` function gets several arguments (which is common for many functions). The first one gives the filename including the path to the file.
-* `skip = 4` tells the function to skip the first four lines (which are plain text lines in this case and not tabulated values)
-* `header = TRUE` tells the function that the next line contains column names
-* `sep = ";"` defines the separator of the individual columns in the data frame
-* `dec = ","` defines the decimal separator used in the dataset
-* `na.strings = "."` marks the source's missing values as `NA`
-* `fileEncoding = "latin1"` reads German characters in this older file correctly
-* `colClasses` keeps the regional ID as text (including leading zeros) and reads the four percentage columns as numbers
-
-A note on the sequence of the arguments: the sequence of the arguments does
-not matter as long as you name them explicitly. If you do not use the argument
-identifier as is the case for the first argument, the filename, in the example
-then the sequence matters. To get information on the default sequence and of 
-course the general application of each R function, type `?<function name>`
-(e.g. `?read.table`) in an R console.
-
-After you execute the `read.table` function above, the content of the text file is
-stored into a two-dimensional data frame called `df` in the example above.
-
-A quick way to check if everything is fine is to display the first few rows of
-the data frame using the `head` function (without the 2, it prints six rows by default).
+```
+## [1] 17 64
+```
 
 ```r
-head(df, 2)
+raw[1:3, c("Bezugszeitraum", "Schluesselnummer_Land", "Regionale_Gliederung")]
 ```
 
 ```
-##      X X.1                  X.2
-## 1 1996  DG          Deutschland
-## 2 1996  01   Schleswig-Holstein
-##   Anteil.Siedlungs..und.Verkehrsfläche.an.Gesamtfl.
-## 1                                              11.8
-## 2                                              10.8
-##   Anteil.Erholungsfläche.an.Gesamtfläche
-## 1                                    0.7
-## 2                                    0.7
-##   Anteil.Landwirtschaftsfläche.an.Gesamtfläche
-## 1                                         54.1
-## 2                                         73.0
-##   Anteil.Waldfläche.an.Gesamtfläche
-## 1                              29.4
-## 2                               9.3
+##   Bezugszeitraum Schluesselnummer_Land Regionale_Gliederung
+## 1           2024                     0          Deutschland
+## 2           2024                    01   Schleswig-Holstein
+## 3           2024                    02              Hamburg
 ```
 
-The source uses decimal commas; R prints the imported numeric values with decimal points. The first three columns contain the year, regional code, and German place name. The remaining four columns are percentages of total area: settlement and transport, recreation, agriculture, and forest. You can use `str(df)` to check the imported types.
+`read.csv2()` is a convenience form of `read.table()` with `header = TRUE`, `sep = ";"`, and `dec = ","`. `colClasses = "character"` postpones numeric conversion; `na.strings = ""` imports empty cells as missing values, and `check.names = FALSE` retains the source's exact column names. These settings describe this file; the timber CSV in Assignment 03 has a different header arrangement and decimal separator.
+
+Use the dictionary to distinguish measurements from metadata. `Bezugszeitraum` is the reporting year, `Schluesselnummer_Land` the state identifier, and `Regionale_Gliederung` the reporting area's name. A code identifies an area; it is not a measured amount.
+
+### Select columns and explain their meaning
+
+Keep `raw` unchanged. Select a small set of columns and assign readable English names. The names on the left below are our names; the strings on the right are exact source headers:
+
+
+```r
+columns <- c(
+  Year = "Bezugszeitraum",
+  ID = "Schluesselnummer_Land",
+  Place = "Regionale_Gliederung",
+  Area_ha = "Bodenflaeche_insgesamt_in_Hektar",
+  Settlement = "Anteil_der_Flaeche_fuer_Siedlung_in_Prozent_10000000",
+  Transport = "Anteil_der_Flaeche_fuer_Verkehr_in_Prozent_20000000",
+  Vegetation = "Anteil_der_Flaeche_fuer_Vegetation_in_Prozent_30000000",
+  Agriculture = "Anteil_der_Flaeche_fuer_Landwirtschaft_in_Prozent_31000000",
+  Forest = "Anteil_der_Flaeche_fuer_Wald_in_Prozent_32000000",
+  Water = "Anteil_der_Flaeche_fuer_Gewaesser_in_Prozent_40000000"
+)
+land_use <- raw[unname(columns)]
+names(land_use) <- names(columns)
+```
+
+`Area_ha` is total area in hectares (1 ha = 10,000 m²). The other six measurement columns are **percentages of each area's total area**, not hectares. For example, `9.4` means 9.4%, rather than a fraction of 0.094. The eight-digit suffixes identify land-use categories.
+
+`Settlement` includes recreational uses and excludes the separately reported `Transport` category. It is not a measure of sealed soil. `Agriculture` and `Forest` are components of the broader `Vegetation` category. Thus these columns describe different levels of a classification.
+
+Convert only the numeric fields, keeping `ID` and `Place` as text:
+
+
+```r
+numeric_columns <- setdiff(names(land_use), c("ID", "Place"))
+land_use[numeric_columns] <- type.convert(
+  land_use[numeric_columns], dec = ",", as.is = TRUE
+)
+str(land_use)
+```
+
+```
+## 'data.frame':	17 obs. of  10 variables:
+##  $ Year       : int  2024 2024 2024 2024 2024 2024 2024 2024 2024 2024 ...
+##  $ ID         : chr  "0" "01" "02" "03" ...
+##  $ Place      : chr  "Deutschland" "Schleswig-Holstein" "Hamburg" "Niedersachsen" ...
+##  $ Area_ha    : int  35768346 1580430 75509 4770988 41994 3411244 2111564 1985796 3574785 7054178 ...
+##  $ Settlement : num  9.5 9.4 46.3 9.5 44 16.9 9.5 8.9 9.6 7.9 ...
+##  $ Transport  : num  5.1 4.4 12.4 5.2 12.3 7.1 6.7 6.5 5.6 4.7 ...
+##  $ Vegetation : num  83.1 81.3 33.1 83.2 32.2 74.2 82.4 83.2 83.7 85.7 ...
+##  $ Agriculture: num  50.2 68.1 22.7 57.7 26.8 46.6 41.1 40.3 44.6 46 ...
+##  $ Forest     : num  29.9 10.3 5.6 21.7 1.4 24.8 40.1 40.5 37.9 35.4 ...
+##  $ Water      : num  2.3 4.9 8.2 2.1 11.6 1.8 1.4 1.4 1.1 1.7 ...
+```
+
+Inspect the result: an unexpected text value can prevent a column from becoming numeric. Missing data are not zeros. A displayed zero may also represent a small amount rounded to the source's precision.
+
+### Check which observations belong together
+
+Germany (code `"0"`) is the national aggregate, not a seventeenth federal state. Select just the states before comparing their distributions:
+
+
+```r
+states <- land_use[land_use$ID != "0", ]
+rownames(states) <- NULL
+nrow(states)
+```
+
+```
+## [1] 16
+```
+
+```r
+anyDuplicated(states$ID)
+```
+
+```
+## [1] 0
+```
+
+```r
+summary(states[c("Settlement", "Transport", "Agriculture", "Forest")])
+```
+
+```
+##    Settlement      Transport       Agriculture        Forest
+##  Min.   : 5.60   Min.   : 3.100   Min.   : 4.00   Min.   : 1.40
+##  1st Qu.: 7.85   1st Qu.: 4.400   1st Qu.:40.12   1st Qu.:20.40
+##  Median : 9.50   Median : 5.400   Median :46.30   Median :25.80
+##  Mean   :17.01   Mean   : 6.569   Mean   :44.49   Mean   :25.61
+##  3rd Qu.:15.93   3rd Qu.: 6.800   3rd Qu.:54.62   3rd Qu.:35.33
+##  Max.   :55.90   Max.   :14.700   Max.   :68.10   Max.   :40.50
+```
+
+There should be 16 rows and no duplicated state identifiers. These checks support a meaningful import; they do not replace reading the source definitions. An unweighted mean of the state percentages gives each state equal weight. It is not Germany's area-weighted percentage; the published national record answers that question.
+
+Settlement, transport, vegetation, and water are the four main categories. Their rounded shares add to approximately 100%:
+
+
+```r
+main_categories <- c("Settlement", "Transport", "Vegetation", "Water")
+range(rowSums(states[main_categories]))
+```
+
+```
+## [1]  99.9 100.1
+```
+
+The small deviations from 100% reflect rounding. Adding `Agriculture` and `Forest` again would double-count parts of `Vegetation`. The four columns used in the overview boxplots are a selected set of non-overlapping categories, not an exhaustive partition of all land.
 
 ## Writing data to csv files
-Writing data is as easy as reading it. Just use the `write.table` function.
+
+Save prepared output separately from the source. `row.names = FALSE` avoids adding an extra index column:
+
 
 ```r
-write.table(df, file = "new.csv", sep = ",", dec = ".",
-            row.names = FALSE, fileEncoding = "UTF-8")
+dir.create("Output", showWarnings = FALSE)
+write.csv(states, "Output/land-use-2024-states.csv",
+          row.names = FALSE, fileEncoding = "UTF-8")
 ```
-As you can see, you can define any column or decimal separator.
 
-For more information have a look at e.g. the respective [data importing](https://www.datacamp.com/doc/r/importingdata) <!--(http://www.statmethods.net/input/importingdata.html) broken link? --> and [data exporting](https://www.datacamp.com/doc/r/exportingdata) <!--(http://www.statmethods.net/input/exportingdata.html)broken link? --> pages at Quick-R/DataCamp, have a look into the package documentation or search the web.
-
+This output uses commas between fields and decimal points. CSV stores text, so re-importing it requires attention to identifiers and types again.
 
 ## Alternative data I/O using RDS
-If you stay within R for reading and writing R objects from and to data files, you could also use the serialization of readRDS and saveRDS.
+
+The prepared file used in the next example is generated from **this same CSV** by the selection, renaming, conversion, and state filtering shown above:
+
 
 ```r
-saveRDS(df, file = "new.rds")
-
-# Read data to different variable
-df2 <- readRDS("new.rds")
+saveRDS(states, "Data/destatis-land-use-2024-states.rds", version = 2)
+restored <- readRDS("Data/destatis-land-use-2024-states.rds")
+identical(states, restored)
 ```
+
+```
+## [1] TRUE
+```
+
+RDS preserves the R object's column types. It does not by itself explain the source, units, or preparation choices; retain the dictionary and source notes with the data. The course also supplies the [prepared RDS]({{ site.baseurl }}/assets/data/destatis-land-use-2024-states.rds) and a [reproducible preparation script]({{ site.baseurl }}/assets/data/prepare-land-use-2024.R). Save both into `Data/`. To repeat the preparation with that script:
+
+
+```r
+source("Data/prepare-land-use-2024.R")
+prepare_land_use("Data")
+```
+
+This example gives an initial, documented preparation workflow. Unit 04 develops missing-value handling, more extensive cleaning, and reshaping. This small state table is for Unit 03; later regression exercises use a separate regional dataset with different categories and many more observations.

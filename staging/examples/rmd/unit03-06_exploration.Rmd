@@ -1,34 +1,60 @@
 ---
 title: "Example: Visual Data Exploration"
 author: "Thomas Nauss"
-date: "19 Oktober 2017"
+date: "2026-10-23"
 output:
   html_document:
     keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.path = "figures/",
-                      fig.width = 12, fig.height = 8)
+knitr::opts_chunk$set(echo = TRUE,
+  fig.path = getOption("mpg.unit03.fig.path", "figures/"),
+  fig.width = 10, fig.height = 7, dpi = 120)
 ```
 
 
 
 
-Visual data exploration should be one of the first steps in data analysis. In fact, it should start right after reading a data set. The following examples are based on a data set showing the percentage fraction of settlement and transport, recreational, agricultural, and forest areas for regional units in Germany. The data has been provided through the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/).
+Visual exploration starts with a question and an understanding of the observations. Here, each row is one German federal state in 2024. We use the prepared [Destatis land-use file]({{ site.baseurl }}/assets/data/destatis-land-use-2024-states.rds) generated in the [CSV I/O example]({{ site.baseurl }}/unit03/unit03-04_csv_io.html). That page documents the source table, English names, numeric conversion, and exclusion of Germany's aggregate. The RDS is a saved result of that preparation, not an independent data source.
 
-Within this example, we will focus on basic R graphics. Of course, all of the examples could also be realized using more advanced plotting libraries like `lattice` or `ggplot`.
-
-
-
-
-Download `lu_clean.rds` from ILIAS and place it beside your R Markdown document. This prepared R data frame has English column names and is separate from the raw `.txt` file in the CSV I/O example. The observations cover 1996–2014, and the four area columns are percentages of total area. The first rows and a column selector are shown below.
+Save the file in your project's `Data/` folder. All six land-use measurements are percentages of each state's total area; `Area_ha` separately records total area in hectares. The following four columns describe non-overlapping categories, but do not cover every land use. Settlement excludes transport under this source's classification.
 
 ```{r example-1, warning=FALSE}
-lu <- readRDS("staging/examples/data/lu_clean.rds")
-numc <- c("Settlement", "Recreation", "Agriculture", "Forest")
+lu <- readRDS("Data/destatis-land-use-2024-states.rds")
+numc <- c("Settlement", "Transport", "Agriculture", "Forest")
 head(lu[, c("Year", "ID", "Place", numc)])
 ```
+
+## First numerical overview
+
+Before plotting, inspect the ranges and typical values:
+
+```{r overview}
+summary(lu[, numc])
+```
+
+For each numerical column, `summary()` reports the minimum, first quartile, median, mean, third quartile, and maximum. A quartile divides the ordered observations into four approximately equal parts. The median is the central value; the mean uses every value and is more sensitive to large observations. These summaries give each of the 16 states equal weight; they are not Germany's area-weighted percentages.
+
+## Bar charts: compare named observations
+
+Suppose the question is: **How do selected land-use shares compare between Lower Saxony, Hessen, and Bavaria?** Select those states by their stable identifiers, then compare the four categories with grouped bars:
+
+```{r grouped-bars}
+selected <- lu[match(c("03", "06", "09"), lu$ID), ]
+heights <- t(as.matrix(selected[, numc]))
+barplot(heights, beside = TRUE,
+        names.arg = c("Lower Saxony", "Hessen", "Bavaria"),
+        col = c("steelblue", "darkorange", "goldenrod2", "darkgreen"),
+        ylim = c(0, max(heights) * 1.4),
+        ylab = "Share of state area (%)", main = "Land use, 2024",
+        legend.text = numc,
+        args.legend = list(x = "topright", ncol = 2, bty = "n"))
+```
+
+`barplot()` uses the matrix values as bar heights. Transposing with `t()` puts categories in rows and states in columns; `beside = TRUE` places category bars next to each other within each state. The bars start at zero, and the labels and legend identify the percentages and groups.
+
+This figure shows a value for each named category in each selected state. A boxplot instead answers how the values are distributed across all 16 states; a histogram groups numerical values into intervals. The [Base R bar-chart page](https://geomoer.github.io/moer-base-r/unit09/unit09-05_barplot.html) provides additional examples.
 
 
 ## Boxplot
@@ -44,7 +70,7 @@ boxplot(lu[, numc])
 As can be seen, outliers in terms of the box-plot logic are clearly identifiable although this logic does not actually prove if an observation is an outlier. Hence, one has to cross-check the data and if there is no actual sign for an outlier, then keep the data as is! However, since "outliers" might have a strong influence on further analysis, one could check some kind of transformation to reduce the value range. The following example shows a root and logarithmic transformation. In order to distinguish the plots, we add a title using the `main` parameter:
 
 ```{r example-3, warning=FALSE}
-par_org <- par()
+par_org <- par(no.readonly = TRUE)
 par(mfrow = c(2,2))
 boxplot(lu[, numc], main = "Original")
 boxplot(lu[, numc]**0.5, main = "Square root")
@@ -53,7 +79,7 @@ boxplot(log1p(lu[, numc]), main = "Log(1 + x)")
 ```
 
 
-`log1p(x)` computes `log(1 + x)`, so the zero values in `Recreation` remain finite. It changes the scale of the plot; it does not change the original data frame.
+`log1p(x)` computes `log(1 + x)` and is defined at zero, unlike `log(x)`. These transformations change the displayed scale; they do not alter the original data frame. A transformation is a choice to explain, rather than an automatic response to an unusual observation.
 
 ```{r example-4, warning=FALSE}
 par(par_org)
@@ -72,7 +98,7 @@ hist(lu$Settlement)
 
 
 ## QQ plots
-QQ plots compare observed quantiles with those expected from a chosen distribution. They are useful diagnostics, but visual agreement does not prove that the data follow that distribution.
+QQ plots compare observed quantiles with those expected from a chosen distribution. Here we have only 16 states, so detailed judgments about distribution shapes are limited. Visual agreement does not prove that the data follow a distribution, and descriptive plots do not require a normal distribution.
 
 For a normal reference distribution, use `qqnorm`. The red reference line passes through the first and third sample quartiles. Substantial departures from a straight line suggest that a normal distribution may be a poor description:
 
@@ -131,16 +157,17 @@ par(par_org)
 
 
 ## Scatterplot
-Scatterplot, i.e. the mother of all plots, focuses on the relationship between variables. The x-axis should be used for the (more) independent variable, the y-axis for the (more) dependent variable.
+A scatterplot shows paired values for the same observations. Here, each point represents one state. We compare settlement and transport shares; placing a variable on the horizontal axis does not establish it as a cause of the vertical-axis variable.
 
 Again, creating such a plot is very simple:
 
 ```{r example-11, warning=FALSE}
-plot(lu$Settlement, lu$Recreation)
+plot(lu$Settlement, lu$Transport,
+     xlab = "Settlement share (%)", ylab = "Transport share (%)", pch = 16)
 ```
 
 
-The axis labels are just the column names of the data frame but for this stage of data analysis, this is more than fine. If you finally decide which graphic should be included in a final presentation (e.g. publication), then the right time for nice labels and other stuff has come. But prior to that, pimping is just a waste of time.
+Even an exploratory graph benefits from variable names and units. City-states and larger states can occupy different parts of the plot. Investigate the reporting areas before interpreting an unusual point as an error or a general relationship.
 
 If you are interested in the relation between all (or many) variables in your dataset, just supply the entire data frame or a column subset of it to `plot`:
 
@@ -150,9 +177,22 @@ plot(lu[, numc])
 
 
 ## Coplot
-As a final example, a coplot might be of some value. It is a scatterplot but the visualized relationship is split in accordance with value ranges of (an)other variable(s). The call to `coplot` is again straightforward. Left of the `|` are the two variables which will be included in the actual scatterplots, to the right is the variable which is used for the splits. If more than one variable should be used, the variables are combined with a `+` (not included here because of figure margin restrictions):
+With only 16 states, splitting into several panels leaves few observations per panel. Use this as an illustration of conditioning rather than evidence of a stable relationship. As a final example, a coplot might be of some value. It is a scatterplot but the visualized relationship is split in accordance with value ranges of (an)other variable(s). The call to `coplot` is again straightforward. Left of the `|` are the two variables which will be included in the actual scatterplots, to the right is the variable which is used for the splits. If more than one variable should be used, the variables are combined with a `+` (not included here because of figure margin restrictions):
 
 ```{r example-13, warning=FALSE}
 coplot(Forest ~ Agriculture | Settlement, data = lu)
 ```
 
+
+
+## Practice: choose, plot, explain
+
+Work in pairs for about **10 minutes**. Choose one question:
+
+1. How do water-area shares compare between Hessen, Bavaria, and Lower Saxony?
+2. How variable are forest shares across the 16 federal states?
+3. How does tree 2's trunk circumference change with age in the `Orange` practice data from the [visualization page]({{ site.baseurl }}/unit03/unit03-03_visualization.html)?
+
+Select an appropriate plot type and write the code in an R Markdown document. Identify the observations, label the variables and units, and use a legend if necessary. Explain your plot choice in one sentence and its main finding in another. Exchange figures with a neighboring pair: can they answer your question from the figure alone?
+
+This is **unmarked practice**. Several plot choices can be defensible; justify how your choice answers the question. Assignment 03 remains the separate marked timber-harvest task.

@@ -55,7 +55,7 @@ boxplot(dwd$LUFTTEMPERATUR ~ dwd$AGG_M)
 
 If you wonder about the distribution, you can use what we learned so far:
 ```{r, warning=FALSE}
-par_org <- par()
+par_org <- par(no.readonly = TRUE)
 par(mfrow = c(1,2))
 hist(dwd$LUFTTEMPERATUR, prob = TRUE)
 lines(density(dwd$LUFTTEMPERATUR))
