@@ -9,40 +9,33 @@ header:
 
 
 
-Visual data exploration should be one of the first steps in data analysis. In fact, it should start right after reading a data set. The following examples are based on a data set showing the percentage fraction of settlement, recreational, agricultural, and forest areas for each rural district in Germany. The data has been provided through the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/).
+Visual data exploration should be one of the first steps in data analysis. In fact, it should start right after reading a data set. The following examples are based on a data set showing the percentage fraction of settlement and transport, recreational, agricultural, and forest areas for regional units in Germany. The data has been provided through the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/).
 
 Within this example, we will focus on basic R graphics. Of course, all of the examples could also be realized using more advanced plotting libraries like `lattice` or `ggplot`.
 
 
 
 
-Pre-processing and reading of the data is not shown but the first six rows of the final data set are printed below. Just for simplicity, a variable `numc` is defined which will be used to subset the data frame to the relevant columns.
+Download `lu_clean.rds` from ILIAS and place it beside your R Markdown document. This prepared R data frame has English column names and is separate from the raw `.txt` file in the CSV I/O example. The observations cover 1996–2014, and the four area columns are percentages of total area. The first rows and a column selector are shown below.
 
 ```r
+lu <- readRDS("lu_clean.rds")
 numc <- c("Settlement", "Recreation", "Agriculture", "Forest")
-head(lu)
+head(lu[, c("Year", "ID", "Place", numc)])
 ```
 
 ```
-##   Year   ID                                          Place Settlement
-## 1 1996   DG                                    Deutschland       11.8
-## 2 1996    1                             Schleswig-Holstein       10.8
-## 3 1996 1001                    Flensburg, Kreisfreie Stadt       47.3
-## 4 1996 1002       Kiel, Landeshauptstadt, Kreisfreie Stadt       52.1
-## 5 1996 1003           L\201beck, Hansestadt, Kreisfreie Stadt       30.2
-## 6 1996 1004                   Neum\201nster, Kreisfreie Stadt       46.4
-##   Recreation Agriculture Forest
-## 1        0.7        54.1   29.4
-## 2        0.7        73.0    9.3
-## 3        5.1        25.1    6.0
-## 4        1.3        34.7    3.3
-## 5        2.9        39.7   12.9
-## 6        4.9        46.9    3.4
+##   Year ID              Place Settlement Recreation Agriculture Forest
+## 1 1996 01 Schleswig-Holstein       10.8        0.7        73.0    9.3
+## 2 2000 01 Schleswig-Holstein       11.2        0.7        72.2    9.5
+## 3 2004 01 Schleswig-Holstein       11.9        0.8        71.0   10.0
+## 4 2008 01 Schleswig-Holstein       12.4        0.9        70.0   10.4
+## 5 2009 01 Schleswig-Holstein       12.5        0.9        69.9   10.5
+## 6 2010 01 Schleswig-Holstein       12.6        0.9        69.8   10.5
 ```
-
 
 ## Boxplot
-A boxplot is probably the most fundamental way to perform a visual data exploration. It generally shows the median along with the 25% and 75% quartiles (box and line within) as well as the value range which is within a range of 1.5 times the inter-quartile range (i.e. the size of the box which is also called spread). Values outside the latter range are indicated as outliers. All those settings can be changed.
+A boxplot shows the median and the first and third quartiles. Its whiskers extend to the most extreme observed values no farther than 1.5 times the interquartile range from the box. More distant values are plotted individually; this rule flags values to inspect, not errors to delete automatically.
 
 Producing a boxplot is straightforward (the x-axis labels are just the column names):
 
@@ -50,7 +43,7 @@ Producing a boxplot is straightforward (the x-axis labels are just the column na
 boxplot(lu[, numc])
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-3-1.png)<!-- -->
+![Boxplots of settlement, recreation, agriculture, and forest area shares.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-3-1.png)
 
 As can be seen, outliers in terms of the box-plot logic are clearly identifiable although this logic does not actually prove if an observation is an outlier. Hence, one has to cross-check the data and if there is no actual sign for an outlier, then keep the data as is! However, since "outliers" might have a strong influence on further analysis, one could check some kind of transformation to reduce the value range. The following example shows a root and logarithmic transformation. In order to distinguish the plots, we add a title using the `main` parameter:
 
@@ -60,10 +53,12 @@ par(mfrow = c(2,2))
 boxplot(lu[, numc], main = "Original")
 boxplot(lu[, numc]**0.5, main = "Square root")
 boxplot(lu[, numc]**(1/3), main = "Cube root")
-boxplot(log(lu[, numc]), main = "Log")
+boxplot(log1p(lu[, numc]), main = "Log(1 + x)")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-4-1.png)<!-- -->
+![The four area-share boxplots on original, square-root, cube-root, and log(1+x) scales.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-4-1.png)
+
+`log1p(x)` computes `log(1 + x)`, so the zero values in `Recreation` remain finite. It changes the scale of the plot; it does not change the original data frame.
 
 ```r
 par(par_org)
@@ -80,13 +75,13 @@ Histograms are useful for getting an idea of the distribution of the dataset. Vi
 hist(lu$Settlement)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-6-1.png)<!-- -->
+![Histogram of settlement area share.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-6-1.png)
 
 
 ## QQ plots
-While histograms just give an idea, QQ plots give a more reliable estimate if a data set follows a specific distribution.
+QQ plots compare observed quantiles with those expected from a chosen distribution. They are useful diagnostics, but visual agreement does not prove that the data follow that distribution.
 
-If you are just interested in a normal distribution, you can use `qqnorm` for this. In order to ease the interpretation, we will also add a theoretical line which runs through the 25% and 75% quartiles. If your data does not deviate considerably from this line, chances are high that it actually follows the theoretical distribution used to compute the plot (in the following case, this is a normal distribution):
+For a normal reference distribution, use `qqnorm`. The red reference line passes through the first and third sample quartiles. Substantial departures from a straight line suggest that a normal distribution may be a poor description:
 
 ```r
 qqnorm(lu$Agriculture)
@@ -96,7 +91,7 @@ abline(h=quantile(lu$Agriculture, probs = c(0.25,0.75), na.rm = TRUE), col="blue
 abline(v=qnorm(c(0.25,0.75)), col="blue", lty = 3)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-7-1.png)<!-- -->
+![Normal QQ plot for agricultural area share with quartile reference lines.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-7-1.png)
 
 Different transformations may be helpful (although not in this case; example adapted from Zuur et al., 2007):
 
@@ -104,7 +99,7 @@ Different transformations may be helpful (although not in this case; example ada
 par(mfrow = c(2,2))
 for(p in c(1, 0.5, 0.25, 0)){
   if(p != 0){
-    qqnorm((lu$Agriculture**p-1)/p, main = paste0("Normal Q-Q Plot, y**p-1/p for ", p))
+    qqnorm((lu$Agriculture**p-1)/p, main = paste0("Normal Q-Q Plot, (y^p - 1)/p; p = ", p))
     qqline((lu$Agriculture**p-1)/p, col = "red")  
   } else {
     qqnorm(log(lu$Agriculture), main = "Normal Q-Q Plot, log(y)")
@@ -113,38 +108,32 @@ for(p in c(1, 0.5, 0.25, 0)){
 }
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-8-1.png)<!-- -->
+![Four normal QQ plots for power and log transformations of agricultural area share.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-8-1.png)
 
 ```r
 par(par_org)
 ```
 
-If you want to use any other distribution, use `qqplot` instead and provide the distribution to the function. For the line, compute the 25% and 75% quantiles and add it with `abline`. Since the latter function requires an intercept and slope for drawing the line, you have to compute it by yourself or just compute a simple linear model for that using `lm`:
+To compare other reference distributions, use their theoretical quantile functions (`qnorm`, `qchisq`, `qgamma`, and `qweibull`) at the same probability points. The shape parameters below are illustrative choices, not fitted estimates. The line joins the first and third quartiles:
 
 ```r
 par(mfrow = c(2,2))
-dist <- rnorm(ppoints(length(lu$Settlement)))
-qqplot(dist, lu$Settlement, main = "Normal")
-abline(lm(quantile(lu$Settlement, na.rm = TRUE, probs = c(0.25, 0.75)) ~ 
-     quantile(dist, probs = c(0.25, 0.75))), col = "red", lwd = 2)
-
-dist <- rchisq(ppoints(length(lu$Settlement)), df = 2)
-qqplot(dist, lu$Settlement, main = "Chi squared")
-abline(lm(quantile(lu$Settlement, na.rm = TRUE, probs = c(0.25, 0.75)) ~ 
-     quantile(dist, probs = c(0.25, 0.75))), col = "red", lwd = 2)
-
-dist <- rgamma(length(lu$Settlement), shape = 0.6)
-qqplot(dist, lu$Settlement, main = "Gamma")
-abline(lm(quantile(lu$Settlement, na.rm = TRUE, probs = c(0.25, 0.75)) ~ 
-     quantile(dist, probs = c(0.25, 0.75))), col = "red", lwd = 2)
-
-dist <- rweibull(length(lu$Settlement), shape = 1)
-qqplot(dist, lu$Settlement, main = "Weibull")
-abline(lm(quantile(lu$Settlement, na.rm = TRUE, probs = c(0.25, 0.75)) ~ 
-     quantile(dist, probs = c(0.25, 0.75))), col = "red", lwd = 2)
+observed <- na.omit(lu$Settlement)
+probs <- ppoints(length(observed))
+references <- list(Normal = qnorm(probs),
+                   `Chi squared` = qchisq(probs, df = 2),
+                   Gamma = qgamma(probs, shape = 0.6),
+                   Weibull = qweibull(probs, shape = 1))
+for (name in names(references)) {
+  dist <- references[[name]]
+  qqplot(dist, observed, main = name, xlab = "Theoretical quantiles",
+         ylab = "Settlement share (%)")
+  abline(lm(quantile(observed, probs = c(0.25, 0.75)) ~
+            quantile(dist, probs = c(0.25, 0.75))), col = "red", lwd = 2)
+}
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-9-1.png)<!-- -->
+![Four QQ plots comparing settlement area share with normal, chi-squared, gamma, and Weibull references.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-9-1.png)
 
 ```r
 par(par_org)
@@ -160,7 +149,7 @@ Again, creating such a plot is very simple:
 plot(lu$Settlement, lu$Recreation)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-10-1.png)<!-- -->
+![Scatterplot of settlement and recreation area shares.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-10-1.png)
 
 The axis labels are just the column names of the data frame but for this stage of data analysis, this is more than fine. If you finally decide which graphic should be included in a final presentation (e.g. publication), then the right time for nice labels and other stuff has come. But prior to that, pimping is just a waste of time.
 
@@ -170,7 +159,7 @@ If you are interested in the relation between all (or many) variables in your da
 plot(lu[, numc])
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-12-1.png)<!-- -->
+![Scatterplot matrix of the four land-use area shares.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-12-1.png)
 
 
 ## Coplot
@@ -180,6 +169,6 @@ As a final example, a coplot might be of some value. It is a scatterplot but the
 coplot(Forest ~ Agriculture | Settlement, data = lu)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-13-1.png)<!-- -->
+![Conditional scatterplots of forest versus agricultural area share across settlement-share ranges.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-13-1.png)
  
 

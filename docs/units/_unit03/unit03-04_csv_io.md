@@ -17,16 +17,22 @@ the text file.
 
 
 ```r
-# adjust your working directory with setwd() or use absolute path
+# Place the ILIAS file beside your R Markdown document, or adjust the path.
 df <- read.table("AI001_gebiet_flaeche.txt",
-                 skip = 4, header = TRUE, sep = ";", dec = ",")
+                 skip = 4, header = TRUE, sep = ";", dec = ",",
+                 na.strings = ".", fileEncoding = "latin1",
+                 colClasses = c("integer", "character", "character",
+                                rep("numeric", 4)))
 ```
 
 As you can see, the `read.table` function gets several arguments (which is common for many functions). The first one gives the filename including the path to the file.
 * `skip = 4` tells the function to skip the first four lines (which are plain text lines in this case and not tabulated values)
-* `header = TRUE` tells the function that the csv file has a header line which is used by `read.table` to name the columns of the returned data frame
+* `header = TRUE` tells the function that the next line contains column names
 * `sep = ";"` defines the separator of the individual columns in the data frame
 * `dec = ","` defines the decimal separator used in the dataset
+* `na.strings = "."` marks the source's missing values as `NA`
+* `fileEncoding = "latin1"` reads German characters in this older file correctly
+* `colClasses` keeps the regional ID as text (including leading zeros) and reads the four percentage columns as numbers
 
 A note on the sequence of the arguments: the sequence of the arguments does
 not matter as long as you name them explicitly. If you do not use the argument
@@ -35,7 +41,7 @@ then the sequence matters. To get information on the default sequence and of
 course the general application of each R function, type `?<function name>`
 (e.g. `?read.table`) in an R console.
 
-After you execute the `read.table` function above, the content of the csv file is
+After you execute the `read.table` function above, the content of the text file is
 stored into a two-dimensional data frame called `df` in the example above.
 
 A quick way to check if everything is fine is to display the first few rows of
@@ -50,24 +56,27 @@ head(df, 2)
 ## 1 1996  DG          Deutschland
 ## 2 1996  01   Schleswig-Holstein
 ##   Anteil.Siedlungs..und.Verkehrsfläche.an.Gesamtfl.
-## 1                                              11,8
-## 2                                              10,8
+## 1                                              11.8
+## 2                                              10.8
 ##   Anteil.Erholungsfläche.an.Gesamtfläche
-## 1                                    0,7
-## 2                                    0,7
+## 1                                    0.7
+## 2                                    0.7
 ##   Anteil.Landwirtschaftsfläche.an.Gesamtfläche
-## 1                                         54,1
-## 2                                         73,0
+## 1                                         54.1
+## 2                                         73.0
 ##   Anteil.Waldfläche.an.Gesamtfläche
-## 1                              29,4
-## 2                               9,3
+## 1                              29.4
+## 2                               9.3
 ```
+
+The source uses decimal commas; R prints the imported numeric values with decimal points. The first three columns contain the year, regional code, and German place name. The remaining four columns are percentages of total area: settlement and transport, recreation, agriculture, and forest. You can use `str(df)` to check the imported types.
 
 ## Writing data to csv files
 Writing data is as easy as reading it. Just use the `write.table` function.
 
 ```r
-write.table(df, file = "new.csv", sep = ",", dec = ".")
+write.table(df, file = "new.csv", sep = ",", dec = ".",
+            row.names = FALSE, fileEncoding = "UTF-8")
 ```
 As you can see, you can define any column or decimal separator.
 

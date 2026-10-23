@@ -19,7 +19,7 @@ a <- c("A", "B", "C", "A", "B", "A", "A")
 b <- c("X", "X", "X", "X", "Y", "Y", "Y")
 c <- c(1, 2, 3, 4, 5, 6, 7)
 d <- c(10, 20, 30, 40, 50, 60, 70)
-df <- data.frame(Cat1 = a, Cat2 = b, Val1 = c, Val2 = d)
+df <- data.frame(Cat1 = factor(a), Cat2 = factor(b), Val1 = c, Val2 = d)
 summary(df)
 ```
 
@@ -33,10 +33,10 @@ summary(df)
 ##              Max.   :7.0   Max.   :70
 ```
 It provides the minimum, maximum, mean and median value of each numerical column
-along with the first and third quartile (i.e. the values separating 25% from 75%
-and 75% from 100% of the data). Non-numeric columns are summarized by counting
-the individual values (which will be omitted after the first few rows so it
-is only informative for columns with just a few different character values).
+along with the first and third quartiles. The first quartile has about 25% of
+the observations below it; the third has about 75% below it. Factor columns
+are summarized by counting observations in each level. Character columns
+instead receive length, class, and mode information.
 
 The information of `summary` can also be obtained by specific functions but these
 will return only the same numbers if applied to a single column. For example the
@@ -164,8 +164,8 @@ aggregate(df[,3:4], by = list(df$Cat1), FUN = median)
 ## 3       C  3.0   30
 ```
 Please note that the grouping elements (parameter "by") have to be supplied as a list
-so if you want to use a column of a data frame, use the `list` function to convert
-the factor to a list.
+so `list(df$Cat1)` supplies that column as one grouping variable; it does not
+change the column's data type.
 
 Of course, one can also use more than one grouping variable.
 

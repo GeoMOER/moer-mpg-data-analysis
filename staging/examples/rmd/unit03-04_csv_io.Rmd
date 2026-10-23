@@ -9,26 +9,31 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
-source("C:/Users/tnauss/permanent/edu/mpg-data-analysis/moer-mpg-data-analysis/staging/examples/000_set_environment.R")
+knitr::opts_chunk$set(fig.path = "figures/")
 ```
 
-## Reading data from csv files
+## Reading data from text files
 
-Reading csv files is realized using the `read.table` function from R's utils
+Reading text files is realized using the `read.table` function from R's utils
 library. The function will return a data frame which contains the information of
 the csv file.
 
 ```{r}
-df <- read.table(paste0(envrmt$path_data_csv, "/AI001_gebiet_flaeche.csv"),
-                 skip = 4, header = TRUE, sep = ";", dec = ",")
+df <- read.table("staging/examples/data/AI001_gebiet_flaeche.txt",
+                 skip = 4, header = TRUE, sep = ";", dec = ",",
+                 na.strings = ".", fileEncoding = "latin1",
+                 colClasses = c("integer", "character", "character",
+                                rep("numeric", 4)))
 ```
 
 As you can see, the `read.table` function gets several arguments (which is common for many functions). The first one gives the filename including the path to the file.
 * `skip = 4` tells the function to skip the first four lines (which are plain text lines in this case and not tabulated values)
-* `header = TRUE` tells the function, that the csv file has a header line which is used by `read.table` to name the columns of the returned data frame
+* `header = TRUE` tells the function that the next line contains column names
 * `sep = ";"` defines the separator of the individual columns in the data frame
 * `dec = ","` defines the decimal separator used in the dataset
+* `na.strings = "."` marks the source's missing values as `NA`
+* `fileEncoding = "latin1"` reads German characters in this older file correctly
+* `colClasses` keeps the regional ID as text and reads the four percentage columns as numbers
 
 A note on the sequence of the arguments: the sequence of the arguments does
 not matter as long as you name them explicitly. If you do not use the argument
@@ -37,32 +42,33 @@ then the sequence matters. To get information on the default sequence and of
 course the general application of the each R function, type `?<function name>`
 (e.g. `?read.table`) in an R console.
 
-After you executing the `read.table` function above, the content of the csv file is
+After you execute the `read.table` function above, the content of the text file is
 stored into a two-dimensional data frame called `df` in the example above.
 
 A quick way to check if everything is fine is to display the first few lines of
-the data file using the `head` function (without the 2, it will print 5 lines as a standard setting).
+the data frame using the `head` function (without the 2, it prints six rows by default).
 ```{r}
 head(df,2)
 ```
 
+The source uses decimal commas; R prints the imported numeric values with decimal points. The first three columns contain the year, regional code, and German place name. The remaining four columns are percentages of total area: settlement and transport, recreation, agriculture, and forest. Use `str(df)` to check the imported types.
+
 ## Writing data to csv files
 Writing data is as easy as reading it. Just use the `write.table` function.
 ```{r}
-write.table(df, file = paste0(envrmt$path_data_tmp, "new.csv"), 
-            sep = ",", dec = ".")
+write.table(df, file = "new.csv", sep = ",", dec = ".",
+            row.names = FALSE, fileEncoding = "UTF-8")
 ```
 As you can see, you can define any column or decimal separator.
 
-For more information have a look at e.g. the respective [data importing](http://www.statmethods.net/input/importingdata.html) and [data exporting](http://www.statmethods.net/input/exportingdata.html) site at Quick R, have a look into the package 
-documentation or search the web.
+For more information, see the [data importing](https://www.datacamp.com/doc/r/importingdata) and [data exporting](https://www.datacamp.com/doc/r/exportingdata) pages, or consult R's function documentation.
 
 
 ## Alternative data I/O using RDS
 If you stay within R for reading and writing R objects from and to data files, you could also use the serialization of readRDS and saveRDS.
 ```{r}
-saveRDS(df, file = paste0(envrmt$path_data_tmp, "new.rds"))
+saveRDS(df, file = "new.rds")
 
 # Read data to different variable
-df2 = readRDS(paste0(envrmt$path_data_tmp, "new.rds"))
+df2 <- readRDS("new.rds")
 ```
