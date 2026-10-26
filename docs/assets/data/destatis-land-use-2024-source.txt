@@ -1,6 +1,6 @@
 Source of the Destatis land-use teaching files
 
-Publisher: Statistisches Bundesamt (Destatis), Wiesbaden, Germany.
+Publisher: German Federal Statistical Office (Statistisches Bundesamt / Destatis), Wiesbaden, Germany.
 Report: Statistischer Bericht - Flaechenerhebung nach Art der tatsaechlichen Nutzung 2024.
 English teaching translation: Statistical report - Survey of land area by actual use, 2024.
 Statistical survey (EVAS): 33111. Article number: 2030510247005.
@@ -14,17 +14,29 @@ Official publication page:
 https://www.destatis.de/DE/Themen/Branchen-Unternehmen/Landwirtschaft-Forstwirtschaft-Fischerei/Flaechennutzung/_inhalt.html
 
 Files supplied with this example:
-- destatis-land-use-2024.xlsx: byte-for-byte copy of the official workbook.
-- destatis-land-use-2024.csv: UTF-8, semicolon-separated export of the complete
-  populated range A1:BL18 in worksheet csv-33111-03. All 17 records and all
-  64 original headers are retained. Percentages are written with decimal commas
-  at the source table's published precision of one decimal place. Trailing
-  empty formatted spreadsheet rows are omitted. The 94 unpopulated data cells
-  remain empty; they are not replaced with zeros or inferred values.
-- destatis-land-use-2024-dictionary.csv: complete 64-column dictionary with
-  source headers, German labels from presentation table 33111-03, English
-  teaching descriptions, units, and land-use codes. The translations are
-  explanatory course material, not official Destatis translations.
+- destatis-land-use-2024.xlsx: byte-for-byte copy of the official German workbook.
+- destatis-land-use-2024.csv: English teaching translation of the complete
+  populated range A1:BL18 in worksheet csv-33111-03, in UTF-8 with semicolons
+  and decimal commas. All 17 records and 64 columns are retained. Headers,
+  survey/table descriptions and region names are translated; identifiers,
+  numbers and the original 94 empty cells are preserved. Percentages retain
+  the source precision of one decimal place. Trailing empty formatted rows
+  are omitted. No missing value is replaced by zero or inferred.
+- destatis-land-use-2024-dictionary.csv: complete 64-column crosswalk. The
+  english_column field identifies the teaching CSV column; source_column and
+  german_label retain the original German header and presentation-table label.
+  English meanings, units and original category codes explain each field.
+  These are course translations, not official Destatis English translations.
+
+Reproduce the English CSV from the unchanged workbook and column crosswalk,
+from the course repository root:
+  python3 staging/examples/translate_land_use_2024.py
+The converter uses only Python's standard library. It translates survey/table
+text and region names and checks source headers, IDs, year and missing cells.
+The CSV filename is retained so that existing course download links stay valid.
+English region names include Germany, Lower Saxony, North Rhine-Westphalia,
+Hesse, Rhineland-Palatinate, Bavaria, Mecklenburg-Western Pomerania, Saxony,
+Saxony-Anhalt and Thuringia; other names retain their usual spelling.
 
 The csv-33111-03 source worksheet is supplied by Destatis for data processing.
 The report explains that its CSV tables omit footnotes and further explanations.
@@ -58,16 +70,20 @@ upstream data as material authored by this course.
 
 SHA-256 checksums:
 6ce23369201411b9a061b7c7503cd69d6a9c09bf12d12ef3e9a26472f4e8ba39  destatis-land-use-2024.xlsx
-9db149548d38dc6e3da60a418241cb7988011cd0b16c38c98bc875f8d8a0f30e  destatis-land-use-2024.csv
-5afe7ad4370920bd1a04d9a22c2cb2ebc076d25db934fa5c4fefae52415a7871  destatis-land-use-2024-dictionary.csv
+6f01731f6ad4b3ee671e714fb7ddeaffbb7be7a8c82f07d6d0ba16b190176d89  destatis-land-use-2024.csv
+c182d455fdbb650116475206fc56c8be91673fc04157f5ebb7c5d929a7d88e15  destatis-land-use-2024-dictionary.csv
+31e1915cb9715abc3a44d963d513e18c686a4d99209103af1a6e853f79241304  destatis-land-use-2024-states.rds
+d796e2bf5e079cb69b3f7a52419a8b07393b60448f26b4364dd35720d555f113  prepare-land-use-2024.R
 
-Data Analysis course preparation (23 October 2026):
-- prepare-land-use-2024.R selects ten documented columns, translates their
-  names, converts only measurements/year to numeric, and excludes Germany
+Data Analysis course preparation (English revision, 26 October 2026):
+- prepare-land-use-2024.R selects ten documented English teaching columns,
+  assigns shorter analysis names, converts only measurements/year to numeric,
+  and excludes Germany
   (code 0). State IDs remain character strings 01-16.
 - destatis-land-use-2024-states.rds contains 16 states in 2024. Fields:
   Year, ID, Place, Area_ha, Settlement, Transport, Vegetation, Agriculture,
-  Forest, Water. Area_ha is hectares; the six land-use columns are percentages
+  Forest, Water. Place uses the English region names from the teaching CSV.
+  Area_ha is hectares; the six land-use columns are percentages
   of each state's total area. No imputation or reweighting is applied.
 - The four main categories Settlement, Transport, Vegetation and Water are
   a partition up to rounding. Agriculture and Forest are components of

@@ -9,13 +9,13 @@ header:
 
 ## Reading data from text files
 
-A successful import produces the right rows, columns, types, and units. We will follow a small official dataset from its source table to an R object used in the [exploration example]({{ site.baseurl }}/unit03/unit03-06_exploration.html).
+A successful import produces the right rows, columns, types, and units. After the small `example.txt` exercise, we will now follow an official dataset from its source table to an R object used in the [exploration example]({{ site.baseurl }}/unit03/unit03-06_exploration.html).
 
 ### Source and downloads
 
 Our source is Destatis's *Survey of land area by actual use, 2024*, published on November 21, 2025. Worksheet `csv-33111-03` contains **17 records**: Germany and its 16 federal states, all at December 31, 2024. It has 64 columns, including identifiers, descriptions, total area in hectares, and land-use percentages. These are state-level observations for one date, not districts or a time series.
 
-Create a `Data/` folder in your RStudio project. Download the [teaching CSV]({{ site.baseurl }}/assets/data/destatis-land-use-2024.csv) into it. Also available are the [original Destatis workbook]({{ site.baseurl }}/assets/data/destatis-land-use-2024.xlsx), [bilingual column dictionary]({{ site.baseurl }}/assets/data/destatis-land-use-2024-dictionary.csv), and [source and preparation notes]({{ site.baseurl }}/assets/data/destatis-land-use-2024-source.txt). The CSV retains all 17 source records and 64 headers; empty source cells remain empty. The dictionary's English explanations are teaching translations.
+Use the `Data/` folder you created on the file-organization page. <a href="{{ site.baseurl }}/assets/data/destatis-land-use-2024.csv" download="destatis-land-use-2024.csv">Download the teaching CSV</a> and save it there, keeping its filename. Also available are the [original Destatis workbook]({{ site.baseurl }}/assets/data/destatis-land-use-2024.xlsx), [column dictionary and source crosswalk]({{ site.baseurl }}/assets/data/destatis-land-use-2024-dictionary.csv), and [source and preparation notes]({{ site.baseurl }}/assets/data/destatis-land-use-2024-source.txt). The CSV retains all 17 source records and 64 columns. Its headers, survey description and region names are English teaching translations; numerical values, identifiers and empty cells are preserved. The dictionary maps every English column name to its original German source header and explains its meaning and units. The original workbook remains in German.
 
 The official [publication page](https://www.destatis.de/DE/Themen/Branchen-Unternehmen/Landwirtschaft-Forstwirtschaft-Fischerei/Flaechennutzung/_inhalt.html) and [methods report](https://www.destatis.de/DE/Methoden/Qualitaet/Qualitaetsberichte/Land-Forstwirtschaft-Fischerei/flaechenerhebung.pdf?__blob=publicationFile) provide the publisher's definitions.
 
@@ -36,47 +36,49 @@ dim(raw)
 ```
 
 ```r
-raw[1:3, c("Bezugszeitraum", "Schluesselnummer_Land", "Regionale_Gliederung")]
+raw[1:3, c("Reference_year", "State_ID", "State_name")]
 ```
 
 ```
-##   Bezugszeitraum Schluesselnummer_Land Regionale_Gliederung
-## 1           2024                     0          Deutschland
-## 2           2024                    01   Schleswig-Holstein
-## 3           2024                    02              Hamburg
+##   Reference_year State_ID         State_name
+## 1           2024        0            Germany
+## 2           2024       01 Schleswig-Holstein
+## 3           2024       02            Hamburg
 ```
 
-`read.csv2()` is a convenience form of `read.table()` with `header = TRUE`, `sep = ";"`, and `dec = ","`. `colClasses = "character"` postpones numeric conversion; `na.strings = ""` imports empty cells as missing values, and `check.names = FALSE` retains the source's exact column names. These settings describe this file; the timber CSV in Assignment 03 has a different header arrangement and decimal separator.
+`read.csv2()` is a convenience form of `read.table()` with `header = TRUE`, `sep = ";"`, and `dec = ","`. `colClasses = "character"` postpones numeric conversion; `na.strings = ""` imports empty cells as missing values, and `check.names = FALSE` retains the teaching CSV's exact column names. These settings describe this file; the timber CSV in Assignment 03 has a different header arrangement and decimal separator.
 
-Use the dictionary to distinguish measurements from metadata. `Bezugszeitraum` is the reporting year, `Schluesselnummer_Land` the state identifier, and `Regionale_Gliederung` the reporting area's name. A code identifies an area; it is not a measured amount.
+Use the dictionary to distinguish measurements from metadata. `Reference_year` is the reporting year, `State_ID` the state identifier, and `State_name` the reporting area's name. A code identifies an area; it is not a measured amount.
 
 ### Select columns and explain their meaning
 
-Keep `raw` unchanged. Select a small set of columns and assign readable English names. The names on the left below are our names; the strings on the right are exact source headers:
+Keep `raw` unchanged. Select a small set of columns and assign shorter names for analysis. The names on the left below are our analysis names; the strings on the right are exact headers in the English teaching CSV:
 
 
 ```r
 columns <- c(
-  Year = "Bezugszeitraum",
-  ID = "Schluesselnummer_Land",
-  Place = "Regionale_Gliederung",
-  Area_ha = "Bodenflaeche_insgesamt_in_Hektar",
-  Settlement = "Anteil_der_Flaeche_fuer_Siedlung_in_Prozent_10000000",
-  Transport = "Anteil_der_Flaeche_fuer_Verkehr_in_Prozent_20000000",
-  Vegetation = "Anteil_der_Flaeche_fuer_Vegetation_in_Prozent_30000000",
-  Agriculture = "Anteil_der_Flaeche_fuer_Landwirtschaft_in_Prozent_31000000",
-  Forest = "Anteil_der_Flaeche_fuer_Wald_in_Prozent_32000000",
-  Water = "Anteil_der_Flaeche_fuer_Gewaesser_in_Prozent_40000000"
+  Year = "Reference_year",
+  ID = "State_ID",
+  Place = "State_name",
+  Area_ha = "Total_area_ha",
+  Settlement = "Settlement_pct_10000000",
+  Transport = "Transport_pct_20000000",
+  Vegetation = "Vegetation_pct_30000000",
+  Agriculture = "Agriculture_pct_31000000",
+  Forest = "Forest_pct_32000000",
+  Water = "Water_pct_40000000"
 )
 land_use <- raw[unname(columns)]
 names(land_use) <- names(columns)
 ```
 
+`unname(columns)` supplies the original headers for column selection; `names(columns)` supplies the shorter analysis names. Selecting a data frame with one index, as in `raw[unname(columns)]`, selects columns and keeps all rows.
+
 `Area_ha` is total area in hectares (1 ha = 10,000 m²). The other six measurement columns are **percentages of each area's total area**, not hectares. For example, `9.4` means 9.4%, rather than a fraction of 0.094. The eight-digit suffixes identify land-use categories.
 
 `Settlement` includes recreational uses and excludes the separately reported `Transport` category. It is not a measure of sealed soil. `Agriculture` and `Forest` are components of the broader `Vegetation` category. Thus these columns describe different levels of a classification.
 
-Convert only the numeric fields, keeping `ID` and `Place` as text:
+Convert only the numeric fields, keeping `ID` and `Place` as text. `setdiff()` selects all column names except those two; `type.convert()` interprets the selected text columns using decimal commas:
 
 
 ```r
@@ -91,7 +93,7 @@ str(land_use)
 ## 'data.frame':	17 obs. of  10 variables:
 ##  $ Year       : int  2024 2024 2024 2024 2024 2024 2024 2024 2024 2024 ...
 ##  $ ID         : chr  "0" "01" "02" "03" ...
-##  $ Place      : chr  "Deutschland" "Schleswig-Holstein" "Hamburg" "Niedersachsen" ...
+##  $ Place      : chr  "Germany" "Schleswig-Holstein" "Hamburg" "Lower Saxony" ...
 ##  $ Area_ha    : int  35768346 1580430 75509 4770988 41994 3411244 2111564 1985796 3574785 7054178 ...
 ##  $ Settlement : num  9.5 9.4 46.3 9.5 44 16.9 9.5 8.9 9.6 7.9 ...
 ##  $ Transport  : num  5.1 4.4 12.4 5.2 12.3 7.1 6.7 6.5 5.6 4.7 ...
@@ -156,7 +158,7 @@ range(rowSums(states[main_categories]))
 
 The small deviations from 100% reflect rounding. Adding `Agriculture` and `Forest` again would double-count parts of `Vegetation`. The four columns used in the overview boxplots are a selected set of non-overlapping categories, not an exhaustive partition of all land.
 
-## Writing data to csv files
+## Writing data to CSV files {#writing-data-to-csv-files}
 
 Save prepared output separately from the source. `row.names = FALSE` avoids adding an extra index column:
 
@@ -184,7 +186,9 @@ identical(states, restored)
 ## [1] TRUE
 ```
 
-RDS preserves the R object's column types. It does not by itself explain the source, units, or preparation choices; retain the dictionary and source notes with the data. The course also supplies the [prepared RDS]({{ site.baseurl }}/assets/data/destatis-land-use-2024-states.rds) and a [reproducible preparation script]({{ site.baseurl }}/assets/data/prepare-land-use-2024.R). Save both into `Data/`. To repeat the preparation with that script:
+RDS preserves the R object's column types. It does not by itself explain the source, units, or preparation choices; retain the dictionary and source notes with the data. You have now created the RDS needed for exploration; no further download is required to continue. The supplied [prepared RDS]({{ site.baseurl }}/assets/data/destatis-land-use-2024-states.rds) is an alternative if you need to start at the exploration page.
+
+For an optional way to repeat the preparation, download the [preparation script]({{ site.baseurl }}/assets/data/prepare-land-use-2024.R) into `Data/`, then run:
 
 
 ```r
@@ -193,3 +197,5 @@ prepare_land_use("Data")
 ```
 
 This example gives an initial, documented preparation workflow. Unit 04 develops missing-value handling, more extensive cleaning, and reshaping. This small state table is for Unit 03; later regression exercises use a separate regional dataset with different categories and many more observations.
+
+The import and preparation are complete. Next, [Visualization]({{ site.baseurl }}/unit03/unit03-03_visualization.html) introduces plot selection with small examples before we explore these prepared state data.

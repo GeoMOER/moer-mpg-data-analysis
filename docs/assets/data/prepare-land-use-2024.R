@@ -1,5 +1,5 @@
 # Source: Destatis, land-use survey 2024, worksheet csv-33111-03.
-# See destatis-land-use-2024-source.txt and the bilingual dictionary.
+# English teaching CSV; see the source notes and column crosswalk.
 # From the project folder: Rscript Data/prepare-land-use-2024.R Data
 # Creates Data/destatis-land-use-2024-states.rds from the teaching CSV.
 
@@ -8,16 +8,16 @@ prepare_land_use <- function(data_dir = "Data") {
                    colClasses = "character", na.strings = "",
                    fileEncoding = "UTF-8", check.names = FALSE)
   columns <- c(
-    Year = "Bezugszeitraum",
-    ID = "Schluesselnummer_Land",
-    Place = "Regionale_Gliederung",
-    Area_ha = "Bodenflaeche_insgesamt_in_Hektar",
-    Settlement = "Anteil_der_Flaeche_fuer_Siedlung_in_Prozent_10000000",
-    Transport = "Anteil_der_Flaeche_fuer_Verkehr_in_Prozent_20000000",
-    Vegetation = "Anteil_der_Flaeche_fuer_Vegetation_in_Prozent_30000000",
-    Agriculture = "Anteil_der_Flaeche_fuer_Landwirtschaft_in_Prozent_31000000",
-    Forest = "Anteil_der_Flaeche_fuer_Wald_in_Prozent_32000000",
-    Water = "Anteil_der_Flaeche_fuer_Gewaesser_in_Prozent_40000000"
+    Year = "Reference_year",
+    ID = "State_ID",
+    Place = "State_name",
+    Area_ha = "Total_area_ha",
+    Settlement = "Settlement_pct_10000000",
+    Transport = "Transport_pct_20000000",
+    Vegetation = "Vegetation_pct_30000000",
+    Agriculture = "Agriculture_pct_31000000",
+    Forest = "Forest_pct_32000000",
+    Water = "Water_pct_40000000"
   )
   stopifnot(nrow(raw) == 17L, ncol(raw) == 64L,
             all(unname(columns) %in% names(raw)))

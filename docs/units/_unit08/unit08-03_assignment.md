@@ -20,7 +20,7 @@ After completing this worksheet you should have improved your skills in using cr
 
 
 ## Model tuning
-For implementing a cross-validation-based and quite simple tuning of an additive model, we go back to the wood harvest data set for Hessen, using the 23 calendar years from 2003 to 2025. Import the annual observations, excluding the four introductory lines and the final notes.
+For implementing a cross-validation-based and quite simple tuning of an additive model, we go back to the wood harvest data set for Hesse, using the 23 calendar years from 2003 to 2025. Import the annual observations, excluding the four introductory lines and the final notes.
 The aim is to predict harvest in the beech and other deciduous trees group (`Beech_other_deciduous`) from harvest in the oak and red oak group (`Oak_red_oak`). Both columns are measured in 1,000 m³ without bark; they represent wood type groups, not individual species.
 
 Write an R Markdown document, which tunes the prediction of `Beech_other_deciduous` harvest based on `Oak_red_oak` harvest using an additive model.

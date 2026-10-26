@@ -15,7 +15,7 @@ The aim is a tidy data frame with the following structure ([Wickham, 2014](https
 * a separate row for each observation
 * a separate data frame for each kind of observation
 
-The following examples are based on a data set showing the percentage shares of settlement, recreation, agriculture, and forest area for German reporting regions, including federal states and districts. The data is provided by the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/) and also formed the basis for the visual data exploration example.
+The following examples are based on a data set showing the percentage shares of settlement, recreation, agriculture, and forest area for German reporting regions, including federal states and districts. The data is provided by the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/). This regional time series is separate from Unit 03's 2024 state table; use `AI001_gebiet_flaeche.txt` for this example. The [file guide]({{ site.baseurl }}/unit04/unit04-01a_introduction.html#data-for-units-04-07) explains the files and their category definitions.
 
 ### Reading data and first look
 

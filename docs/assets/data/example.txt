@@ -1,0 +1,4 @@
+tree;height_m
+beech;18,5
+oak;21,0
+pine;16,2
