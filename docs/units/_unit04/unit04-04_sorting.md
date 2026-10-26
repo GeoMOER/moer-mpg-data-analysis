@@ -7,12 +7,73 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
+## Sort values or reorder observations?
 
+`sort()` returns values in order. `order()` returns the positions that put values in order. Use those positions to reorder complete rows of a data frame, keeping each observation's identifier and measurements together.
 
-For a quick introduction to **sorting and combining data** in R check out our own material in the accompanying 
-[Base R course](https://geomoer.github.io/moer-base-r/unit08/unit08-01_Intro.html){:target="_blank"}.
+## Sort a vector
 
+```r
+heights <- c(18.5, 21.0, 16.2)
+sort(heights)
+order(heights)
+```
 
+```text
+[1] 16.2 18.5 21.0
+[1] 3 1 2
+```
 
+The smallest value is in position 3, followed by positions 1 and 2. Therefore, `heights[order(heights)]` gives the same ordered values as `sort(heights)`.
 
+## Reorder complete rows
 
+Create a small table directly in R:
+
+```r
+measurements <- data.frame(
+  ID = c("01", "02", "03", "04"),
+  Year = c(2024L, 2023L, 2024L, 2023L),
+  Height_m = c(18.5, 21.0, 16.2, NA),
+  stringsAsFactors = FALSE
+)
+measurements[order(measurements$Height_m, na.last = TRUE), ]
+```
+
+The row order is `03`, `01`, `02`, `04`; the unavailable height comes last. The comma in `[rows, columns]` matters: leaving the column position empty retains every column.
+
+To keep this result, assign it to another object:
+
+```r
+by_height <- measurements[
+  order(measurements$Height_m, na.last = TRUE),
+]
+```
+
+Do not sort the height column and assign it back on its own. That would attach heights to different IDs and silently change the observations.
+
+## Use more than one sorting column
+
+```r
+by_year <- measurements[
+  order(measurements$Year, measurements$ID),
+]
+by_year
+```
+
+Rows are ordered by year first; IDs break ties within each year. Here the ID order is `02`, `04`, `01`, `03`. Use `decreasing = TRUE` to reverse the ordering. For `order()`, `na.last = TRUE` keeps missing values at the end, whereas `na.last = NA` removes their positions; choose explicitly.
+
+## Check the result
+
+```r
+nrow(by_year) == nrow(measurements)
+identical(sort(by_year$ID), sort(measurements$ID))
+```
+
+Both checks should return `TRUE`: this operation changes row order, not the set of observations. Real regional data repeat each ID across years, so use `ID` **and** `Year` when identifying an observation. Sorting is not a method for removing duplicates or repairing mismatched values.
+
+## Characters and factors
+
+Keep identifiers as text to preserve leading zeros. Create a factor explicitly when its levels represent categories. Reordering rows does not change a factor's level order; specify `levels = ...` when that order matters for plots or models.
+
+For additional examples, see [sorting in the Base R course](https://geomoer.github.io/moer-base-r/unit08/unit08-02_sorting.html) and the [R documentation for `order()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/order.html).

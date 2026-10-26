@@ -6,6 +6,8 @@ output:
   html_document: 
     keep_md: yes
 ---
+
+<!-- Source status: Historical wide/long and lattice draft; not the source of the current Unit-04 reshaping page and not an active Unit-12 page. See README.md before reuse. -->
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e11-04/')

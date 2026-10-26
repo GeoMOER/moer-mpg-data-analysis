@@ -23,7 +23,7 @@ hist(ind, main = "Independent variable")
 hist(dep, main = "Dependent variable")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-1-1.png)<!-- -->
+![Histograms of the predictor and response in the first Anscombe dataset; the predictor spans about 4 to 14 and the response about 4 to 11.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-1-1.png)<!-- -->
 
 A look at the relationship between the variables by using a scatterplot justifies a linear modeling attempt. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
 
@@ -39,7 +39,7 @@ text(10, 6, bquote(paste("y"["i"], " = ", .(round(lmod$coefficients[1], 3)),
                           " + ", .(round(lmod$coefficients[2], 3)), "* x"["i"])))
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-2-1.png)<!-- -->
+![First Anscombe dataset with an upward-sloping fitted line; points scatter around y = 3 + 0.5 x.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-2-1.png)<!-- -->
 
 While the visualization is illustrative, it does not provide any information on the actual significance of the parameters of the model, i.e. it does not answer the question about the existence of an actual linear relationship which - in the case of linear regression - requires a slope of the regression line which is actually different from 0. In principle, there are two ways to tackle this problem: using an analysis of variance (ANOVA) or a t-test.
 
@@ -236,7 +236,9 @@ for(i in seq(4)){
 }
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-12-1.png)<!-- -->
+![Anscombe quartet: approximately linear points, a curved relationship, one response outlier, and a cluster with one high-leverage point.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-12-1.png)<!-- -->
+
+Reading the panels from top left to bottom right: the first dataset is approximately linear; the second follows a curve; the third is approximately linear apart from one unusually high response; and the fourth has nearly all predictor values at the same position, with one point far to the right. These different patterns explain why similar regression summaries do not replace inspecting the observations.
 
 While x3/y3 might still justify a linear regression if we remove the outlier, the two plots on the right side do not. So what to do? Unfortunately, all of these data combinations result in almost the same regression statistics:
 
@@ -361,7 +363,7 @@ for(i in seq(4)){
 }
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-14-1.png)<!-- -->
+![Residual-versus-fitted plots for the four Anscombe datasets; the second shows curvature and the third highlights one large residual.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-14-1.png)<!-- -->
 
 Except maybe for the upper left figure, this assumption is clearly violated as can be shown on residuals vs. fitted values plots. A better visualization might be the scale-location plot which standardizes the residuals and performs a square-root transformation on them. In doing so, the variance of the residuals becomes more evident in the case of small deviations from the homoscedasticity assumption:
 
@@ -373,7 +375,7 @@ for(i in seq(4)){
 }
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-15-1.png)<!-- -->
+![Scale-location plots for the Anscombe quartet compare the spread of standardized residuals across fitted values.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-15-1.png)<!-- -->
 
 If you want to check the normality of the residuals, we could visualize their distribution as a QQ plot.
 
@@ -384,7 +386,7 @@ for(i in seq(4)){
 }
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-16-1.png)<!-- -->
+![Normal QQ plots for the four Anscombe regression models show different residual patterns despite their similar summary statistics.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-16-1.png)<!-- -->
 
 ```r
 par(par_org)
@@ -404,7 +406,7 @@ for(i in seq(4)){
 }
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-17-1.png)<!-- -->
+![Cook distance plots for the Anscombe quartet identify observations with unusually strong influence on the fitted regressions.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-17-1.png)<!-- -->
 
 
 

@@ -22,7 +22,7 @@ So far, the models have only considered linear relationships. The corresponding 
 To illustrate nonlinear fits, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) but modify variable x3 and use y1 and y2.
 
 Just for completeness, the following code shows the modification of the anscombe data set although it is not relevant to know anything about it for the examples below:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Second Anscombe dataset: the response rises with the predictor before leveling off and declining at the upper end."}
 library(mgcv)
 
 y <- anscombe$y2
@@ -40,7 +40,7 @@ df <- data.frame(y = y,
 
 ### From linear regression models to generalized additive models
 To start with, the following plots shows the data set used within this example and the result of a simple linear regression model.
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "A straight fitted regression line misses the curvature in the second Anscombe dataset."}
 plot(df$x, df$y)
 
 lmod <- lm(y ~ x, data = df)
@@ -51,7 +51,7 @@ summary(lmod)
 Provided that all the assumptions relevant for linear models are met, x is significant and the model explains about 65.67 percent of the variation in the data set.
 
 One might think that replacing `lm` with `mgcv::gam` (i.e. the gam function from the mgcv package) would be enough to turn our model in an additive model. However, this is not true. In fact, `gam` with (its default) gaussian family acts exactly as the `lm` function if the same formula is supplied. We will show this by plotting the gam-based regression line (dotted, red) on top of the one from the linear model above (gray).
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Linear-model and unsmoothed GAM fitted lines overlap because both use the predictor without a smooth term."}
 gammod <- gam(y ~ x, data = df, family = gaussian())
 
 px <- seq(min(df$x), max(df$x), 0.1)
@@ -71,7 +71,7 @@ summary(gammod)
 No surprise. All test statistics are equal (it is the same model!). The only difference is due to some wording since the R squared value in the linear model (0.6567) can no be found in the "deviance explained".
 
 Obviously, there must be more than just switching a function call to come from linear models to additive models. And there is: while for simple linear models, the equation would be something like y = a+bx, a smoothing term replace the slope b in additive models: y = a+s(x). By adding this term to the `gam` function and using a penalized regression spline (fx = FALSE which is the default), we finally get a first non-linear model:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "A smoothed GAM follows the rise and leveling of the second Anscombe dataset more closely than a straight line."}
 gammod <- gam(y ~ s(x, fx = FALSE), data = df)
 
 px <- seq(min(df$x), max(df$x), 0.1)
@@ -84,19 +84,19 @@ summary(gammod)
 ```
 A look on the model performance reveals that the explained deviance has increased. Assuming that all model assumptions, which are actually the same as for linear models (except the linear relationship) are met, the explained deviance has increased to almost 78 percent. In order to check the model assumptions, you can use e.g. the `gam.check` function.
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Four GAM diagnostics: residual QQ plot, residuals versus linear predictor, residual histogram, and observed versus fitted response."}
 gam.check(gammod)
 ```
 
 Speaking of side notes: this is how you can visualize the smoother quickly (you have to add the intercept to get the final prediction values):
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Estimated GAM smooth with dashed uncertainty limits and tick marks showing the predictor observations."}
 plot(gammod)
 ```
 
 
 ### Optimal smoother selection and reducing the risk of overfitting
 One might wonder, why this and no other smoother has been found in the end. The reason relies in the way, the default penalized regression works (which is beyond the scope of this example but to sum it up: the regression penalizes each added smoothing term, i.e. each reduction in the resulting degrees of freedom of the model). To illustrate what would happen if no penalized but just a simple spline regression would be used, one can set the fx option to TRUE:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "A flexible fixed-basis GAM fit follows local peaks and dips between observations."}
 gammod <- gam(y ~ s(x, bs = "tp", fx = TRUE), data = df)
 
 px <- seq(min(df$x), max(df$x), 0.1)
@@ -111,7 +111,7 @@ Now the function is highly non-linear and 9 degrees of freedom are used for the 
 
 
 If you do not want to use the standard (penalty) model selection, a feasible approach for the additive models might be to select the number of knots and iterate over them in e.g. a leave-many-out cross-validation approach. For illustration purposes, the following will just show the iteration and visualize the different model results in one plot:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "GAM fits with several basis sizes range from smooth curves to increasingly wavy fits through the same observations."}
 knots <- seq(3, 19)
 
 palette <- colorRampPalette(colors=c("blue", "green", "red"))
@@ -133,7 +133,7 @@ legend(13, 7.5, paste("knots", knots, sep = " "), col = cols, lty=2, cex=0.75)
 
 ### LOESS
 While the above examples are more straightforward if one comes from the implementation side of a linear model (i.e. `lm`), the locally weighted scatterplot smoothing (LOESS) is more straightforward from a conceptual point of view. It uses local linear regressions defined on moving subsets of the data set. For example, if the moving window is set to 21 pixels, than only the 10 left and right neighbors of the actually considered value (target) are considered and a linear regression is computed based on this subset. The term weighted indicates that not all of the neighboring pixels are treated equally but the ones closer to the target are weighted higher. The following shows one example using 75 percent of all the data pairs in order to compute the local regression for each target value:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "A LOESS fit follows the broad curved pattern of the second Anscombe dataset."}
 loessmod <- loess(y ~ x, data = df, span = 0.75)
 
 px <- seq(min(df$x), max(df$x), 0.1)
@@ -144,7 +144,7 @@ lines(px, loesspred, col = "red")
 ```
 
 Again, one could iterate over the window size in a e.g. cross-validation approach to identify the best fit. As for the gam model, the following just illustrates the different models:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "LOESS fits with different spans show how a smaller smoothing window permits more local variation."}
 window <- seq(0.3, 1, 0.01)
 
 palette <- colorRampPalette(colors=c("blue", "green", "red"))

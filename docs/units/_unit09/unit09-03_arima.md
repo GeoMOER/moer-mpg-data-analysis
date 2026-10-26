@@ -38,7 +38,7 @@ On the contrary, it requires a stationary time series, which is a prerequisite w
 acf(tam$Ta)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-2-1.png)<!-- -->
+![Autocorrelation of monthly mean temperature shows the repeating annual pattern used to motivate time-series modeling.]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-2-1.png)<!-- -->
 
 ### Auto-regressive models (AR)
 While we could start with de-trending and de-seasoning now, let us try a quick-and-dirty approach first and postpone the time series decomposition to the next session. 
@@ -50,7 +50,7 @@ dTa <- diff(diff(tam$Ta))
 acf(dTa)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-3-1.png)<!-- -->
+![Autocorrelation of the twice-differenced temperature series shows a strong negative first-lag value and smaller later values.]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-3-1.png)<!-- -->
 
 Not perfect but good enough to be used in this example. Before we run the ARIMA model, we run a simple AR model first:
 
@@ -83,7 +83,7 @@ The number of lags with the minimum AIC is used:
 plot(0:20, armod$aic, type = "o")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-5-1.png)<!-- -->
+![AIC versus autoregressive order drops sharply through the lower orders, then changes less at higher orders.]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-5-1.png)<!-- -->
 
 Using the Yule-Walker method for estimating the AR parameters, a maximum lag of 14 is considered. 
 Although the results will be quite different if another method is used and although the following is of no use if one actually wants to use not just an AR or an MA but an ARIMA model,
@@ -102,7 +102,7 @@ acf(dTa)
 pacf(dTa)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-6-1.png)<!-- -->
+![Autocorrelation and partial autocorrelation of the twice-differenced series show remaining lag structure.]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-6-1.png)<!-- -->
 
 ```r
 par(par_org)
@@ -143,7 +143,7 @@ lines(arpred$pred + arpred$se, col = "grey")
 lines(arpred$pred - arpred$se, col = "grey")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-9-1.png)<!-- -->
+![Autoregressive forecast for the differenced series: observed values, an oscillating prediction, and upper and lower uncertainty curves.]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-9-1.png)<!-- -->
 
 
 ### Auto-regressive integrated moving average models (ARIMA)
@@ -219,7 +219,7 @@ lines(arima_predict$pred + arima_predict$se, col = "grey")
 lines(arima_predict$pred - arima_predict$se, col = "grey")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-12-1.png)<!-- -->
+![ARIMA forecast of monthly temperature extends the seasonal pattern beyond the observed series, with uncertainty curves.]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-12-1.png)<!-- -->
 
 
 ### Finding the right parameters for ARIMA
@@ -276,7 +276,7 @@ To better estimate the quality of the ARIMA model, we can use some diagnostic pl
 tsdiag(arima_ns)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-15-1.png)<!-- -->
+![Nonseasonal ARIMA diagnostics show standardized residuals, their autocorrelation, and Ljung-Box p-values by lag.]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-15-1.png)<!-- -->
 
 The last plot shows test results if the residuals were independently distributed. 
 For time lags larger than 4, this may not be the case, which indicates that the ARIMA model is not really well specified.
@@ -287,7 +287,7 @@ The forecast looks like this:
 plot(forecast::forecast(arima_ns))
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-16-1.png)<!-- -->
+![Nonseasonal ARIMA temperature forecast with an oscillating forecast line and shaded prediction intervals.]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-16-1.png)<!-- -->
 
 If we include a seasonal component, the results look like this:
 
@@ -319,13 +319,13 @@ summary(arima_s)
 tsdiag(arima_s)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-18-1.png)<!-- -->
+![Seasonal ARIMA diagnostics show standardized residuals, their autocorrelation, and Ljung-Box p-values by lag.]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-18-1.png)<!-- -->
 
 ```r
 plot(forecast::forecast(arima_s))
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-19-1.png)<!-- -->
+![Seasonal ARIMA temperature forecast continues the annual cycle, with shaded intervals showing forecast uncertainty.]({{ site.baseurl }}/assets/images/rmd_images/e09-03/unnamed-chunk-19-1.png)<!-- -->
 
 
 So which parameter combination is the best? You will tackle this question with the assignment of this unit. 

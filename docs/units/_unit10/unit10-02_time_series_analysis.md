@@ -42,7 +42,7 @@ tam$Date <- strptime(paste0(tam$Date, "01"), format = "%Y%m%d", tz = "Europe/Ber
 plot(tam$Date, tam$Ta, type = "l")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-2-1.png)<!-- -->
+![Monthly mean air temperature shows repeated summer peaks and winter troughs across the teaching period.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-2-1.png)<!-- -->
 
 ### Seasonality of time series
 The time series shows clear seasonality. In this case, we already know that monthly mid-latitude temperature shows a seasonality of 12 months. 
@@ -55,13 +55,13 @@ Hence, in order to convert frequency back to the original time units, we divide 
 spec <- spectrum(tam$Ta)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-3-1.png)<!-- -->
+![Raw periodogram of monthly temperature has a prominent peak near one cycle per twelve observations.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-3-1.png)<!-- -->
 
 ```r
 plot(1/spec$freq, spec$spec, type = "h")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-4-1.png)<!-- -->
+![Spectral power plotted against period has a dominant peak near twelve months.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-4-1.png)<!-- -->
 
 ```r
 1/spec$freq[spec$spec == max(spec$spec)]
@@ -89,7 +89,7 @@ plot(tam$Date, tam$Ta, type = "l")
 lines(tam$Date, annual_trend, col = "red")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-6-1.png)<!-- -->
+![Monthly temperature with a twelve-month moving-average trend, which varies more slowly than the seasonal cycle.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-6-1.png)<!-- -->
 
 The annual trend shows some fluctuations but it is certainly not very strong or even hardly different from zero.
 
@@ -106,7 +106,7 @@ plot(tam$Date, seasonal, type = "l")
 lines(tam$Date, seasonal_cycle, col = "blue")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-7-1.png)<!-- -->
+![Detrended temperature and the repeating estimated seasonal cycle show similar annual oscillations.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-7-1.png)<!-- -->
 
 The blue line shows the average seasonal signal of the time series.
 
@@ -117,7 +117,7 @@ remainder <- tam$Ta - annual_trend - seasonal_cycle
 plot(tam$Date, remainder, type = "l")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-8-1.png)<!-- -->
+![Temperature remainder after removing trend and seasonality fluctuates around zero, with a few larger departures.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-8-1.png)<!-- -->
 
 As we can see, it is slightly autocorrelated:
 
@@ -125,7 +125,7 @@ As we can see, it is slightly autocorrelated:
 acf(remainder, na.action = na.pass)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-9-1.png)<!-- -->
+![Autocorrelation of the remainder is much smaller than in the original seasonal temperature series.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-9-1.png)<!-- -->
 
 As an alternative to the workflow above, we could (and should) of course use existing functions, like ``decompose``, which handles the decomposition in one step. 
 Since this function requires a time series, this data type has to be created first. 
@@ -137,7 +137,7 @@ tam_ts_dec <- decompose(tam_ts)
 plot(tam_ts_dec$trend)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-10-1.png)<!-- -->
+![Trend component from classical decomposition changes slowly over the monthly temperature record.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-10-1.png)<!-- -->
 
 While the above shows the plotting of the trend component, we can also plot everything in one plot:
 
@@ -145,7 +145,7 @@ While the above shows the plotting of the trend component, we can also plot ever
 plot(tam_ts_dec)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-11-1.png)<!-- -->
+![Classical additive decomposition separates observed monthly temperature, trend, seasonal cycle, and remainder into four panels.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-11-1.png)<!-- -->
 
 
 But - again - it is not as static as it seems. 
@@ -160,7 +160,7 @@ lines(tam_ts_stl$time.series[, 2], col = "blue")
 legend(2018, 9.2, c("decompose", "stl"), col = c("red", "blue"), lty=c(1,1))
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-12-1.png)<!-- -->
+![Trend estimates from classical decomposition and STL mostly agree, with differences near some peaks and endpoints.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-12-1.png)<!-- -->
 
 The entire result from the ``stl`` function call looks like this:
 
@@ -168,7 +168,7 @@ The entire result from the ``stl`` function call looks like this:
 plot(tam_ts_stl)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-13-1.png)<!-- -->
+![STL decomposition displays observed temperature, repeating seasonality, a slowly varying trend, and a short-term remainder.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-13-1.png)<!-- -->
 
 
 # Trend estimation
@@ -182,7 +182,7 @@ tam$Ta_ds <- tam$Ta - monthly_mean$x
 plot(tam$Date, tam$Ta_ds, type = "l")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-14-1.png)<!-- -->
+![Deseasonalized temperature shows departures from the average monthly cycle rather than the original annual oscillation.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-14-1.png)<!-- -->
 
 Once this is done, a linear model could be used. In this context, it is important to understand the meaning of the independent (i.e. time) variable. The following shows the slope of the trend per month since the time is just supplied as a sequence of natural numbers:
 
@@ -247,7 +247,7 @@ plot(ts, tam$Ta_ds, type = "l")
 abline(lmod, col = "red")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-17-1.png)<!-- -->
+![Deseasonalized temperature with a gently upward-sloping fitted line across the teaching period.]({{ site.baseurl }}/assets/images/rmd_images/e10-02/unnamed-chunk-17-1.png)<!-- -->
 
 There is a significant annual trend.
 

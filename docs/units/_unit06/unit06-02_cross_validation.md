@@ -43,7 +43,7 @@ plot(anscombe$x1, anscombe$y1)
 abline(lmod, col = "red")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-1-1.png)<!-- -->
+![First Anscombe dataset with its fitted linear regression, used as the starting model for cross-validation.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-1-1.png)<!-- -->
 
 ```r
 anova(lmod)
@@ -114,7 +114,7 @@ mss_resid <- ss_resid / (length(cv$obsv) - 2)
 plot(cv$obsv, (cv$obsv - cv$pred))
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-2-1.png)<!-- -->
+![Leave-one-out residuals, observed minus predicted response, plotted against observed values; errors fall on both sides of zero.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-2-1.png)<!-- -->
 
 Based on this example, one could compute something like the F and r-squared values of an anova. 
 Notably, compared to the "internal" F-test of the anova from the original model and the r-squared value, the cross-validation indicates a less accurate prediction.

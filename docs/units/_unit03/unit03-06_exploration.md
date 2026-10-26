@@ -139,21 +139,9 @@ par(old_par)
 
 Saving the original settings before changing them lets you restore them afterward. A call such as `lines()` adds to the current plot; it does not start another panel. The transformation example below demonstrates a complete four-panel figure.
 
-## Practice: choose, plot, explain
-
-Work in pairs for about **10 minutes**. Choose one question:
-
-1. How do water-area shares compare between Hesse, Bavaria, and Lower Saxony?
-2. How variable are forest shares across the 16 federal states?
-3. How does tree 2's trunk circumference change with age in the `Orange` practice data from the [visualization page]({{ site.baseurl }}/unit03/unit03-03_visualization.html)?
-
-Select an appropriate plot type and write the code in an R Markdown document. Identify the observations, label the variables and units, and use a legend if necessary. Explain your plot choice in one sentence and its main finding in another. Exchange figures with a neighboring pair: can they answer your question from the figure alone?
-
-This is **unmarked practice**. Several plot choices can be defensible; justify how your choice answers the question. Assignment 03 remains the separate marked timber-harvest task.
-
 ## Further exploration
 
-After the basic plots and practice, the following examples explore transformations, reference distributions and conditioning in more detail. They use the same prepared land-use file.
+After the basic plots, the following examples explore transformations, reference distributions and conditioning in more detail. They use the same prepared land-use file.
 
 ### Transformations
 

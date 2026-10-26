@@ -38,7 +38,7 @@ tam$Date <- strptime(paste0(tam$Date, "01"), format = "%Y%m%d", tz = "Europe/Ber
 plot(tam$Date, tam$Ta, type = "l")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-03/unnamed-chunk-2-1.png)<!-- -->
+![Monthly mean temperature series used to assemble one twelve-month sequence for each complete year.]({{ site.baseurl }}/assets/images/rmd_images/e10-03/unnamed-chunk-2-1.png)<!-- -->
 
 The major risk in time series clustering (or any other clustering) is that we cluster something, which actually does not have any kind of "real" groups. 
 Hence, the most important part to remember is that cluster algorithms will always identify clusters no matter if they really exist. 
@@ -149,7 +149,7 @@ plot(tam_hc)
 rect.hclust(tam_hc, k = 3)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e10-03/unnamed-chunk-5-1.png)<!-- -->
+![Hierarchical clustering dendrogram of annual temperature sequences, with three outlined groups and 2010 in a group on its own.]({{ site.baseurl }}/assets/images/rmd_images/e10-03/unnamed-chunk-5-1.png)<!-- -->
 
 
 In this example, we derived three clusters of years with similar mean monthly air temperatures. 

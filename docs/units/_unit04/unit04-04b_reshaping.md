@@ -1,0 +1,75 @@
+---
+title: "Example: Reshaping and Grouped Summaries"
+toc: true
+toc_label: In this example
+header:
+  image: "/assets/images/teaser/holz.jpg"
+  caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
+---
+
+## Define one observation first
+
+A **wide** table stores different measurements in different columns. A **long** table puts a measurement name in one column and its value in another. Both can be appropriate; reshaping changes what a row represents, rather than improving a table automatically.
+
+## A small wide table
+
+```r
+wide <- data.frame(
+  ID = c("01", "02"),
+  Year = c(2024L, 2024L),
+  Height_m = c(18.5, 16.2),
+  Crown_m = c(4.0, 3.5),
+  stringsAsFactors = FALSE
+)
+wide
+```
+
+Here one row is one site in one year. `ID` and `Year` identify it; height and crown diameter are in meters.
+
+## Stack measurements into rows
+
+This course uses `reshape2`. If necessary, run the following once in the R console:
+
+```r
+install.packages("reshape2")
+```
+
+The `reshape2::` prefix calls a function from that package without attaching the whole package.
+
+```r
+long <- reshape2::melt(
+  wide, id.vars = c("ID", "Year"),
+  measure.vars = c("Height_m", "Crown_m"),
+  variable.name = "Measurement", value.name = "Value_m"
+)
+long
+```
+
+There are now four rows: two sites multiplied by two measurements. One row represents one measurement at one site in one year. Its key is `ID`, `Year` **and** `Measurement`. Missing values are retained unless you deliberately request otherwise.
+
+## Return to wide form
+
+```r
+restored <- reshape2::dcast(
+  long, ID + Year ~ Measurement, value.var = "Value_m"
+)
+restored
+```
+
+The columns left of `~` identify output rows; the measurement names on the right become columns. If several rows target the same output cell, `dcast()` needs an aggregation rule and can otherwise default to counting rows. Investigate duplicates before choosing a rule; do not silently replace measurements with counts.
+
+## Summarize groups deliberately
+
+```r
+aggregate(Height_m ~ Year, data = wide, FUN = mean)
+```
+
+For 2024, this returns the unweighted mean **17.35 m** across two sites. Aggregation reduces several observations to a summary; reshaping merely rearranges them.
+
+A regional percentage or yield is not an additive total. Summing percentages from overlapping administrative areas is invalid, and an unweighted average across districts does not generally reproduce a national percentage or yield. The worked regional example therefore retains individual region-year observations.
+
+## Use each form for its purpose
+
+The worked land-use example creates a long view to illustrate reshaping, then saves the validated **wide** table for regression in Units 05–06. The crop assignment also produces a wide table for Unit 07.
+
+See [aggregation and reshaping in Base R](https://geomoer.github.io/moer-base-r/unit08/unit08-07-aggregate.html), the [`melt()` documentation](https://search.r-project.org/CRAN/refmans/reshape2/html/melt.data.frame.html) and [`dcast()` documentation](https://search.r-project.org/CRAN/refmans/reshape2/html/cast.html).

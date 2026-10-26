@@ -1,0 +1,62 @@
+---
+title: "Example: Splitting Text"
+output:
+  html_document:
+    keep_md: true
+---
+
+## Separate text without inventing information
+
+A label can contain several pieces of information. First split the text mechanically; then decide what each part means. Preserve the original label throughout.
+
+## Split a small example
+
+```{r}
+labels <- c("  Riverdale, District",
+            "Hillford, State capital, Urban district",
+            "Cedar City")
+parts <- strsplit(trimws(labels), ",", fixed = TRUE)
+parts
+```
+
+`trimws()` removes leading and trailing whitespace. `strsplit()` returns a **list** because labels can contain different numbers of parts. `fixed = TRUE` treats the comma as a literal delimiter. For example, the first label has two parts, the second three, and the last only one.
+
+```{r}
+parts <- lapply(parts, trimws)
+place <- vapply(parts, function(x) x[1], character(1))
+descriptors <- lapply(parts, function(x) x[-1])
+place
+lengths(descriptors)
+```
+
+`lapply()` applies `trimws()` to each list element. `vapply()` requests one character value from each element: its first part. `x[-1]` retains the remaining parts; the last label has no descriptor, rather than a known administrative type.
+
+## Recognize only documented categories
+
+```{r}
+known_types <- c("District", "Urban district")
+admin_unit <- vapply(descriptors, function(x) {
+  found <- intersect(x, known_types)
+  if (length(found) == 1L) found else NA_character_
+}, character(1))
+admin_unit
+```
+
+The first two labels identify their type explicitly. `Cedar City` remains unresolved: a place name containing "City" is not evidence of its legal status. `State capital` is an additional descriptor; it does not replace `Urban district`.
+
+For real regional data, use documented source classifications and dates. Do not assign every unresolved label to the same category. Retain the other descriptors and report cases that require checking.
+
+## Package a repeated operation
+
+A function names a reusable operation and makes its input explicit:
+
+```{r}
+split_label <- function(x) {
+  strsplit(trimws(x), ",", fixed = TRUE)
+}
+split_label(labels)
+```
+
+Save a function definition in an `.R` file and load it with `source("Scripts/region_helpers.R")` after creating that file in your project. The crop assignment asks you to develop your own reusable region-cleaning function; this small example shows how a definition and a call fit together.
+
+See [character strings in Base R](https://geomoer.github.io/moer-base-r/unit08/unit08-06-string.html) and [writing functions](https://geomoer.github.io/moer-base-r/unit07/unit07-06_functions.html).

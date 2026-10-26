@@ -38,7 +38,7 @@ sometimes also referred to as jet-colors (that's MATLAB talk).
 pal(rainbow(100))
 ```
 
-<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-2-1.png" alt="Rainbow palette runs from red through yellow, green, cyan and blue to magenta, with uneven perceived changes between colors." style="display: block; margin: auto;" />
 
 We see that any change that may be happening in the green region will not be noticeable
 whereas changes that happen from red, via orange to yellow will be very prominent even though 
@@ -52,7 +52,7 @@ This becomes even more evident when we plot the colors in grayscale:
 pal(desaturate(rainbow(100)))
 ```
 
-<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-3-1.png" alt="Rainbow palette in grayscale alternates between dark and light sections rather than changing brightness in one direction." style="display: block; margin: auto;" />
 
 Such a color scale does not linearly represent continuous data.
 There have been numerous attempts to produce perceptually consistent, yet visually pleasing
@@ -66,7 +66,7 @@ brewer_rainbow <- colorRampPalette(brewer.pal(11, "Spectral"))
 pal(brewer_rainbow(100))
 ```
 
-<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-4-1.png" alt="Spectral diverging palette has darker red and blue ends and a light yellow center." style="display: block; margin: auto;" />
 
 Most of the edges are gone and the result looks quite pleasing too.
 To check how effectively this palette takes care of the above observed edges,
@@ -77,7 +77,7 @@ let's again look at the grayscale version:
 pal(desaturate(brewer_rainbow(100)))
 ```
 
-<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-5-1.png" alt="Spectral palette in grayscale is lightest near the center and darker toward both ends." style="display: block; margin: auto;" />
 
 Not bad at all, though there is a distinguishable increase in lightness towards the middle of the scale.
 This is accepted in this case as this color scale is a diverging color scale. This means it should only be used for visualizing deviations from a central value (e.g. zero). Do not use this color scale to represent sequential data (i.e. data changing only in one direction)!!
@@ -95,7 +95,7 @@ clrs_hcl <- function(n) {
 pal(clrs_hcl(100))
 ```
 
-<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-6-1.png" alt="HCL palette changes hue from reddish tones through green and cyan to blue while keeping lightness approximately constant." style="display: block; margin: auto;" />
 
 This looks a bit pale, yet there are no observable edges in the palette. Let's check the grayscale version.
 
@@ -104,7 +104,7 @@ This looks a bit pale, yet there are no observable edges in the palette. Let's c
 pal(desaturate(clrs_hcl(100)))
 ```
 
-<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-7-1.png" alt="Constant-lightness HCL palette becomes an almost uniform gray strip, so positions cannot be distinguished by brightness." style="display: block; margin: auto;" />
 
 Nice! One evenly distributed grayscale without any changes in lightness along the palette. So this is truly a perceptually uniform color palette where only the hue changes.
 
@@ -121,7 +121,7 @@ clrs_hcl2 <- function(n) {
 pal(clrs_hcl2(100))
 ```
 
-<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-8-1.png" alt="HCL palette varies both hue and lightness, progressing from dark reddish tones to pale blue." style="display: block; margin: auto;" />
 
 ... and in grayscale...
 
@@ -130,7 +130,9 @@ pal(clrs_hcl2(100))
 pal(desaturate(clrs_hcl2(100)))
 ```
 
-<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="{{ site.baseurl }}/assets/images/rmd_images/e11-02/unnamed-chunk-9-1.png" alt="Varying-lightness HCL palette becomes a grayscale ramp from dark to light." style="display: block; margin: auto;" />
 
 This color scale is visually pleasing and represents the data honestly. Low and high values are readily discernible even in grayscale.
+
+Color is one part of an accessible figure. Identify lines with labels, symbols or line types as well as color, and describe the relevant pattern in the accompanying text. Check whether the distinction survives grayscale and whether the legend names the values or groups. A constant-lightness palette can distinguish hues while losing those distinctions in grayscale, as the examples above demonstrate.
 

@@ -36,13 +36,13 @@ head(tam)
 
 ### Auto-regressive and moving average models for predicting time series
 In order to predict the time series just based on its observed dynamics, an auto-regressive integrated moving average model (ARIMA) can be used. ARIMA is not a diagnostic model for the identification e.g. of seasonal components etc. On the contrary, it requires a stationary time series which we already know is not the case for the monthly mean air temperature values between July 1st 2006 and December 31st 2015.
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Autocorrelation of monthly mean temperature shows the repeating annual pattern used to motivate time-series modeling."}
 acf(tam$Ta)
 ```
 
 ### Auto-regressive models (AR)
 While we can start with detrending and de-seasoning now, let's try a quick-and-dirty approach first and postpone the time series decomposition to the next session. One thing one could try is to use not the original values but the difference between the consecutive value pairs (i.e. the difference between time t and t+1 etc.). And if one difference is not enough, we can compute the difference of the differences and the auto-correlation behavior would look like that:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Autocorrelation of the twice-differenced temperature series shows a strong negative first-lag value and smaller later values."}
 dTa <- diff(diff(tam$Ta))
 acf(dTa)
 ```
@@ -56,7 +56,7 @@ armod
 The ``ar`` function computes an AR Model and iterates over the lags to be included in the linear equation which predicts the monthly air temperature value for time t based on its value at time t-1, t-2, .... 
 
 The maximum number of lags (within a maximum of 20 as provided to the function) is determined based on an internal estimate of the AIC parameter. The number of lags with the minimum AIC are used:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "AIC versus autoregressive order drops sharply through the lower orders, then changes less at higher orders."}
 plot(0:20, armod$aic, type = "o")
 ```
 
@@ -66,7 +66,7 @@ Using the Yule-Walker method for estimating the AR parameters, a maximum lag of 
 * the partial auto-correlation function shows only p significant lags in the beginning,
 
 an AR(p) model (i.e. an AR model with p considered lags) is a good starting point. For moving average models it is vice versa and the lags q considered in the model would be taken from the auto-correlation function. In the auto- and partial auto-correlation function of the two-times differentiated dataset, we might see exactly this:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Autocorrelation and partial autocorrelation of the twice-differenced series show remaining lag structure."}
 par_org <- par(no.readonly = TRUE)
 par(mfrow = c(1,2))
 acf(dTa)
@@ -82,7 +82,7 @@ armod
 
 
 The AR model can now be used to predict the time series (although 100 month in the future is way to much; gray lines indicate the standard error):
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Autoregressive forecast for the differenced series: observed values, an oscillating prediction, and upper and lower uncertainty curves."}
 arpred <- predict(armod, n.ahead = 100)
 
 plot(dTa, type = "l", xlim = c(0, length(dTa)+100))
@@ -114,7 +114,7 @@ summary(arimamod)
 ```
 
 We will not focus on optimal prediction in this example, so these results are just fine for the purpose of illustration. The arima model can be used to predict the time series in the future analogously to the AR model:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "ARIMA forecast of monthly temperature extends the seasonal pattern beyond the observed series, with uncertainty curves."}
 arima_predict <- predict(arimamod, n.ahead = 100)
 
 plot(tam$Ta, type = "l", xlim = c(0, length(dTa)+100))
@@ -145,19 +145,19 @@ summary(arima_ns)
 Actually, the arima comes with d = 0 which means that the data values are not differenced (which is a tough choice).
 
 To better estimate the quality of the ARIMA, we can use some diagnostic plots:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Nonseasonal ARIMA diagnostics show standardized residuals, their autocorrelation, and Ljung-Box p-values by lag."}
 tsdiag(arima_ns)
 ```
 
 The last plot shows test results if the residuals are independently distributed. For time lags larger 4, this is maybe not the case which indicates that the arima model is not really well specified.
 
 The forecast will look like this:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Nonseasonal ARIMA temperature forecast with an oscillating forecast line and shaded prediction intervals."}
 plot(forecast(arima_ns))
 ```
 
 If we allow a seasonal component, the results look like that:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = c("Seasonal ARIMA diagnostics show standardized residuals, their autocorrelation, and Ljung-Box p-values by lag.", "Seasonal ARIMA temperature forecast continues the annual cycle, with shaded intervals showing forecast uncertainty.")}
 arima_s <- auto.arima(tam_ts, max.p = 20, max.q = 20, seasonal=TRUE)
 summary(arima_s)
 tsdiag(arima_s)

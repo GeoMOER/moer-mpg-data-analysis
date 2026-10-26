@@ -7,156 +7,56 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
+## Dates, instants and reporting years
 
-Coercing data types to date and/or time information is generally performed using
-`as.Date`, `as.POSIXct`, or `as.POSIXlt`. Let's start with `as.Date`:
+Use a date class when an observation records a calendar date, and a date-time class when it records an instant. A reporting year such as `2014` is an integer, not a complete date to be guessed as January 1. The regional cleaning example only needs reporting years; these date-time examples prepare you for the station data in Units 09–10.
 
-```r
-as.Date("2014-01-01 13:30:35")
-```
-
-```
-## [1] "2014-01-01"
-```
-If the character string supplied to the function comes in the ISO standard format,
-`as.Date` will notice it automatically. Otherwise, we have to define the format. For example, `%d.%m.%Y` means day, month, and year:
+## Read a calendar date
 
 ```r
-as.Date("01.01.2014", "%d.%m.%Y")
+as.Date("2014-01-01")
+as.Date("31.01.2014", format = "%d.%m.%Y")
 ```
 
-```
-## [1] "2014-01-01"
-```
-While `as.Date` requires information on the year, month and day without any
-exception, time information is not handled at all.
+`%d`, `%m` and `%Y` specify day, month and four-digit year. Use an explicit format for ambiguous source strings and inspect failed conversions with `is.na()`.
 
-To handle date and time information explicitly,
-convert it to a POSIX data type. In general, there
-are two kinds of POSIX classes: (i) POSIXct which handles date/time information as
-seconds since a certain time (standard: 1970-01-01 00:00.00 UTC) and (ii)
-POSIXlt which stores date/time information as a list. Again, if the date/time
-information is not supplied in standard format, one has to define it:
+## Specify the time zone
 
 ```r
-as.POSIXct("01.01.2014 13:30:35", format = "%d.%m.%Y %H:%M:%S")
-```
-
-```
-## [1] "2014-01-01 13:30:35 CET"
-```
-
-```r
-as.POSIXlt("01.01.2014 13:30:35", format = "%d.%m.%Y %H:%M:%S")
-```
-
-```
-## [1] "2014-01-01 13:30:35 CET"
-```
-For an overview of the formatting syntax, see the help pages of the `strptime`
-function, which handles the conversion. The latter function can also be used
-directly for converting character information to POSIXlt:
-
-```r
-lt <- strptime("01.01.2014 13:30:35", "%d.%m.%Y %H:%M:%S")
-lt
-```
-
-```
-## [1] "2014-01-01 13:30:35 CET"
-```
-
-```r
-class(lt)
-```
-
-```
-## [1] "POSIXlt" "POSIXt"
-```
-This function is faster than `as.POSIXlt` if the time format
-is supplied in the ISO way. Otherwise (and maybe even in this case), just forget 
-about it.
-
-Aside from theory, a practical difference between the POSIXct and POSIXlt classes
-is the way one can add or subtract a specific amount of time. For POSIXct, you
-have to supply the time interval as seconds:
-
-```r
-ct <- as.POSIXct("01.01.2014 13:30:35", format = "%d.%m.%Y %H:%M:%S")
-ct + 60 * 30  # add 30 minutes to ct
-```
-
-```
-## [1] "2014-01-01 14:00:35 CET"
-```
-While this can also be used for POSIXlt, one can also access the individual 
-time information directly:
-
-```r
-lt <- as.POSIXlt("01.01.2014 13:30:35", format = "%d.%m.%Y %H:%M:%S")
-lt$hour <- lt$hour + 24  # add 24 hours
-lt
-```
-
-```
-## [1] "2014-01-02 13:30:35 CET"
-```
-
-To convert POSIX information back to a character string, one can use the
-`strftime` function which allows precise formatting of the date/time string and
-also has an option for time zone conversion.
-
-```r
+ct <- as.POSIXct("01.01.2014 13:30:35",
+                 format = "%d.%m.%Y %H:%M:%S", tz = "Europe/Berlin")
 ct
+format(ct, format = "%Y-%m-%d %H:%M:%S", tz = "UTC", usetz = TRUE)
 ```
 
-```
-## [1] "2014-01-01 13:30:35 CET"
-```
+The input is **13:30:35 in Berlin**, which is **12:30:35 UTC** on that January date. Specifying the zone avoids depending on the computer's local settings. `Europe/Berlin` accounts for daylight-saving rules; `CET` and `CEST` describe different seasonal offsets.
 
-```r
-strftime(ct, "%d. %b %y, %H:%M", tz = "UTC")
-```
-
-```
-## [1] "01. Jan 14, 12:30"
-```
-Please note that the time zone conversion only works for POSIXct.
-
-
-Finally, if you want to subtract two date/time values, you can use the
-arithmetic operation or the difftime function to control the layout of
-the result (see the help pages of `strptime` for an overview of the layout 
-specifications).
+`POSIXct` represents instants as seconds relative to the Unix epoch. `POSIXlt` exposes calendar components in a list-like representation:
 
 ```r
-lt
+lt <- as.POSIXlt(ct, tz = "Europe/Berlin")
+lt$hour
+lt$mon + 1L
 ```
 
-```
-## [1] "2014-01-02 13:30:35 CET"
-```
+Here the hour is 13 and the month is 1; POSIXlt months start at zero. Prefer `POSIXct` for a date-time column in a data frame. `strptime()` parses strings into `POSIXlt`; consult its format documentation rather than guessing a format.
 
-```r
-ct
-```
-
-```
-## [1] "2014-01-01 13:30:35 CET"
-```
+## Elapsed time and calendar changes
 
 ```r
-lt - ct
+later <- ct + 30 * 60
+difftime(later, ct, units = "mins")
+as.Date("2014-01-02") - as.Date("2014-01-01")
 ```
 
-```
-## Time difference of 1 days
-```
+These calculations give 30 elapsed minutes and one calendar day. Adding 86,400 seconds is not always the same as moving to the same local clock time on the next calendar day across a daylight-saving transition. State which operation your question requires.
+
+## Return to readable text
 
 ```r
-difftime(lt, ct, units = "mins")
+strftime(ct, format = "%d.%m.%Y %H:%M", tz = "UTC")
 ```
 
-```
-## Time difference of 1440 mins
-```
+The displayed text is `01.01.2014 12:30`; the original instant is unchanged. Formatting produces character data, rather than changing the measurement itself. Keep parsed instants for calculations and format a separate display when needed.
+
+See the [R date-time documentation](https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html) for formats and conversion details.

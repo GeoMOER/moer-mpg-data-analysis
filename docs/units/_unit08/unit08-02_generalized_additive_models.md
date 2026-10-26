@@ -39,7 +39,7 @@ x <- c(x1, x3)
 plot(x, y)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-1-1.png)<!-- -->
+![Second Anscombe dataset: the response rises with the predictor before leveling off and declining at the upper end.]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-1-1.png)<!-- -->
 
 ```r
 df <- data.frame(y = y,
@@ -56,7 +56,7 @@ lmod <- lm(y ~ x, data = df)
 abline(lmod, col = "red")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-2-1.png)<!-- -->
+![A straight fitted regression line misses the curvature in the second Anscombe dataset.]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-2-1.png)<!-- -->
 
 ```r
 summary(lmod)
@@ -99,7 +99,7 @@ abline(lmod, col = "grey")
 lines(px, gampred, col = "red", lty=2)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-3-1.png)<!-- -->
+![Linear-model and unsmoothed GAM fitted lines overlap because both use the predictor without a smooth term.]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-3-1.png)<!-- -->
 
 There is no difference, although we need some more code since we have to predict the model values before we can overlay them in the plot. Therefore, the vector `px` is used and initialized with a sequence between the minimum and maximum x value and a step of 0.1. This is also sufficient to visualize more "non-linear" model predictions later.
 
@@ -145,7 +145,7 @@ plot(df$x, df$y)
 lines(px, gampred, col = "red")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-5-1.png)<!-- -->
+![A smoothed GAM follows the rise and leveling of the second Anscombe dataset more closely than a straight line.]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-5-1.png)<!-- -->
 
 ```r
 summary(gammod)
@@ -184,7 +184,7 @@ In order to check the model assumptions, you can use e.g. the `gam.check` functi
 gam.check(gammod)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-6-1.png)<!-- -->
+![Four GAM diagnostics: residual QQ plot, residuals versus linear predictor, residual histogram, and observed versus fitted response.]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-6-1.png)<!-- -->
 
 ```
 ## 
@@ -207,7 +207,7 @@ Speaking of side notes: this is how you can visualize the smoother quickly (you 
 plot(gammod)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-7-1.png)<!-- -->
+![Estimated GAM smooth with dashed uncertainty limits and tick marks showing the predictor observations.]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-7-1.png)<!-- -->
 
 
 ### Optimal smoother selection and reducing the risk of overfitting
@@ -225,7 +225,7 @@ plot(df$x, df$y)
 lines(px, gampred, col = "red")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-8-1.png)<!-- -->
+![A flexible fixed-basis GAM fit follows local peaks and dips between observations.]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-8-1.png)<!-- -->
 
 ```r
 summary(gammod)
@@ -279,7 +279,7 @@ for(i in seq(length(knots))){
 legend(13, 7.5, paste("knots", knots, sep = " "), col = cols, lty=2, cex=0.75)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-9-1.png)<!-- -->
+![GAM fits with several basis sizes range from smooth curves to increasingly wavy fits through the same observations.]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-9-1.png)<!-- -->
 
 
 
@@ -299,7 +299,7 @@ plot(df$x, df$y)
 lines(px, loesspred, col = "red")
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-10-1.png)<!-- -->
+![A LOESS fit follows the broad curved pattern of the second Anscombe dataset.]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-10-1.png)<!-- -->
 
 Again, one could iterate over the window size in, e.g., a cross-validation approach to identify the best fit. As for the gam model, the following just illustrates the different models:
 
@@ -319,7 +319,7 @@ for(i in seq(length(window))){
 }
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-11-1.png)<!-- -->
+![LOESS fits with different spans show how a smaller smoothing window permits more local variation.]({{ site.baseurl }}/assets/images/rmd_images/e08-02/unnamed-chunk-11-1.png)<!-- -->
 
 
 

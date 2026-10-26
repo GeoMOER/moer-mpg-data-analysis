@@ -20,6 +20,10 @@ After completing this worksheet you should have gained some experience in applyi
   * Data on percentage shares of land use at several administrative levels provided by the course instructors.
 
 
+## Input from Unit 04
+
+Reuse `Output/lu_clean.rds`, the wide land-use table from the [Unit 04 worked example]({{ site.baseurl }}/unit04/unit04-05_cleaning.html#handoff-to-later-units), as in Assignment 05. Load it with `readRDS("Output/lu_clean.rds")` from your course project. Keep its region/year identifiers when designing validation; the input contains several administrative levels and repeated regions across years.
+
 ## Prediction error of a linear model
 Please write an R Markdown document,
 which helps you to statistically evaluate the performance of a simple linear model that predicts the percentage recreation area from the respective settlement area. 

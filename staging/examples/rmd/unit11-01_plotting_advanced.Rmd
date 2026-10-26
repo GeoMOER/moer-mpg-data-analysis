@@ -6,6 +6,8 @@ output:
   html_document: 
     keep_md: yes
 ---
+
+<!-- Source status: Historical draft with mixed crop/disaster data and unresolved objects; no active published counterpart. See README.md before reuse. -->
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e11-01/')

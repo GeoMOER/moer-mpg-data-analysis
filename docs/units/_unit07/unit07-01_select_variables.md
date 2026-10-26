@@ -26,7 +26,7 @@ The graphic above shows how the cross-validation performance of two regression m
 
 For a deeper look into variable selection have a look at [Meyer et al. 2016](https://www.mdpi.com/2072-4292/8/9/732){:target="_blank"}
 
-{% include figure image_path="https://imgs.xkcd.com/comics/seat_selection.png" alt="Comic illustrating the selection of a seat in a plane." caption_url="[CC-BY by xkcd.com](https://xkcd.com/726/){:target='_blank'}" %}
+{% include figure image_path="https://imgs.xkcd.com/comics/seat_selection.png" alt="Seat Selection comic: a traveler clicks the cockpit on an airline seat diagram and finds herself flying the plane." caption_url="[Randall Munroe / xkcd, CC BY-NC 2.5](https://xkcd.com/726/){:target='_blank'}" %}
 
 
 ## Comments?

@@ -20,7 +20,7 @@ source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_e
 Linear regression modeling is one of the more common tasks in data analysis and the following example will cover the very basic topic of bivariate linear regression. The storyline follows the one from Zuur et al. (2007) to a certain degree.
 
 While one could use actual data sets, we keep it controlled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet). The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as bart of base R. For now, we will use variables x1 and y1 as independent and dependent variables.
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Histograms of the predictor and response in the first Anscombe dataset; the predictor spans about 4 to 14 and the response about 4 to 11."}
 ind <- anscombe$x1
 dep <- anscombe$y1
 
@@ -31,7 +31,7 @@ hist(dep, main = "Dependend variable")
 ```
 
 A look at the relationship between the variables by using a scatterplot justifies a linear modeling attempt. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "First Anscombe dataset with an upward-sloping fitted line; points scatter around y = 3 + 0.5 x."}
 library(car)
 par(par_org)
 plot(ind, dep)
@@ -140,13 +140,15 @@ ss_model / ss_obsrv
 Well, the above looks like a real good example of linear regression analysis, right? And the r square of about 0.67 is also quite OK not to mention the significance of the independent variable.
 
 Before we clap our hands, let's just have a look at the other variable combinations of the Anscombe data set.
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Anscombe quartet: approximately linear points, a curved relationship, one response outlier, and a cluster with one high-leverage point."}
 par(mfrow = c(2,2))
 for(i in seq(4)){
   plot(anscombe[, i], anscombe[, i+4],
        xlab = names(anscombe[i]), ylab = names(anscombe[i+4]))
 }
 ```
+
+Reading the panels from top left to bottom right: the first dataset is approximately linear; the second follows a curve; the third is approximately linear apart from one unusually high response; and the fourth has nearly all predictor values at the same position, with one point far to the right. These different patterns explain why similar regression summaries do not replace inspecting the observations.
 
 While x3/y3 might still justify a linear regression if we remove the outlier, the two plots on the right side do not. So what? Well, unfortunately, all of these data combinations result in almost the same regression statistics:
 ```{r, warning=FALSE}
@@ -168,7 +170,7 @@ The following checks are what should at least be considered in bivariate linear 
 The normality of the residuals could be checked by normality tests. These tests do not prove normality; a test such as Shapiro–Wilk tests the null hypothesis that the data follow a normal distribution. E.g. a Shapiro-Wilk normality test with an insignificant p value does not reject the hypothesis that the distribution is normal but it does not prove that the distribution is actually normal. In addition, for small data, such tests often fail to reject non-normal distributions while for large samples, even very small deviations with no fundamental implication on e.g. anova results lead to a rejection. Speaking about anova influences: anovas are quite robust against violations of normality. Regarding homoscedasticity, this robustness decreases a little so larger F-values should be defined as a threshold for significance. For now, we will restrict our evaluation of the model to a visual approach.
 
 Let's start with the most important assumption, the one of homogeneous variances in the residuals, aka the homoscedasticity:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Residual-versus-fitted plots for the four Anscombe datasets; the second shows curvature and the third highlights one large residual."}
 par(par_org)
 par(mfrow = c(2,2))
 for(i in seq(4)){
@@ -178,7 +180,7 @@ for(i in seq(4)){
 
 Except maybe for the upper left figure, this assumption is clearly violated as can be shown on residuals vs. fitted values plots. A better visualization might be the scale-location plot which standardizes the residuals and performs a square root transformation on them. In doing so, the variance of the residuals becomes more evident in the case of small deviations from the homoscedasticity assumption:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Scale-location plots for the Anscombe quartet compare the spread of standardized residuals across fitted values."}
 par(mfrow = c(2,2))
 for(i in seq(4)){
   plot(lmodels[[i]], which = 3)
@@ -186,7 +188,7 @@ for(i in seq(4)){
 ```
 
 If you want to check the normality of the residuals, we could visualize their distribution as a QQ plot.
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Normal QQ plots for the four Anscombe regression models show different residual patterns despite their similar summary statistics."}
 par(mfrow = c(2,2))
 for(i in seq(4)){
   plot(lmodels[[i]], which = 2)
@@ -196,7 +198,7 @@ par(par_org)
 Also there are deviations from a straight line, the deviations except for the lower left plot are not really crucial (and there it is only for the data pair labeled with 3). The lower left plot is also the only plot where the Shapiro-Wilk test rejects the normal distribution hypothesis on a p<0.05 level.
 
 You might wonder why some of the points in the above figures are labeled (e.g. 3, 9, 10 in the upper left plots). This "feature" results from a influential points analysis using Cook's distance which is a measure of how strong the regression parameters change if a certain observation is not considered. Hence, the larger this change, the larger the influence of this particular observation. For the above data, Cook's distance looks like that:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Cook distance plots for the Anscombe quartet identify observations with unusually strong influence on the fitted regressions."}
 par(mfrow = c(2,2))
 for(i in seq(4)){
   plot(lmodels[[i]], which = 4)

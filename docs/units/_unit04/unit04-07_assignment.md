@@ -7,27 +7,59 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-This assignment is the first in a series which uses regional statistical data. While the wood harvest data from Hessen was (i) quite small and (ii) quite tidy already, this is not the case for this data set even though it is distributed by the federal statistical offices.
-
-After completing this worksheet you should be able to notice some common data set problems and know how to clean them up using little functions, too.
+The crop file provides a second historical regional dataset with real import and cleaning problems. Transfer the workflow from the land-use example while checking the crop-specific columns, units and source symbols. This assignment is **unmarked**.
 
 ## Things you need for this worksheet
-  * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
-  * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
-  * [Git](https://git-scm.com/downloads){:target="_blank"} installed and available to RStudio. [GitHub Desktop](https://desktop.github.com/){:target="_blank"} is an optional graphical client.
-  * Data on crop yield for German reporting areas, including rural districts and independent cities (*Kreise und kreisfreie Städte*), provided by the course instructors.
 
-## Cleaning crop data
-The above data set provides information on crop yield. 
+- Your existing RStudio course project, R Markdown workflow and personal course repository.
+- <a href="{{ site.baseurl }}/assets/data/unit04/regional-crop-yields-1999-2015.txt" download="regional-crop-yields-1999-2015.txt">regional-crop-yields-1999-2015.txt</a>, the English teaching copy (also available on ILIAS), saved in `Data/`.
+- The [Unit 04 file guide]({{ site.baseurl }}/unit04/unit04-01a_introduction.html#data-for-units-04-07) and the focused text, reshaping and merging examples.
 
-Please have a look at the data and create a list of tasks you have to cope with in order to clean the data.
+## Inspect and plan
 
-Please write an R Markdown document which cleans the data set according to your list. The R Markdown document should roughly describe what you are doing and show the major code structure in addition to some actual data wherever appropriate. After cleaning, put identifier variables in the leftmost columns and data variables in the remaining columns of the data frame.
+Open the text file before importing it. Identify the introductory lines, column header, observations and footer. The file contains 8,925 region-year observations for 1999–2015, ten crop yields in `dt/ha`, decimal commas and several source symbols. It is not the same layout as the land-use input.
 
-Since the cleaning of the administrative area information requires quite a few lines of code, write a function for this task and save this function in a separate R script (.R file) in order to keep the main R Markdown document clear.
+Write a short list of cleaning tasks and explain what one output row should represent. Preserve identifiers as text, including leading zeros. Do not let copyright/footer lines become observations or factor levels.
 
-Save your R functions and R Markdown (.Rmd) document in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
-Make sure that the created HTML file is also part of your course repository on GitHub.
+## Clean and document {#cleaning-crop-data}
 
-Make sure you keep the cleaned dataset. You will need it in the next unit.
+Write an R Markdown document that implements your plan, explains the main decisions and shows selected intermediate results. Keep your Rmd beside the `.Rproj` file.
+
+- Preserve the original source tokens before converting yields. Count `-`, `.` and `/` separately. For this exercise, retain these non-numeric tokens in a source-cell table and represent their yields as `NA` in the numerical analysis table; this policy does not establish that all symbols have the same official meaning. Do not invent zero yields. Keep an explicit `0,0` as zero.
+- Separate a place name, an explicitly reported administrative type and any additional descriptors. Do not assign a type solely because a label lacks one; document unresolved cases. Optional descriptors may legitimately be absent.
+- Put identifiers and metadata first, followed by numerical yield columns. Keep a **wide** table for later modeling.
+- Develop a reusable function for the regional-label work and save it in `Scripts/region_helpers.R`. Load it using `source()` from your Rmd. The [text example]({{ site.baseurl }}/unit04/unit04-04a_text.html#package-a-repeated-operation) introduces this pattern; create the `Scripts/` folder before saving your function.
+
+### Output schema
+
+Use these metadata columns: `ID` (character), `Year` (integer), `Place` (character), `Admin_unit` (character) and `Admin_misc` (character). Each `ID`–`Year` pair should identify one observation.
+
+For compatibility with the existing later assignment, retain the following analysis names. The English source headings give their full meaning:
+
+| English source heading | Analysis column | Meaning |
+|---|---|---|
+| `Winter_wheat` | `Winter_wheat` | Winter wheat yield. |
+| `Rye_and_winter_mixed_cereals` | `Rye` | Rye and winter mixed cereals, not rye alone. |
+| `Winter_barley` | `Winter_barley` | Winter barley yield. |
+| `Spring_barley` | `Spring_barley` | Spring barley yield. |
+| `Oats` | `Oat` | Oat yield. |
+| `Triticale` | `Triticale` | Triticale yield. |
+| `Potatoes` | `Potatos` | Potato yield; legacy analysis-column spelling. |
+| `Sugar_beet` | `Suggar_beets` | Sugar beet yield; legacy analysis-column spelling. |
+| `Winter_rapeseed` | `Rapeseed` | Winter rapeseed yield. |
+| `Silage_maize` | `Silage_maize` | Silage maize yield. |
+
+All ten measurements are numerical yields in `dt/ha`. Preserve source codes separately rather than adding them to numerical predictor columns.
+
+## Validate and retain your results
+
+Check and report dimensions, key uniqueness, types, years, source-symbol counts and numerical missingness. Compare selected values with the source by ID, year and crop; check that joins do not multiply or discard observations.
+
+Save the wide table as `Output/cp_clean.rds` and preserve the original-token table separately, for example as `Output/crop-source-cells.rds`. Reload your analysis output with `readRDS()` and compare it with the object you saved.
+
+Keep the cleaned crop dataset: it is reused in **[Unit 07's feature-selection assignment]({{ site.baseurl }}/unit07/unit07-03_assignment.html)**. Units 05–06 instead use the land-use output from the worked example.
 {: .notice--info}
+
+## Submit your work
+
+Save your function script and Rmd in your personal course repository, knit the Rmd to HTML, and commit/push the script, Rmd and HTML. Include enough explanation to recover your cleaning decisions and unresolved cases. The assignment's unmarked status and existing submission workflow are unchanged.

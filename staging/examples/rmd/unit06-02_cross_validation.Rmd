@@ -27,7 +27,7 @@ The straight-forward way for a test on an independent sample is of course the on
 To illustrate this concept, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) and use the variables x1 and y1 as independent and dependent variables.
 
 The statistics of a linear regression model would be:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "First Anscombe dataset with its fitted linear regression, used as the starting model for cross-validation."}
 lmod <- lm(y1 ~ x1, data = anscombe)
 
 plot(anscombe$x1, anscombe$y1)
@@ -39,7 +39,7 @@ summary(lmod)
 
 ### Leave-one-out cross-validation
 For the leave-one-out cross-validation, the training sample is comprised by all but one value pairs of the data set and the left-out data pair is used as a validation sample. The procedure is typically iterated over the entire data set, i.e. each value is left-out once.
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Leave-one-out residuals, observed minus predicted response, plotted against observed values; errors fall on both sides of zero."}
 # Leave one out cross-validation
 cv <- lapply(seq(nrow(anscombe)), function(i){
   train <- anscombe[-i,]

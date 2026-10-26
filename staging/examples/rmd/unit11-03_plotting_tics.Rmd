@@ -6,6 +6,8 @@ output:
   html_document: 
     keep_md: yes
 ---
+
+<!-- Source status: Historical source for staging/unit12-04_plotting_tics.md; that page is not part of the published course. See README.md before reuse. -->
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e11-03/')

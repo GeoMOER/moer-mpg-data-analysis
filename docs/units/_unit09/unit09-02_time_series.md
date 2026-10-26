@@ -114,7 +114,7 @@ Plotting is now easy:
 plot(dwd$DATUM, dwd$TT_TU)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-4-1.png)<!-- -->
+![Air-temperature observations over time show repeated annual warming and cooling cycles and short-term variability.]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-4-1.png)<!-- -->
 
 As one can see, there is a clear annual pattern (surprise, surprise).
 To have a closer look at this pattern, one simple option would be a set of boxplots showing the variation within each month over the entire dataset.
@@ -126,7 +126,7 @@ dwd$AGG_M <- substr(dwd$MESS_DATUM, 5, 6)
 boxplot(dwd$TT_TU ~ dwd$AGG_M)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-5-1.png)<!-- -->
+![Monthly air-temperature boxplots show low temperatures in winter and higher temperatures in summer.]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-5-1.png)<!-- -->
 
 If you wonder about the distribution, you can use what we have learned so far:
 
@@ -138,7 +138,7 @@ lines(density(dwd$TT_TU))
 qqnorm(dwd$TT_TU)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-6-1.png)<!-- -->
+![Air-temperature histogram and normal QQ plot show the distribution and departures from a normal reference.]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-6-1.png)<!-- -->
 
 ```r
 par(par_org)
@@ -159,7 +159,7 @@ While one can have a look at the actual correlation values, a visualization give
 acf(dwd$TT_TU, lag.max = 100)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-7-1.png)<!-- -->
+![Autocorrelation of the high-frequency temperature series persists across many lags and has an oscillating pattern.]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-7-1.png)<!-- -->
 
 Since we have more than 143 thousand values available, we use a maximum lag of 100, although this is done mainly for illustration purposes.
 Obviously, we have the strongest correlations at lags of 24 (i.e. the correlation between hourly temperatures is highest if the temperatures are measured at the same time of day).
@@ -178,7 +178,7 @@ write.table(tam, file = "tam.txt", sep = ";", row.names = FALSE)
 acf(tam$Ta)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-8-1.png)<!-- -->
+![Autocorrelation of monthly mean temperature alternates between positive and negative values with an annual cycle.]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-8-1.png)<!-- -->
 
 Now the seasonal pattern becomes evident with negative correlations with a lag of around 6 months (summer/winter, spring/autumn) and positive correlations with lags around 12 months.
 The blue lines indicate the significance corresponding to a p value of 0.05 if normality can be assumed.
@@ -194,7 +194,7 @@ The partial auto-correlation of our dataset looks like this:
 pacf(tam$Ta)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-9-1.png)<!-- -->
+![Partial autocorrelation of monthly mean temperature shows its strongest positive value at the first lag and several later negative values.]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-9-1.png)<!-- -->
 
 
 <!--
@@ -238,7 +238,7 @@ colnames(rhm) <- c("Date", "rh")
 ccf(tam$Ta, rhm$rh)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-11-1.png)<!-- -->
+![Cross-correlation between monthly temperature and relative humidity alternates with lag; the correlation near zero lag is negative.]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-11-1.png)<!-- -->
 
 Similarly, air humidity is auto-correlated to air temperature.
 And this relationship is pretty much the same over all months:
@@ -247,7 +247,7 @@ And this relationship is pretty much the same over all months:
 coplot(TT_TU ~ RF_TU | AGG_M, data = dwd)
 ```
 
-![]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-12-1.png)<!-- -->
+![Conditional scatterplots of temperature versus relative humidity show generally declining relationships within overlapping month ranges.]({{ site.baseurl }}/assets/images/rmd_images/e09-02/unnamed-chunk-12-1.png)<!-- -->
 
 Auto-correlation analysis also provides an indication of _stationarity_. Stationarity is essential if one e.g. wants to predict future time series values based on auto-regressive or moving average models.
 Stationarity means that the time series has no trend and has similar variance over the entire time span.

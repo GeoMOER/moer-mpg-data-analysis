@@ -31,7 +31,7 @@ We complete data I/O before moving on to visualization. In each part, start with
 3. [R Syntax and Help]({{ site.baseurl }}/unit03/unit03-02a_r_syntax_and_help.html): read the practice file and connect function syntax with the help page.
 4. [Example: CSV I/O]({{ site.baseurl }}/unit03/unit03-04_csv_io.html): import, inspect and prepare the official land-use data, then save the result.
 5. [Visualization]({{ site.baseurl }}/unit03/unit03-03_visualization.html): choose plots for different questions and try small examples.
-6. [Example: Visual Data Exploration]({{ site.baseurl }}/unit03/unit03-06_exploration.html): explore the prepared land-use data and complete the unmarked pair practice.
+6. [Example: Visual Data Exploration]({{ site.baseurl }}/unit03/unit03-06_exploration.html): explore the prepared land-use data and arrange plots in a four-panel figure.
 7. [Marked Assignment: Read and Plot]({{ site.baseurl }}/unit03/unit03-07_assignment.html): apply the workflow independently to timber harvest data.
 
 ## Data files (reference) {#data-files-on-ilias}

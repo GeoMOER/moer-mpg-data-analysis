@@ -20,6 +20,10 @@ After completing this worksheet you should be able to compute a linear regressio
   * Data on percentage shares of land use at several administrative levels provided by the course instructors.
 
 
+## Input from Unit 04
+
+Use the wide land-use table saved as `Output/lu_clean.rds` in the [Unit 04 worked example]({{ site.baseurl }}/unit04/unit04-05_cleaning.html#handoff-to-later-units). Read it from your existing course project with `readRDS("Output/lu_clean.rds")`. `Settlement` includes transport; `Settlement` and `Recreation` are percentages, and each row is a region-year record. This is separate from Unit 03's 16-state table. A prepared instructor checkpoint must match the current workflow before substituting for your output.
+
 ## Linear modeling and normal distribution of the residuals  
 Please write an R Markdown document which computes a linear regression model that relates the percentage recreation area (dependent variable) to the settlement area and visualizes the relationship as a scatter plot with the linear model drawn in the same plot. Additionally, create a visualization which allows the assessment of the heteroscedasticity and the normal distribution of the residuals.
 

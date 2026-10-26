@@ -1,70 +1,51 @@
 ---
-title: "Example: Merging"
-author: "Thomas Nauss"
-date: "19 Oktober 2017"
-output: 
-  html_document: 
-    keep_md: yes
+title: "Example: Matching Tables by Keys"
+output:
+  html_document:
+    keep_md: true
 ---
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
-```
 
-When thinking about combining two data frames one has to distinguish between
-merging them by the values given in a specific column or consecutively putting
-them together just rows after rows.
+## Match observations, not row positions
 
-For the following examples, we will use these two data frames.
+A **key** identifies an observation. Joining by a key combines matching records even when the two tables are in different orders. `rbind()` instead appends rows with compatible columns; it does not look up matching IDs.
+
+## A small example
+
 ```{r}
-x <- c(1, 2, 3, 4, 5)
-y <- c(1.4, 2.5, 3.6, 4.0, 5.5)
-z <- c("A", "B", "C", "D", "E")
-df1 <- data.frame(X = x, Y = y, Z = z)
-df1
-
-y <- c(14, 25, 36, 40, 55)
-x <- c(100, 200, 300, 400, 500)
-z <- c("A", "C", "E", "D", "B")
-df2 <- data.frame(X = x, Y = y, Z = z)
-df2
+measurements <- data.frame(
+  ID = c("01", "02", "03"),
+  Height_m = c(18.5, 21.0, 16.2),
+  stringsAsFactors = FALSE
+)
+metadata <- data.frame(
+  ID = c("02", "01"),
+  Place = c("Hillford", "Riverdale"),
+  stringsAsFactors = FALSE
+)
+metadata[duplicated(metadata$ID), ]
+setdiff(measurements$ID, metadata$ID)
 ```
 
-To combine two data frames, use the `rbind` function provided that both
-data frames have the same column names and the same number of columns.
+There should be no duplicated metadata IDs. `setdiff()` identifies `03` as an unmatched measurement. A matching result can be incomplete even when the code runs without an error.
+
 ```{r}
-dfr <- rbind(df1, df2)
-dfr
-```
-Note, that it is not necessary that the columns are in the same order since the
-concatenation is done by the column names, not the column sequence:
-```{r}
-df3 <- df2[,c(1,3,2)]
-df3
-dfr <- rbind(df1, df3)
-dfr
+joined <- merge(measurements, metadata, by = "ID", all.x = TRUE)
+joined
+nrow(joined) == nrow(measurements)
 ```
 
+`all.x = TRUE` retains every row from the first table. The unmatched ID receives `NA` for `Place`. The row count is still three. With the default `all.x = FALSE` and `all.y = FALSE`, only matches remain. Choose the behavior deliberately.
 
-To merge two data frames, you have to specify the column containing the values
-which should be used in the matching. In this example, we use the values of
-the column Z to merge the two data frames.
-```{r}
-dfc <- merge(df1, df2, by = "Z")
-dfc
-```
-Since both data frames have identical column names, X and Y is added to the 
-column names in the resulting data frame to indicate if the column is from the
-first (i.e. X) or second (i.e. Y) data frame. You can easily rename the columns
-using the `colnames` function.
+## Check cardinality and order
 
-If the columns which should be used for merging have different names, no problem:
-just supply the column names separately for the first (i.e. X) and second (i.e. Y)
-data frame:
-```{r}
-colnames(df2) <- c("H", "I", "J")
-dfc <- merge(df1, df2, by.x = "Z", by.y = "J")
-dfc
-```
-Since not only the names of the columns used for merging but all column names are
-different, no X or Y is added in the output column names.
+If metadata contains two matching rows for the same ID, a join can multiply measurement rows. Check that the intended key is unique on the lookup side **before** joining, and compare row counts afterward. `merge()` sorts by the key by default; never rely on its output having the input's row order.
+
+In the regional example, records repeat across years. Use `by = c("ID", "Year")` when the metadata is specific to a region-year observation. Do not assume that an administrative name or status is constant throughout a historical series.
+
+## Handle column names explicitly
+
+When non-key columns have the same name in both tables, `merge()` adds `.x` and `.y` by default to distinguish their origins. These suffixes refer to the first and second table. They do not describe coordinates or the meaning of a variable. Select and name your intended columns before joining when practical.
+
+Use `by.x` and `by.y` if corresponding key columns have different names. Keep identifier types consistent, especially leading zeros.
+
+See [merging in Base R](https://geomoer.github.io/moer-base-r/unit08/unit08-04_merging.html) and the [R documentation for `merge()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/merge.html).

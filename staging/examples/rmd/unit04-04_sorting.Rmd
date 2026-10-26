@@ -1,103 +1,72 @@
 ---
 title: "Example: Sorting"
-author: "Thomas Nauss"
-date: "19 Oktober 2017"
-output: 
-  html_document: 
-    keep_md: yes
+output:
+  html_document:
+    keep_md: true
 ---
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-01/')
-```
 
-#### Sorting vectors or lists
-Vectors can be sorted using the `sort` function. If you want to sort a list,
-you have to access the actual elements since sort requires atomic vectors.
+## Sort values or reorder observations?
+
+`sort()` returns values in order. `order()` returns the positions that put values in order. Use those positions to reorder complete rows of a data frame, keeping each observation's identifier and measurements together.
+
+## Sort a vector
+
 ```{r}
-x <- c(7,5,8,2,10)
-sort(x)
-
-l <- list(x)
-sort(l[[1]])
+heights <- c(18.5, 21.0, 16.2)
+sort(heights)
+order(heights)
 ```
 
+The smallest value is in position 3, followed by positions 1 and 2. Therefore, `heights[order(heights)]` gives the same ordered values as `sort(heights)`.
 
-#### Sorting data frames
-The logic of sorting data frames is different from the `sort` function shown
-above. Instead of directly getting a sorted output, one has to get the 
-permutation of the ordering i.e. a vector which gives the position of the 
-elements in ascending or descending order. This is realized by the `order` 
-function, which can also be applied to vectors or lists.
+## Reorder complete rows
+
+Create a small table directly in R:
+
 ```{r}
-y <- c("Z", "D", "R", "A", "O")
-z <- c(10, 40, 20, 30, 50)
-df <- data.frame(X = x, Y = y, Z = z)
-df
-
-df[order(df$X),]  # order by column X
-df[order(df$Y),]  # order by column Y
-df[order(df$Y, df$Z),]  # order by column Y and Z
-
-# sorting would only be applicable for one row/column (i.e. one vector)
-sort(df[,2])
-
-# for the vector and list example above, the following would apply
-x[order(x)]
-l[[1]][order(l[[1]])]
+measurements <- data.frame(
+  ID = c("01", "02", "03", "04"),
+  Year = c(2024L, 2023L, 2024L, 2023L),
+  Height_m = c(18.5, 21.0, 16.2, NA),
+  stringsAsFactors = FALSE
+)
+measurements[order(measurements$Height_m, na.last = TRUE), ]
 ```
-Please note that the above examples are not the only way and that you might
-find other solutions for the same problem - this is something quite typical for
-very high level programming languages. Just to illustrate it, here comes the
-`with` function which evaluates an expression for the given data structure which
-requires that e. g. for a data frame it is placed at the position of the 
-respective dimension inside the square brackets.
+
+The row order is `03`, `01`, `02`, `04`; the unavailable height comes last. The comma in `[rows, columns]` matters: leaving the column position empty retains every column.
+
+To keep this result, assign it to another object:
+
 ```{r}
-# sort a data frame by column X and Z
-df[with(df, order(X, Z)), ]
+by_height <- measurements[
+  order(measurements$Height_m, na.last = TRUE),
+]
 ```
 
+Do not sort the height column and assign it back on its own. That would attach heights to different IDs and silently change the observations.
 
-#### Sorting factors
-A quick note on sorting factors. Factors are categorical variables which can take
-on a value which is part of a predefined (and limited) set. Factors consist
-of two parts, the actual value at some position and the set of possible values
-called levels. This implies that two aspects of a factor can be ordered separately:
-the factor values which we see when printing the content of a data frame and
-the levels which we do not see when we print it (but which might affect the
-printing and plotting or some statistical operations).
+## Use more than one sorting column
 
-Characters like the ones of vector y are generally converted to factor variables
-in data frames.
-
-Lets have a look at the data frame df again:
 ```{r}
-df
-str(df)
-levels(df$Y) 
-df$Y  # alternatively to levels(df$Y) to print both the values and the levels
+by_year <- measurements[
+  order(measurements$Year, measurements$ID),
+]
+by_year
 ```
-As you see, column Y is not sorted but looking at its structure we see that the
-column is of type Factor and using the `levels` function, we note that the
-factor levels are obviously ordered in an increasing order.
 
-Let's sort column Y in a decreasing order and have a look at the factor levels
-afterwards.
+Rows are ordered by year first; IDs break ties within each year. Here the ID order is `02`, `04`, `01`, `03`. Use `decreasing = TRUE` to reverse the ordering. For `order()`, `na.last = TRUE` keeps missing values at the end, whereas `na.last = NA` removes their positions; choose explicitly.
+
+## Check the result
+
 ```{r}
-df <- df[order(df$Y, decreasing = TRUE),]
-levels(df$Y)
-df$Y
-```
-Obviously, the value ordering in column Y has changed but not the ordering of
-its levels. To actually change the ordering of factor levels, we have to sort 
-them explicitly.
-```{r}
-df$Y <- factor(df$Y, levels(df$Y)[order(levels(df$Y), decreasing = TRUE)])
-levels(df$Y)
-df$Y
+nrow(by_year) == nrow(measurements)
+identical(sort(by_year$ID), sort(measurements$ID))
 ```
 
+Both checks should return `TRUE`: this operation changes row order, not the set of observations. Real regional data repeat each ID across years, so use `ID` **and** `Year` when identifying an observation. Sorting is not a method for removing duplicates or repairing mismatched values.
 
-For more information have a look at e.g. the respective 
-[sorting](http://www.statmethods.net/management/sorting.html) site at Quick R, 
-have a look into the package documentation or search the web.
+## Characters and factors
+
+Keep identifiers as text to preserve leading zeros. Create a factor explicitly when its levels represent categories. Reordering rows does not change a factor's level order; specify `levels = ...` when that order matters for plots or models.
+
+For additional examples, see [sorting in the Base R course](https://geomoer.github.io/moer-base-r/unit08/unit08-02_sorting.html) and the [R documentation for `order()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/order.html).

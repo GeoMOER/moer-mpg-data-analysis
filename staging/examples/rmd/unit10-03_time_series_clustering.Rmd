@@ -27,7 +27,7 @@ tam <- aggregate(dwd$LUFTTEMPERATUR, by = list(dwd$AGG_JM), FUN = mean)
 colnames(tam) <- c("Date", "Ta")
 ```
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Monthly mean temperature series used to assemble one twelve-month sequence for each complete year."}
 tam <- tam[-(1:6),]
 tam$Date <- strptime(paste0(tam$Date, "010000"), format = "%Y%m%d%H%M", tz = "UTC")
 plot(tam$Date, tam$Ta, type = "l")
@@ -51,14 +51,14 @@ tam_dist
 ```
 
 The resulting dissimilarity is larger if the different time series (i.e. years in this case) are less similar and smaller if they are more similar. This dissimilarity is now used for hierarchical clustering which computes the distance between the individual samples. Plotting the result shows a cluster dendrogram:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Hierarchical clustering dendrogram of annual temperature sequences with three outlined groups."}
 tam_hc <- hclust(tam_dist)
 plot(tam_hc)
 rect.hclust(tam_hc, k = 3)
 ```
 
 Just for completeness, if you want to derive a certain number of clusters from it, you can use the following for the visualization of the clusters or getting the respective group IDs. In this example, we derive three clusters:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.alt = "Hierarchical clustering dendrogram with the same three-group cut used to obtain cluster membership."}
 plot(tam_hc)
 rect.hclust(tam_hc, k = 3)
 cutree(tam_hc, k = 3)

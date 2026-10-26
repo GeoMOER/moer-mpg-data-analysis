@@ -30,7 +30,7 @@ Using statistical models for relating independent and dependent variables in ord
 Note that the commonly computed test statistics do not have any meaning for using linear regression models to predict data but only to describe a relationship between the known observations.
 {: .notice--info}
 
-{% include figure image_path="https://imgs.xkcd.com/comics/linear_regression.png" alt="Comic illustrating scatter plots with almost no linear relationship." caption_url="[CC-BY by xkcd.com](https://xkcd.com/1725/){:target='_blank'}" %}
+{% include figure image_path="https://imgs.xkcd.com/comics/linear_regression.png" alt="Comic illustrating scatter plots with almost no linear relationship." caption_url="[Randall Munroe / xkcd, CC BY-NC 2.5](https://xkcd.com/1725/){:target='_blank'}" %}
 
 
 ## Linear regression kickoff {#linear-regression-kick-off}

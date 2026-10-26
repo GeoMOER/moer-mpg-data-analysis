@@ -19,6 +19,10 @@ After completing this worksheet you should have gained some experience in design
   * Data on crop yield for German reporting areas, including rural districts and independent cities (*Kreise und kreisfreie Städte*), provided by the course instructors.
 
 
+## Input from Unit 04
+
+Use `Output/cp_clean.rds`, the wide crop-yield table created in the [Unit 04 cleaning assignment]({{ site.baseurl }}/unit04/unit04-07_assignment.html#output-schema). Load it with `readRDS("Output/cp_clean.rds")` from your existing course project. `Winter_wheat` is the response; the ten crop columns contain yields in `dt/ha`. The linked schema explains full crop meanings and retained legacy column spellings. Use the numerical crop columns as predictors; region identifiers and source-symbol records are not additional crop yields. A prepared instructor checkpoint must match the current workflow before substituting for your output.
+
 ## Forward feature selection in multiple linear regression models
 Please write an R function which implements a forward feature selection approach for a multiple linear regression model. The function should have two options for the performance measure: (i) the Akaike information criterion (AIC) and (ii) a leave-many-out cross-validation strategy which uses four folds.
 

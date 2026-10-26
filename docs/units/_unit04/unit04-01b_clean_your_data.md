@@ -5,22 +5,37 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
+## Cleaning starts with a question {#cleaning-101}
 
-## Cleaning 101
-Cleaning datasets is a standard and often tedious part of data analysis. It can be quite time-consuming but it is the most important step in data analysis. If your underlying data is incorrect, the analysis results and your scientific study are not reliable. Hence, carefully check your data and clean it thoroughly.
+Before changing a table, ask what one row represents and which analysis it should support. A successful import is not evidence that identifiers, values or units are correct.
 
-To start with, Hadley Wickham suggests the following:
-* separate column for each variable 
-* exactly one kind of information per variable
-* separate row for each observation
-* separate data set for each kind of observation
+A useful starting point is one variable per column, one observation per row, and a separate table for each kind of observation. [Wickham (2014)](https://www.jstatsoft.org/article/view/v059i10) explains this approach. The appropriate arrangement also depends on the task: a wide table can be useful for regression, while a long table can be useful for grouped summaries.
 
-See [Wickham (2014)](https://www.jstatsoft.org/article/view/v059i10){:target="_blank"} for more on these topics.
+## A small example
 
-Note that one cannot provide a complete list of checking and cleaning tasks since the workflow always depends on the actual dataset.
-{: .notice--info}
+Consider these invented measurements:
 
-{% include figure image_path="https://imgs.xkcd.com/comics/exploits_of_a_mom.png" alt="Picture illustrating data cleaning as a comic." caption_url="[CC-BY by xkcd.com](https://xkcd.com/327/){:target='_blank'}" %}
+| ID | Year | Height as reported |
+|---|---|---|
+| `01` | 2024 | `18,5` |
+| `02` | 2024 | `.` |
+| `03` | 2024 | `16,2` |
 
+Each row is one site in one year. `ID` must remain text so that the leading zero survives. The height column contains decimal commas and a source symbol. Before converting it, establish the unit and what `.` means. Retain the original entries so that the decisions remain traceable.
 
+## A cleaning workflow
 
+1. **Keep the source.** Download it into `Data/`; never edit the original in a spreadsheet to make an import succeed.
+2. **Inspect.** Read the source notes, inspect `head()`, `str()`, names, dimensions, distinct IDs and source symbols.
+3. **Define the intended table.** Name its observation, key, columns, units and types. A regional ID alone is not unique in a table containing several years.
+4. **Change deliberately.** Select, rename, convert, split, reshape or merge only where the intended table requires it.
+5. **Validate.** Check keys, counts, values, unmatched records and missingness. Record unresolved cases instead of guessing.
+6. **Save and explain.** Keep source codes and processing decisions, save the analysis table, and check its structure after reloading.
+
+A missing optional descriptor can be legitimate. Zero missing cells is not a cleaning objective.
+
+## From Unit 03 to Unit 04
+
+Unit 03 prepared a small state-level table. Here we use historical regional exports with mixed administrative levels, several years, embedded descriptions and missing-value symbols. The examples first introduce individual operations, then combine them in the worked land-use workflow. The crop assignment transfers those operations to a second table.
+
+All teaching explanations and regional descriptors are in English. Place names remain in their source spelling; they identify regions rather than instructions you need to translate.

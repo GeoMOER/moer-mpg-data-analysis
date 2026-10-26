@@ -33,7 +33,7 @@ Have a look at this [video](https://www.youtube.com/watch?v=fSytzGwwBVw){:target
 For a deeper look into cross-validation strategies related to spatially and temporally dependent data,
 have a look at [Meyer et al. 2018.](https://www.sciencedirect.com/science/article/pii/S1364815217310976?via%3Dihub){:target="_blank"}
 
-{% include figure image_path="https://imgs.xkcd.com/comics/extrapolating.png" alt="Comic illustrating extrapolation." caption_url="[CC-BY by xkcd.com](https://xkcd.com/605/){:target='_blank'}" %}
+{% include figure image_path="https://imgs.xkcd.com/comics/extrapolating.png" alt="Extrapolating comic: extending a line from zero husbands yesterday to one today predicts dozens of husbands next month, illustrating an absurd extrapolation." caption_url="[Randall Munroe / xkcd, CC BY-NC 2.5](https://xkcd.com/605/){:target='_blank'}" %}
 
 
 ## Comments?
