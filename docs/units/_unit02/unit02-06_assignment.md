@@ -7,7 +7,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-This worksheet lets you practice control structures and loops in R.
+This worksheet lets you practice control structures and loops in R. First complete the [required preparation on operations]({{ site.baseurl }}/unit02/unit02-05_operations.html#required-preparation), including functions, returned values and `lapply()`.
 
 ## Things you need for this worksheet
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
@@ -15,7 +15,7 @@ This worksheet lets you practice control structures and loops in R.
   * [Git](https://git-scm.com/downloads){:target="_blank"} installed and available to RStudio. [GitHub Desktop](https://desktop.github.com/){:target="_blank"} is an optional graphical client.
 
 ## Loop till you drop
-Write an R Markdown (`.Rmd`) document with HTML output for the following tasks and commit it to your GitHub-based learning log. Set `n` to a value before testing the first three statements.
+Write an R Markdown (`.Rmd`) document with HTML output for the following tasks. Save it beside the `.Rproj` file in your course repository; the [shared project layout]({{ site.baseurl }}/unit03/unit03-02a_organize_your_data_files.html#common-project-layout) explains the folder roles used later. Set `n` to a value before testing the first three statements.
 
 1. Implement an if-then-else statement which prints "larger" if the number provided as variable `n` is larger than three and "equal or smaller" otherwise.
 1. Extend a copy of the above statement (i.e. copy the entire if-then-else statement and include it a second time in your script in order to preserve both versions) so that it prints "equal" and "smaller" explicitly in addition to "larger".

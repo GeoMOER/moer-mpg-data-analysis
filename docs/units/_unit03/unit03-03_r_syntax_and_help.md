@@ -1,7 +1,7 @@
 ---
 title: "R Syntax and Help"
 toc: true
-toc_label: In this example
+toc_label: On this page
 permalink: /unit03/unit03-02a_r_syntax_and_help.html
 header:
   image: "/assets/images/teaser/holz.jpg"
@@ -121,7 +121,7 @@ Notice the two roles of commas: the comma **after** `sep = ";"` separates argume
 
 The [next example]({{ site.baseurl }}/unit03/unit03-04_csv_io.html) applies this workflow to a real land-use dataset. It introduces the additional import choices that dataset needs and follows its preparation through to an RDS file.
 
-## Try reading the help yourself
+## Exercise: Read the help for read.table() {#try-reading-the-help-yourself}
 
 Use `?read.table` to answer these questions before running another import:
 

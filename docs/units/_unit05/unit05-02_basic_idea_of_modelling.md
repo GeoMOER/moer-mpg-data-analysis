@@ -1,5 +1,5 @@
 ---
-title: Basic idea of statistical modeling
+title: "Basic Idea of Statistical Modeling"
 header:
   image: "/assets/images/teaser/linear_5_1.png"
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
@@ -18,22 +18,20 @@ The model coefficients are given in the equation. Residual values are additional
 ## Linear regression 101
 Using statistical models for relating independent and dependent variables in order to describe relationships between the recorded data pairs or predict (interpolate) values in a range where no data pairs have been observed is a key method in environmental sciences. A bivariate linear regression model is the simplest form of such a statistical model. However, if the quality of a linear regression model is assessed by the commonly computed internal test statistics (e.g. p-values, t-test, R-squared), the following aspects have to be kept in mind (Y is the dependent, X the independent variable):     
 
-* Linear regression models are only appropriate for linear relationships between independent and dependent variables.
-<!-- * Linear regression models require at least as many observations as independent variables (and preferably many more). -->
-* Residuals of linear regression models must be normally distributed, which is equivalent to the normal distribution of Y at each observation X (and which is not equivalent to the common statement that X and Y must be normally distributed).
-* The variance of the linear regression residuals must be homogeneous (i.e. homoscedasticity), which is equivalent to the homogeneity of the variance of Y at each observation X. 
-* The residuals of the linear regression model must be independent, which is equivalent to the independence of Y for different observations X.
-* The values of X must not be random but are exact or show only very little noise compared to Y.
-* If more than one independent variable is used in the model (i.e. multiple linear regression), each independent variable must not be a linear combination of one or more other independent variables (i.e. no multicollinearity).
+* For a simple straight-line model, the conditional mean of Y should be adequately described by a line in X. Residual plots help reveal remaining curvature.
+* The usual standard errors, t/F tests and intervals assume a constant error variance and independent errors. Use the study design as well as the diagnostic plots when assessing these assumptions.
+* A normal-error model supports the usual small-sample t/F reference distributions and intervals. Neither X nor the pooled Y values have to be normally distributed. We examine fitted residuals as evidence about the unobserved errors.
+* The observed X values can come from a random sample. Substantial measurement error in X can affect the fitted relationship and needs consideration.
+* With several predictors, exact linear dependence prevents separate estimation of their coefficients; strong dependence can make estimates unstable. Multiple regression is introduced later.
 
+These checks support careful interpretation rather than proving that a model is correct. The [minimum-assumptions walkthrough]({{ site.baseurl }}/unit05/unit05-03a_assumptions.html#minimum-assumptions-for-bivariate-linear-regression-models) explains how to inspect residuals before the assignment.
 
-Note that the commonly computed test statistics do not have any meaning for using linear regression models to predict data but only to describe a relationship between the known observations.
-{: .notice--info}
+R-squared and the fitting tests summarize the data used to estimate the model. They do not by themselves measure prediction quality for new observations; independent evaluation follows in later units.
 
 {% include figure image_path="https://imgs.xkcd.com/comics/linear_regression.png" alt="Comic illustrating scatter plots with almost no linear relationship." caption_url="[Randall Munroe / xkcd, CC BY-NC 2.5](https://xkcd.com/1725/){:target='_blank'}" %}
 
 
-## Linear regression kickoff {#linear-regression-kick-off}
+## Exercise: Explain the basics of linear regression {#linear-regression-kick-off}
 
 To get an overview of linear regression, you can watch the videos below or do some internet research on your own. There are some great tutorials out there.
 

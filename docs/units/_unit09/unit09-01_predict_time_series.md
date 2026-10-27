@@ -10,10 +10,17 @@ Look into some specific characteristics of time series data and predict future o
 
 ## Learning objectives
 At the end of this session you should be able to
-* explain some basic characteristics of time series information,
-* evaluate common requirements for predicting time series from their past values, and
+
+* parse dates and timestamps with explicit formats and time zones;
+* extract calendar months and years for grouped summaries;
+* explain some basic characteristics of time series information;
+* evaluate common requirements for predicting time series from their past values;
 * use ARIMA models for short-term predictions of time series data.
 
+
+## How this unit is organized
+
+Start with [dates and times]({{ site.baseurl }}/unit09/unit09-01a_datetime.html) to distinguish calendar dates, timestamps and elapsed time. Apply those steps to the station observations in the [DWD time-series example]({{ site.baseurl }}/unit09/unit09-02_time_series.html), then continue with [predicting time series]({{ site.baseurl }}/unit09/unit09-03_arima.html).
 
 ## Time series data
 Time series data describe how a variable changes over time. 

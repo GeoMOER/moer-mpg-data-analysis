@@ -37,6 +37,7 @@ The official [Destatis quality report (PDF, German)](https://www.destatis.de/DE/
 
 Use the [R Syntax and Help page]({{ site.baseurl }}/unit03/unit03-02a_r_syntax_and_help.html#try-reading-the-help-yourself) to look up how to skip introductory lines and limit the number of rows read. The [four-panel layout template]({{ site.baseurl }}/unit03/unit03-06_exploration.html#arrange-four-plots-in-one-figure) supports task 3.
 
+
 Please write an R Markdown (.Rmd) document with HTML output for the following task. Save it alongside your project's `.Rproj` file so that the `Data/` paths also work when knitting, and commit it to your GitHub-based learning log:
 
 1. Read the supplied CSV into a data frame. Keep the 23 annual observations from 2003 to 2025; exclude the introductory lines and final notes from the data. Check that the year and harvest columns have useful data types.

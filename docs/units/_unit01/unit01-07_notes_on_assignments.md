@@ -46,7 +46,7 @@ Work through the [R and RStudio introduction](https://geomoer.github.io/moer-bas
 
 5. If prompted, authenticate using the method configured for your repository connection. See [GitHub's authentication documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github) for guidance.
 
-6. Create an R Markdown document (`.Rmd`) in your project and knit it to HTML.
+6. Create an R Markdown document (`.Rmd`) beside the project's `.Rproj` file and knit it to HTML. The [shared project layout]({{ site.baseurl }}/unit03/unit03-02a_organize_your_data_files.html#common-project-layout) explains the folders introduced as the course progresses.
 
 7. To record your changes locally, open the **Git** menu and choose **Commit**.
 {% include figure image_path="/assets/images/units/u01/Step7.png" alt="RStudio Git menu with the Commit command." caption="" %}

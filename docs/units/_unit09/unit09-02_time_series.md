@@ -1,5 +1,5 @@
 ---
-title: "Time Series"
+title: "Example: Exploring a Temperature Time Series"
 toc: true
 toc_label: In this example
 header:
@@ -63,9 +63,7 @@ tail(dwd)
 ## 144670        3164 2022123123    3  14.6    58 eor
 ```
 
-In order to plot the dataset in a correct manner (i.e. without large gaps at the end of the year when e.g. 2006123123 switches to 2007010100),
-the data can either be transformed to a time series ``ts`` object or the date column can be converted to some kind of date format.
-Since we will have a closer look at ``ts`` objects later, let us start with the date conversion.
+Apply the parsing step from [dates and times]({{ site.baseurl }}/unit09/unit09-01a_datetime.html#apply-this-to-station-timestamps) to the full timestamp column. Its year–month–day–hour fields match `%Y%m%d%H`; this example uses UTC. Parsed timestamps give the plot a continuous time axis across day, month and year boundaries. We will introduce `ts` objects later.
 
 ```r
 dwd$DATUM <- strptime(dwd$MESS_DATUM, format = "%Y%m%d%H", tz = "UTC")

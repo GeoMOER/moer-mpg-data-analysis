@@ -9,7 +9,7 @@ header:
 
 
 
-Vectors are the basis for many data types in R.
+A vector is a one-dimensional data structure that stores a sequence of values.
 
 ## Creating a vector
 A vector is created using the `c` function. Here are some examples:

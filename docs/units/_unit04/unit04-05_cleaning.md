@@ -1,7 +1,7 @@
 ---
-title: "Example: Cleaning Columns"
+title: "Exercise: Cleaning Land-Use Data"
 toc: true
-toc_label: In this example
+toc_label: In this exercise
 header:
   image: "/assets/images/teaser/holz.jpg"
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
@@ -14,6 +14,28 @@ Combine the individual operations from this unit into a traceable workflow. The 
 <a href="{{ site.baseurl }}/assets/data/unit04/regional-land-use-1996-2014.txt" download="regional-land-use-1996-2014.txt">Download regional-land-use-1996-2014.txt</a> (also available on ILIAS) and save it in your existing project's `Data/` folder. Keep your Rmd beside the `.Rproj` file so knitting uses the same relative paths as the console. The [file guide]({{ site.baseurl }}/unit04/unit04-01a_introduction.html#data-for-units-04-07) explains coverage and units. This file is separate from Unit 03's 2024 state table.
 
 Our analysis output is a **wide table**: one row per `ID`–`Year`, four numerical percentage columns and regional metadata. A long view demonstrates reshaping; it does not replace the wide output used in Units 05–06.
+
+## In-class individual work
+
+After the general cleaning examples, work individually on this dataset for **35 minutes**. Use your own R Markdown document and apply the operations introduced earlier in this unit.
+
+1. Inspect the source file and describe what one observation represents. Identify the columns that form its key.
+2. Import the data, preserving identifiers as text and keeping a copy of the original source values.
+3. Convert the reporting years and measurement columns to suitable types. Document how you handle source symbols and missing values.
+4. Separate regional names and descriptors. Keep uncertain administrative information explicit, then match metadata and measurements by their key.
+5. Create a long view and explain what one row represents. Keep the wide table for later modeling.
+6. Check dimensions, keys, types and missing values, then save your analysis table as `Output/lu_clean.rds`. Keep source cells and unresolved metadata separately.
+
+Use the focused examples on [text splitting]({{ site.baseurl }}/unit04/unit04-04a_text.html), [reshaping]({{ site.baseurl }}/unit04/unit04-04b_reshaping.html) and [matching tables]({{ site.baseurl }}/unit04/unit04-04c_merging.html) as references. The worked example below provides additional help when you need it.
+
+Note questions as you work. For a code problem, keep the relevant code or error message and explain what you expected to happen. For a cleaning decision, record the source entries that made it unclear.
+
+### Collect questions and discuss
+
+We will use the following **15 minutes** to collect questions and discuss them as a class. Bring an unresolved question or a cleaning decision you would like to compare. We will examine common problems, explain the decisions and summarize the checks needed before reusing the output.
+
+<details markdown="1">
+<summary>Worked example: hints and reference workflow</summary>
 
 ### Reading data and first look
 
@@ -124,20 +146,20 @@ Before joining, the metadata key should be unique. `all.x = TRUE` retains measur
 
 ### Converting wide to long format
 
-Use the [reshaping example]({{ site.baseurl }}/unit04/unit04-04b_reshaping.html) for package setup and the meaning of each argument:
+Use the [reshaping example]({{ site.baseurl }}/unit04/unit04-04b_reshaping.html) for the meaning of each `reshape()` argument:
 
 ```r
-lu_long <- reshape2::melt(
-  lu_clean,
-  id.vars = c("ID", "Year", "Place", "Admin_unit", "Admin_misc"),
-  measure.vars = measurement_columns,
-  variable.name = "Land_use", value.name = "Share_pct"
+lu_long <- reshape(
+  lu_clean, direction = "long",
+  idvar = c("ID", "Year"), varying = measurement_columns,
+  timevar = "Land_use", times = measurement_columns,
+  v.names = "Share_pct"
 )
 head(lu_long, 3)
 dim(lu_long)
 ```
 
-Expect **21,000 rows**: 5,250 region-year observations multiplied by four land-use columns. The long key is `ID`, `Year`, `Land_use`. This form is useful for grouped displays; regression later uses `lu_clean`, with separate predictor columns.
+The regional metadata is repeated for each land-use category, and missing shares remain in the table. Expect **21,000 rows**: 5,250 region-year observations multiplied by four land-use columns. The long key is `ID`, `Year`, `Land_use`. This form is useful for grouped displays; regression later uses `lu_clean`, with separate predictor columns.
 
 ### Validate and save the analysis table
 
@@ -163,6 +185,8 @@ identical(lu_clean, reloaded)
 ```
 
 The round-trip check should be `TRUE`. Keep the source-cell table to recover original tokens and the unresolved-region table to document remaining work. Saving a file does not resolve those uncertainties.
+
+</details>
 
 ## Handoff to later units
 

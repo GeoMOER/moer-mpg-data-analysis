@@ -34,7 +34,7 @@ plot(pressure$temperature, pressure$pressure,
 
 `pressure` is a built-in R dataset. `xlab` and `ylab` describe the variables and units; `pch` selects the point symbol. The [R dataset documentation](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/pressure.html) explains the observations. The [land-use exploration example]({{ site.baseurl }}/unit03/unit03-06_exploration.html) demonstrates category comparisons with `barplot()`.
 
-### Line charts: put time on the horizontal axis
+### Example: Compare tree growth over time {#line-charts-put-time-on-the-horizontal-axis}
 
 R's built-in `Orange` data record repeated measurements of the trunk circumference of five orange trees. We will compare trees 1 and 2. Time here is **age in days** (the source records days since December 31, 1968), and circumference is measured in **millimeters**. These are practice data, separate from the timber assignment.
 

@@ -1,5 +1,5 @@
 ---
-title: "Time Series Decomposition"
+title: "Example: Time Series Decomposition"
 toc: true
 toc_label: In this example
 header:
@@ -7,6 +7,8 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
+
+The [Unit 09 date/time lesson]({{ site.baseurl }}/unit09/unit09-01a_datetime.html#extract-months-and-years) explains parsing and extracting calendar components. Here, the first day of each month is a plotting label for a monthly summary, not the date of an individual observation.
 
 After looking into time-series forecasting, we will now switch to some basics of describing time series. 
 To illustrate this, we will again use the (mean monthly) air temperature record of the weather station in Cölbe (which is closest to Marburg). 

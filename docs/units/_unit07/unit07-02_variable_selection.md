@@ -1,5 +1,5 @@
 ---
-title: "Feature selection in multiple variable models"
+title: "Example: Feature Selection in Multiple Regression"
 toc: true
 toc_label: In this example
 header:

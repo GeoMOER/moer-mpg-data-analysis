@@ -34,6 +34,7 @@ We complete data I/O before moving on to visualization. In each part, start with
 6. [Example: Visual Data Exploration]({{ site.baseurl }}/unit03/unit03-06_exploration.html): explore the prepared land-use data and arrange plots in a four-panel figure.
 7. [Marked Assignment: Read and Plot]({{ site.baseurl }}/unit03/unit03-07_assignment.html): apply the workflow independently to timber harvest data.
 
+
 ## Data files (reference) {#data-files-on-ilias}
 
 Download files when you reach the relevant page, keeping their original names:

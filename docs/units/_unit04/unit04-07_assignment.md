@@ -7,7 +7,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-The crop file provides a second historical regional dataset with real import and cleaning problems. Transfer the workflow from the land-use example while checking the crop-specific columns, units and source symbols. This assignment is **unmarked**.
+The crop file provides a second historical regional dataset with real import and cleaning problems. Transfer the workflow from the land-use exercise while checking the crop-specific columns, units and source symbols. This assignment is **unmarked**.
 
 ## Things you need for this worksheet
 
@@ -57,7 +57,7 @@ Check and report dimensions, key uniqueness, types, years, source-symbol counts 
 
 Save the wide table as `Output/cp_clean.rds` and preserve the original-token table separately, for example as `Output/crop-source-cells.rds`. Reload your analysis output with `readRDS()` and compare it with the object you saved.
 
-Keep the cleaned crop dataset: it is reused in **[Unit 07's feature-selection assignment]({{ site.baseurl }}/unit07/unit07-03_assignment.html)**. Units 05–06 instead use the land-use output from the worked example.
+Keep the cleaned crop dataset: it is reused in **[Unit 07's feature-selection assignment]({{ site.baseurl }}/unit07/unit07-03_assignment.html)**. Units 05–06 instead use the land-use output from the exercise.
 {: .notice--info}
 
 ## Submit your work

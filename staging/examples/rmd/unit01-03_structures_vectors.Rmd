@@ -12,7 +12,7 @@ knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e01-
 ```
 
 
-Vectors are the basis for many data types in R.
+A vector is a one-dimensional data structure that stores a sequence of values.
 
 ## Creating a vector
 A vector is created using the `c` function. Here are some examples:

@@ -137,127 +137,21 @@ par(mfrow = c(2, 2))
 par(old_par)
 ```
 
-Saving the original settings before changing them lets you restore them afterward. A call such as `lines()` adds to the current plot; it does not start another panel. The transformation example below demonstrates a complete four-panel figure.
+Saving the original settings before changing them lets you restore them afterward. A call such as `lines()` adds to the current plot; it does not start another panel. Replace the four comment lines with your own plotting calls when using this template for Assignment 03.
 
-## Further exploration
+## Continue with Assignment 03
 
-After the basic plots, the following examples explore transformations, reference distributions and conditioning in more detail. They use the same prepared land-use file.
+The import, basic plot types and four-panel layout prepare you for [Assignment 03: Read and Plot]({{ site.baseurl }}/unit03/unit03-07_assignment.html). Use the [line-chart example]({{ site.baseurl }}/unit03/unit03-03_visualization.html#line-charts-put-time-on-the-horizontal-axis) when plotting the timber harvest over time.
 
-### Transformations
-
-Inspect unusual observations and their reporting areas before deciding how to handle them. To compare the displayed scales, the following figure shows the original shares and square-root, cube-root and logarithmic transformations. The `main` argument supplies each panel's title.
-
-```r
-par_org <- par(no.readonly = TRUE)
-par(mfrow = c(2,2))
-boxplot(lu[, numc], main = "Original")
-boxplot(lu[, numc]**0.5, main = "Square root")
-boxplot(lu[, numc]**(1/3), main = "Cube root")
-boxplot(log1p(lu[, numc]), main = "Log(1 + x)")
-```
-
-![Land-use shares for the 16 states on original, square-root, cube-root, and log(1+x) scales.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-4-1.png)<!-- -->
-
-
-`log1p(x)` computes `log(1 + x)` and is defined at zero, unlike `log(x)`. These transformations change the displayed scale; they do not alter the original data frame. A transformation is a choice to explain, rather than an automatic response to an unusual observation.
-
-
-```r
-par(par_org)
-```
-
-
-
-
-
-### QQ plots
-QQ plots compare observed quantiles with those expected from a chosen distribution. Here we have only 16 states, so detailed judgments about distribution shapes are limited. Visual agreement does not prove that the data follow a distribution, and descriptive plots do not require a normal distribution.
-
-For a normal reference distribution, use `qqnorm`. The red reference line passes through the first and third sample quartiles. Substantial departures from a straight line suggest that a normal distribution may be a poor description:
-
-
-```r
-qqnorm(lu$Agriculture)
-qqline(lu$Agriculture, col = "red", lwd = 2)
-
-abline(h=quantile(lu$Agriculture, probs = c(0.25,0.75), na.rm = TRUE), col="blue", lty = 3)
-abline(v=qnorm(c(0.25,0.75)), col="blue", lty = 3)
-```
-
-![Normal QQ plot of 2024 agricultural area shares for 16 states, with quartile reference lines.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-7-1.png)<!-- -->
-
-
-Different transformations may be helpful (although not in this case; example adapted from Zuur et al., 2007):
-
-
-```r
-par(mfrow = c(2,2))
-for(p in c(1, 0.5, 0.25, 0)){
-  if(p != 0){
-    qqnorm((lu$Agriculture**p-1)/p, main = paste0("Normal Q-Q Plot, (y^p - 1)/p; p = ", p))
-    qqline((lu$Agriculture**p-1)/p, col = "red")
-  } else {
-    qqnorm(log(lu$Agriculture), main = "Normal Q-Q Plot, log(y)")
-    qqline(log(lu$Agriculture), col = "red")
-  }
-}
-```
-
-![Four normal QQ plots of power and log transformations of state agricultural area shares in 2024.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-8-1.png)<!-- -->
-
-
-
-```r
-par(par_org)
-```
-
-To compare other reference distributions, use their theoretical quantile functions (`qnorm`, `qchisq`, `qgamma`, and `qweibull`) at the same probability points. The shape parameters below are illustrative choices, not fitted estimates. The line joins the first and third quartiles:
-
-
-```r
-par(mfrow = c(2,2))
-observed <- na.omit(lu$Settlement)
-probs <- ppoints(length(observed))
-references <- list(Normal = qnorm(probs),
-                   `Chi squared` = qchisq(probs, df = 2),
-                   Gamma = qgamma(probs, shape = 0.6),
-                   Weibull = qweibull(probs, shape = 1))
-for (name in names(references)) {
-  dist <- references[[name]]
-  qqplot(dist, observed, main = name, xlab = "Theoretical quantiles",
-         ylab = "Settlement share (%)")
-  abline(lm(quantile(observed, probs = c(0.25, 0.75)) ~
-            quantile(dist, probs = c(0.25, 0.75))), col = "red", lwd = 2)
-}
-```
-
-![State settlement shares in 2024 compared with normal, chi-squared, gamma, and Weibull reference quantiles.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-9-1.png)<!-- -->
-
-
-
-```r
-par(par_org)
-```
-
-
-### Scatterplot matrix
-
-If you are interested in the relation between all (or many) variables in your dataset, just supply the entire data frame or a column subset of it to `plot`:
-
-
-```r
-plot(lu[, numc])
-```
-
-![Scatterplot matrix of settlement, transport, agriculture, and forest shares for the 16 states in 2024.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-12-1.png)<!-- -->
-
-
-### Coplot
-With only 16 states, splitting into several panels leaves few observations per panel. Use this as an illustration of conditioning rather than evidence of a stable relationship. As a final example, a coplot might be of some value. It is a scatterplot but the visualized relationship is split in accordance with value ranges of (an)other variable(s). The call to `coplot` is again straightforward. Left of the `|` are the two variables which will be included in the actual scatterplots, to the right is the variable which is used for the splits. If more than one variable should be used, the variables are combined with a `+` (not included here because of figure margin restrictions):
-
-
-```r
-coplot(Forest ~ Agriculture | Settlement, data = lu)
-```
-
-![Conditional forest-versus-agriculture scatterplots for 16 states, split by settlement share; panels contain few observations.]({{ site.baseurl }}/assets/images/rmd_images/vis_dat_expl/unnamed-chunk-13-1.png)<!-- -->
+<span id="further-exploration" hidden></span>
+<span id="transformations" hidden></span>
+<span id="qq-plots" hidden></span>
+<span id="scatterplot-matrix" hidden></span>
+<span id="coplot" hidden></span>
+<script>
+(function () {
+  var oldSections = {"further-exploration": "minimum-assumptions-for-bivariate-linear-regression-models", "transformations": "transformations", "qq-plots": "qq-plots", "scatterplot-matrix": "scatterplot-matrix", "coplot": "coplot"};
+  var target = oldSections[window.location.hash.slice(1)];
+  if (typeof target === "string") window.location.replace({{ '/unit05/unit05-03a_assumptions.html' | relative_url | jsonify }} + '#' + target);
+}());
+</script>

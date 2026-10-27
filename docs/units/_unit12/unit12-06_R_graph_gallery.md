@@ -1,5 +1,5 @@
 ---
-title: "Example: The R Graph Gallery"
+title: "The R Graph Gallery"
 header:
   image: "/assets/images/teaser/unnamed-chunk-8-1.png"
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'

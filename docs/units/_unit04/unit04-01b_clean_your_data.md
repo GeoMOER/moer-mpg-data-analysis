@@ -11,7 +11,7 @@ Before changing a table, ask what one row represents and which analysis it shoul
 
 A useful starting point is one variable per column, one observation per row, and a separate table for each kind of observation. [Wickham (2014)](https://www.jstatsoft.org/article/view/v059i10) explains this approach. The appropriate arrangement also depends on the task: a wide table can be useful for regression, while a long table can be useful for grouped summaries.
 
-## A small example
+## Example: Measurements with a source symbol {#a-small-example}
 
 Consider these invented measurements:
 
@@ -36,6 +36,6 @@ A missing optional descriptor can be legitimate. Zero missing cells is not a cle
 
 ## From Unit 03 to Unit 04
 
-Unit 03 prepared a small state-level table. Here we use historical regional exports with mixed administrative levels, several years, embedded descriptions and missing-value symbols. The examples first introduce individual operations, then combine them in the worked land-use workflow. The crop assignment transfers those operations to a second table.
+Unit 03 prepared a small state-level table. Here we use historical regional exports with mixed administrative levels, several years, embedded descriptions and missing-value symbols. The instructor first introduces individual operations with general examples. You then apply them individually to the land-use data in class and discuss questions together. The expandable worked example supports that practice; the crop assignment transfers those operations to a second table.
 
 All teaching explanations and regional descriptors are in English. Place names remain in their source spelling; they identify regions rather than instructions you need to translate.

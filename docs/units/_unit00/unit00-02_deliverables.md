@@ -29,8 +29,8 @@ Present your solutions in the weekly sessions to demonstrate that you understand
 | 03         | [Read and Plot](/moer-mpg-data-analysis/unit03/unit03-07_assignment.html)                        | marked             |
 | 04         | [Cleaning Crops](/moer-mpg-data-analysis/unit04/unit04-07_assignment.html)                       | unmarked           |
 | 05         | [Recreation vs. Settlement](/moer-mpg-data-analysis/unit05/unit05-04_assignment.html)            | marked             |
-| 06         | [Recreation vs. Settlement revisited](/moer-mpg-data-analysis/unit06/unit06-03_assignment.html)  | unmarked           |
-| 07         | [Wheat vs. everything else](/moer-mpg-data-analysis/unit07/unit07-03_assignment.html)            | marked             |
+| 06         | [Recreation vs. Settlement Revisited](/moer-mpg-data-analysis/unit06/unit06-03_assignment.html)  | unmarked           |
+| 07         | [Wheat vs. Everything Else](/moer-mpg-data-analysis/unit07/unit07-03_assignment.html)            | marked             |
 | 08         | [Model Tuning](/moer-mpg-data-analysis/unit08/unit08-03_assignment.html)                         | unmarked           |
 | 09         | [Precipitation Forecast](/moer-mpg-data-analysis/unit09/unit09-04_assignment.html)               | unmarked           |
 | 10         | [NAO and Cölbe](/moer-mpg-data-analysis/unit10/unit10-04_assignment.html)                        | unmarked           |

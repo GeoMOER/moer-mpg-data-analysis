@@ -1,5 +1,5 @@
 ---
-title: "Unmarked Assignment: Recreation vs. Settlement revisited"
+title: "Unmarked Assignment: Recreation vs. Settlement Revisited"
 toc: true
 toc_label: In this worksheet
 header:
@@ -22,7 +22,7 @@ After completing this worksheet you should have gained some experience in applyi
 
 ## Input from Unit 04
 
-Reuse `Output/lu_clean.rds`, the wide land-use table from the [Unit 04 worked example]({{ site.baseurl }}/unit04/unit04-05_cleaning.html#handoff-to-later-units), as in Assignment 05. Load it with `readRDS("Output/lu_clean.rds")` from your course project. Keep its region/year identifiers when designing validation; the input contains several administrative levels and repeated regions across years.
+Reuse `Output/lu_clean.rds`, the wide land-use table from the [Unit 04 land-use exercise]({{ site.baseurl }}/unit04/unit04-05_cleaning.html#handoff-to-later-units), as in Assignment 05. Load it with `readRDS("Output/lu_clean.rds")` from your course project. Keep its region/year identifiers when designing validation; the input contains several administrative levels and repeated regions across years.
 
 ## Prediction error of a linear model
 Please write an R Markdown document,

@@ -225,6 +225,6 @@ my_other_df
 ## 2 300 B
 ## 3 401 C
 ```
-As for lists, to actually delete an element, it has to be set to `NULL`.
+Assigning `NULL` to a data-frame column deletes that column.
 
 For more information, see the accompanying Base R course on [data types](https://geomoer.github.io/moer-base-r/unit02/unit02-01_Intro.html){:target="_blank"} and [object types](https://geomoer.github.io/moer-base-r/unit03/unit03-01_Intro.html){:target="_blank"}. Package documentation is another useful resource.

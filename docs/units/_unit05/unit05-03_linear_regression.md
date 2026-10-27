@@ -10,7 +10,7 @@ header:
 Linear regression modeling is one of the more common tasks in data analysis and the following example will cover the very basic topic of bivariate linear regression. The storyline follows the one from Zuur et al. (2007) to a certain degree.
 
 While one could use actual data sets, we keep it controlled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet).
-The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as part of base R. 
+The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as part of base R.
 For now, we will use x1 as independent variable and y1 as dependent variable.
 
 ```r
@@ -28,39 +28,36 @@ hist(dep, main = "Dependent variable")
 A look at the relationship between the variables by using a scatterplot justifies a linear modeling attempt. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
 
 ```r
-library(car)
 par(par_org)
 plot(ind, dep)
 
 lmod <- lm(dep ~ ind) # Compute linear regression model
 
-regLine(lmod, col = "red") # Add regression line to plot (requires car package)
-text(10, 6, bquote(paste("y"["i"], " = ", .(round(lmod$coefficients[1], 3)), 
+abline(lmod, col = "red") # Add the fitted line using base R
+text(10, 6, bquote(paste("y"["i"], " = ", .(round(lmod$coefficients[1], 3)),
                           " + ", .(round(lmod$coefficients[2], 3)), "* x"["i"])))
 ```
 
 ![First Anscombe dataset with an upward-sloping fitted line; points scatter around y = 3 + 0.5 x.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-2-1.png)<!-- -->
 
-While the visualization is illustrative, it does not provide any information on the actual significance of the parameters of the model, i.e. it does not answer the question about the existence of an actual linear relationship which - in the case of linear regression - requires a slope of the regression line which is actually different from 0. In principle, there are two ways to tackle this problem: using an analysis of variance (ANOVA) or a t-test.
+The fitted line describes the observed relationship. Under suitable model assumptions, an ANOVA or t-test can assess evidence against a zero slope. Neither test checks all those assumptions or establishes a causal relationship. We calculate the summaries first, then use the separate [assumptions walkthrough]({{ site.baseurl }}/unit05/unit05-03a_assumptions.html) to judge how cautiously they should be interpreted.
 
 
 ### Testing a linear regression relationship by an analysis of variance
 
-Let's start with the ANOVA. In general, variance is the deviation of some value v from another value w for all pairs of v and w. 
+Let's start with the ANOVA. Here we divide the variation in the response into variation described by the fitted line and variation left in the residuals.
 
 Given a (linear) model, each actual data value can be calculated by adding the fitted value and the corresponding residual value:
 
 data value = fitted value + residual value (or y = y' + res)
 
-The associated variances are:
+The corresponding differences are:
 
-* The variance of the observed values, i.e. the difference between the individual observation y values and the mean over all observations of y. This will be called the *observed (or total) variance*.
-* The variance of the fitted values, i.e. the difference between the predicted values of y' and the mean over all observations of y. This will be called the *model variance*.
-* The variance of the residual values, i.e. the difference between the predicted values y' and the observed values y. This will be called the *residual variance*.
+* **Observed differences:** each observed y minus the mean response, describing total variation.
+* **Model differences:** each fitted y' minus the mean response, describing variation explained by the model.
+* **Residual differences:** each observed y minus its fitted y', describing the remaining variation.
 
-The sum of model variance and residual variance equals the observed variance.
-
-Commonly, all variances are squared and summed up over all observations which gives us the *observed sum of squares*, the *model sum of squares* and the *residual sum of squares*.
+Square the differences and sum them to obtain the total, model and residual sums of squares. For this ordinary least-squares model with an intercept, the model and residual sums of squares add to the total sum of squares.
 
 In order to calculate the variances, one can use the lm class of the model since - among others - it contains the original independent and dependent values as well as the predicted ones:
 
@@ -83,10 +80,7 @@ mss_model <- ss_model / 1
 mss_resid <- ss_resid / (length(lmod$model$dep) - 2)
 ```
 
-It can be shown that for large sample sizes, the mean residual sum of squares equals the squared variance of the population. In this case, the mean model sum of squares equals the squared variance of the population plus the sum of squares over all x values multiplied by the slope of the regression model. In other words, 
-
-* if the slope is zero, then mean model sum of squares and mean residual sum of squares are equal and the ratio of both is 1.
-* if the slope is not zero, then mean model sum of squares is larger than the mean residual sum of squares and the ratio is larger than 1. 
+Under the zero-slope null hypothesis and the usual model assumptions, both the model and residual mean squares estimate the error variance. Their ratio fluctuates around a reference distribution; it is not exactly one in every sample. A systematic relationship can make the model mean square larger relative to the residual mean square.
 
 This provides us with the test statistic for the *null-hypothesis* that the true slope is not different from 0.
 
@@ -132,16 +126,18 @@ anova(lmod)
 
 ```
 ## Analysis of Variance Table
-## 
+##
 ## Response: dep
-##           Df Sum Sq Mean Sq F value  Pr(>F)   
+##           Df Sum Sq Mean Sq F value  Pr(>F)
 ## ind        1 27.510 27.5100   17.99 0.00217 **
-## Residuals  9 13.763  1.5292                   
+## Residuals  9 13.763  1.5292
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-**Exercise**. Now you can check your knowledge and strengthen your plotting skills by writing code to rebuild the linear regression scatterplot from the previous page.
+### Exercise: Recreate the regression plot
+
+Now you can check your knowledge and strengthen your plotting skills by writing code to rebuild the linear regression scatterplot from the previous page.
 When coding, think about the meaning of slope, intercept, observed variance, model variance, residual variance, and the different types of sums of squares.
 {: .notice--success}
 
@@ -163,7 +159,7 @@ lmod$coefficients[2] / sdt_error_slope
 ```
 
 ```
-##      ind 
+##      ind
 ## 4.241455
 ```
 
@@ -174,23 +170,23 @@ summary(lmod)
 ```
 
 ```
-## 
+##
 ## Call:
 ## lm(formula = dep ~ ind)
-## 
+##
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.92127 -0.45577 -0.04136  0.70941  1.83882 
-## 
+##      Min       1Q   Median       3Q      Max
+## -1.92127 -0.45577 -0.04136  0.70941  1.83882
+##
 ## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)   
-## (Intercept)   3.0001     1.1247   2.667  0.02573 * 
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)   3.0001     1.1247   2.667  0.02573 *
 ## ind           0.5001     0.1179   4.241  0.00217 **
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
+##
 ## Residual standard error: 1.237 on 9 degrees of freedom
-## Multiple R-squared:  0.6665,	Adjusted R-squared:  0.6295 
+## Multiple R-squared:  0.6665,	Adjusted R-squared:  0.6295
 ## F-statistic: 17.99 on 1 and 9 DF,  p-value: 0.00217
 ```
 -->
@@ -251,177 +247,120 @@ lapply(lmodels, summary)
 
 ```
 ## [[1]]
-## 
+##
 ## Call:
 ## lm(formula = anscombe[, i + 4] ~ anscombe[, i])
-## 
+##
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.92127 -0.45577 -0.04136  0.70941  1.83882 
-## 
+##      Min       1Q   Median       3Q      Max
+## -1.92127 -0.45577 -0.04136  0.70941  1.83882
+##
 ## Coefficients:
-##               Estimate Std. Error t value Pr(>|t|)   
-## (Intercept)     3.0001     1.1247   2.667  0.02573 * 
+##               Estimate Std. Error t value Pr(>|t|)
+## (Intercept)     3.0001     1.1247   2.667  0.02573 *
 ## anscombe[, i]   0.5001     0.1179   4.241  0.00217 **
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
+##
 ## Residual standard error: 1.237 on 9 degrees of freedom
-## Multiple R-squared:  0.6665,	Adjusted R-squared:  0.6295 
+## Multiple R-squared:  0.6665,	Adjusted R-squared:  0.6295
 ## F-statistic: 17.99 on 1 and 9 DF,  p-value: 0.00217
-## 
-## 
+##
+##
 ## [[2]]
-## 
+##
 ## Call:
 ## lm(formula = anscombe[, i + 4] ~ anscombe[, i])
-## 
+##
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.9009 -0.7609  0.1291  0.9491  1.2691 
-## 
+##     Min      1Q  Median      3Q     Max
+## -1.9009 -0.7609  0.1291  0.9491  1.2691
+##
 ## Coefficients:
-##               Estimate Std. Error t value Pr(>|t|)   
-## (Intercept)      3.001      1.125   2.667  0.02576 * 
+##               Estimate Std. Error t value Pr(>|t|)
+## (Intercept)      3.001      1.125   2.667  0.02576 *
 ## anscombe[, i]    0.500      0.118   4.239  0.00218 **
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
+##
 ## Residual standard error: 1.237 on 9 degrees of freedom
-## Multiple R-squared:  0.6662,	Adjusted R-squared:  0.6292 
+## Multiple R-squared:  0.6662,	Adjusted R-squared:  0.6292
 ## F-statistic: 17.97 on 1 and 9 DF,  p-value: 0.002179
-## 
-## 
+##
+##
 ## [[3]]
-## 
+##
 ## Call:
 ## lm(formula = anscombe[, i + 4] ~ anscombe[, i])
-## 
+##
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.1586 -0.6146 -0.2303  0.1540  3.2411 
-## 
+##     Min      1Q  Median      3Q     Max
+## -1.1586 -0.6146 -0.2303  0.1540  3.2411
+##
 ## Coefficients:
-##               Estimate Std. Error t value Pr(>|t|)   
-## (Intercept)     3.0025     1.1245   2.670  0.02562 * 
+##               Estimate Std. Error t value Pr(>|t|)
+## (Intercept)     3.0025     1.1245   2.670  0.02562 *
 ## anscombe[, i]   0.4997     0.1179   4.239  0.00218 **
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
+##
 ## Residual standard error: 1.236 on 9 degrees of freedom
-## Multiple R-squared:  0.6663,	Adjusted R-squared:  0.6292 
+## Multiple R-squared:  0.6663,	Adjusted R-squared:  0.6292
 ## F-statistic: 17.97 on 1 and 9 DF,  p-value: 0.002176
-## 
-## 
+##
+##
 ## [[4]]
-## 
+##
 ## Call:
 ## lm(formula = anscombe[, i + 4] ~ anscombe[, i])
-## 
+##
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -1.751 -0.831  0.000  0.809  1.839 
-## 
+##    Min     1Q Median     3Q    Max
+## -1.751 -0.831  0.000  0.809  1.839
+##
 ## Coefficients:
-##               Estimate Std. Error t value Pr(>|t|)   
-## (Intercept)     3.0017     1.1239   2.671  0.02559 * 
+##               Estimate Std. Error t value Pr(>|t|)
+## (Intercept)     3.0017     1.1239   2.671  0.02559 *
 ## anscombe[, i]   0.4999     0.1178   4.243  0.00216 **
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
+##
 ## Residual standard error: 1.236 on 9 degrees of freedom
-## Multiple R-squared:  0.6667,	Adjusted R-squared:  0.6297 
+## Multiple R-squared:  0.6667,	Adjusted R-squared:  0.6297
 ## F-statistic:    18 on 1 and 9 DF,  p-value: 0.002165
 ```
 
-So be careful when interpreting p and R-squared values! 
+So be careful when interpreting p and R-squared values!
 We will learn how to treat non-linear relationships in the subsequent units.
 {: .notice--info}
 
-
-
-
-### Minimum assumption(s) for bivariate linear regression models
-The above example illustrates why it is important to understand a concept and not just to know how something is computed. 
-In the present example, we have to make some additional checks, which give us information about the distribution of variables in order to actually decide if we want to do some assessments based on e.g. the retrieved r-squared value. 
-
-The following checks are what should at least be considered in bivariate linear regression (for multiple linear regression, multicollinearity of the independent variables is crucial):
-  
-* homogeneity of the variance of residuals (homoscedasticity)
-* normality of the residuals (much less important, but handy for small samples)
-
-
-The normality of the residuals could be checked by normality tests. These tests do not prove normality; a test such as Shapiro–Wilk tests the null hypothesis that the data follow a normal distribution. E.g. a Shapiro-Wilk normality test with an insignificant p value does not reject the hypothesis that the distribution is normal but it does not prove that the distribution is actually normal. In addition, for small data, such tests often fail to reject non-normal distributions while for large samples, even very small deviations with no fundamental implication on e.g. anova results lead to a rejection. Speaking about anova influences: anovas are quite robust against violations of normality. For now, we will restrict our evaluation of the model to a visual approach.
-
-Let's start with the most important assumption, the one of homogeneous variances in the residuals, aka the homoscedasticity:
-
-```r
-par(par_org)
-par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 1)
-}
-```
-
-![Residual-versus-fitted plots for the four Anscombe datasets; the second shows curvature and the third highlights one large residual.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-14-1.png)<!-- -->
-
-Except maybe for the upper left figure, this assumption is clearly violated as can be shown on residuals vs. fitted values plots. A better visualization might be the scale-location plot which standardizes the residuals and performs a square-root transformation on them. In doing so, the variance of the residuals becomes more evident in the case of small deviations from the homoscedasticity assumption:
-
-
-```r
-par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 3)
-}
-```
-
-![Scale-location plots for the Anscombe quartet compare the spread of standardized residuals across fitted values.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-15-1.png)<!-- -->
-
-If you want to check the normality of the residuals, we could visualize their distribution as a QQ plot.
-
-```r
-par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 2)
-}
-```
-
-![Normal QQ plots for the four Anscombe regression models show different residual patterns despite their similar summary statistics.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-16-1.png)<!-- -->
-
 ```r
 par(par_org)
 ```
-Although there are deviations from a straight line, the deviations except for the lower left plot are not really crucial (and there it is only for the data pair labeled with 3).
-The lower left plot is also the only plot where the Shapiro-Wilk test rejects the normal distribution hypothesis on a p < 0.05 level.
 
-You might wonder why some of the points in the above figures are labeled (e.g. 3, 9, 10 in the upper left plots).
-These numbers in the plots refer to the observation number in the original dataset.
-This feature results from an "influential points analysis" using Cook's distance, which is a measure of how strongly the regression parameters change if a certain observation is not considered.
-Hence, the larger this change, the larger the influence of this particular observation. For the above data, Cook's distance looks like that:
+## Continue with model checking
 
-```r
-par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 4)
-}
-```
+The Anscombe examples show why similar regression summaries are not enough. Next, work through [Checking Regression Assumptions]({{ site.baseurl }}/unit05/unit05-03a_assumptions.html) for residual plots, the graphical plausibility check, normality-test limitations and possible responses to concerns. That page prepares you for [Assignment 05]({{ site.baseurl }}/unit05/unit05-04_assignment.html).
 
-![Cook distance plots for the Anscombe quartet identify observations with unusually strong influence on the fitted regressions.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-17-1.png)<!-- -->
-
-
-
-### No alternatives?
-If your linear regression diagnostics reveal violations, several options remain. According to Zuur et al. (2007), the solutions to common problems are the following:
-
-* Violation of homogeneity (residuals vs. fitted values plot) without a pattern in the residual vs. observations (i.e. x values) plot: transform the y values or use generalized models
-* Violation of homogeneity (residuals vs. fitted values plot) with a pattern in the residual vs. observations (i.e. x values) plot: add non-linear terms of the independent variable
-* No violation of homogeneity (residuals vs. fitted values plot) but a pattern in the residual vs. observations (i.e. x values) plot: transform the x values or use additive modeling
-
-Before transforming your variables beyond recognition consider whether you really need a linear regression for your data analysis task.
-If in doubt, use some other statistical method like generalized additive models.
-{: .notice--info}
-
-
-
-
-
+<span id="minimum-assumptions-for-bivariate-linear-regression-models" hidden></span>
+<span id="what-are-we-checking" hidden></span>
+<span id="start-with-residuals-versus-fitted-values" hidden></span>
+<span id="compare-spread-with-a-scale-location-plot" hidden></span>
+<span id="qq-plots" hidden></span>
+<span id="use-a-normality-test-as-an-additional-diagnostic" hidden></span>
+<span id="investigate-influential-observations" hidden></span>
+<span id="transformations" hidden></span>
+<span id="additional-views-of-residual-patterns" hidden></span>
+<span id="no-alternatives" hidden></span>
+<span id="from-diagnostics-to-assignment-05" hidden></span>
+<span id="scatterplot-matrix" hidden></span>
+<span id="coplot" hidden></span>
+<script>
+(function () {
+  var sections = ["minimum-assumptions-for-bivariate-linear-regression-models", "what-are-we-checking", "start-with-residuals-versus-fitted-values", "compare-spread-with-a-scale-location-plot", "qq-plots", "use-a-normality-test-as-an-additional-diagnostic", "investigate-influential-observations", "transformations", "additional-views-of-residual-patterns", "no-alternatives", "from-diagnostics-to-assignment-05", "scatterplot-matrix", "coplot"];
+  var section = window.location.hash.slice(1);
+  if (sections.indexOf(section) !== -1) {
+    window.location.replace({{ '/unit05/unit05-03a_assumptions.html' | relative_url | jsonify }} + '#' + section);
+  }
+}());
+</script>

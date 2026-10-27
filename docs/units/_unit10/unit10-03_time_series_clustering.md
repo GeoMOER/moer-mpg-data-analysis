@@ -1,11 +1,13 @@
 ---
-title: "Time series clustering"
+title: "Example: Time Series Clustering"
 toc: true
 toc_label: In this example
 header:
   image: "/assets/images/teaser/air_temperature.png"
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
+
+The [Unit 09 date/time lesson]({{ site.baseurl }}/unit09/unit09-01a_datetime.html#extract-months-and-years) explains parsing and extracting calendar components. Here, the first day of each month is a plotting label for a monthly summary, not the date of an individual observation.
 
 As a final example, we will look at time series clustering. This module has only touched on a small subset of time series analysis methods.
 To illustrate this concept, we will again use the (mean monthly) air temperature record of the weather station in Cölbe (which is closest to Marburg). 

@@ -1,5 +1,5 @@
 ---
-title: "Time Series"
+title: "Example: Exploring a Temperature Time Series"
 author: "Thomas Nauss"
 date: "19 Oktober 2017"
 output: 
@@ -17,6 +17,8 @@ root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/",
 source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_environment.R"))
 
 ```
+
+Before this example, work through [dates and times]({{ site.baseurl }}/unit09/unit09-01a_datetime.html) for explicit formats, time zones and calendar components.
 
 While we had already got in contact with some temporal datasets, we did not have a closer formal look on time series analysis. Time series datasets often inhibit some kind of autocorrelation which is a no go for the models we have used so far. The first more formal contact with time series will therefore highlight these characteristics. The structure of this example follows Zuur et al. 2007 to a certain degree.
 

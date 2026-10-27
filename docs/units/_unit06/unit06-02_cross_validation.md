@@ -1,5 +1,5 @@
 ---
-title: "Cross-validation"
+title: "Example: Cross-Validation"
 toc: true
 toc_label: In this example
 header:

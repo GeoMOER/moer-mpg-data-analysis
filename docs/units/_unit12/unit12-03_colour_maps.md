@@ -1,5 +1,5 @@
 ---
-title: "Example: Colors and maps"
+title: "Example: Colors and Maps"
 toc: true
 toc_label: In this example
 header:

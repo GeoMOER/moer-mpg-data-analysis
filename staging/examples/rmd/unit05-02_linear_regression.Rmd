@@ -1,146 +1,187 @@
 ---
 title: "Example: Simple Bivariate Linear Regression"
 author: "Thomas Nauss"
-date: "19 Oktober 2017"
-output: 
-  html_document: 
-    keep_md: yes
+date: "2026-10-27"
+output:
+  html_document:
+    keep_md: true
 ---
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e05-02/')
-library(envimaR)
-root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/", 
-                              alt_env_id = "COMPUTERNAME",
-                              alt_env_value = "PCRZP", 
-                              alt_env_root_folder = "F:\\BEN\\edu")
-source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_environment.R"))
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+  fig.path = getOption("mpg.unit05.fig.path", "figures/"),
+  fig.width = 10, fig.height = 7, dpi = 120)
 ```
+
+
 Linear regression modeling is one of the more common tasks in data analysis and the following example will cover the very basic topic of bivariate linear regression. The storyline follows the one from Zuur et al. (2007) to a certain degree.
 
-While one could use actual data sets, we keep it controlled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet). The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as bart of base R. For now, we will use variables x1 and y1 as independent and dependent variables.
-```{r, warning=FALSE, fig.alt = "Histograms of the predictor and response in the first Anscombe dataset; the predictor spans about 4 to 14 and the response about 4 to 11."}
+While one could use actual data sets, we keep it controlled by using an artificial data set originally compiled by [Francis Anscombe](https://en.wikipedia.org/wiki/Anscombe%27s_quartet).
+The [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) comes as part of base R.
+For now, we will use x1 as independent variable and y1 as dependent variable.
+
+```{r unnamed-chunk-1, fig.alt = "Histograms of the predictor and response in the first Anscombe dataset; the predictor spans about 4 to 14 and the response about 4 to 11."}
 ind <- anscombe$x1
 dep <- anscombe$y1
 
 par_org <- par(no.readonly = TRUE)
 par(mfrow = c(1,2))
 hist(ind, main = "Independent variable")
-hist(dep, main = "Dependend variable")
+hist(dep, main = "Dependent variable")
 ```
 
+
 A look at the relationship between the variables by using a scatterplot justifies a linear modeling attempt. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
-```{r, warning=FALSE, fig.alt = "First Anscombe dataset with an upward-sloping fitted line; points scatter around y = 3 + 0.5 x."}
-library(car)
+
+```{r unnamed-chunk-2, fig.alt = "First Anscombe dataset with an upward-sloping fitted line; points scatter around y = 3 + 0.5 x."}
 par(par_org)
 plot(ind, dep)
 
 lmod <- lm(dep ~ ind) # Compute linear regression model
 
-regLine(lmod, col = "red") # Add regression line to plot (requires car package)
-text(10, 16, bquote(paste("y"["i"], " = ", .(round(lmod$coefficients[1], 3)), 
+abline(lmod, col = "red") # Add the fitted line using base R
+text(10, 6, bquote(paste("y"["i"], " = ", .(round(lmod$coefficients[1], 3)),
                           " + ", .(round(lmod$coefficients[2], 3)), "* x"["i"])))
 ```
 
-While the visualization is illustrative, it does not provide any information on the actual significance of the parameters of the model, i.e. it does not answer the question after the existence of an actual linear relationship which - in the case of linear regression - requires a slope of the regression line which is actually different from 0. In principal, there are two ways to tackle this problem. Using an analysis of variance (ANOVA) or a t-test.
+
+The fitted line describes the observed relationship. Under suitable model assumptions, an ANOVA or t-test can assess evidence against a zero slope. Neither test checks all those assumptions or establishes a causal relationship. We calculate the summaries first, then use the separate [assumptions walkthrough]({{ site.baseurl }}/unit05/unit05-03a_assumptions.html) to judge how cautiously they should be interpreted.
 
 
 ### Testing a linear regression relationship by an analysis of variance
 
-Let's start with the ANOVA. In general, variance is the deviation of some value v from another value w for all pairs of v and w. 
+Let's start with the ANOVA. Here we divide the variation in the response into variation described by the fitted line and variation left in the residuals.
 
 Given a (linear) model, each actual data value can be calculated by adding the fitted value and the corresponding residual value:
 
 data value = fitted value + residual value (or y = y' + res)
 
-The associated variances are:
+The corresponding differences are:
 
-* The variance of the observed values, i.e. the difference between the individual observation y values and the mean over all observations of y. This will be called the total observed variance.
-* The variance of the fitted values, i.e. the difference between the predicted values of y' and the mean over all observations of y. This will be called the model variance.
-* The variance of the residual values, i.e. the difference between the predicted values y' and the observed values y. This will be called residual variance.
+* **Observed differences:** each observed y minus the mean response, describing total variation.
+* **Model differences:** each fitted y' minus the mean response, describing variation explained by the model.
+* **Residual differences:** each observed y minus its fitted y', describing the remaining variation.
 
-Together, model and residual variance equals the total variance. 
+Square the differences and sum them to obtain the total, model and residual sums of squares. For this ordinary least-squares model with an intercept, the model and residual sums of squares add to the total sum of squares.
 
-Commonly, all variances are squared and summed up over all observations which gives us the sum of squares observed (or total), the sum of squares of the model and the sum of squares of residuals.
+In order to calculate the variances, one can use the lm class of the model since - among others - it contains the original independent and dependent values as well as the predicted ones:
 
-In order to calculate the variances, one can use the lm class of the model since - among others - it contains the original independent and dependent values as well as the predicted ones.
 
-```{r, warning=FALSE}
+```{r lesson-3}
 ss_obsrv <- sum((lmod$model$dep - mean(lmod$model$dep))**2)
 ss_model <- sum((lmod$fitted.values - mean(lmod$model$dep))**2)
 ss_resid <- sum((lmod$model$dep - lmod$fitted.values)**2)
 ```
 
-Since the sum increases with increasing numbers of observations, the resulting sum of squares are normalized by the respective degrees of freedom. This gives us:
-* the mean observation sum of squares
+Since the sum increases with increasing numbers of observations, the resulting sums of squares are normalized by the respective degrees of freedom. This gives us:
+* the mean observed sum of squares
 * the mean model sum of squares
-* the mean residual sum of squares, i.e. the mean square error if the model is a simple linear regression model.
+* the mean residual sum of squares, i.e. the mean squared error if the model is a simple linear regression model.
 
-```{r, warning=FALSE}
+
+```{r lesson-4}
 mss_obsrv <- ss_obsrv / (length(lmod$model$dep) - 1)
 mss_model <- ss_model / 1
 mss_resid <- ss_resid / (length(lmod$model$dep) - 2)
 ```
 
-It can be shown that for large sample sizes, the mean square error (mss_resid) equals the squared variance of the population. In this case, the mean square model error (mss_model) also equals the squared variance but additionally considers the sum of squares over all x values multiplied by the slope of the regression model. In other words, 
+Under the zero-slope null hypothesis and the usual model assumptions, both the model and residual mean squares estimate the error variance. Their ratio fluctuates around a reference distribution; it is not exactly one in every sample. A systematic relationship can make the model mean square larger relative to the residual mean square.
 
-* if the slope is zero, then mean square and model error are equal and the ration of both is 1.
-* if the slope is not zero, then mean square model error is larger than the mean square error and the ratio is larger than 1. 
+This provides us with the test statistic for the *null-hypothesis* that the true slope is not different from 0.
 
-This provides us the test statistic for the null-hypothesis that the the true slope is not different from 0.
-```{r, warning=FALSE}
+```{r lesson-5}
 f_value <- mss_model / mss_resid
 ```
-By comparing the computed F value with tabulated information, one can finally decided if the null-hypothesis should be rejected.
 
-In summary (and without the tabulated F value), this gives us the following:
-```{r, warning=FALSE}
+The F-statistic quantifies how much larger the variation explained by the model is compared to the variation left unexplained (residuals).
+* A large F value indicates that the model explains a lot more variation than is left unexplained, suggesting that the slope is likely not 0.
+* A small F value indicates that the model doesn't explain much more variation than the residuals, suggesting that the slope might be 0.
+
+By comparing the computed F value to an F distribution with 1 numerator degree of freedom and (number of observations - 2) denominator degrees of freedom, the p value is determined. If the p value is very small, the null-hypothesis can be rejected.
+
+```{r lesson-6}
+p_value <- pf(f_value, 1, length(dep) - 2, lower.tail = FALSE)
+```
+
+In summary, this gives us the following:
+
+```{r lesson-7}
 data.frame(Name = c("ind", "residuals"),
            Deg_of_freedom = c(1, length(lmod$model$dep) - 2),
            Sum_of_squares = c(ss_model, ss_resid),
            Mean_sum_of_squares = c(mss_model, mss_resid),
-           F_value = f_value)
+           F_value = f_value,
+           p_value = p_value)
 ```
+
+
 Of course, one does not have to compute this every time. A simple call to the anova function will do it:
-```{r, warning=FALSE}
+
+```{r lesson-8}
 anova(lmod)
 ```
 
 
+### Exercise: Recreate the regression plot
 
+Now you can check your knowledge and strengthen your plotting skills by writing code to rebuild the linear regression scatterplot from the previous page.
+When coding, think about the meaning of slope, intercept, observed variance, model variance, residual variance, and the different types of sums of squares.
+{: .notice--success}
+
+
+<!--
 ### Testing a linear regression relationship by a t-test
 
 For simple linear bivariate regressions, a t-test can be used as an alternative to test if the true slope is not different from 0.
 Therefore, one needs to calculate the standard error of the slope which follows from the residual standard error by:
-```{r, warning=FALSE}
+
+```{r lesson-9}
 sdt_error_slope <- sqrt(length(lmod$model$dep) * mss_resid / (length(lmod$model$dep) * sum(lmod$model$ind**2) - sum(lmod$model$ind)**2))
 ```
 
 The test statistics would be
-```{r, warning=FALSE}
+
+```{r lesson-10}
 lmod$coefficients[2] / sdt_error_slope
 ```
 
+
 which is exactly what one finds in the summary statistics of the linear model:
-```{r, warning=FALSE}
+
+```{r lesson-11}
 summary(lmod)
 ```
 
+-->
 
 ### R squared
 
-The variance explained by the model is one of the most often used variables to explain the relationship in simple linear models. It is computed by normalizing either the model sum of squares by the observation sum of squares or by subtracting the normalization of the residual sum of squares from 1.
-```{r, warning=FALSE}
+The variance explained by the model is one of the most often used variables to explain the relationship in simple linear models. It is computed by normalizing either the model sum of squares by the observed sum of squares or by subtracting the normalization of the residual sum of squares from 1.
+
+```{r lesson-12}
 ss_model / ss_obsrv
+```
+
+
+```{r lesson-13}
 1 - ss_resid / ss_obsrv
 ```
 
+
+
+**Convention**. p and r-squared often denote results of bivariate linear regressions while P and R-squared (capital letters) often denote results of multiple linear regressions.
+The letters *p* (*P*) and *r<sup>2</sup>* (*R*<sup>2</sup>) are often written in *italics*.
+{: .notice--info}
+
+
+
+
 ### Finished?
-Well, the above looks like a real good example of linear regression analysis, right? And the r square of about 0.67 is also quite OK not to mention the significance of the independent variable.
+Well, the above looks like a really good example of linear regression analysis, right? And the r-squared of about 0.67 is also quite OK not to mention the significance of the independent variable.
 
 Before we clap our hands, let's just have a look at the other variable combinations of the Anscombe data set.
-```{r, warning=FALSE, fig.alt = "Anscombe quartet: approximately linear points, a curved relationship, one response outlier, and a cluster with one high-leverage point."}
+
+```{r unnamed-chunk-12, fig.alt = "Anscombe quartet: approximately linear points, a curved relationship, one response outlier, and a cluster with one high-leverage point."}
 par(mfrow = c(2,2))
 for(i in seq(4)){
   plot(anscombe[, i], anscombe[, i+4],
@@ -148,71 +189,27 @@ for(i in seq(4)){
 }
 ```
 
+
 Reading the panels from top left to bottom right: the first dataset is approximately linear; the second follows a curve; the third is approximately linear apart from one unusually high response; and the fourth has nearly all predictor values at the same position, with one point far to the right. These different patterns explain why similar regression summaries do not replace inspecting the observations.
 
-While x3/y3 might still justify a linear regression if we remove the outlier, the two plots on the right side do not. So what? Well, unfortunately, all of these data combinations result in almost the same regression statistics:
-```{r, warning=FALSE}
+While x3/y3 might still justify a linear regression if we remove the outlier, the two plots on the right side do not. So what to do? Unfortunately, all of these data combinations result in almost the same regression statistics:
+
+```{r lesson-15}
 lmodels <- lapply(seq(4), function(i){
   lm(anscombe[, i+4] ~ anscombe[, i])
 })
 lapply(lmodels, summary)
 ```
 
-### Minimum assumption(s) for bivariate linear regression models
-The above example illustrates why it is important to understand a concept and not just to know how something is computed. In the present example, we have to make some additional checks which gives us some information about the distribution of some variables in order to actually decide if we want to do some assessments based on e.g. the retrieved r square. 
 
-The following checks are what should at least be considered in bivariate linear regression (for multiple linear regression, multicollinearity of the independent variables is crucial but this is checked prior the linear modeling):
-  
-* homogeneity of the variance of residuals
-* normality of the residuals (much less important, but handy for small samples)
+So be careful when interpreting p and R-squared values!
+We will learn how to treat non-linear relationships in the subsequent units.
+{: .notice--info}
 
-
-The normality of the residuals could be checked by normality tests. These tests do not prove normality; a test such as Shapiro–Wilk tests the null hypothesis that the data follow a normal distribution. E.g. a Shapiro-Wilk normality test with an insignificant p value does not reject the hypothesis that the distribution is normal but it does not prove that the distribution is actually normal. In addition, for small data, such tests often fail to reject non-normal distributions while for large samples, even very small deviations with no fundamental implication on e.g. anova results lead to a rejection. Speaking about anova influences: anovas are quite robust against violations of normality. Regarding homoscedasticity, this robustness decreases a little so larger F-values should be defined as a threshold for significance. For now, we will restrict our evaluation of the model to a visual approach.
-
-Let's start with the most important assumption, the one of homogeneous variances in the residuals, aka the homoscedasticity:
-```{r, warning=FALSE, fig.alt = "Residual-versus-fitted plots for the four Anscombe datasets; the second shows curvature and the third highlights one large residual."}
-par(par_org)
-par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 1)
-}
-```
-
-Except maybe for the upper left figure, this assumption is clearly violated as can be shown on residuals vs. fitted values plots. A better visualization might be the scale-location plot which standardizes the residuals and performs a square root transformation on them. In doing so, the variance of the residuals becomes more evident in the case of small deviations from the homoscedasticity assumption:
-
-```{r, warning=FALSE, fig.alt = "Scale-location plots for the Anscombe quartet compare the spread of standardized residuals across fitted values."}
-par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 3)
-}
-```
-
-If you want to check the normality of the residuals, we could visualize their distribution as a QQ plot.
-```{r, warning=FALSE, fig.alt = "Normal QQ plots for the four Anscombe regression models show different residual patterns despite their similar summary statistics."}
-par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 2)
-}
+```{r restore-graphics}
 par(par_org)
 ```
-Also there are deviations from a straight line, the deviations except for the lower left plot are not really crucial (and there it is only for the data pair labeled with 3). The lower left plot is also the only plot where the Shapiro-Wilk test rejects the normal distribution hypothesis on a p<0.05 level.
 
-You might wonder why some of the points in the above figures are labeled (e.g. 3, 9, 10 in the upper left plots). This "feature" results from a influential points analysis using Cook's distance which is a measure of how strong the regression parameters change if a certain observation is not considered. Hence, the larger this change, the larger the influence of this particular observation. For the above data, Cook's distance looks like that:
-```{r, warning=FALSE, fig.alt = "Cook distance plots for the Anscombe quartet identify observations with unusually strong influence on the fitted regressions."}
-par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 4)
-}
-```
+## Continue with model checking
 
-
-
-### No alternatives?
-If your linear regression diagnostics reveal violations, several options remain. According to Zuur et al. (2007), the solutions to common problems are the following:
-
-* Violation of homogeneity (residuals vs. fitted values plot) without a pattern in the residual vs. observations (i.e. x values) plot: transform the y values or use generalized models
-* Violation of homogeneity (residuals vs. fitted values plot) with a pattern in the residual vs. observations (i.e. x values) plot: add non-linear terms of the independent variable
-* No violation of homogeneity (residuals vs. fitted values plot) but a pattern in the residual vs. observations (i.e. x values) plot: transform the x values or use additive modeling
-
-In general, adding interaction terms (more than one explanatory variable is required) might also be a solution. 
-
+The Anscombe examples show why similar regression summaries are not enough. Next, work through [Checking Regression Assumptions]({{ site.baseurl }}/unit05/unit05-03a_assumptions.html) for residual plots, the graphical plausibility check, normality-test limitations and possible responses to concerns. That page prepares you for [Assignment 05]({{ site.baseurl }}/unit05/unit05-04_assignment.html).

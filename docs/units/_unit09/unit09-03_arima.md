@@ -1,5 +1,5 @@
 ---
-title: "Predicting time series"
+title: "Example: Forecasting with ARIMA"
 toc: true
 toc_label: In this example
 header:

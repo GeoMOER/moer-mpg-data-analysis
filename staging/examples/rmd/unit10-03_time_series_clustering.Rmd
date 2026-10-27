@@ -1,5 +1,5 @@
 ---
-title: "Time series clustering"
+title: "Example: Time Series Clustering"
 author: "Thomas Nauss"
 date: "19 Oktober 2017"
 output: 
@@ -17,6 +17,8 @@ root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/",
 source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_environment.R"))
 path_dwd <- file.path(envrmt$path_dwd,"3164_coelbe/")
 ```
+The [Unit 09 date/time lesson]({{ site.baseurl }}/unit09/unit09-01a_datetime.html#extract-months-and-years) explains parsing and extracting calendar components. Here, the first day of each month is a plotting label for a monthly summary, not the date of an individual observation.
+
 Just as one last example on time series analysis for this module and mainly to demonstrate that this module only touched on a very small set of analysis concepts out there, we will have a glimpse on time series clustering. To illustrate this, we will again use the (mean monthly) air temperature record of the weather station in Coelbe (which is closest to the Marburg university forest). The data has been supplied by the German weather service [German weather service](ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/). For simplicity, we will remove the first 6 entries (July to December 2006 to have full years).
 ```{r, warning=FALSE, echo=FALSE, message= FALSE}
 

@@ -22,14 +22,31 @@ After completing this worksheet you should be able to compute a linear regressio
 
 ## Input from Unit 04
 
-Use the wide land-use table saved as `Output/lu_clean.rds` in the [Unit 04 worked example]({{ site.baseurl }}/unit04/unit04-05_cleaning.html#handoff-to-later-units). Read it from your existing course project with `readRDS("Output/lu_clean.rds")`. `Settlement` includes transport; `Settlement` and `Recreation` are percentages, and each row is a region-year record. This is separate from Unit 03's 16-state table. A prepared instructor checkpoint must match the current workflow before substituting for your output.
+Use the wide land-use table saved as `Output/lu_clean.rds` in the [Unit 04 land-use exercise]({{ site.baseurl }}/unit04/unit04-05_cleaning.html#handoff-to-later-units). Read it from your existing course project with `readRDS("Output/lu_clean.rds")`. `Settlement` includes transport; `Settlement` and `Recreation` are percentages, and each row is a region-year record. This is separate from Unit 03's 16-state table. A prepared instructor checkpoint must match the current workflow before substituting for your output.
 
-## Linear modeling and normal distribution of the residuals  
-Please write an R Markdown document which computes a linear regression model that relates the percentage recreation area (dependent variable) to the settlement area and visualizes the relationship as a scatter plot with the linear model drawn in the same plot. Additionally, create a visualization which allows the assessment of the heteroscedasticity and the normal distribution of the residuals.
+## Prepare comparable observations
 
-Please write exactly one sentence which summarizes the key message of the heteroscedasticity and normality plots.
+Use **2014** observations whose explicitly recorded `Admin_unit` is **`District` or `Urban district`**. These are the two district-level types for this exercise; omit other levels and unresolved types rather than guessing them. Retain complete `Settlement`–`Recreation` pairs, preserving the region identifiers. Report how many records were excluded for metadata or missing measurements, and check that each region occurs once. Check that at least 50 complete pairs remain.
 
-Once you have described your data, please have a closer look at the normal distribution assessment. For that, please evaluate how often a normal distribution test on the residuals would reject its null-hypothesis if a regression model is not computed on the entire dataset but 100 regression models are computed on 100 sub-samples of the dataset. Each of the 100 sub-samples should contain 50 value pairs chosen randomly from the entire data set. Please state or visualize the result and discuss it with respect to sample design and the reliability of test results (three sentences max).
+This avoids mixing repeated years and nested administrative levels. It does not guarantee independence: neighboring regions can still be related. Keep that limitation in your interpretation.
+
+## Fit and inspect the model {#linear-modeling-and-normal-distribution-of-the-residuals}
+
+Write an R Markdown document fitting recreation share (response) against settlement share (predictor) in this cohort. Plot the paired observations and add the fitted line. Then assess the model using the [minimum-assumptions walkthrough]({{ site.baseurl }}/unit05/unit05-03a_assumptions.html#minimum-assumptions-for-bivariate-linear-regression-models):
+
+- Use residual-versus-fitted and scale-location plots to discuss the mean pattern and spread.
+- Use a normal QQ plot of residuals to assess the normal approximation. A plot of the raw percentages does not answer this question.
+- Write **exactly one sentence** summarizing the main evidence from the spread and normality plots. Use cautious wording and identify any concern.
+
+The additional transformation, scatterplot-matrix and coplot examples are not required. A diagnostic concern is a result to explain, not a request to delete observations or transform the data until a test passes.
+
+## Investigate sensitivity to random subsets
+
+From the **same prepared cohort**, draw **100 random subsets of 50 complete pairs**, without replacement within each subset. Set a random seed once before the loop and record it with your R version. Fit the same regression separately to each subset and apply a Shapiro–Wilk test to that model's residuals.
+
+Report or visualize how often the test returns `p < 0.05`. Discuss the result in **at most three sentences**, relating it to the graphical evidence, sample design and sensitivity of the test. These subsets can overlap, so the rejection fraction is not based on independent replications and is not the probability that the regression model is correct or incorrect. Failure to reject normality does not establish linearity, constant variance or independence.
+
+Keep your Rmd beside the `.Rproj` file so that `Output/lu_clean.rds` resolves in both the console and knitting.
 
 Save your R functions and R Markdown (.Rmd) document in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
 Make sure that the created HTML file is also part of your course repository on GitHub.

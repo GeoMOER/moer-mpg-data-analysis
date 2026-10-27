@@ -1,5 +1,5 @@
 ---
-title: Select your variables
+title: "Select Your Variables"
 header:
   image: "/assets/images/teaser/ffs_beta2.png"
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics){:target="_blank"}'

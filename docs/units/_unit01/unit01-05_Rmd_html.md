@@ -1,5 +1,5 @@
 ---
-title: "Example: R Markdown with HTML output"
+title: "Example: R Markdown with HTML Output"
 toc: true
 toc_label: In this example
 header:
@@ -48,9 +48,8 @@ Copy the following example into an `.Rmd` file and click **Knit** to create an H
 
 ``````markdown
 ---
-title: "Example: R Markdown with HTML output"
+title: "Example: R Markdown with HTML Output"
 author: "Thomas Nauss"
-date: "10 Oktober 2018"
 output: 
   html_document: 
     keep_md: yes

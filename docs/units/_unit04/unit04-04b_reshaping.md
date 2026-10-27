@@ -28,35 +28,39 @@ Here one row is one site in one year. `ID` and `Year` identify it; height and cr
 
 ## Stack measurements into rows
 
-This course uses `reshape2`. If necessary, run the following once in the R console:
+Use `reshape()`, which is included with R. First name the measurement columns to combine:
 
 ```r
-install.packages("reshape2")
-```
-
-The `reshape2::` prefix calls a function from that package without attaching the whole package.
-
-```r
-long <- reshape2::melt(
-  wide, id.vars = c("ID", "Year"),
-  measure.vars = c("Height_m", "Crown_m"),
-  variable.name = "Measurement", value.name = "Value_m"
+measurements <- c("Height_m", "Crown_m")
+long <- reshape(
+  wide, direction = "long",
+  idvar = c("ID", "Year"), varying = measurements,
+  timevar = "Measurement", times = measurements,
+  v.names = "Value_m"
 )
 long
 ```
 
-There are now four rows: two sites multiplied by two measurements. One row represents one measurement at one site in one year. Its key is `ID`, `Year` **and** `Measurement`. Missing values are retained unless you deliberately request otherwise.
+The arguments describe the change:
+
+- `idvar` identifies each original row.
+- `varying` lists the columns to combine.
+- `timevar` names the new label column; `times` supplies its labels. Here these labels identify measurements, rather than dates.
+- `v.names` names the new value column.
+
+There are now four rows: two sites multiplied by two measurements. One row represents one measurement at one site in one year. Its key is `ID`, `Year` **and** `Measurement`. Missing measurements remain in the table.
 
 ## Return to wide form
 
 ```r
-restored <- reshape2::dcast(
-  long, ID + Year ~ Measurement, value.var = "Value_m"
-)
+anyDuplicated(long[c("ID", "Year", "Measurement")])
+restored <- reshape(long, direction = "wide")
 restored
 ```
 
-The columns left of `~` identify output rows; the measurement names on the right become columns. If several rows target the same output cell, `dcast()` needs an aggregation rule and can otherwise default to counting rows. Investigate duplicates before choosing a rule; do not silently replace measurements with counts.
+The duplicate check should return zero: each key identifies one value. Investigate duplicates before reshaping; several values cannot occupy the same output cell.
+
+Because `long` was created with `reshape()`, it retains the information needed to reverse the conversion. Setting `direction = "wide"` restores the original measurement columns. This short form relies on that information remaining attached to the table.
 
 ## Summarize groups deliberately
 
@@ -70,6 +74,6 @@ A regional percentage or yield is not an additive total. Summing percentages fro
 
 ## Use each form for its purpose
 
-The worked land-use example creates a long view to illustrate reshaping, then saves the validated **wide** table for regression in Units 05–06. The crop assignment also produces a wide table for Unit 07.
+The land-use exercise creates a long view to illustrate reshaping, then saves the validated **wide** table for regression in Units 05–06. The crop assignment also produces a wide table for Unit 07.
 
-See [aggregation and reshaping in Base R](https://geomoer.github.io/moer-base-r/unit08/unit08-07-aggregate.html), the [`melt()` documentation](https://search.r-project.org/CRAN/refmans/reshape2/html/melt.data.frame.html) and [`dcast()` documentation](https://search.r-project.org/CRAN/refmans/reshape2/html/cast.html).
+See the R documentation for [`reshape()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/reshape.html) and [`aggregate()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/aggregate.html).

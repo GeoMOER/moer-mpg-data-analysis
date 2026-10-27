@@ -1,5 +1,5 @@
 ---
-title: "Marked Assignment: Wheat vs. everything else"
+title: "Marked Assignment: Wheat vs. Everything Else"
 toc: true
 toc_label: In this worksheet
 header:

@@ -1,5 +1,5 @@
 ---
-title: "Example: Colors and maps"
+title: "Example: Colors and Maps"
 output:
   html_document:
     keep_md: true

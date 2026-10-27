@@ -173,7 +173,7 @@ This output uses commas between fields and decimal points. CSV stores text, so r
 
 ## Alternative data I/O using RDS
 
-The prepared file used in the next example is generated from **this same CSV** by the selection, renaming, conversion, and state filtering shown above:
+The prepared file used in the next example is generated from **this same CSV** by the selection, renaming, conversion, and state filtering shown above. As explained in the [shared project layout]({{ site.baseurl }}/unit03/unit03-02a_organize_your_data_files.html#common-project-layout), this RDS stays in `Data/` because it is the prepared input for exploration. The CSV export above is in `Output/`:
 
 
 ```r

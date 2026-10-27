@@ -1,5 +1,5 @@
 ---
-title: "Predicting time series"
+title: "Example: Forecasting with ARIMA"
 author: "Thomas Nauss"
 date: "19 Oktober 2017"
 output: 

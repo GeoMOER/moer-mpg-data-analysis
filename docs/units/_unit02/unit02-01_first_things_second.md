@@ -11,9 +11,16 @@ Look closer at data types and object types before focusing on the most important
 
 ## Learning objectives
 At the end of this unit you should be able to
-* tell the difference between data types and object types,
-* use logical and Boolean operators to make decisions, and
-* use loops for repeated tasks.
+
+* distinguish data types from data structures and select elements by index;
+* use comparisons and logical operators in conditional statements;
+* use loops to repeat an operation;
+* define and call a small function and explain its returned value;
+* use `lapply()` to collect results in a list and flatten a suitable list into a vector.
+
+## Preparation for the assignment
+
+Follow the pages on data types, object types and indexing, then complete the [required preparation on operations]({{ site.baseurl }}/unit02/unit02-05_operations.html#required-preparation). This prepares you for Assignment 02 and for the reusable cleaning functions in Unit 04.
 
 
 ## Comments?

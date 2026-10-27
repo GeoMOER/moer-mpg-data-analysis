@@ -9,7 +9,7 @@ header:
 
 ## Separate text without inventing information
 
-A label can contain several pieces of information. First split the text mechanically; then decide what each part means. Preserve the original label throughout.
+A label can contain several pieces of information. First split the text mechanically; then decide what each part means. Preserve the original label throughout. This example builds on [Unit 02's functions, returned values and `lapply()`]({{ site.baseurl }}/unit02/unit02-05_operations.html#required-preparation).
 
 ## Split a small example
 

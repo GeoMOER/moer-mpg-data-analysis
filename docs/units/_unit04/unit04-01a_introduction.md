@@ -17,17 +17,24 @@ At the end of this unit you should be able to
 - inspect types, source symbols and missing values before conversion;
 - sort complete rows without separating measurements from their identifiers;
 - split compound labels without guessing missing administrative information;
+- write a small cleaning function, save it in an R script and load it with `source()`;
 - reshape a table and explain what a row represents before and afterward;
 - match tables by keys and identify duplicates or unmatched records;
 - save a reproducible wide analysis table and document unresolved cases.
 
 ## How this unit is organized
 
-Build on [Unit 03's local-file workflow]({{ site.baseurl }}/unit03/unit03-01_look_at_your_data.html): keep your Rmd beside the `.Rproj`, downloaded inputs in `Data/`, and generated results in `Output/`.
+Build on [Unit 03's shared project layout]({{ site.baseurl }}/unit03/unit03-02a_organize_your_data_files.html#common-project-layout): keep your Rmd beside the `.Rproj`, inputs in `Data/`, function scripts in `Scripts/` and generated analysis results in `Output/`. Reuse [Unit 02's functions and returned values]({{ site.baseurl }}/unit02/unit02-05_operations.html#required-preparation) when writing your cleaning helper.
 
-Start with [Cleaning 101]({{ site.baseurl }}/unit04/unit04-01b_clean_your_data.html), then work through [missing values]({{ site.baseurl }}/unit04/unit04-02_na.html) and [sorting]({{ site.baseurl }}/unit04/unit04-04_sorting.html). The focused examples on [splitting text]({{ site.baseurl }}/unit04/unit04-04a_text.html), [reshaping and grouped summaries]({{ site.baseurl }}/unit04/unit04-04b_reshaping.html) and [matching tables]({{ site.baseurl }}/unit04/unit04-04c_merging.html) introduce operations used in the [worked land-use example]({{ site.baseurl }}/unit04/unit04-05_cleaning.html). The [crop assignment]({{ site.baseurl }}/unit04/unit04-07_assignment.html) transfers them to another source file.
+The examples use functions included with R.
 
-The separate [date/time example]({{ site.baseurl }}/unit04/unit04-03_datetime.html) prepares you for the station observations in Units 09–10. The annual regional tables here require integer reporting years rather than full date-time values.
+Pages labeled **Example** support the instructor demonstrations. The **Exercise** is your individual practice in class; the **Unmarked Assignment** is the follow-up crop task.
+
+Start with [Cleaning 101]({{ site.baseurl }}/unit04/unit04-01b_clean_your_data.html), then work through [missing values]({{ site.baseurl }}/unit04/unit04-02_na.html) and [sorting]({{ site.baseurl }}/unit04/unit04-04_sorting.html). The focused examples on [splitting text]({{ site.baseurl }}/unit04/unit04-04a_text.html), [reshaping and grouped summaries]({{ site.baseurl }}/unit04/unit04-04b_reshaping.html) and [matching tables]({{ site.baseurl }}/unit04/unit04-04c_merging.html) introduce operations used in the [land-use exercise]({{ site.baseurl }}/unit04/unit04-05_cleaning.html). The [crop assignment]({{ site.baseurl }}/unit04/unit04-07_assignment.html) transfers them to another source file.
+
+In class, the instructor introduces the cleaning steps with small general examples. You then apply them individually to the land-use dataset, followed by a shared question collection and class discussion. The worked example is available as an expandable reference.
+
+Keep reporting years such as `2014` as integers. The annual regional tables do not require full dates or timestamps.
 
 Additional explanations are available in [sorting and combining data in Base R](https://geomoer.github.io/moer-base-r/unit08/unit08-01_Intro.html).
 
@@ -35,11 +42,11 @@ Additional explanations are available in [sorting and combining data in Base R](
 
 We retain two historical regional datasets because they provide real cleaning problems and support the later modeling tasks. The English teaching copies translate headings, introductory text and regional descriptors while retaining the source values, IDs, years, indentation, decimal commas and symbols. They are teaching translations, not newer official English exports. Proper place names remain in their source spelling.
 
-Download the English file specified by the worked example or assignment into `Data/`, keeping its filename. The same files are available on ILIAS. If your browser displays a text file, use **Save As** and move it into `Data/`.
+Download the English file specified by the exercise or assignment into `Data/`, keeping its filename. The same files are available on ILIAS. If your browser displays a text file, use **Save As** and move it into `Data/`.
 
 | Input | Coverage and role | File layout |
 |---|---|---|
-| <a href="{{ site.baseurl }}/assets/data/unit04/regional-land-use-1996-2014.txt" download="regional-land-use-1996-2014.txt">regional-land-use-1996-2014.txt</a> | 5,250 region-year records; four land-use percentages; worked cleaning example. | UTF-8; semicolons; four introductory lines; header line 5. |
+| <a href="{{ site.baseurl }}/assets/data/unit04/regional-land-use-1996-2014.txt" download="regional-land-use-1996-2014.txt">regional-land-use-1996-2014.txt</a> | 5,250 region-year records; four land-use percentages; in-class cleaning exercise. | UTF-8; semicolons; four introductory lines; header line 5. |
 | <a href="{{ site.baseurl }}/assets/data/unit04/regional-crop-yields-1999-2015.txt" download="regional-crop-yields-1999-2015.txt">regional-crop-yields-1999-2015.txt</a> | 8,925 region-year records; ten crop yields; independent cleaning assignment. | UTF-8; semicolons; six introductory lines; header line 7; five footer lines. |
 
 The attributed sources are GENESIS/Regional Atlas **AI001** (`AI001_gebiet_flaeche.txt`) and **115-46-4** (`115-46-4_feldfruechte.txt`), supplied by the course instructors from the [Regional Database Germany](https://www.regionalstatistik.de/genesis/online/). The unchanged exports are provenance, rather than extra required learner downloads. The [English crosswalk]({{ site.baseurl }}/assets/data/unit04/regional-data-english-crosswalk.csv) records the original headings and translated labels; [source and preparation notes]({{ site.baseurl }}/assets/data/unit04/regional-data-source.txt) explain the files. `-`, `.` and `/` are retained; preserve them separately before making a numerical conversion decision. A reported `0,0` remains an explicit zero.
@@ -52,7 +59,7 @@ Crop yields use **decitonnes per hectare** (`dt/ha`; 1 dt = 100 kg). The English
 
 | Output | Where it comes from | Reused in |
 |---|---|---|
-| `Output/lu_clean.rds` | Wide land-use table generated in the worked example, with source cells and unresolved metadata saved separately. | Units 05–06. |
+| `Output/lu_clean.rds` | Wide land-use table generated in the exercise, with source cells and unresolved metadata saved separately. | Units 05–06. |
 | `Output/cp_clean.rds` | Wide crop table generated in your unmarked assignment, with original source tokens retained separately. | Unit 07. |
 
 Prepared instructor RDS files are alternative checkpoints, not unexplained additional sources. The current checkpoints use the same English metadata rules and output schema as these lessons. Inspect their provenance and structure before using them; unresolved regional types remain explicitly unavailable.

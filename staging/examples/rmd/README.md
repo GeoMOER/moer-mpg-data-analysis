@@ -1,22 +1,33 @@
 # Course example sources
 
-Published Markdown in `docs/units/` is the course reference. Match a source by its content before rendering: historical source numbers do not always match published page numbers. Keep existing public URLs and figure paths. Review generated output before incorporating it into a course page.
+Published Markdown in `docs/units/` is the course reference. Use **Example** for demonstrations, **Exercise** for independent student practice, and plain titles for explanations and resources. Steps within a page inherit its role; retain assignment status labels. Match a source by its content before rendering: historical source numbers do not always match published page numbers. Keep existing public URLs and figure paths. Review generated output before incorporating it into a course page.
+
+## Active sources for Unit 03
+
+| Rmd source | Published Markdown under `docs/units/` | Maintenance note |
+|---|---|---|
+| `unit03-04_csv_io.Rmd` | `_unit03/unit03-04_csv_io.md` | Import and preparation for exploration. |
+| `unit03-03_visualization.Rmd` | `_unit03/unit03-05_visualization.md` | Basic plot selection; existing permalink retains the old URL. |
+| `unit03-06_exploration.Rmd` | `_unit03/unit03-06_exploration.md` | Core summaries/plots and four-panel layout before Assignment 03. |
+
+Unit 03 contains the basic exploration needed for Assignment 03. Further diagnostic tools are integrated into the Unit-05 regression example; former Unit-03 extension URLs/anchors redirect there outside the active learning path. The historical aggregation source remains unpublished.
 
 ## Active sources for Units 04–12
 
 | Rmd source | Published Markdown under `docs/units/` | Maintenance note |
 |---|---|---|
 | `unit04-02_na.Rmd` | `_unit04/unit04-02_na.md` | Current English lesson. |
-| `unit04-03_datetime.Rmd` | `_unit04/unit04-03_datetime.md` | Current explicit-time-zone example. |
 | `unit04-04_sorting.Rmd` | `_unit04/unit04-04_sorting.md` | Current complete-row sorting example. |
 | `unit04-04a_text.Rmd` | `_unit04/unit04-04a_text.md` | Current text-splitting example. |
-| `unit04-04b_reshaping.Rmd` | `_unit04/unit04-04b_reshaping.md` | Current reshaping/grouped-summary example. |
+| `unit04-04b_reshaping.Rmd` | `_unit04/unit04-04b_reshaping.md` | Base R `reshape()` and `aggregate()`; no extra package. |
 | `unit04-06_merging.Rmd` | `_unit04/unit04-04c_merging.md` | Source keeps its older filename. |
-| `unit04-05_cleaning.Rmd` | `_unit04/unit04-05_cleaning.md` | Current worked regional-data workflow. |
-| `unit05-02_linear_regression.Rmd` | `_unit05/unit05-03_linear_regression.md` | Anscombe example; plot descriptions are synchronized. |
+| `unit04-05_cleaning.Rmd` | `_unit04/unit04-05_cleaning.md` | Land-use exercise with an expandable worked example. |
+| `unit05-02_linear_regression.Rmd` | `_unit05/unit05-03_linear_regression.md` | Portable model-fitting example; continues on the separate assumptions page. |
+| `unit05-03a_assumptions.Rmd` | `_unit05/unit05-03a_assumptions.md` | Residual-based assumptions, QQ plots, transformations and Assignment-05 transition; recreates the Anscombe fits independently. Both Unit-05 sources use `mpg.unit05.fig.path`. |
 | `unit06-02_cross_validation.Rmd` | `_unit06/unit06-02_cross_validation.md` | Associated historical source; its setup/method review remains M1. |
 | `unit07-02_variable_selection.Rmd` | `_unit07/unit07-02_variable_selection.md` | Associated source; model-selection/evaluation review remains M1. |
 | `unit08-02_generalized_additive_models.Rmd` | `_unit08/unit08-02_generalized_additive_models.md` | Plot descriptions added; historical RNG/results remain M2. |
+| `unit09-01a_datetime.Rmd` | `_unit09/unit09-01a_datetime.md` | Dates, time zones and calendar components before DWD; moved from Unit 04. The old Unit-04 URL redirects outside the teaching collection. |
 | `unit09-02_time_series.Rmd` | `_unit09/unit09-02_time_series.md` | Historical source targets a 2015 DWD layout; published data handling is newer. Align in D4/M3 before rerendering. |
 | `unit09-03_arima.Rmd` | `_unit09/unit09-03_arima.md` | Historical source has a different time window and chunk layout; descriptions follow its own plot calls. Align in D4/M3. |
 | `unit10-02_time_series_analysis.Rmd` | `_unit10/unit10-02_time_series_analysis.md` | Historical source has an older time window; includes unpublished trend-test material. Align in D4/M3. |
