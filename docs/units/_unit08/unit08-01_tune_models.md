@@ -11,16 +11,18 @@ Evaluate model tuning strategies and find optimal settings for your prediction m
 
 ## Learning objectives
 At the end of this session you should be able to
-* explain some basic principles of (general) additive models and the LOESS smoother,
+* explain some basic principles of generalized additive models and the LOESS smoother,
 * discuss the importance of model tuning and its tripping hazards, and
 * implement some basic model tuning strategies.
 
 
 ## Basic idea of model tuning
 
-{% include figure image_path="/assets/images/gam.png" alt="Illustration of a generalized additive model with increasing knots." %}
+{% include figure image_path="/assets/images/gam.png" alt="Schematic comparison of spline fits with increasing flexibility." %}
 
-The graphic above shows how a changing number of knots affects the result of a generalized additive model (GAM). As the number of knots increases, the model becomes more flexible to adapt itself to the dataset. By increasing the number of knots, the dataset provided to the model is fitted with increasing accuracy. However, overfitting of the sample dataset increases, too.
+The graphic illustrates how a spline can become more flexible. In `mgcv::s()`, `k` specifies the **basis dimension**, not a literal number of knots. With a penalized smooth, the smoothing parameter also controls the effective flexibility; a larger `k` does not force a more variable fit.
+
+Closer agreement with training observations does not establish better prediction. Use held-out scores to tune settings and keep final evaluation separate from that choice. The [worked example]({{ site.baseurl }}/unit08/unit08-02_generalized_additive_models.html) distinguishes these roles and defines the repeated-run metrics needed for the assignment.
 
 
 ## Comments?

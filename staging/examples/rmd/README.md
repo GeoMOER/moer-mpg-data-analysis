@@ -24,9 +24,9 @@ Unit 03 contains the basic exploration needed for Assignment 03. Further diagnos
 | `unit04-05_cleaning.Rmd` | `_unit04/unit04-05_cleaning.md` | Land-use exercise with an expandable worked example. |
 | `unit05-02_linear_regression.Rmd` | `_unit05/unit05-03_linear_regression.md` | Portable model-fitting example; continues on the separate assumptions page. |
 | `unit05-03a_assumptions.Rmd` | `_unit05/unit05-03a_assumptions.md` | Residual-based assumptions, QQ plots, transformations and Assignment-05 transition; recreates the Anscombe fits independently. Both Unit-05 sources use `mpg.unit05.fig.path`. |
-| `unit06-02_cross_validation.Rmd` | `_unit06/unit06-02_cross_validation.md` | Associated historical source; its setup/method review remains M1. |
-| `unit07-02_variable_selection.Rmd` | `_unit07/unit07-02_variable_selection.md` | Associated source; model-selection/evaluation review remains M1. |
-| `unit08-02_generalized_additive_models.Rmd` | `_unit08/unit08-02_generalized_additive_models.md` | Plot descriptions added; historical RNG/results remain M2. |
+| `unit06-02_cross_validation.Rmd` | `_unit06/unit06-02_cross_validation.md` | Current executable source: held-out metrics, run-level RMSE and four folds; portable `mpg.unit06.fig.path`. |
+| `unit07-02_variable_selection.Rmd` | `_unit07/unit07-02_variable_selection.md` | Current executable source: guarded AIC steps, fixed-fold scoring and independent final evaluation; portable `mpg.unit07.fig.path`. |
+| `unit08-02_generalized_additive_models.Rmd` | `_unit08/unit08-02_generalized_additive_models.md` | Current executable source: basis dimension versus penalty, fitted/held-out metrics and separate tuning/final evaluation; portable `mpg.unit08.fig.path`. |
 | `unit09-01a_datetime.Rmd` | `_unit09/unit09-01a_datetime.md` | Dates, time zones and calendar components before DWD; moved from Unit 04. The old Unit-04 URL redirects outside the teaching collection. |
 | `unit09-02_time_series.Rmd` | `_unit09/unit09-02_time_series.md` | Historical source targets a 2015 DWD layout; published data handling is newer. Align in D4/M3 before rerendering. |
 | `unit09-03_arima.Rmd` | `_unit09/unit09-03_arima.md` | Historical source has a different time window and chunk layout; descriptions follow its own plot calls. Align in D4/M3. |
@@ -50,5 +50,7 @@ Keep these drafts separate from active course sources. Their preservation does n
 ## Figures and accessibility
 
 Published plot images remain at their existing paths. Informative images have descriptions of their variables, panels and relevant patterns. Matching source chunks carry `fig.alt`, including a vector of descriptions where one chunk creates several figures. Nearby prose explains complex comparisons.
+
+The Unit-06/07 sources accept `options(mpg.unit06.fig.path = "<temporary-figure-directory>/")` and `options(mpg.unit07.fig.path = "<temporary-figure-directory>/")` for isolated rendering. The original Unit-07 toy data explicitly reproduce the historical sampling rule and restore the previous setting; new validation examples use current sampling. Both sources use only base R for analysis. The Unit-08 source uses `mgcv`, accepts `mpg.unit08.fig.path`, and likewise explicitly reproduces its historical toy data before using current sampling for the independent tuning example.
 
 The two current Unit-12 sources accept `options(mpg.unit12.fig.path = "<temporary-figure-directory>/")` for isolated output. Their default `figures/` paths are portable; published asset URLs stay separate. The accessibility pass does not refresh historical datasets, RNG, model fits or raster files.

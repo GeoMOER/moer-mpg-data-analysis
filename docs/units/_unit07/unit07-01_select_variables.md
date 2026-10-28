@@ -24,6 +24,8 @@ Use only those explanatory variables which best explain the dependent variable w
 
 The graphic above shows how the cross-validation performance of two regression models typically changes with increasing number of independent variables used by the model. At first, more independent variables lead to a better performance (increasing R squared) but the maximum performance is reached quite fast. Afterwards, additional independent variables would still lead to the same or better "internal" model results as long as the performance measure does not account for the number of variables but the increasing overfitting of the model to the data sample certainly leads to a decreasing performance in the cross-validation.
 
+Scores used to choose predictors belong to model selection. The [worked example]({{ site.baseurl }}/unit07/unit07-02_variable_selection.html#keep-final-evaluation-independent) shows how a reserved test set provides a separate final assessment after that choice.
+
 For a deeper look into variable selection have a look at [Meyer et al. 2016](https://www.mdpi.com/2072-4292/8/9/732){:target="_blank"}
 
 {% include figure image_path="https://imgs.xkcd.com/comics/seat_selection.png" alt="Seat Selection comic: a traveler clicks the cockpit on an airline seat diagram and finds herself flying the plane." caption_url="[Randall Munroe / xkcd, CC BY-NC 2.5](https://xkcd.com/726/){:target='_blank'}" %}

@@ -6,7 +6,7 @@ header:
 toc: true
 ---
 
-Compute simple linear models to predict dependent data and assess the performance with independent test samples.
+Compute simple linear models to predict dependent data and assess performance using observations held out from model fitting.
 
 <!--more-->
 
@@ -29,6 +29,8 @@ Such an error estimation strategy is generally called (leave-one-out) _cross val
 
 Have a look at this [video](https://www.youtube.com/watch?v=fSytzGwwBVw){:target="_blank"} to get started with the basic concepts of cross-validation.
 {: .notice--info}
+
+The [worked example]({{ site.baseurl }}/unit06/unit06-02_cross_validation.html) distinguishes repeated random holdout from four-fold partitioning and computes one RMSE per complete run. Random splits do not by themselves remove spatial dependence.
 
 For a deeper look into cross-validation strategies related to spatially and temporally dependent data,
 have a look at [Meyer et al. 2018.](https://www.sciencedirect.com/science/article/pii/S1364815217310976?via%3Dihub){:target="_blank"}

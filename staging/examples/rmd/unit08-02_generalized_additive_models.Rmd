@@ -1,210 +1,246 @@
 ---
 title: "Example: Generalized Additive Models"
 author: "Thomas Nauss"
-date: "19 Oktober 2017"
-output: 
-  html_document: 
-    keep_md: yes
+output:
+  html_document:
+    keep_md: true
+    section_divs: false
 ---
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e08-02/')
-library(envimaR)
-root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/", 
-                              alt_env_id = "COMPUTERNAME",
-                              alt_env_value = "PCRZP", 
-                              alt_env_root_folder = "F:\\BEN\\edu")
-source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_environment.R"))
-
+knitr::opts_chunk$set(
+  echo = TRUE, warning = TRUE, fig.width = 7, fig.height = 5,
+  fig.path = getOption("mpg.unit08.fig.path", "figures/unit08/")
+)
 ```
-So far, the models have only considered linear relationships. The corresponding model type to simple linear models would be an additive model and for poisson or logistic linear regression, it would be the generalized additive model (GAM). Since (all?) implementations of GAM also allow for additive models (i.e. using gaussian instead of e.g. poisson distribution functions), we will not distinguish between AM and GAM in the following.
 
-To illustrate nonlinear fits, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) but modify variable x3 and use y1 and y2.
+A generalized additive model (GAM) represents a response using a sum of predictor effects, which can include smooth functions. Here we use a Gaussian response with an identity link: `y = intercept + s(x) + error`. A GAM can also use other response distributions and links, but this example concerns a continuous response.
 
-Just for completeness, the following code shows the modification of the anscombe data set although it is not relevant to know anything about it for the examples below:
-```{r, warning=FALSE, fig.alt = "Second Anscombe dataset: the response rises with the predictor before leveling off and declining at the upper end."}
-library(mgcv)
+A straight line is still possible: supplying `y ~ x` to `mgcv::gam()` does not add a smooth automatically. We will compare that linear fit with penalized and unpenalized smooths, then distinguish curve fitting, tuning and independent evaluation.
 
-y <- anscombe$y2
-x1 <- anscombe$x1
+The small plotting dataset combines the first and second [Anscombe datasets](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html), with a perturbed predictor for the second set. It contains 22 observations, not just the second dataset. We explicitly reproduce its historical sampling rule and restore the previous setting afterward. It is an illustration of fitting, not an independent sample for a reliable performance claim.
 
+```{r, fig.alt = "Combined first and second Anscombe responses against their predictors, with the second predictor perturbed; observations show curvature and scatter."}
+suppressPackageStartupMessages(library(mgcv))
+previous_rng_kind <- RNGkind()
+# Recreate the historical toy data, then restore the previous sampling rule.
+suppressWarnings(RNGkind("Mersenne-Twister", "Inversion", "Rounding"))
 set.seed(2)
 x3 <- anscombe$x3 + sample(seq(-1, 1, 0.1), nrow(anscombe))
+do.call(RNGkind, as.list(previous_rng_kind))
 
 y <- c(anscombe$y1, anscombe$y2)
-x <- c(x1, x3)
+x <- c(anscombe$x1, x3)
 plot(x, y)
-df <- data.frame(y = y,
-                 x = x)
+df <- data.frame(y = y, x = x)
+```
+
+Record the software versions when reproducing model summaries:
+
+```{r software-versions}
+c(R = as.character(getRversion()),
+  mgcv = as.character(packageVersion("mgcv")))
 ```
 
 ### From linear regression models to generalized additive models
-To start with, the following plots shows the data set used within this example and the result of a simple linear regression model.
-```{r, warning=FALSE, fig.alt = "A straight fitted regression line misses the curvature in the second Anscombe dataset."}
-plot(df$x, df$y)
 
+First fit a straight line to the combined observations:
+
+```{r, fig.alt = "Straight regression line fitted to the combined Anscombe observations; the line does not capture their curved component."}
+plot(df$x, df$y)
 lmod <- lm(y ~ x, data = df)
 abline(lmod, col = "red")
-
 summary(lmod)
 ```
-Provided that all the assumptions relevant for linear models are met, x is significant and the model explains about 65.67 percent of the variation in the data set.
 
-One might think that replacing `lm` with `mgcv::gam` (i.e. the gam function from the mgcv package) would be enough to turn our model in an additive model. However, this is not true. In fact, `gam` with (its default) gaussian family acts exactly as the `lm` function if the same formula is supplied. We will show this by plotting the gam-based regression line (dotted, red) on top of the one from the linear model above (gray).
-```{r, warning=FALSE, fig.alt = "Linear-model and unsmoothed GAM fitted lines overlap because both use the predictor without a smooth term."}
-gammod <- gam(y ~ x, data = df, family = gaussian())
+The R squared in this summary describes **training fit**. It does not measure prediction on observations held out from fitting.
 
-px <- seq(min(df$x), max(df$x), 0.1)
-gampred <- predict(gammod, list(x = px))
+With the same Gaussian identity-link formula and no smooth term, `gam()` fits the same straight line. Predict on an ordered grid of predictor values to draw it:
+
+```{r, fig.alt = "Linear-model and unsmoothed Gaussian GAM lines overlap on the combined data because both fit the same straight-line formula."}
+linear_gam <- gam(y ~ x, data = df, family = gaussian())
+px <- seq(min(df$x), max(df$x), length.out = 200)
+gampred <- predict(linear_gam, newdata = data.frame(x = px))
 
 plot(df$x, df$y)
 abline(lmod, col = "grey")
-lines(px, gampred, col = "red", lty=2)
+lines(px, gampred, col = "red", lty = 2)
 ```
 
-There is no difference, although we need some more code since we have to predict the model values before we can overlay them in the plot. Therefore, the vector `px` is used and initialized with a sequence between the minimum and maximum x value and a step of 0.1. This is also sufficient to visualize more "non-linear" model predictions later.
-
-Let's have a look at the summary:
-```{r, warning=FALSE}
-summary(gammod)
+```{r}
+summary(linear_gam)
 ```
-No surprise. All test statistics are equal (it is the same model!). The only difference is due to some wording since the R squared value in the linear model (0.6567) can no be found in the "deviance explained".
 
-Obviously, there must be more than just switching a function call to come from linear models to additive models. And there is: while for simple linear models, the equation would be something like y = a+bx, a smoothing term replace the slope b in additive models: y = a+s(x). By adding this term to the `gam` function and using a penalized regression spline (fx = FALSE which is the default), we finally get a first non-linear model:
-```{r, warning=FALSE, fig.alt = "A smoothed GAM follows the rise and leveling of the second Anscombe dataset more closely than a straight line."}
-gammod <- gam(y ~ s(x, fx = FALSE), data = df)
+For this Gaussian model without an offset, *deviance explained* matches the ordinary training R squared from `lm()`. The GAM summary's `R-sq.(adj)` is **adjusted training R squared**; `summary(model)$r.sq` retrieves that adjusted quantity. It is not a held-out R squared. The [GAM summary documentation](https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/summary.gam.html) defines both measures.
 
-px <- seq(min(df$x), max(df$x), 0.1)
-gampred <- predict(gammod, list(x = px))
+Now replace the straight-line effect with `s(x)`. The default thin-plate regression spline basis (`bs = "tp"`) provides functions that can be combined into a curve. With `fx = FALSE`, a roughness penalty controls the fitted curve's flexibility. We explicitly retain GCV smoothing-parameter selection here (`method = "GCV.Cp"`):
+
+```{r, fig.alt = "Penalized GAM curve follows the broad curvature in the combined Anscombe observations without following every local fluctuation."}
+smooth_gam <- gam(y ~ s(x, bs = "tp", k = 10, fx = FALSE),
+                  data = df, method = "GCV.Cp")
+gampred <- predict(smooth_gam, newdata = data.frame(x = px))
 
 plot(df$x, df$y)
 lines(px, gampred, col = "red")
-
-summary(gammod)
-```
-A look on the model performance reveals that the explained deviance has increased. Assuming that all model assumptions, which are actually the same as for linear models (except the linear relationship) are met, the explained deviance has increased to almost 78 percent. In order to check the model assumptions, you can use e.g. the `gam.check` function.
-
-```{r, warning=FALSE, fig.alt = "Four GAM diagnostics: residual QQ plot, residuals versus linear predictor, residual histogram, and observed versus fitted response."}
-gam.check(gammod)
+summary(smooth_gam)
 ```
 
-Speaking of side notes: this is how you can visualize the smoother quickly (you have to add the intercept to get the final prediction values):
-```{r, warning=FALSE, fig.alt = "Estimated GAM smooth with dashed uncertainty limits and tick marks showing the predictor observations."}
-plot(gammod)
+A higher fitted deviance explained indicates closer agreement with these training observations. It does not establish better prediction. The Gaussian mean/error assumptions still need assessment, including residual patterns, variance, influential observations and independence. Smoothness does not resolve dependence in the input data.
+
+`gam.check()` provides residual plots, convergence information and a check for a basis dimension that may be too restrictive. Set a seed for its simulation-based checks. Their p-values are diagnostic clues, not proof that the model is valid:
+
+```{r, fig.alt = "Four diagnostics for the penalized Gaussian GAM: residual QQ plot, residuals versus linear predictor, residual histogram, and observed versus fitted response."}
+RNGkind("Mersenne-Twister", "Inversion", "Rejection")
+set.seed(806)
+gam.check(smooth_gam, k.rep = 200)
 ```
 
+The smooth can be plotted separately. It is centered, so the vertical axis is the smooth contribution rather than the full response prediction. The dashed limits describe approximate uncertainty about the estimated smooth, not a prediction interval for a new observation. Use `predict()` for the complete fitted response:
+
+```{r, fig.alt = "Centered estimated GAM smooth with dashed approximate uncertainty limits and predictor observations marked along the horizontal axis."}
+plot(smooth_gam)
+```
 
 ### Optimal smoother selection and reducing the risk of overfitting
-One might wonder, why this and no other smoother has been found in the end. The reason relies in the way, the default penalized regression works (which is beyond the scope of this example but to sum it up: the regression penalizes each added smoothing term, i.e. each reduction in the resulting degrees of freedom of the model). To illustrate what would happen if no penalized but just a simple spline regression would be used, one can set the fx option to TRUE:
-```{r, warning=FALSE, fig.alt = "A flexible fixed-basis GAM fit follows local peaks and dips between observations."}
-gammod <- gam(y ~ s(x, bs = "tp", fx = TRUE), data = df)
 
-px <- seq(min(df$x), max(df$x), 0.1)
-gampred <- predict(gammod, list(x = px))
+Two controls need to be distinguished:
+
+* **Basis dimension `k`:** limits the size of the function space available for the curve. For this one-variable centered smooth, its effective degrees of freedom (EDF) cannot usually exceed `k - 1`.
+* **Smoothing penalty:** with `fx = FALSE`, penalizes roughness within that space. The smoothing parameter selected during fitting determines how much of the available flexibility is used. Increasing `k` does not force EDF to reach its upper limit.
+
+In `mgcv::s()`, `k` is **not a literal count of knots**. Choose it large enough to represent the pattern and check the fit; [basis-dimension guidance](https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/choose.k.html) explains the distinction. GCV and REML are smoothing-selection methods; the [GAM selection documentation](https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/gam.selection.html) also discusses the limitations of automatic selection with few observations.
+
+With `fx = TRUE`, the smooth is **unpenalized**: its complexity is controlled by the chosen basis dimension. The following fit uses the same `k = 10` as before, with about nine EDF for the smooth and one intercept:
+
+```{r, fig.alt = "Unpenalized GAM with basis dimension ten bends through local features of the combined sample; its fitted curve is more variable than the penalized fit."}
+fixed_gam <- gam(y ~ s(x, bs = "tp", k = 10, fx = TRUE), data = df)
+gampred <- predict(fixed_gam, newdata = data.frame(x = px))
 
 plot(df$x, df$y)
 lines(px, gampred, col = "red")
-
-summary(gammod)
+summary(fixed_gam)
 ```
-Now the function is highly non-linear and 9 degrees of freedom are used for the smooth terms. The explained deviance has increased but overfitting is very likely (the R squared has declined, too, but we should not give to much emphasis on that).
 
+Closer agreement with training data can accompany worse held-out prediction. Adjusted training R squared also accounts for fitted model complexity, so it can decrease even when deviance explained increases.
 
-If you do not want to use the standard (penalty) model selection, a feasible approach for the additive models might be to select the number of knots and iterate over them in e.g. a leave-many-out cross-validation approach. For illustration purposes, the following will just show the iteration and visualize the different model results in one plot:
-```{r, warning=FALSE, fig.alt = "GAM fits with several basis sizes range from smooth curves to increasingly wavy fits through the same observations."}
-knots <- seq(3, 19)
+For an explicit basis-size tuning exercise, vary `k` with `fx = TRUE`. The next plot **only compares fitted curves**; it does not select a model by validation. This toy dataset has 22 rows and 19 distinct predictor values, so the illustrative range stops at `k = 19`. At that upper end, only three residual degrees of freedom remain. Feasibility depends on the training subset, not just the full dataset.
 
-palette <- colorRampPalette(colors=c("blue", "green", "red"))
-cols <- palette(length(knots))
-
-plot(df$x, df$y)
-
-for(i in seq(length(knots))){
-  gammod <- gam(y ~ s(x, k = knots[i], fx = TRUE), data = df)
-  px <- seq(min(df$x), max(df$x), 0.1)
-  gampred <- predict(gammod, list(x = px))
-  lines(px, gampred, col = cols[i], lty=2)
+```{r, fig.alt = "Unpenalized GAM curves for basis dimensions three through nineteen show increasing capacity for local bends; the legend identifies basis dimension k."}
+basis_dimensions <- seq(3, 19)
+curve_palette <- colorRampPalette(c("blue", "green", "red"))
+cols <- curve_palette(length(basis_dimensions))
+curve_predictions <- lapply(basis_dimensions, function(k) {
+  fit <- gam(y ~ s(x, k = k, fx = TRUE), data = df)
+  predict(fit, newdata = data.frame(x = px))
+})
+plot(df$x, df$y, ylim = range(c(df$y, unlist(curve_predictions))))
+for (i in seq_along(basis_dimensions)) {
+  lines(px, curve_predictions[[i]], col = cols[i], lty = 2)
 }
-
-legend(13, 7.5, paste("knots", knots, sep = " "), col = cols, lty=2, cex=0.75)
+legend("topleft", legend = paste("k =", basis_dimensions),
+       col = cols, lty = 2, ncol = 2, cex = 0.65, bty = "n")
 ```
-
-
 
 ### LOESS
-While the above examples are more straightforward if one comes from the implementation side of a linear model (i.e. `lm`), the locally weighted scatterplot smoothing (LOESS) is more straightforward from a conceptual point of view. It uses local linear regressions defined on moving subsets of the data set. For example, if the moving window is set to 21 pixels, than only the 10 left and right neighbors of the actually considered value (target) are considered and a linear regression is computed based on this subset. The term weighted indicates that not all of the neighboring pixels are treated equally but the ones closer to the target are weighted higher. The following shows one example using 75 percent of all the data pairs in order to compute the local regression for each target value:
-```{r, warning=FALSE, fig.alt = "A LOESS fit follows the broad curved pattern of the second Anscombe dataset."}
-loessmod <- loess(y ~ x, data = df, span = 0.75)
 
-px <- seq(min(df$x), max(df$x), 0.1)
-loesspred <- predict(loessmod, data.frame(x = px), type = "response")
+Locally weighted scatterplot smoothing (LOESS) fits a polynomial near each target predictor value. For one predictor, `span = 0.75` uses approximately the nearest 75% of observations, with closer observations given higher weights. This is a fraction of observations ordered by predictor distance, not a fixed number of observations on each side or a time window. R's default polynomial degree is **two** (locally quadratic); use `degree = 1` for local straight-line fits. See the [LOESS documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/loess.html).
 
+```{r, fig.alt = "Locally quadratic LOESS with span 0.75 follows the broad curved component of the combined Anscombe sample."}
+loessmod <- loess(y ~ x, data = df, span = 0.75, degree = 2)
+loesspred <- predict(loessmod, newdata = data.frame(x = px))
 plot(df$x, df$y)
 lines(px, loesspred, col = "red")
 ```
 
-Again, one could iterate over the window size in a e.g. cross-validation approach to identify the best fit. As for the gam model, the following just illustrates the different models:
-```{r, warning=FALSE, fig.alt = "LOESS fits with different spans show how a smaller smoothing window permits more local variation."}
-window <- seq(0.3, 1, 0.01)
+Smaller spans use fewer nearby observations and permit more local variation. A fit can become unstable when too few distinct predictor values support a local polynomial. The next comparison uses four spans; it illustrates flexibility and does not establish which span predicts best:
 
-palette <- colorRampPalette(colors=c("blue", "green", "red"))
-cols <- palette(length(window))
-
+```{r, fig.alt = "LOESS fits at spans 0.4, 0.6, 0.75 and 1 show increasing smoothing as more neighboring observations enter each local quadratic fit."}
+spans <- c(0.4, 0.6, 0.75, 1)
+cols <- curve_palette(length(spans))
 plot(df$x, df$y)
-
-for(i in seq(length(window))){
-  loessmod <- loess(y ~ x, data = df, span = window[i])
-  px <- seq(min(df$x), max(df$x), 0.1)
-  loesspred <- predict(loessmod, data.frame(x = px))
-  lines(px, loesspred, col = cols[i])
+for (i in seq_along(spans)) {
+  fit <- loess(y ~ x, data = df, span = spans[i], degree = 2)
+  lines(px, predict(fit, newdata = data.frame(x = px)), col = cols[i])
 }
+legend("topleft", legend = paste("span =", spans),
+       col = cols, lty = 1, cex = 0.8, bty = "n")
 ```
 
+### From curve fitting to tuning
 
-```{r, warning=FALSE, echo=FALSE, eval=FALSE}
-knots <- seq(3, 14)
+Use held-out prediction errors to compare tuning settings. Keep the observations and validation partitions fixed across candidates, as in Units 06–07. To show the distinction from final evaluation, create a larger independent synthetic sample. Reserve 20 observations as a final test set; split the remaining 80 into 60 for fitting and 20 for tuning:
 
-cv <- lapply(knots, function(k){
-  kcv <- lapply(seq(100), function(c){
+```{r tuning-data}
+RNGkind("Mersenne-Twister", "Inversion", "Rejection")
+set.seed(808)
+tuning_data <- data.frame(id = seq_len(100), x = runif(100, -2, 2))
+tuning_data$y <- sin(2 * tuning_data$x) + rnorm(100, sd = 0.25)
 
-    set.seed(c)
-    smpl <- sample(nrow(df), nrow(df)*0.8)
-    train <- df[smpl, ]
-    test <- df[-smpl, ]
-    gmod <- gam(y ~ s(x, k = k, fx = TRUE), data = train)
-    pred <- predict(gmod, test)
-    obsv <- test$y
-    data.frame(knots = k,
-               rmse = sqrt(mean((pred - obsv)**2)),
-               rsq = summary(gmod)$r.sq)
-  
-  })
-  
-  kcv <- do.call("rbind", kcv)
-  data.frame(knots = unique(kcv$knots),
-             rmse = mean(kcv$rmse),
-             rmse_sd_plus = mean(kcv$rmse) + sd(kcv$rmse),
-             rmse_sd_minus = mean(kcv$rmse) - sd(kcv$rmse),
-             rsq = mean(kcv$rsq))
-  
+training_id <- sample(seq_len(nrow(tuning_data)), 60)
+remaining_id <- setdiff(seq_len(nrow(tuning_data)), training_id)
+validation_id <- sample(remaining_id, 20)
+final_test_id <- setdiff(remaining_id, validation_id)
+train_data <- tuning_data[training_id, ]
+validation_data <- tuning_data[validation_id, ]
+final_test <- tuning_data[final_test_id, ]
+```
+
+Compare three basis dimensions using the same training and validation rows. `fx = TRUE` isolates the effect of basis size. The candidate table records adjusted R squared **from the training fit** and RMSE **from held-out validation predictions**:
+
+```{r tuning-candidates}
+candidate_k <- c(3, 5, 9)
+candidate_models <- lapply(candidate_k, function(k) {
+  gam(y ~ s(x, bs = "tp", k = k, fx = TRUE), data = train_data)
 })
-
-cv <- do.call("rbind", cv)
-
-plot(cv$knots, cv$rmse/max(cv$rmse), type = "l", col = "red",
-     ylim = c(min(cv$rmse_sd_minus/max(cv$rmse)), max(cv$rmse_sd_plus/max(cv$rmse))))
-lines(cv$knots, cv$rmse_sd_plus/max(cv$rmse), col = "red", lty = 2)
-lines(cv$knots, cv$rmse_sd_minus/max(cv$rmse), col = "red", lty = 2)
-lines(cv$knots, cv$rsq, col = "blue")
-
-legend(10, 0.6, c("rmse", "r squared"), col = c("red", "blue"), lty = 1)
-
-
-gammod <- gam(y ~ s(x, k = 3, bs = "tp", fx = TRUE), data = df)
-
-px <- seq(min(df$x), max(df$x), 0.1)
-gampred <- predict(gammod, list(x = px))
-
-plot(df$x, df$y)
-lines(px, gampred, col = "red")
+candidate_scores <- data.frame(
+  k = candidate_k,
+  training_adjusted_R2 = vapply(candidate_models, function(fit) {
+    summary(fit)$r.sq
+  }, numeric(1)),
+  validation_RMSE = vapply(candidate_models, function(fit) {
+    pred <- predict(fit, newdata = validation_data)
+    sqrt(mean((pred - validation_data$y)^2))
+  }, numeric(1))
+)
+round(candidate_scores, 3)
 ```
+
+Select the smallest validation RMSE, keeping full precision for the comparison. The minimum is a **tuning score**, since it helped choose `k`. Freeze that choice, refit on the 80 development observations, and use the reserved test set once:
+
+```{r final-evaluation, fig.alt = "Observed versus predicted responses for the untouched synthetic final test set after selecting GAM basis dimension on separate validation data."}
+selected_k <- candidate_scores$k[which.min(candidate_scores$validation_RMSE)]
+development <- rbind(train_data, validation_data)
+final_gam <- gam(y ~ s(x, bs = "tp", k = selected_k, fx = TRUE),
+                 data = development)
+final_prediction <- predict(final_gam, newdata = final_test)
+final_test_RMSE <- sqrt(mean((final_prediction - final_test$y)^2))
+c(selected_k = selected_k, final_test_RMSE = round(final_test_RMSE, 3))
+
+plot(final_test$y, final_prediction, xlab = "Observed final-test response",
+     ylab = "Final-test prediction", asp = 1)
+abline(0, 1, col = "red")
+```
+
+Do not use the final test score to choose another `k`, try another split or change the data preparation. That would make the final test part of tuning. This example uses one tuning holdout to make the roles clear; repeated tuning splits can be drawn **within the development data** before a frozen model is tested independently. Units 06–07 provide the repetition and selection patterns.
+
+### Metrics for repeated tuning runs
+
+For each candidate `k` and each tuning run, retain one held-out RMSE and the fitted model's adjusted training R squared. The three curves requested in Assignment 08 have these definitions:
+
+| Curve | Calculation for each `k` | Interpretation |
+|---|---|---|
+| Mean RMSE | Mean of the 100 run-level held-out RMSE values. | Average error across the chosen random splits; smaller is better. |
+| Mean RMSE ± SD | Mean RMSE plus/minus the SD of those same 100 run-level values. | Descriptive sensitivity to the splits, not a standard error or confidence interval. |
+| Mean training adjusted R squared | Mean of `summary(fit)$r.sq` across the 100 training fits. | A fitted summary, not a held-out prediction score; it can be negative. |
+
+The [run-level example in Unit 06]({{ site.baseurl }}/unit06/unit06-02_cross_validation.html#leave-many-out-cross-validation) shows why one score per run is needed. Do not substitute pooled RMSE across all test rows for the mean run-level RMSE, or use the SD of individual squared errors. Repeated splits reuse observations, so their scores are dependent.
+
+For a shared-scale plot, calculate one divisor: the maximum **mean** RMSE across the candidate settings. Divide the mean RMSE and both SD bounds by that same divisor; keep adjusted R squared on its own scale. Label the normalization and retain the original error units when reporting numerical values. The scaled error is unitless, but its height is not equivalent in meaning to R squared. Set axis limits to show every curve, including negative adjusted R squared or a descriptive lower SD bound below zero.
+
+### Annual observations in Assignment 08
+
+The timber dataset has only 23 annual records, from 2003 to 2025. The assignment retains 100 random 80/20 splits: **18 training years and five held-out years** per run after rounding down the training size. Its target is retrospective prediction of held-out records within the same historical series, not forecasting a future year. Shared trends, serial dependence and collection changes can make random-split scores optimistic. A held-out predictor value can also lie outside the training predictor range; inspect that possibility rather than treating every random split as interpolation.
+
+For the one-smooth unpenalized Gaussian model, `k` cannot exceed the number of distinct training predictor values, and the total model rank must leave residual degrees of freedom. The current complete timber input has 23 distinct oak-harvest values, so every 18-year training set can support `k = 3:13`; the largest candidate uses 13 model coefficients including the intercept and leaves only five residual degrees of freedom. Being estimable does not make that setting reliable. Keep all candidates on the same 100 splits; report and diagnose failures rather than silently comparing different sets of successful runs.
+
+This is a tuning exercise. Its best repeated-split score has already been used to choose `k`; do not present it as an independent final performance assessment. A separate final-test submission is not required. Chronological or blocked validation would address a different prediction design and needs a separate choice of training windows and feasible basis sizes.

@@ -7,304 +7,262 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-Test statistics can describe the quality or accuracy of regression models if the assumptions of the models are met. 
-However, the assessment would still be based on a model that is perfectly fitted to a given sample. 
-To assess the prediction performance of a model in a more independent manner, the accuracy must be computed based on an independent (sub)-sample.
+A model's fitted statistics describe its fit to the observations used for training. Prediction assessment asks a different question: how well does the fitted model predict observations that were left out of training?
 
-The straightforward way for a test on an independent sample is of course the one which actually fits the model on sample _A_ and tests it on a completely different sample _B_.
-However, in real-world applications, the available sample is too small in many cases.
-Therefore, cross-validation - although not entirely independent -
-is a good alternative to get an idea of the model performance for data values, which have not been part of the fitted model. 
+Cross-validation repeatedly separates training observations from validation observations. The held-out observations are used to calculate prediction errors. Reusing observations across splits makes the resulting scores dependent; it does not create new independent samples.
 
-In principle, there are two strategies for cross-validation:
+We will compare three approaches:
 
-* **Leave-one-out cross-validation**: in this case, one value pair or data point of the sample data set is left out during model fitting
-and the model accuracy is estimated based on the quality of the prediction for the left-out value. 
-In order to obtain a sufficiently large sample size, this procedure is iterated over all value pairs of the data set (i.e. each data point is left out once).
+* **Leave-one-out cross-validation:** hold out one observation, fit on all others, and repeat until each observation has one held-out prediction.
+* **Repeated random holdout (leave-many-out):** repeatedly draw a training subset, such as 80% of the observations, and validate on the remaining observations. Some observations can be held out several times and others less often.
+* **Four-fold cross-validation:** divide the observations into four disjoint groups. Hold out each group once and fit on the other three. Each observation has one held-out prediction per complete four-fold run.
 
-* **Leave-many-out cross-validation**: in this case, more than one value pair or data point of the sample data set is left out during model fitting
-and the model accuracy is estimated based on the quality of the prediction for the left-out samples. 
-This strategy is suitable for larger data sets, in which e.g. 80% of the data can be used as _training_ data for fitting 
-and 20% can be used as independent data for _validation_ (aka _testing_). 
-The procedure can of course be repeated by creating models for different random training data sets and testing them using the respective left-out samples. 
-Please note that independence is compromised to a small degree in the latter case.
-On the other hand, one can get a better impression of the model performance, 
-especially if the different validation data sets are not averaged but used independently for getting an idea of the _variation_ of the performance.
+These random splits illustrate the mechanics. They suit observations that can reasonably be treated as exchangeable for the prediction question. Repeated observations from the same region should stay together when assessing prediction for unseen regions; nested administrative aggregates should not be mixed with their component districts. Predicting future years requires chronological validation. A random split alone does not remove spatial or temporal dependence.
 
-To illustrate the concept of cross-validation, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html){:target='_blank'}
-and use `x1` and `y1` as independent and dependent variables, respectively.
+To illustrate the calculations, we use `x1` and `y1` from the [Anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html){:target='_blank'}. Its eleven observations make the loops easy to inspect, but such a small dataset gives unstable performance estimates.
 
-The statistics of a linear regression model would be:
+First, fit the model to all observations. These are **training statistics**, not held-out prediction scores:
 
-```r
+
+``` r
 lmod <- lm(y1 ~ x1, data = anscombe)
-
 plot(anscombe$x1, anscombe$y1)
 abline(lmod, col = "red")
 ```
 
 ![First Anscombe dataset with its fitted linear regression, used as the starting model for cross-validation.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-1-1.png)<!-- -->
 
-```r
+``` r
 anova(lmod)
 ```
 
 ```
 ## Analysis of Variance Table
-## 
+##
 ## Response: y1
-##           Df Sum Sq Mean Sq F value  Pr(>F)   
+##           Df Sum Sq Mean Sq F value  Pr(>F)
 ## x1         1 27.510 27.5100   17.99 0.00217 **
-## Residuals  9 13.763  1.5292                   
+## Residuals  9 13.763  1.5292
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-```r
+``` r
 summary(lmod)
 ```
 
 ```
-## 
+##
 ## Call:
 ## lm(formula = y1 ~ x1, data = anscombe)
-## 
+##
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.92127 -0.45577 -0.04136  0.70941  1.83882 
-## 
+##      Min       1Q   Median       3Q      Max
+## -1.92127 -0.45577 -0.04136  0.70941  1.83882
+##
 ## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)   
-## (Intercept)   3.0001     1.1247   2.667  0.02573 * 
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)   3.0001     1.1247   2.667  0.02573 *
 ## x1            0.5001     0.1179   4.241  0.00217 **
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
+##
 ## Residual standard error: 1.237 on 9 degrees of freedom
-## Multiple R-squared:  0.6665,	Adjusted R-squared:  0.6295 
+## Multiple R-squared:  0.6665,	Adjusted R-squared:  0.6295
 ## F-statistic: 17.99 on 1 and 9 DF,  p-value: 0.00217
 ```
 
 ## Leave-one-out cross-validation
-For the leave-one-out cross-validation, the training sample contains all but one of the data pairs and the left-out data pair is used as a validation sample.
-The procedure is typically iterated over the entire data set, i.e. each value is left out once.
 
-```r
-# Leave one out cross-validation
-cv <- lapply(seq(nrow(anscombe)), function(i){
-  train <- anscombe[-i,]
-  test <- anscombe[i,]
-  lmod <- lm(y1 ~ x1, data = train)
-  pred <- predict(lmod, newdata = test)
-  obsv <- test$y1
-  data.frame(pred = pred,
-             obsv = obsv,
-             model_r_squared = summary(lmod)$r.squared)
+For each observation, fit the same model without that observation and predict its response. Retain the observation ID so the prediction can be traced back to its input row.
+
+
+``` r
+cv <- lapply(seq_len(nrow(anscombe)), function(i) {
+  train <- anscombe[-i, ]
+  test <- anscombe[i, ]
+  fit <- lm(y1 ~ x1, data = train)
+  data.frame(row_id = i, pred = predict(fit, newdata = test),
+             obsv = test$y1)
 })
-cv <- do.call("rbind", cv)
-
-ss_obsrv <- sum((cv$obsv - mean(cv$obsv))**2)
-ss_model <- sum((cv$pred - mean(cv$obsv))**2)
-ss_resid <- sum((cv$obsv - cv$pred)**2)
-
-mss_obsrv <- ss_obsrv / (length(cv$obsv) - 1)
-mss_model <- ss_model / 1
-mss_resid <- ss_resid / (length(cv$obsv) - 2)
+cv <- do.call(rbind, cv)
 
 plot(cv$obsv, (cv$obsv - cv$pred))
 ```
 
 ![Leave-one-out residuals, observed minus predicted response, plotted against observed values; errors fall on both sides of zero.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-2-1.png)<!-- -->
 
-Based on this example, one could compute something like the F and r-squared values of an anova. 
-Notably, compared to the "internal" F-test of the anova from the original model and the r-squared value, the cross-validation indicates a less accurate prediction.
+Mean error (ME) uses **predicted minus observed** values: positive ME indicates overprediction on average. Mean absolute error (MAE) measures the typical absolute error. Root mean squared error (RMSE) gives more weight to large errors. All three use the response's units; smaller MAE and RMSE indicate smaller prediction errors.
 
-```r
-data.frame(NAME = c("cross validation F value",
-                    "linear model F value", 
-                    "cross validation r squared",
-                    "linear model r squared"),
-           VALUE = c(round(mss_model / mss_resid, 2),
-                     round(anova(lmod)$'F value'[1], 2),
-                     round(1 - ss_resid / ss_obsrv, 2),
-                     round(summary(lmod)$r.squared, 2)))
+
+``` r
+prediction_metrics <- function(observed, predicted) {
+  error <- predicted - observed
+  c(ME = mean(error), MAE = mean(abs(error)),
+    RMSE = sqrt(mean(error^2)))
+}
+round(prediction_metrics(cv$obsv, cv$pred), 3)
 ```
 
 ```
-##                         NAME VALUE
-## 1   cross validation F value 12.43
-## 2       linear model F value 17.99
-## 3 cross validation r squared  0.50
-## 4     linear model r squared  0.67
+##    ME   MAE  RMSE
+## 0.037 1.025 1.368
 ```
 
-The range of r-squared values from the individual cross-validation models is computed by
+Here, one leave-one-out run produces eleven held-out predictions and **one RMSE**. The individual errors are not eleven RMSE runs. We do not derive an ANOVA F-test from these predictions: each prediction comes from a different fitted model, so the usual single-model ANOVA decomposition does not apply.
 
-```r
-max(cv$model_r_squared) - min(cv$model_r_squared)
-summary(cv$model_r_squared)
+Compare the held-out predictions with the observations. The diagonal indicates perfect prediction:
+
+
+``` r
+plot(cv$obsv, cv$pred, xlab = "Observed response",
+     ylab = "Held-out prediction", asp = 1)
+abline(0, 1, col = "red")
 ```
 
-and yields
-
-```
-## 0.219664
-```
-
-```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.5640  0.6482  0.6640  0.6668  0.6915  0.7836
-```
-
-Aside from this error metric, a variety of different error metrics is commonly used to describe the predictive performance of a model (for regression-based approaches):
-
-```r
-se <- function(x) sd(x, na.rm = TRUE)/sqrt(length(na.exclude(x)))
-
-me <- round(mean(cv$pred - cv$obs, na.rm = TRUE), 2)
-me_sd <- round(se(cv$pred - cv$obs), 2)
-mae <- round(mean(abs(cv$pred - cv$obs), na.rm = TRUE), 2)
-mae_sd <- round(se(abs(cv$pred - cv$obs)), 2)
-rmse <- round(sqrt(mean((cv$pred - cv$obs)^2, na.rm = TRUE)), 2)
-rmse_sd <- round(se((cv$pred - cv$obs)^2), 2)
-
-data.frame(NAME = c("Mean error (ME)", "Std. error of ME", 
-                    "Mean absolute error (MAE)", "Std. error of MAE", 
-                    "Root mean square error (RMSE)", "Std. error of RMSE"),
-           VALUE = c(me, me_sd,
-                     mae, mae_sd,
-                     rmse, rmse_sd))
-```
-
-```
-##                            NAME VALUE
-## 1               Mean error (ME)  0.04
-## 2              Std. error of ME  0.43
-## 3     Mean absolute error (MAE)  1.03
-## 4             Std. error of MAE  0.29
-## 5 Root mean square error (RMSE)  1.37
-## 6            Std. error of RMSE  0.68
-```
-
-
+![Observed versus leave-one-out predicted Anscombe responses, with a diagonal reference line for perfect prediction.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/loo-predictions-1.png)<!-- -->
 
 ## Leave-many-out cross-validation
-For the leave-many-out cross-validation, the following example computes 100 different models. For each model, a training sample of 80% of the data set is randomly chosen.
+
+In this example, repeat a random 80/20 split 100 times. Set the seed once before sampling and keep both the run ID and the original row ID. With eleven observations, rounding down gives eight training observations and three validation observations per run.
 
 
-```r
-range <- nrow(anscombe)
-nbr <- nrow(anscombe) * 0.8
+``` r
+RNGkind(sample.kind = "Rejection")
+set.seed(6)
+n_train <- floor(0.8 * nrow(anscombe))
 
-cv_sample <- lapply(seq(100), function(i){
-  set.seed(i)
-  smpl <- sample(range, nbr)
-  train <- anscombe[smpl,]
-  test <- anscombe[-smpl,]
-  lmod <- lm(y1 ~ x1, data = train)
-  pred <- predict(lmod, newdata = test)
-  obsv <- test$y1
-  resid <- obsv - pred
-  ss_obsrv <- sum((obsv - mean(obsv))**2)
-  ss_model <- sum((pred - mean(obsv))**2)
-  ss_resid <- sum((obsv - pred)**2)
-  mss_obsrv <- ss_obsrv / (length(obsv) - 1)
-  mss_model <- ss_model / 1
-  mss_resid <- ss_resid / (length(obsv) - 2)
-  data.frame(pred = pred,
-             obsv = obsv,
-             resid = resid,
-             ss_obsrv = ss_obsrv,
-             ss_model = ss_model,
-             ss_resid = ss_resid,
-             mss_obsrv = mss_obsrv,
-             mss_model = mss_model,
-             mss_resid = mss_resid,
-             r_squared = ss_model / ss_obsrv
-  )
+cv_sample <- lapply(seq_len(100), function(i) {
+  train_id <- sample(seq_len(nrow(anscombe)), n_train)
+  test_id <- setdiff(seq_len(nrow(anscombe)), train_id)
+  fit <- lm(y1 ~ x1, data = anscombe[train_id, ])
+  data.frame(run = i, row_id = test_id,
+             obsv = anscombe$y1[test_id],
+             pred = predict(fit, newdata = anscombe[test_id, ]))
 })
-cv_sample <- do.call("rbind", cv_sample)
-
-ss_obsrv <- sum((cv_sample$obsv - mean(cv_sample$obsv))**2)
-ss_model <- sum((cv_sample$pred - mean(cv_sample$obsv))**2)
-ss_resid <- sum((cv_sample$obsv - cv_sample$pred)**2)
-
-mss_obsrv <- ss_obsrv / (length(cv_sample$obsv) - 1)
-mss_model <- ss_model / 1
-mss_resid <- ss_resid / (length(cv_sample$obsv) - 2)
-```
-
-Other error metrics for describing the performance of the prediction:
-
-```r
-data.frame(NAME = c("cross validation F value",
-                    "linear model F value", 
-                    "cross validation r squared",
-                    "linear model r squared"),
-           VALUE = c(round(mss_model / mss_resid, 2),
-                     round(anova(lmod)$'F value'[1], 2),
-                     round(1 - ss_resid / ss_obsrv, 2),
-                     round(summary(lmod)$r.squared, 2)))
+cv_sample <- do.call(rbind, cv_sample)
+head(cv_sample)
 ```
 
 ```
-##                         NAME  VALUE
-## 1   cross validation F value 403.81
-## 2       linear model F value  17.99
-## 3 cross validation r squared   0.48
-## 4     linear model r squared   0.67
+##    run row_id  obsv      pred
+## 6    1      6  9.96 10.227311
+## 7    1      7  7.24  5.556050
+## 11   1     11  5.68  4.972143
+## 1    2      1  8.04  7.752304
+## 8    2      8  4.26  5.482220
+## 9    2      9 10.84  8.508998
 ```
 
-
-<!--
-Das ist seltsam hier und sollte gecheckt werden. Warum gibt es r-squareds > 1 in cv_sample$r_squared?
-
-The range of r-squared values from the individual cross-validation models is computed by
-
-```r
-max(cv_sample$r_squared) - min(cv_sample$r_squared)
-summary(cv_sample$r_squared)
-```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.5640  0.6482  0.6640  0.6668  0.6915  0.7836
-```
-```
--->
+The table has one row per held-out observation in each run: 300 rows in total. Group those rows by run **before** calculating the distribution of run-level RMSE:
 
 
-
-
-Aside from that, a variety of different errors is commonly used to describe the predictive performance of the model (for regression based approaches):
-
-```r
-se <- function(x) sd(x, na.rm = TRUE)/sqrt(length(na.exclude(x)))
-
-me <- round(mean(cv_sample$pred - cv_sample$obs, na.rm = TRUE), 2)
-me_sd <- round(se(cv_sample$pred - cv_sample$obs), 2)
-mae <- round(mean(abs(cv_sample$pred - cv_sample$obs), na.rm = TRUE), 2)
-mae_sd <- round(se(abs(cv_sample$pred - cv_sample$obs)), 2)
-rmse <- round(sqrt(mean((cv_sample$pred - cv_sample$obs)^2, na.rm = TRUE)), 2)
-rmse_sd <- round(se((cv_sample$pred - cv_sample$obs)^2), 2)
-
-data.frame(NAME = c("Mean error (ME)", "Std. error of ME", 
-                    "Mean absolute error (MAE)", "Std. error of MAE", 
-                    "Root mean square error (RMSE)", "Std. error of RMSE"),
-           VALUE = c(me, me_sd,
-                     mae, mae_sd,
-                     rmse, rmse_sd))
+``` r
+run_scores <- lapply(split(cv_sample, cv_sample$run), function(x) {
+  error <- x$pred - x$obsv
+  data.frame(run = x$run[1], n_test = nrow(x),
+             RMSE = sqrt(mean(error^2)))
+})
+run_scores <- do.call(rbind, run_scores)
+rownames(run_scores) <- NULL
+head(run_scores)
 ```
 
 ```
-##                            NAME VALUE
-## 1               Mean error (ME)  0.06
-## 2              Std. error of ME  0.08
-## 3     Mean absolute error (MAE)  1.12
-## 4             Std. error of MAE  0.05
-## 5 Root mean square error (RMSE)  1.42
-## 6            Std. error of RMSE  0.13
+##   run n_test      RMSE
+## 1   1      3 1.0658648
+## 2   2      3 1.5286334
+## 3   3      3 1.6152109
+## 4   4      3 1.6380227
+## 5   5      3 1.5848474
+## 6   6      3 0.6392997
 ```
+
+``` r
+round(c(mean_RMSE = mean(run_scores$RMSE),
+        SD_RMSE = sd(run_scores$RMSE)), 3)
+```
+
+```
+## mean_RMSE   SD_RMSE
+##     1.280     0.502
+```
+
+The standard deviation describes how RMSE varies with these random splits. Because runs share observations, it is not a standard error or confidence interval based on 100 independent samples. The standard deviation or standard error of the **individual squared errors** is a different quantity and cannot be labeled the spread of RMSE across runs.
+
+
+``` r
+hist(run_scores$RMSE, xlab = "RMSE per run", main = "100 random holdout runs")
+abline(v = mean(run_scores$RMSE), col = "red", lwd = 2)
+```
+
+![Histogram of the 100 run-level RMSE values from repeated random holdout; the vertical line marks their mean.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/rmse-distribution-1.png)<!-- -->
+
+We can also pool all held-out prediction rows and calculate overall prediction errors:
+
+
+``` r
+round(prediction_metrics(cv_sample$obsv, cv_sample$pred), 3)
+```
+
+```
+##    ME   MAE  RMSE
+## 0.009 1.074 1.374
+```
+
+**Pooled RMSE and mean run-level RMSE answer different questions.** Pooled RMSE takes the square root after averaging all squared errors; mean run-level RMSE takes a square root within each run before averaging. Even with equal validation-set sizes, these generally differ. Neither treats repeated predictions for the same observation as independent new observations. Label the chosen summary explicitly.
+
+## Four-fold cross-validation
+
+A four-fold run is a partition, not four unrelated random holdouts. Randomly assign every observation to one of four approximately equal groups. Each group is used for validation once:
+
+
+``` r
+set.seed(7)
+fold_id <- sample(rep(seq_len(4), length.out = nrow(anscombe)))
+table(fold_id)
+```
+
+```
+## fold_id
+## 1 2 3 4
+## 3 3 3 2
+```
+
+``` r
+four_fold_predictions <- lapply(seq_len(4), function(k) {
+  test_id <- which(fold_id == k)
+  fit <- lm(y1 ~ x1, data = anscombe[-test_id, ])
+  data.frame(fold = k, row_id = test_id,
+             obsv = anscombe$y1[test_id],
+             pred = predict(fit, newdata = anscombe[test_id, ]))
+})
+four_fold_predictions <- do.call(rbind, four_fold_predictions)
+```
+
+Pool the held-out predictions from the four folds and compute **one RMSE for the complete run**. When comparing candidate models, use the same observations and the same fold assignment for every candidate.
+
+
+``` r
+round(prediction_metrics(four_fold_predictions$obsv,
+                         four_fold_predictions$pred), 3)
+```
+
+```
+##     ME    MAE   RMSE
+## -0.029  1.153  1.472
+```
+
+Equivalently, add the four sums of squared prediction errors, divide by the total number of held-out observations, then take the square root. This weights folds by their sizes; it is not an unweighted mean of four fold RMSE values. If the complete partitioning procedure is repeated, retain one pooled RMSE per repetition before summarizing its distribution.
+
+## Transfer to the regional data
+
+In Assignment 06, carry forward Assignment 05's 2014 district-level cohort and complete `Settlement`–`Recreation` pairs. Split records from this prepared cohort, retaining identifiers for checks. This prevents repeated years and nested administrative levels from entering the same comparison. Nearby districts can still be related, so random validation describes held-out districts within this historical cohort; it does not establish performance in a new geographic area or a future year.
+
+The assignment asks for a distribution across runs. Use a repeated holdout design or repeated complete fold partitions, document your choice, and return one RMSE per run from your function. One leave-one-out run alone does not supply that distribution.
 
 ## Further watching
 
 1. [Machine Learning Fundamentals: cross-validation](https://youtu.be/fSytzGwwBVw?si=Es_FWEBZdwq4x0fB){:target="_blank"}
 
+For a written description of fold partitioning, see the [R documentation for cross-validation](https://stat.ethz.ch/R-manual/R-devel/library/boot/html/cv.glm.html). The worked code above uses base R so you can inspect each split directly.

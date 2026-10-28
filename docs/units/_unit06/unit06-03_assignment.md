@@ -24,12 +24,18 @@ After completing this worksheet you should have gained some experience in applyi
 
 Reuse `Output/lu_clean.rds`, the wide land-use table from the [Unit 04 land-use exercise]({{ site.baseurl }}/unit04/unit04-05_cleaning.html#handoff-to-later-units), as in Assignment 05. Load it with `readRDS("Output/lu_clean.rds")` from your course project. Keep its region/year identifiers when designing validation; the input contains several administrative levels and repeated regions across years.
 
+## Prepare comparable observations
+
+Carry forward the **same cohort as Assignment 05**: **2014**, explicitly recorded `Admin_unit` of **`District` or `Urban district`**, and complete `Settlement`–`Recreation` pairs. Omit other levels and unresolved types, retain region IDs, report exclusions, and check that each region occurs once. Split this prepared cohort rather than the full mixed-year, mixed-level input.
+
+Random splits assess prediction for held-out records within this historical district cohort. Nearby districts can still be related; this design does not establish transfer to an unseen geographic area or a future year.
+
 ## Prediction error of a linear model
 Please write an R Markdown document,
 which helps you to statistically evaluate the performance of a simple linear model that predicts the percentage recreation area from the respective settlement area. 
-Therefore, please choose an appropriate cross-validation procedure.
-The procedure should be implemented as a function. 
-Include a plot in the end that provides information on the distribution of the root mean squared error across the different cross-validation runs.
+Choose and explain a repeated validation procedure: repeated random holdout or repeated complete fold partitions, as introduced in the [cross-validation example]({{ site.baseurl }}/unit06/unit06-02_cross_validation.html#leave-many-out-cross-validation). Implement it as a function. Set the seed once before random splitting, retain run and region IDs, and record your seed and R version.
+
+Calculate **one RMSE per run** from that run's held-out predictions. For a fold-based design, pool the predictions from all folds within each complete run before calculating RMSE. Plot the resulting distribution across runs and report its mean and standard deviation. Label any additional pooled prediction metric separately. Overlapping runs are not independent replications; their SD describes split sensitivity rather than a standard error or confidence interval.
 
 Please write exactly one sentence as a summary of the reliability of the model.
 
