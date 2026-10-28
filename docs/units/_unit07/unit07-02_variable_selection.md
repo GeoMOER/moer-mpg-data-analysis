@@ -194,7 +194,21 @@ AIC and cross-validation scores can compare predictor sets only when the compari
 
 For the crop assignment, use the defined 2014 district cohort and keep only rows complete across `Winter_wheat` and the nine other crop yields. Report the exclusions. This makes comparisons consistent, but complete-case results apply to the retained records and may be biased if missingness is systematic. IDs, years and source-symbol records are not yield predictors; `Winter_wheat` must never appear among its own predictors.
 
-Adjusted R squared and AIC describe fitted candidate models. Lower AIC is preferred among models fitted to the same response data, but AIC is not a held-out prediction error. The [R AIC documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/AIC.html) explains this comparison requirement.
+## Which measure answers which question?
+
+Recall the [distinction between description, inference, and prediction]({{ site.baseurl }}/unit05/unit05-02_basic_idea_of_modelling.html#what-do-we-want-to-learn-from-a-model). The following measures answer different questions about a model:
+
+| Measure | Question it helps answer | Interpretation and appropriate use |
+|---|---|---|
+| **R squared (R²)** | How much of the observed variation does the fitted model account for? | For ordinary linear regression with an intercept, training R² describes the fraction of response variation accounted for in the fitting data. Higher means closer fit. It does not establish causation or predictive accuracy on new observations. |
+| **Root mean squared error (RMSE)** | How large are the model's errors, in the response's units? | Lower means smaller errors, with greater weight given to large errors. To assess prediction, calculate it from observations held out of fitting. Training RMSE only describes training fit. |
+| **Akaike information criterion (AIC)** | Which candidate model offers a useful balance between fit and complexity? | Lower is preferred among comparable models fitted by maximum likelihood to the same response observations. AIC penalizes additional estimated parameters. It is a relative selection criterion, rather than an absolute measure of model quality. |
+
+Ordinary training R² cannot decrease when predictors are added to the same linear regression on the same observations. **Adjusted R²** accounts for the number of predictors, but still does not replace independent predictive evaluation. Keep the observations and response scale consistent when comparing models. The [R linear-model summary documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html) defines both versions of R²; [Forecasting: Principles and Practice](https://otexts.com/fpp3/toolbox.html) explains RMSE.
+
+**Parsimony** means avoiding unnecessary complexity. AIC balances likelihood fit against the number of estimated parameters; it does not simply favor the model with the fewest predictors. Under its assumptions, it estimates relative expected predictive information loss. It is therefore connected to prediction, but does not directly measure held-out RMSE. See the [R AIC documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/AIC.html) for comparison requirements and the [American Statistical Association abstract on AIC and predictive ability](https://ww2.amstat.org/meetings/jsm/2020/onlineprogram/AbstractDetails.cfm?abstractid=312533) for this connection.
+
+When AIC or cross-validation RMSE is used to choose a model, the winning score belongs to selection. Keep [final evaluation independent](#keep-final-evaluation-independent) of that choice.
 
 ## Recursive feature selection
 The idea of recursive feature selection is to start with the full model and then leave out one variable after another until the quality of the model does not increase further. The variables are taken out from the equation depending on their predictive power in the multi-variable model.

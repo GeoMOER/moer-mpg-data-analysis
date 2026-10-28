@@ -18,6 +18,9 @@ At the end of this session you should be able to
 
 
 ## Basic idea of statistical prediction
+
+We now shift our emphasis from interpreting fitted relationships to evaluating predictions for held-out observations. Recall the [distinction between description, inference, and prediction in Unit 05]({{ site.baseurl }}/unit05/unit05-02_basic_idea_of_modelling.html#what-do-we-want-to-learn-from-a-model).
+
 Use observation samples to build a model, which predicts the dependent variable based on one or more independent variables. 
 
 {% include figure image_path="/assets/images/cross_validation.png" alt="Cross validation example using linear regressions" caption="Linear regression models computed with left-out data pairs." %}

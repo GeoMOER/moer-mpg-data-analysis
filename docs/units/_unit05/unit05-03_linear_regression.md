@@ -212,6 +212,8 @@ ss_model / ss_obsrv
 ```
 
 
+This R squared describes the fraction of observed response variation accounted for in the fitting data. For a comparison with held-out RMSE and AIC, see [which measure answers which question in Unit 07]({{ site.baseurl }}/unit07/unit07-02_variable_selection.html#which-measure-answers-which-question).
+
 **Convention**. p and r-squared often denote results of bivariate linear regressions while P and R-squared (capital letters) often denote results of multiple linear regressions.
 The letters *p* (*P*) and *r<sup>2</sup>* (*R*<sup>2</sup>) are often written in *italics*.
 {: .notice--info}

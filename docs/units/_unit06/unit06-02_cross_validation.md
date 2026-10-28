@@ -94,6 +94,8 @@ plot(cv$obsv, (cv$obsv - cv$pred))
 
 Mean error (ME) uses **predicted minus observed** values: positive ME indicates overprediction on average. Mean absolute error (MAE) measures the typical absolute error. Root mean squared error (RMSE) gives more weight to large errors. All three use the response's units; smaller MAE and RMSE indicate smaller prediction errors.
 
+Here, RMSE uses held-out predictions to assess prediction error. For a comparison with training R squared and AIC, see [which measure answers which question in Unit 07]({{ site.baseurl }}/unit07/unit07-02_variable_selection.html#which-measure-answers-which-question).
+
 
 ``` r
 prediction_metrics <- function(observed, predicted) {
