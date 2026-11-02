@@ -8,7 +8,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-You have downloaded `example.txt` and saved it in your project's `Data/` folder on the [previous page]({{ site.baseurl }}/unit03/unit03-02a_organize_your_data_files.html). Here we read a function call from left to right and use its help page to understand the inputs. Keep your project folder as the working directory.
+You have downloaded `example.txt` and saved it in your project's `Data/` folder on the [previous page]({{ site.baseurl }}/unit03/unit03-02a_organize_your_data_files.html). Keep your project folder as the working directory. Here you will use R's documentation to choose the import settings for that file and inspect the result.
 
 ## Open the help page
 
@@ -19,13 +19,21 @@ Enter either of these commands in the R console:
 help("read.table")
 ```
 
-In RStudio, these commands open documentation in the **Help** pane. You can also read the [official online help for read.table()](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html). Prefer the installed help for details specific to your R version.
+In RStudio, these commands open documentation in the **Help** pane. The heading identifies `read.table` and its package, **utils**; **Data Input** is the title. Several functions share the page, so find `read.table` in **Usage**.
 
-The heading identifies `read.table` and its package, **utils**; **Data Input** is the title. Several functions share this page, including `read.csv()` and `read.csv2()`. Locate your function in **Usage**.
+<span id="find-your-way-around-the-help-page"></span>
+<span id="defaults-are-starting-settings"></span>
+
+Use the Base R guides for the general foundations:
+
+- [R Syntax: read a function call from left to right](https://geomoer.github.io/moer-base-r/unit01/unit01-04a_r_syntax.html#read-a-function-call-from-left-to-right) explains parentheses, argument names and values, quotation marks, commas, and assignment with `<-`.
+- [R Help-Files: a quick route through the help](https://geomoer.github.io/moer-base-r/unit01/unit01-06_helpfiles.html#find-your-way-around-the-help-page) connects **Usage**, **Arguments** and **Value**; its [default-value guide](https://geomoer.github.io/moer-base-r/unit01/unit01-06_helpfiles.html#defaults-are-starting-settings) explains omitted arguments and `...`.
+
+If these ideas are new, work through those guides first. The syntax lesson supplies its own comma-separated practice file. Return here to apply the same approach to your **semicolon-separated** `Data/example.txt`; keep this course's project and file layout.
 
 ## Read a function call from left to right
 
-Read the small file you downloaded:
+Use the file's contents to choose the inputs:
 
 ```r
 read.table(file = "Data/example.txt", header = TRUE, sep = ";", dec = ",")
@@ -33,63 +41,17 @@ read.table(file = "Data/example.txt", header = TRUE, sep = ";", dec = ",")
 
 The result is a data frame with three rows and two columns: `tree` and `height_m`.
 
-| Read next | What it does |
+| Setting | Why it fits this file |
 |---|---|
-| `read.table` | Names the function to call. The dot is part of its name. |
-| `(` | Opens the round brackets, or parentheses, around the inputs. |
-| `file` | Names the first argument supplied in this call. |
-| `=` | Connects the argument name to the value you supply. |
-| `"Data/example.txt"` | Supplies the file path as a character string, enclosed in quotes. |
-| `,` | Separates this argument from the next one. |
-| `header = TRUE` | Repeats the pattern: an argument name, an equals sign, and a logical value. |
-| `,` | Separates the next argument. |
-| `sep = ";"` | Supplies the separator argument. Its value is a string containing one semicolon. |
-| `,` | Separates the final argument. |
-| `dec = ","` | Supplies a string containing the decimal character used in the file. |
-| `)` | Closes the call after the final argument. There is no trailing comma. |
+| `file = "Data/example.txt"` | Gives the path to the local file prepared on the preceding page. |
+| `header = TRUE` | Uses the first line as column names. |
+| `sep = ";"` | Reads semicolons as field separators. |
+| `dec = ","` | Converts heights such as `18,5` into numeric values in R. |
 
-The repeating pattern is **argument name = value**, with commas between arguments. Input names such as `header` are also called *formal arguments* or *parameters*; `TRUE` is the value supplied here.
+The comma **after** `sep = ";"` separates arguments in R code; the comma **inside** `dec = ","` describes decimal notation in the file. Keep these two roles apart when adapting an import.
 
-Quotes and capitalization matter. `TRUE` is logical; `"TRUE"` is text. `0` is numeric; `"0"` is text. Write argument names such as `header` without quotes. R distinguishes uppercase and lowercase letters.
-
-### Named and positional arguments
-
-For `read.table()`, you can leave the first argument unnamed because `file` is first in the documented argument order. These two calls read the same local file with the same settings:
-
-```r
-read.table(file = "Data/example.txt", header = TRUE, sep = ";", dec = ",")
-read.table("Data/example.txt", header = TRUE, sep = ";", dec = ",")
-```
-
-Unnamed arguments are matched by position; named arguments identify their inputs explicitly. The named arguments above can appear in a different order. Use full names to make your calls easy to compare with the help page.
-
-## Find your way around the help page
-
-The main sections answer different questions. Their presence and order can vary between functions.
-
-| Section | Question to ask | What to look for in `?read.table` |
-|---|---|---|
-| **Description** | What does the function do? | It imports tabular information into a data frame. |
-| **Usage** | How can I call it? | Argument names, their order, and defaults; find the `read.table` entry among the related functions. |
-| **Arguments** | What does each input mean, and which values are accepted? | `file` identifies the input, `header` controls column names, `sep` separates fields, and `dec` specifies the decimal character. |
-| **Details** | Which rules or special cases affect the result? | How the file is interpreted and how imported columns are converted. |
-| **Value** | What will the function return? | A data frame that you can assign to an object. |
-| **Note**, **Warning**, or a topic such as **Memory usage** | What limitations should I consider? | Additional cautions, for example when importing a large file. |
-| **References** | Where does the documented method come from? | Background literature where provided. |
-| **See Also** | Which related functions might help? | Links to other functions and documentation. |
-| **Examples** | What does a concrete use look like? | Code you can inspect and adapt after checking its inputs and any accompanying comments. |
-
-Start with **Description**, connect **Usage** to **Arguments**, and check **Value**. Consult **Details** for unresolved questions.
-
-### Defaults are starting settings
-
-In **Usage**, an entry such as `skip = 0` gives an argument and its default value. If you omit `skip`, the function normally starts without skipping lines. `dec = "."` uses decimal points, and `sep = ""` means separation by whitespace, such as spaces or tabs.
-
-Check the argument description as well: although **Usage** shows `header = FALSE`, `read.table()` can infer a header for some file layouts. Set `header` explicitly when you know whether your file has column names.
-
-Supply the settings your file needs; you do not have to specify every argument in **Usage**. A filename is a value you choose for your own input.
-
-In the `read.csv()` and `read.csv2()` entries, `...` indicates that additional arguments can be passed to `read.table()`. Replace it with the actual named arguments you need.
+<span id="named-and-positional-arguments"></span>
+For [named and positional arguments](https://geomoer.github.io/moer-base-r/unit01/unit01-04a_r_syntax.html#named-and-positional-arguments), compare the syntax guide with this call: `file` is named here, and its value is the path to your own course file.
 
 ## Store and inspect the result
 
@@ -106,18 +68,7 @@ dim(trees)
 str(trees)
 ```
 
-`dim(trees)` returns **3 rows and 2 columns**. `str(trees)` shows that `tree` contains text and `height_m` contains numbers. Line breaks and indentation make a longer call readable; the parentheses and commas still define the call.
-
-`trees <-` stores the returned data frame in `trees`. The assignment arrow is outside the call; the equals signs inside connect argument names to values. `dim(trees)` passes that object as an unnamed argument to another function, which returns its dimensions.
-
-| Setting | Why it fits this file |
-|---|---|
-| `file = "Data/example.txt"` | Gives the path to the local file prepared on the preceding page. |
-| `header = TRUE` | Uses the first line as column names. |
-| `sep = ";"` | Reads semicolons as field separators. |
-| `dec = ","` | Converts heights such as `18,5` into numeric values in R. |
-
-Notice the two roles of commas: the comma **after** `sep = ";"` separates arguments in R code; the comma **inside** `dec = ","` describes decimal notation in the data file. There is no argument separator after the final argument.
+`dim(trees)` returns **3 rows and 2 columns**. `str(trees)` shows that `tree` contains text and `height_m` contains numbers. Check that the heights are **18.5, 21.0 and 16.2 meters**: the file uses decimal commas, while R prints decimal points. `trees <-` stores the returned data frame under the name `trees`.
 
 The [next example]({{ site.baseurl }}/unit03/unit03-04_csv_io.html) applies this workflow to a real land-use dataset. It introduces the additional import choices that dataset needs and follows its preparation through to an RDS file.
 
@@ -130,4 +81,4 @@ Use `?read.table` to answer these questions before running another import:
 3. Why does the course example explicitly set `header = TRUE` and `sep = ";"`?
 4. What kind of object does `read.table()` return, and where is it stored in the example?
 
-For another guided view of the same help page, see [R Help-Files?! in the Base R course](https://geomoer.github.io/moer-base-r/unit01/unit01-06_helpfiles.html). The [official help() documentation](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/help.html) describes the help system itself.
+Use the [official online help for read.table()](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/read.table.html) if installed help is unavailable. The [official help() documentation](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/help.html) describes the help system itself.
