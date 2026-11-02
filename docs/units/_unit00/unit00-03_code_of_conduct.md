@@ -10,7 +10,7 @@ header:
 
 Please:
 
-* use your University of Marburg student email account for university-related messages (`username@students.uni-marburg.de`),
+* use your University of Marburg student email account for university-related messages (`Username@students.uni-marburg.de`),
 * arrive on time for course sessions,
 * submit your assignments on time,
 * let the instructors know if you cannot attend a session, and
