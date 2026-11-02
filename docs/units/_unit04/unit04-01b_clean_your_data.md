@@ -1,5 +1,6 @@
 ---
 title: Cleaning 101
+toc: true
 header:
   image: "/assets/images/teaser/holz.jpg"
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
@@ -9,7 +10,37 @@ header:
 
 Before changing a table, ask what one row represents and which analysis it should support. A successful import is not evidence that identifiers, values or units are correct.
 
-A useful starting point is one variable per column, one observation per row, and a separate table for each kind of observation. [Wickham (2014)](https://www.jstatsoft.org/article/view/v059i10) explains this approach. The appropriate arrangement also depends on the task: a wide table can be useful for regression, while a long table can be useful for grouped summaries.
+A useful starting point is one variable per column, one observation per row, and a separate table for each kind of observation. [Wickham (2014)](https://www.jstatsoft.org/article/view/v059i10) explains this approach. To choose a suitable arrangement, first consider two common table forms.
+
+## Wide and long tables
+
+Imagine that you measured height and crown diameter at two sites in 2024. Both measurements are in meters.
+
+In a **wide table**, the measurements occupy separate columns:
+
+| ID | Year | Height_m | Crown_m |
+|---|---|---|---|
+| `01` | 2024 | 18.5 | 4.0 |
+| `02` | 2024 | 16.2 | 3.5 |
+
+One row represents **one site in one year**. Together, `ID` and `Year` form its **key**: their combined values uniquely identify a row. Each measurement has its own column name.
+
+In a **long table**, those column names become entries in a measurement column, and the corresponding numbers share a value column:
+
+| ID | Year | Measurement | Value_m |
+|---|---|---|---|
+| `01` | 2024 | Height_m | 18.5 |
+| `01` | 2024 | Crown_m | 4.0 |
+| `02` | 2024 | Height_m | 16.2 |
+| `02` | 2024 | Crown_m | 3.5 |
+
+One row now represents **one measurement at one site in one year**. Its key is `ID`, `Year` **and** `Measurement`. Site and year repeat because each site has two measurements.
+
+Both tables contain the same four measured values. **Reshaping** rearranges them; it does not calculate a summary or create new measurements. Here, the row count changes from two to four.
+
+Choose the form for your task. Separate measurement columns are useful for regression, where one variable predicts another. A long table can be useful for plots or summaries grouped by measurement. Neither form is automatically cleaner, and a long table should not mix values with different units without keeping their meaning clear.
+
+The later [reshaping example]({{ site.baseurl }}/unit04/unit04-04b_reshaping.html) uses these same measurements to show how to convert between the two forms with R.
 
 ## Example: Measurements with a source symbol {#a-small-example}
 
@@ -30,7 +61,7 @@ Each row is one site in one year. `ID` must remain text so that the leading zero
 3. **Define the intended table.** Name its observation, key, columns, units and types. A regional ID alone is not unique in a table containing several years.
 4. **Change deliberately.** Select, rename, convert, split, reshape or merge only where the intended table requires it.
 5. **Validate.** Check keys, counts, values, unmatched records and missingness. Record unresolved cases instead of guessing.
-6. **Save and explain.** Keep source codes and processing decisions, save the analysis table, and check its structure after reloading.
+6. **Save and explain.** Keep original source entries and processing decisions, save the analysis table, and check its structure after reloading.
 
 A missing optional descriptor can be legitimate. Zero missing cells is not a cleaning objective.
 

@@ -24,7 +24,7 @@ After the general cleaning examples, work individually on this dataset for **35 
 3. Convert the reporting years and measurement columns to suitable types. Document how you handle source symbols and missing values.
 4. Separate regional names and descriptors. Keep uncertain administrative information explicit, then match metadata and measurements by their key.
 5. Create a long view and explain what one row represents. Keep the wide table for later modeling.
-6. Check dimensions, keys, types and missing values, then save your analysis table as `Output/lu_clean.rds`. Keep source cells and unresolved metadata separately.
+6. Check dimensions, keys, types and missing values, then save your analysis table as `Output/lu_clean.rds`. Keep original source entries and unresolved metadata separately.
 
 Use the focused examples on [text splitting]({{ site.baseurl }}/unit04/unit04-04a_text.html), [reshaping]({{ site.baseurl }}/unit04/unit04-04b_reshaping.html) and [matching tables]({{ site.baseurl }}/unit04/unit04-04c_merging.html) as references. The worked example below provides additional help when you need it.
 
@@ -44,8 +44,7 @@ Read all source fields as character strings initially. This preserves leading ze
 ```r
 lu_raw <- read.table(
   "Data/regional-land-use-1996-2014.txt",
-  skip = 4, header = TRUE, sep = ";", quote = "", comment.char = "",
-  colClasses = "character", na.strings = character(),
+  skip = 4, header = TRUE, sep = ";", colClasses = "character",
   fileEncoding = "UTF-8", check.names = FALSE
 )
 head(lu_raw, 3)
@@ -80,14 +79,15 @@ These are English analysis names, not new measurements. `Settlement` includes tr
 lapply(lu[measurement_columns], function(x) head(sort(unique(x)), 6))
 ```
 
-Inspect these short lists of distinct source entries in your session. The source uses `.` in these columns. For this teaching workflow, encode it as an unavailable numerical value while retaining the unmodified source cells. This is a processing policy, not a claim that all source symbols have identical meanings.
+Inspect these short lists of distinct source entries in your session. The source uses `.` in these columns. For this teaching workflow, encode it as an unavailable numerical value while retaining the original entries. This is a processing policy, not a claim that all source symbols have identical meanings.
+
+Reuse `type.convert()` from the missing-values example: read decimal commas and convert `.` to `NA`. Store each result as numerical data with `as.numeric()`, which also keeps a completely unavailable column numerical.
 
 ```r
 lu_source_cells <- lu
 for (column in measurement_columns) {
-  values <- lu[[column]]
-  values[values == "."] <- NA_character_
-  lu[[column]] <- as.numeric(sub(",", ".", values, fixed = TRUE))
+  values <- type.convert(lu[[column]], dec = ",", na.strings = ".", as.is = TRUE)
+  lu[[column]] <- as.numeric(values)
 }
 colSums(is.na(lu[measurement_columns]))
 str(lu)
@@ -97,23 +97,26 @@ Each measurement column has **540 unavailable values** in this export. Unexpecte
 
 ### Splitting regional labels {#split-multiple-information-within-one-column}
 
-The [text example]({{ site.baseurl }}/unit04/unit04-04a_text.html) separates mechanical splitting from administrative interpretation. Apply that distinction here:
+The [text example]({{ site.baseurl }}/unit04/unit04-04a_text.html) separates mechanical splitting from administrative interpretation. Apply the same `lapply()` and `unlist()` steps here. Keep additional descriptors in `Admin_misc`: `setdiff()` selects entries outside `known_types`, and `paste(..., collapse = ", ")` combines them into one string.
 
 ```r
 parts <- lapply(strsplit(trimws(lu$Region_label), ",", fixed = TRUE), trimws)
 place_info <- lu[c("ID", "Year")]
-place_info$Place <- vapply(parts, function(x) x[1], character(1))
+places <- lapply(parts, function(x) x[1])
+place_info$Place <- unlist(places)
 descriptors <- lapply(parts, function(x) x[-1])
 known_types <- c("District", "Urban district", "Administrative district",
                  "Statistical region", "Regional association", "NUTS 2 region")
-place_info$Admin_unit <- vapply(descriptors, function(x) {
-  found <- intersect(x, known_types)
-  if (length(found) == 1L) found else NA_character_
-}, character(1))
-place_info$Admin_misc <- vapply(descriptors, function(x) {
+types <- lapply(descriptors, function(x) {
+  found <- known_types[known_types %in% x]
+  if (length(found) == 1) found else NA_character_
+})
+place_info$Admin_unit <- unlist(types)
+other_descriptions <- lapply(descriptors, function(x) {
   other <- setdiff(x, known_types)
-  if (length(other)) paste(other, collapse = ", ") else NA_character_
-}, character(1))
+  if (length(other) > 0) paste(other, collapse = ", ") else NA_character_
+})
+place_info$Admin_misc <- unlist(other_descriptions)
 ```
 
 The English translation preserves descriptors such as `State capital` or `Hanseatic city`. Keep these separately from an explicit administrative type. A label without a type remains unresolved.
@@ -121,7 +124,8 @@ The English translation preserves descriptors such as `State capital` or `Hansea
 For the country aggregate `DG` and the 16 state codes `01`–`16`, identify the known aggregate levels explicitly:
 
 ```r
-state_ids <- sprintf("%02d", 1:16)
+state_ids <- c("01", "02", "03", "04", "05", "06", "07", "08",
+               "09", "10", "11", "12", "13", "14", "15", "16")
 place_info$Admin_unit[place_info$ID == "DG"] <- "Country"
 place_info$Admin_unit[place_info$ID %in% state_ids] <- "State"
 head(place_info[is.na(place_info$Admin_unit), c("ID", "Year", "Place")])
@@ -159,18 +163,18 @@ head(lu_long, 3)
 dim(lu_long)
 ```
 
-The regional metadata is repeated for each land-use category, and missing shares remain in the table. Expect **21,000 rows**: 5,250 region-year observations multiplied by four land-use columns. The long key is `ID`, `Year`, `Land_use`. This form is useful for grouped displays; regression later uses `lu_clean`, with separate predictor columns.
+The regional metadata is repeated for each land-use category, and missing shares remain in the table. Expect **21,000 rows**: 5,250 region-year observations multiplied by four land-use columns. The long key is `ID`, `Year`, `Land_use`. This form is useful for grouped displays; regression later uses `lu_clean`, with separate measurement columns.
 
 ### Validate and save the analysis table
 
 ```r
 nrow(lu_clean) == nrow(lu_raw)
 anyDuplicated(lu_clean[c("ID", "Year")])
-vapply(lu_clean[measurement_columns], is.numeric, logical(1))
+lapply(lu_clean[measurement_columns], is.numeric)
 colSums(is.na(lu_clean[measurement_columns]))
 ```
 
-Check that no region-year records were added or lost, the key remains unique, columns are numerical and missingness has not changed during the join. Compare a few values to their source cells by **ID and year**, rather than comparing arbitrary row positions after sorting.
+The row-count check should be `TRUE`, the duplicate check **0**, and the four `is.numeric()` results `TRUE`. Missing-value counts should still be **540 per measurement column**. Compare a few values to their original entries by **ID and year**, rather than comparing arbitrary row positions after sorting.
 
 Create an `Output/` folder in your project and keep generated files separate from downloads:
 
@@ -184,7 +188,7 @@ reloaded <- readRDS("Output/lu_clean.rds")
 identical(lu_clean, reloaded)
 ```
 
-The round-trip check should be `TRUE`. Keep the source-cell table to recover original tokens and the unresolved-region table to document remaining work. Saving a file does not resolve those uncertainties.
+The save-and-reload check should be `TRUE`. Keep the original source entries and the unresolved-region table to document remaining work. Saving a file does not resolve those uncertainties.
 
 </details>
 

@@ -9,10 +9,13 @@ output:
 
 A missing value records information that is unavailable. It is different from a measured zero. R represents missing values with `NA`, without quotation marks; `"NA"` is ordinary text. Although the constant `NA` is logical, R converts it to the appropriate type when it is placed in a character or numeric vector.
 
+Use `NA_character_` for a missing value in a character column. You will see this when we separate regional descriptions later in this unit.
+
 ```{r}
 x <- c("A", "B", NA, "D")
 is.na(x)
 ```
+
 
 `is.na()` asks whether each entry is missing. Use it instead of `x == NA`: a comparison with an unknown value does not establish equality.
 
@@ -29,6 +32,7 @@ measurements <- data.frame(
 colSums(is.na(measurements))
 ```
 
+
 `is.na(measurements)` produces a logical table and `colSums()` counts the missing entries in each column. Inspect the affected rows before deciding what to do:
 
 ```{r}
@@ -37,28 +41,29 @@ mean(measurements$Height_m)
 mean(measurements$Height_m, na.rm = TRUE)
 ```
 
-The first mean is `NA`. With `na.rm = TRUE`, the mean is **17.35 m**, calculated from the two available heights. Report that one of three measurements was unavailable: excluding it does not recover its value or remove possible bias.
+The first mean is `NA`. With `na.rm = TRUE`, the mean is **17.35 m**, calculated from the two available heights. Report that one of three measurements was unavailable. Its height is still unknown, and the two measured sites may not represent all three.
 
 Keep numerical columns numerical. Replacing an unavailable height with `"no value"` would turn the entire column into text. A display label can be created in a separate character column if needed.
 
 ## Preserve source symbols
 
-Official tables can use symbols such as `-`, `.`, or `/`. Their meanings depend on the source documentation. Inspect them as text before converting a column to numbers. Preserve the original tokens so that different reasons for an unavailable number remain distinguishable.
+Official tables can use symbols such as `-`, `.`, or `/`. Their meanings depend on the source documentation. Inspect them as text before converting a column to numbers. Preserve the original entries so that different reasons for an unavailable number remain distinguishable.
 
 ```{r}
 reported <- c("18,5", ".", "16,2")
-table(reported, useNA = "ifany")
+table(reported)
 ```
 
-If the documentation says that `.` represents an unavailable number, create a numerical version while retaining `reported`:
+`table()` counts each distinct entry. Here each occurs once. If the documentation says that `.` represents an unavailable number, convert a copy using `type.convert()` from Unit 03:
 
 ```{r}
-height <- reported
-height[height == "."] <- NA
-height <- as.numeric(sub(",", ".", height, fixed = TRUE))
+height <- type.convert(reported, dec = ",", na.strings = ".", as.is = TRUE)
+height
 ```
 
-This example explains a conversion rule; it does not assign meanings to every symbol in the regional crop file. An unexplained token should lead to a documented question, not an automatic replacement with zero.
+`dec = ","` reads decimal commas, `na.strings = "."` turns that marker into `NA`, and `as.is = TRUE` keeps entries as text if they cannot be converted. The result here is `18.5, NA, 16.2`; `reported` still contains the original entries. Check the result with `str(height)`.
+
+This example explains a conversion rule; it does not assign meanings to every symbol in the regional crop file. An unexplained entry should lead to a documented question, not an automatic replacement with zero.
 
 ## Apply this to the regional data
 
@@ -66,7 +71,7 @@ In the worked cleaning example and crop assignment:
 
 - count source symbols and missing entries before and after conversion;
 - explain the chosen treatment for each documented symbol;
-- retain source codes alongside numerical data where they carry additional information;
+- retain original source entries alongside numerical data where they carry additional information;
 - distinguish an optional missing descriptor from an unavailable measurement;
 - explain exclusions and check how many observations remain for analysis.
 

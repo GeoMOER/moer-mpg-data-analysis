@@ -64,11 +64,15 @@ Because `long` was created with `reshape()`, it retains the information needed t
 
 ## Summarize groups deliberately
 
+A grouped summary calculates a statistic separately for observations sharing a value, such as a year. Here we calculate mean height for each year:
+
 ```r
-aggregate(Height_m ~ Year, data = wide, FUN = mean)
+aggregate(wide["Height_m"], by = list(Year = wide$Year), FUN = mean)
 ```
 
-For 2024, this returns the unweighted mean **17.35 m** across two sites. Aggregation reduces several observations to a summary; reshaping merely rearranges them.
+`wide["Height_m"]` selects the column to summarize. `by` supplies the grouping column in a list, and `FUN = mean` chooses the calculation. Both sites belong to 2024, so the result has one row: year **2024**, mean height **17.35 m**. Each site has equal weight.
+
+This operation is called **aggregation**: it reduces several observations to a summary. The individual site heights are no longer in the result. Reshaping preserves those measurements and rearranges them.
 
 A regional percentage or yield is not an additive total. Summing percentages from overlapping administrative areas is invalid, and an unweighted average across districts does not generally reproduce a national percentage or yield. The worked regional example therefore retains individual region-year observations.
 

@@ -9,7 +9,7 @@ header:
 
 ## Match observations, not row positions
 
-A **key** identifies an observation. Joining by a key combines matching records even when the two tables are in different orders. `rbind()` instead appends rows with compatible columns; it does not look up matching IDs.
+A **key** identifies an observation. Joining by a key combines columns from matching records even when the two tables are in different orders.
 
 ## A small example
 
@@ -24,11 +24,11 @@ metadata <- data.frame(
   Place = c("Hillford", "Riverdale"),
   stringsAsFactors = FALSE
 )
-metadata[duplicated(metadata$ID), ]
+anyDuplicated(metadata$ID)
 setdiff(measurements$ID, metadata$ID)
 ```
 
-There should be no duplicated metadata IDs. `setdiff()` identifies `03` as an unmatched measurement. A matching result can be incomplete even when the code runs without an error.
+The first check should return **0**: no metadata ID is repeated. `setdiff()` finds measurement IDs absent from the metadata table; here it returns `03`. This site has a height but no place description. A matching result can be incomplete even when the code runs without an error.
 
 ```r
 joined <- merge(measurements, metadata, by = "ID", all.x = TRUE)
@@ -36,11 +36,11 @@ joined
 nrow(joined) == nrow(measurements)
 ```
 
-`all.x = TRUE` retains every row from the first table. The unmatched ID receives `NA` for `Place`. The row count is still three. With the default `all.x = FALSE` and `all.y = FALSE`, only matches remain. Choose the behavior deliberately.
+`all.x = TRUE` retains every row from the first table, `measurements`. The unmatched ID receives `NA` for `Place`. The row count is still three. Without `all.x = TRUE`, only matching IDs remain. Choose the behavior deliberately.
 
-## Check cardinality and order
+## Check matches and row order {#check-cardinality-and-order}
 
-If metadata contains two matching rows for the same ID, a join can multiply measurement rows. Check that the intended key is unique on the lookup side **before** joining, and compare row counts afterward. `merge()` sorts by the key by default; never rely on its output having the input's row order.
+If metadata contains two matching rows for the same ID, a join can multiply measurement rows. Check that the key is unique in the table supplying the descriptions **before** joining, and compare row counts afterward. `merge()` sorts by the key by default; never rely on its output having the input's row order.
 
 In the regional example, records repeat across years. Use `by = c("ID", "Year")` when the metadata is specific to a region-year observation. Do not assume that an administrative name or status is constant throughout a historical series.
 
@@ -48,6 +48,6 @@ In the regional example, records repeat across years. Use `by = c("ID", "Year")`
 
 When non-key columns have the same name in both tables, `merge()` adds `.x` and `.y` by default to distinguish their origins. These suffixes refer to the first and second table. They do not describe coordinates or the meaning of a variable. Select and name your intended columns before joining when practical.
 
-Use `by.x` and `by.y` if corresponding key columns have different names. Keep identifier types consistent, especially leading zeros.
+Keep identifier types consistent, especially leading zeros.
 
 See [merging in Base R](https://geomoer.github.io/moer-base-r/unit08/unit08-04_merging.html) and the [R documentation for `merge()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/merge.html).

@@ -19,18 +19,18 @@ The crop file provides a second historical regional dataset with real import and
 
 Open the text file before importing it. Identify the introductory lines, column header, observations and footer. The file contains 8,925 region-year observations for 1999–2015, ten crop yields in `dt/ha`, decimal commas and several source symbols. It is not the same layout as the land-use input.
 
-Write a short list of cleaning tasks and explain what one output row should represent. Preserve identifiers as text, including leading zeros. Do not let copyright/footer lines become observations or factor levels.
+Write a short list of cleaning tasks and explain what one output row should represent. Preserve identifiers as text, including leading zeros. Do not let copyright/footer lines become observations.
 
 ## Clean and document {#cleaning-crop-data}
 
 Write an R Markdown document that implements your plan, explains the main decisions and shows selected intermediate results. Keep your Rmd beside the `.Rproj` file.
 
-- Preserve the original source tokens before converting yields. Count `-`, `.` and `/` separately. For this exercise, retain these non-numeric tokens in a source-cell table and represent their yields as `NA` in the numerical analysis table; this policy does not establish that all symbols have the same official meaning. Do not invent zero yields. Keep an explicit `0,0` as zero.
+- Preserve the original source entries before converting yields. Count `-`, `.` and `/` separately. For this exercise, retain these symbols in a separate table of original entries and represent their yields as `NA` in the numerical analysis table; this policy does not establish that all symbols have the same official meaning. Do not invent zero yields. Keep an explicit `0,0` as zero.
 - Separate a place name, an explicitly reported administrative type and any additional descriptors. Do not assign a type solely because a label lacks one; document unresolved cases. Optional descriptors may legitimately be absent.
 - Put identifiers and metadata first, followed by numerical yield columns. Keep a **wide** table for later modeling.
 - Develop a reusable function for the regional-label work and save it in `Scripts/region_helpers.R`. Load it using `source()` from your Rmd. The [text example]({{ site.baseurl }}/unit04/unit04-04a_text.html#package-a-repeated-operation) introduces this pattern; create the `Scripts/` folder before saving your function.
 
-### Output schema
+### Required output columns {#output-schema}
 
 Use these metadata columns: `ID` (character), `Year` (integer), `Place` (character), `Admin_unit` (character) and `Admin_misc` (character). Each `ID`–`Year` pair should identify one observation.
 
@@ -49,13 +49,13 @@ For compatibility with the existing later assignment, retain the following analy
 | `Winter_rapeseed` | `Rapeseed` | Winter rapeseed yield. |
 | `Silage_maize` | `Silage_maize` | Silage maize yield. |
 
-All ten measurements are numerical yields in `dt/ha`. Preserve source codes separately rather than adding them to numerical predictor columns.
+All ten measurements are numerical yields in `dt/ha`. Preserve original source entries separately from the numerical yield columns.
 
 ## Validate and retain your results
 
 Check and report dimensions, key uniqueness, types, years, source-symbol counts and numerical missingness. Compare selected values with the source by ID, year and crop; check that joins do not multiply or discard observations.
 
-Save the wide table as `Output/cp_clean.rds` and preserve the original-token table separately, for example as `Output/crop-source-cells.rds`. Reload your analysis output with `readRDS()` and compare it with the object you saved.
+Save the wide table as `Output/cp_clean.rds` and preserve the table of original entries separately, for example as `Output/crop-source-cells.rds`. Reload your analysis output with `readRDS()` and compare it with the object you saved.
 
 Keep the cleaned crop dataset: it is reused in **[Unit 07's feature-selection assignment]({{ site.baseurl }}/unit07/unit07-03_assignment.html)**. Units 05–06 instead use the land-use output from the exercise.
 {: .notice--info}

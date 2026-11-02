@@ -23,26 +23,29 @@ parts
 
 ```{r}
 parts <- lapply(parts, trimws)
-place <- vapply(parts, function(x) x[1], character(1))
+place <- lapply(parts, function(x) x[1])
+place <- unlist(place)
 descriptors <- lapply(parts, function(x) x[-1])
 place
-lengths(descriptors)
 ```
 
-`lapply()` applies `trimws()` to each list element. `vapply()` requests one character value from each element: its first part. `x[-1]` retains the remaining parts; the last label has no descriptor, rather than a known administrative type.
+`lapply()` applies `trimws()` to each list element, then extracts the first part of each label. As in Unit 02, `unlist()` combines those returned results into a vector: `Riverdale`, `Hillford`, `Cedar City`. `x[-1]` retains the remaining parts in `descriptors`. The last label has no descriptor.
 
 ## Recognize only documented categories
 
+For each label, keep the entries from `known_types` that occur among its descriptors. `%in%` tests this membership. Accept a type only when there is exactly one match; otherwise return a missing character value.
+
 ```{r}
 known_types <- c("District", "Urban district")
-admin_unit <- vapply(descriptors, function(x) {
-  found <- intersect(x, known_types)
-  if (length(found) == 1L) found else NA_character_
-}, character(1))
+admin_unit <- lapply(descriptors, function(x) {
+  found <- known_types[known_types %in% x]
+  if (length(found) == 1) found else NA_character_
+})
+admin_unit <- unlist(admin_unit)
 admin_unit
 ```
 
-The first two labels identify their type explicitly. `Cedar City` remains unresolved: a place name containing "City" is not evidence of its legal status. `State capital` is an additional descriptor; it does not replace `Urban district`.
+The result is `District`, `Urban district`, `NA`. The first two labels identify their type explicitly. `Cedar City` remains unresolved: a place name containing "City" is not evidence of its legal status. `State capital` is an additional descriptor; it does not replace `Urban district`.
 
 For real regional data, use documented source classifications and dates. Do not assign every unresolved label to the same category. Retain the other descriptors and report cases that require checking.
 
@@ -57,6 +60,6 @@ split_label <- function(x) {
 split_label(labels)
 ```
 
-Save a function definition in an `.R` file and load it with `source("Scripts/region_helpers.R")` after creating that file in your project. The crop assignment asks you to develop your own reusable region-cleaning function; this small example shows how a definition and a call fit together.
+This function takes a vector of labels and returns a list of parts. Save the definition in `Scripts/region_helpers.R`, then load it with `source("Scripts/region_helpers.R")` from your Rmd before calling it. The crop assignment asks you to develop your own region-cleaning function using the operations above.
 
 See [character strings in Base R](https://geomoer.github.io/moer-base-r/unit08/unit08-06-string.html) and [writing functions](https://geomoer.github.io/moer-base-r/unit07/unit07-06_functions.html).
