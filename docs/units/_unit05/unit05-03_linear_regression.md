@@ -27,6 +27,8 @@ hist(dep, main = "Dependent variable")
 
 A look at the relationship between the variables by using a scatterplot justifies a linear modeling attempt. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
 
+In `lm(dep ~ ind)`, the response `dep` is modeled using the predictor `ind`. `abline()` adds the fitted line to the scatterplot; `text()` labels it with the rounded intercept and slope. These functions are included with R, so no additional package is needed.
+
 ```r
 par(par_org)
 plot(ind, dep)
@@ -34,8 +36,8 @@ plot(ind, dep)
 lmod <- lm(dep ~ ind) # Compute linear regression model
 
 abline(lmod, col = "red") # Add the fitted line using base R
-text(10, 6, bquote(paste("y"["i"], " = ", .(round(lmod$coefficients[1], 3)),
-                          " + ", .(round(lmod$coefficients[2], 3)), "* x"["i"])))
+text(10, 6, paste("Fitted y =", round(lmod$coefficients[1], 3),
+                  "+", round(lmod$coefficients[2], 3), "* x"))
 ```
 
 ![First Anscombe dataset with an upward-sloping fitted line; points scatter around y = 3 + 0.5 x.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-2-1.png)<!-- -->

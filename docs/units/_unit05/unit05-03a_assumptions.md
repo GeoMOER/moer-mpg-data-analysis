@@ -9,6 +9,17 @@ header:
 
 After fitting a regression, check whether its assumptions are a reasonable description of the observations. This page continues the [Anscombe regression example]({{ site.baseurl }}/unit05/unit05-03_linear_regression.html) and leads to [Assignment 05]({{ site.baseurl }}/unit05/unit05-04_assignment.html). QQ plots concern the fitted model's residuals; transformations are followed by a new fit and another diagnostic check.
 
+## What to do on this page
+
+Work through this example before starting Assignment 05:
+
+1. Run **Recreate the example models** below. The later code uses these objects.
+2. Follow the core checks: residuals versus fitted values, scale-location, residual QQ plots, the Shapiro–Wilk test and influential observations. Each four-panel figure shows datasets 1–4 from top left to bottom right. In `plot(model, which = ...)`, `which` selects the diagnostic plot explained in that section.
+3. For each dataset, note the main pattern you see, which assumption it calls into question and what that means for interpreting the line or its tests. Compare your notes with the explanations below the figures. Use the sampling information to discuss independence; the plots alone cannot establish it.
+4. Use **From this example to Assignment 05** to transfer the checks to the land-use data. The transformation, extra histogram/QQ comparison, scatterplot matrix and coplot are optional extensions.
+
+Your result here is a set of diagnostic notes to support the assignment. There is no separate submission for this walkthrough.
+
 ## Recreate the example models
 
 The `anscombe` dataset is included with R. The following code recreates the first fitted model (`lmod`) and all four models (`lmodels`), so the page also works in a fresh R session without additional downloads:
@@ -210,9 +221,13 @@ Read the panels from bottom left to bottom right, then top left to top right: da
 
 ### If a check raises concerns {#no-alternatives}
 
-Summarize which assumption appears compatible with the data, which looks questionable and which cannot be assessed from the available information. For each concern, identify the relevant plot or design feature and explain the consequence for interpreting the model. Avoid an automatic pass/fail decision based on one plot or p-value.
+Turn the checks into a short assessment:
 
-For example: “The curved residual trend makes a straight-line mean questionable, so its slope and tests need cautious interpretation even though the normality test does not reject.” An unresolved issue is a legitimate finding. More flexible models and predictive evaluation are introduced in later units.
+1. **Describe the evidence.** Name the plot or design feature and the pattern you see, such as a curved residual trend or neighboring regions.
+2. **State the consequence.** Explain which assumption is questionable and whether this limits interpretation of the fitted line, its tests or its uncertainty. Also say what cannot be assessed from the available information.
+3. **Choose a justified next step.** Check unusual records against their source. If a different scale makes sense, refit and repeat the diagnostics as shown above. If the concern remains, report it as a limitation. Assignment 05 asks you to diagnose and explain concerns; fitting a replacement model is not required.
+
+For example: “The second dataset has a curved residual trend, so a straight-line mean is questionable and I would not interpret its slope test as adequate evidence for that relationship, even though the normality test does not reject.” Do not remove observations or transform variables simply to obtain a reassuring plot or p-value. More flexible models and predictive evaluation follow in later units.
 
 ### From this example to Assignment 05 {#from-diagnostics-to-assignment-05}
 

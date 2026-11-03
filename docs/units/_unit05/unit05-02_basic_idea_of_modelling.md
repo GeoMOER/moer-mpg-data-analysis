@@ -41,6 +41,8 @@ R-squared and the fitting tests summarize the data used to estimate the model. T
 
 ## Where does this course fit?
 
+This is an **applied statistical modeling course for physical geography**. We begin with frequentist inference: estimate a relationship and discuss its uncertainty using tests and model assumptions. We then move toward predictive modeling: check performance on observations not used to fit the model, compare models and tune their flexibility. This part overlaps with supervised machine learning, where known predictor–response pairs are used to learn a prediction rule. Bayesian methods and deep learning provide context here; we do not fit those models in this course.
+
 The following perspectives and fields overlap. They help us distinguish how we express uncertainty, how we fit models, and what we want to learn from data.
 
 | Perspective or field | Main idea |
