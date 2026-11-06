@@ -15,7 +15,7 @@ If you have not yet created your course repository, follow the [Classroom 50 set
 
 
 You may use ChatGPT or similar AI tools to help solve the assignments, and you are encouraged to do so.
-Present your solutions in the weekly sessions to demonstrate that you understand your work.
+But be prepared to present your solutions in the weekly sessions to demonstrate that you understand your work!
 {: .notice--info}
 
 
@@ -43,6 +43,9 @@ Submit your solutions for regular marked and unmarked assignments by committing 
 Do not leave the assignments until the day before the deadline. Programming tasks can involve unexpected, time-consuming problems, so start early.
 {: .notice--warning}
 
+
+### Feedback
+Your submitted files and GitHub username help us keep track of assignments and provide semi-automated individual feedback on your work. AI tools also support the review process and help prepare feedback. All final assessment decisions are made by the instructor. If you prefer not to receive semi-automated feedback, just let the instructor know.
 
 
 ## MOHA
