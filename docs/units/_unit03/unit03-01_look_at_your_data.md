@@ -1,4 +1,5 @@
 ---
+toc: TRUE
 title: Look at Your Data
 header:
   image: "/assets/images/teaser/holz.jpg"

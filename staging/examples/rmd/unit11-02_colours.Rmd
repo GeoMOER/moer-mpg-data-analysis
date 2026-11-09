@@ -2,8 +2,8 @@
 title: "Example: Colors"
 author: "Thomas Nauss"
 date: "19 Oktober 2017"
-output: 
-  html_document: 
+output:
+  html_document:
     keep_md: yes
 ---
 
@@ -11,116 +11,50 @@ output:
 knitr::opts_chunk$set(echo = TRUE, fig.path = getOption("mpg.unit12.fig.path", "figures/e11-02/"))
 ```
 
-Before we expand our plotting capabilities, we want to spend a bit more time 
-thinking about colors and color spaces. A careful study of color-spaces
-(e.g. [Zeileis et al. 2009](http://statmath.wu.ac.at/~zeileis/papers/Zeileis+Hornik+Murrell-2009.pdf){:target="_blank"})
-and
-[Wikipedia](https://en.wikipedia.org/wiki/HSL_and_HSV){:target="_blank"}
-could lead us to the conclusion that the ```hcl``` color space is preferable when mapping a variable to color (be it factorial or continuous).
+Choose colors according to **what the variable means**. Start with these three cases:
 
-This color space is readily available in R through the function `hcl()`.
+| Data | Palette type | Example |
+|---|---|---|
+| Categories without an order | **Qualitative:** distinct colors without a low-to-high sequence. | Different land-use types. |
+| Values ordered from low to high | **Sequential:** a clear progression in lightness. | Recreation share from small to large. |
+| Values on either side of a meaningful reference | **Diverging:** two directions from a central color. | Temperature difference below or above zero. |
 
-But before we dive into this, let's create a function that draws color palettes:
+The base R function `hcl.colors(n, palette = ...)` supplies ready-made palettes: `n` is the number of colors. You do not need an additional package or a custom palette function. The following strips use equal-height bars only to display the colors; their heights are not data.
 
-
-```{r}
-library(colorspace) # needed for function desaturate()
-
-### function to plot a color palette
-pal <- function(col, border = "transparent", ...) {
- n <- length(col)
- plot(0, 0, type="n", xlim = c(0, 1), ylim = c(0, 1),
-      axes = FALSE, xlab = "", ylab = "", ...)
- rect(0:(n-1)/n, 0, 1:n/n, 1, col = col, border = border)
-}
+```{r palette-types, fig.width=8, fig.height=6, fig.alt="Three palette strips: Dark 3 distinguishes categories, YlGnBu runs from light to dark for increasing values, and Blue-Red 3 has a light center between blue and red extremes."}
+old_par <- par(no.readonly = TRUE)
+par(mfrow = c(3, 1), mar = c(2, 1, 2, 1))
+barplot(rep(1, 4), col = hcl.colors(4, "Dark 3"),
+        names.arg = c("A", "B", "C", "D"), axes = FALSE,
+        border = NA, main = "Qualitative: categories")
+barplot(rep(1, 7), col = hcl.colors(7, "YlGnBu", rev = TRUE),
+        names.arg = 1:7, axes = FALSE,
+        border = NA, main = "Sequential: low to high")
+barplot(rep(1, 7), col = hcl.colors(7, "Blue-Red 3"),
+        names.arg = -3:3, axes = FALSE,
+        border = NA, main = "Diverging: around zero")
+par(old_par)
 ```
 
-Let's start with a particularly bad example of a color palette, the rainbow color palette,
-sometimes also referred to as jet-colors (that's MATLAB talk).
+Use `rev = TRUE` to reverse a palette when needed. Match its direction to the numerical legend. A diverging palette is useful only when its center has a meaning in your data; a light midpoint alone does not make it appropriate for ordered values.
 
+## Why avoid a rainbow for ordered values?
 
-```{r, fig.width = 8, fig.height = 3, fig.align = 'center', fig.alt = "Rainbow palette runs from red through yellow, green, cyan and blue to magenta, with uneven perceived changes between colors."}
-pal(rainbow(100))
+The rainbow's lightness rises and falls. Equal numerical changes can look very different depending on their position, and apparent boundaries can draw attention away from the actual pattern. Compare it with a sequential palette:
+
+```{r ordered-palettes, fig.width=8, fig.height=4, fig.alt="Rainbow colors have uneven apparent transitions; the sequential YlGnBu strip progresses from pale yellow to dark blue."}
+old_par <- par(no.readonly = TRUE)
+par(mfrow = c(2, 1), mar = c(2, 1, 2, 1))
+barplot(rep(1, 10), col = rainbow(10), names.arg = 1:10,
+        axes = FALSE, border = NA, main = "Rainbow")
+barplot(rep(1, 10), col = hcl.colors(10, "YlGnBu", rev = TRUE),
+        names.arg = 1:10, axes = FALSE, border = NA,
+        main = "Sequential: low to high")
+par(old_par)
 ```
 
-We see that any change that may be happening in the green region will not be noticeable
-whereas changes that happen from red, via orange to yellow will be very prominent even though 
-the underlying data change (let's assume a change of 5 units) will be identical. This leads to 
-perceived edges in the visualization which do not reflect real changes in the data.
+HCL-based palettes aim to make color differences easier to interpret, but **HCL does not guarantee perfect perceptual uniformity or accessibility**. A constant-lightness palette can become nearly indistinguishable in grayscale. Conversely, a smooth grayscale ramp does not prove that all viewers can distinguish the colors. Choose a palette suited to the data, inspect the result and use labels, symbols or line types alongside color. The [R palette documentation](https://stat.ethz.ch/R-manual/R-devel/library/grDevices/html/palettes.html) describes the available palette types.
 
-This becomes even more evident when we plot the colors in grayscale:
+## Try it on a familiar figure
 
-
-```{r, fig.width = 8, fig.height = 3, fig.align = 'center', fig.alt = "Rainbow palette in grayscale alternates between dark and light sections rather than changing brightness in one direction."}
-pal(desaturate(rainbow(100)))
-```
-
-Such a color scale does not linearly represent continuous data.
-There have been numerous attempts to produce perceptually consistent, yet visually pleasing
-color palettes. One very good example of this is [colorbrewer2.org](http://www.colorbrewer2.org){:target="_blank"}
-These palettes can be accessed through the R package `RColorBrewer`.
-
-
-```{r, fig.width = 8, fig.height = 3, fig.align = 'center', fig.alt = "Spectral diverging palette has darker red and blue ends and a light yellow center."}
-library(RColorBrewer)
-brewer_rainbow <- colorRampPalette(brewer.pal(11, "Spectral"))
-pal(brewer_rainbow(100))
-```
-
-Most of the edges are gone and the result looks quite pleasing too.
-To check how effectively this palette takes care of the above observed edges,
-let's again look at the grayscale version:
-
-
-```{r, fig.width = 8, fig.height = 3, fig.align = 'center', fig.alt = "Spectral palette in grayscale is lightest near the center and darker toward both ends."}
-pal(desaturate(brewer_rainbow(100)))
-```
-
-Not bad at all, though there is a distinguishable increase in lightness towards the middle of the scale.
-This is accepted in this case as this color scale is a diverging color scale. This means it should only be used for visualizing deviations from a central value (e.g. zero). Do not use this color scale to represent sequential data (i.e. data changing only in one direction)!!
-
-In order to create a truly perceptually uniform color scale we need to use the hcl color space. As mentioned above, this can be done using `hcl()`. Here, we create a function that produces a color palette of a length n specified by the user, based on the hcl color space:
-
-
-```{r, fig.width = 8, fig.height = 3, fig.align = 'center', fig.alt = "HCL palette changes hue from reddish tones through green and cyan to blue while keeping lightness approximately constant."}
-clrs_hcl <- function(n) {
-  hcl(h = seq(0, 260, length.out = n), 
-      c = 60, l = 50, 
-      fixup = TRUE)
-  }
-
-pal(clrs_hcl(100))
-```
-
-This looks a bit pale, yet there are no observable edges in the palette. Let's check the grayscale version.
-
-
-```{r, fig.width = 8, fig.height = 3, fig.align = 'center', fig.alt = "Constant-lightness HCL palette becomes an almost uniform gray strip, so positions cannot be distinguished by brightness."}
-pal(desaturate(clrs_hcl(100)))
-```
-
-Nice! One evenly distributed grayscale without any changes in lightness along the palette. So this is truly a perceptually uniform color palette where only the hue changes.
-
-One obvious problem with this color palette is that when printed in grayscale, all values will look exactly the same... To address this, we can modify our clrs_hcl definition slightly by also varying the lightness (or better luminance) along the same length n along which we change the hue.
-
-
-```{r, fig.width = 8, fig.height = 3, fig.align = 'center', fig.alt = "HCL palette varies both hue and lightness, progressing from dark reddish tones to pale blue."}
-clrs_hcl2 <- function(n) {
-  hcl(h = seq(0, 260, length.out = n), 
-      c = 60, l = seq(10, 90, length.out = n), 
-      fixup = TRUE)
-  }
-
-pal(clrs_hcl2(100))
-```
-
-... and in grayscale...
-
-
-```{r, fig.width = 8, fig.height = 3, fig.align = 'center', fig.alt = "Varying-lightness HCL palette becomes a grayscale ramp from dark to light."}
-pal(desaturate(clrs_hcl2(100)))
-```
-
-This color scale is visually pleasing and represents the data honestly. Low and high values are readily discernible even in grayscale.
-
-Color is one part of an accessible figure. Identify lines with labels, symbols or line types as well as color, and describe the relevant pattern in the accompanying text. Check whether the distinction survives grayscale and whether the legend names the values or groups. A constant-lightness palette can distinguish hues while losing those distinctions in grayscale, as the examples above demonstrate.
+Take a plot from an earlier unit. Decide whether its colors represent categories, ordered values or deviations from a reference. Choose one palette, then check that the legend and labels let a reader recover that meaning. Keep units visible and explain your choice in one sentence. The next page applies this choice to map classes.

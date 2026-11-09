@@ -23,17 +23,17 @@ Unit 03 contains the basic exploration needed for Assignment 03. Further diagnos
 | `unit04-06_merging.Rmd` | `_unit04/unit04-04c_merging.md` | Source keeps its older filename. |
 | `unit04-05_cleaning.Rmd` | `_unit04/unit04-05_cleaning.md` | Land-use exercise with an expandable worked example. |
 | `unit05-02_linear_regression.Rmd` | `_unit05/unit05-03_linear_regression.md` | Portable model-fitting example; continues on the separate assumptions page. |
-| `unit05-03a_assumptions.Rmd` | `_unit05/unit05-03a_assumptions.md` | Residual-based assumptions, QQ plots, transformations and Assignment-05 transition; recreates the Anscombe fits independently. Both Unit-05 sources use `mpg.unit05.fig.path`. |
-| `unit06-02_cross_validation.Rmd` | `_unit06/unit06-02_cross_validation.md` | Current executable source: held-out metrics, run-level RMSE and four folds; portable `mpg.unit06.fig.path`. |
-| `unit07-02_variable_selection.Rmd` | `_unit07/unit07-02_variable_selection.md` | Current executable source: guarded AIC steps, fixed-fold scoring and independent final evaluation; portable `mpg.unit07.fig.path`. |
-| `unit08-02_generalized_additive_models.Rmd` | `_unit08/unit08-02_generalized_additive_models.md` | Current executable source: basis dimension versus penalty, fitted/held-out metrics and separate tuning/final evaluation; portable `mpg.unit08.fig.path`. |
+| `unit05-03a_assumptions.Rmd` | `_unit05/unit05-03a_assumptions.md` | Core residual diagnostics and Assignment-05 transition; recreates the Anscombe fits independently. Both Unit-05 sources use `mpg.unit05.fig.path`. |
+| `unit06-02_cross_validation.Rmd` | `_unit06/unit06-02_cross_validation.md` | Current executable source: one held-out prediction before repetition, run-level RMSE and four folds; portable `mpg.unit06.fig.path`. |
+| `unit07-02_variable_selection.Rmd` | `_unit07/unit07-02_variable_selection.md` | Current executable source: one explicit AIC comparison before the guarded forward helper, fixed-fold scoring and independent final evaluation; portable `mpg.unit07.fig.path`. |
+| `unit08-02_generalized_additive_models.Rmd` | `_unit08/unit08-02_generalized_additive_models.md` | Current executable source: basis dimension versus penalty, one tuning fit before repetition, fitted/held-out metrics and separate tuning/final evaluation; portable `mpg.unit08.fig.path`. |
 | `unit09-01a_datetime.Rmd` | `_unit09/unit09-01a_datetime.md` | Dates, time zones and calendar components before DWD; moved from Unit 04. The old Unit-04 URL redirects outside the teaching collection. |
 | `unit09-02_time_series.Rmd` | `_unit09/unit09-02_time_series.md` | Historical source targets a 2015 DWD layout; published data handling is newer. Align in D4/M3 before rerendering. |
 | `unit09-03_arima.Rmd` | `_unit09/unit09-03_arima.md` | Historical source has a different time window and chunk layout; descriptions follow its own plot calls. Align in D4/M3. |
 | `unit10-02_time_series_analysis.Rmd` | `_unit10/unit10-02_time_series_analysis.md` | Historical source has an older time window; includes unpublished trend-test material. Align in D4/M3. |
 | `unit10-03_time_series_clustering.Rmd` | `_unit10/unit10-03_time_series_clustering.md` | Historical source has an older time window; descriptions do not assert unchanged group membership. Align in D4/M3. |
-| `unit11-02_colours.Rmd` | `_unit12/unit12-02_colours.md` | Current prose/code and figure descriptions synchronized; the legacy `e11-02` image directory is intentional. |
-| `unit12-03_colour_maps.Rmd` | `_unit12/unit12-03_colour_maps.md` | Created from the current published lesson on 26.10.2026; no historical map Rmd was found. Uses Natural Earth boundaries and simulated values. |
+| `unit11-02_colours.Rmd` | `_unit12/unit12-02_colours.md` | Ready-made base R palettes and practical choice; the legacy `e11-02` image directory is intentional. |
+| `unit12-03_colour_maps.Rmd` | `_unit12/unit12-03_colour_maps.md` | Created from the current published lesson on 26.10.2026; no historical map Rmd was found. Uses Natural Earth boundaries and simulated values; class counts are bar charts. |
 
 Units 04–12 introductions, assignments, MOHA links and external-resource pages are maintained directly as Markdown unless listed above. Unit 12's workshop and R Graph Gallery links point to external material; the historical drafts below are not their sources.
 
@@ -53,4 +53,4 @@ Published plot images remain at their existing paths. Informative images have de
 
 The Unit-06/07 sources accept `options(mpg.unit06.fig.path = "<temporary-figure-directory>/")` and `options(mpg.unit07.fig.path = "<temporary-figure-directory>/")` for isolated rendering. The original Unit-07 toy data explicitly reproduce the historical sampling rule and restore the previous setting; new validation examples use current sampling. Both sources use only base R for analysis. The Unit-08 source uses `mgcv`, accepts `mpg.unit08.fig.path`, and likewise explicitly reproduces its historical toy data before using current sampling for the independent tuning example.
 
-The two current Unit-12 sources accept `options(mpg.unit12.fig.path = "<temporary-figure-directory>/")` for isolated output. Their default `figures/` paths are portable; published asset URLs stay separate. The accessibility pass does not refresh historical datasets, RNG, model fits or raster files.
+The two current Unit-12 sources accept `options(mpg.unit12.fig.path = "<temporary-figure-directory>/")` for isolated output. Their default `figures/` paths are portable; published asset URLs stay separate. The 09.11.2026 simplification retains historical model data/RNG and refreshes the changed curve, palette and class-count figures. Retired figure files remain available at their existing URLs.

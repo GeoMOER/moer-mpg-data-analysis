@@ -33,7 +33,9 @@ hist(dep, main = "Dependent variable")
 
 A look at the relationship between the variables by using a scatterplot justifies a linear modeling attempt. Fitting a bivariate linear model to the data set would result in the function shown in the plot and visualized by the red line.
 
-In `lm(dep ~ ind)`, the response `dep` is modeled using the predictor `ind`. `abline()` adds the fitted line to the scatterplot; `text()` labels it with the rounded intercept and slope. These functions are included with R, so no additional package is needed.
+In `lm(dep ~ ind)`, the response `dep` is modeled using the predictor `ind`. The **intercept** is the fitted mean response at a predictor value of zero. The **slope** is the change in that fitted mean for a one-unit increase in the predictor. **Least squares** chooses the line with the smallest sum of squared vertical residuals.
+
+`abline()` adds the fitted line to the scatterplot; `text()` labels it with the rounded intercept and slope. These functions are included with R, so no additional package is needed.
 
 ```{r unnamed-chunk-2, fig.alt = "First Anscombe dataset with an upward-sloping fitted line; points scatter around y = 3 + 0.5 x."}
 par(par_org)
@@ -47,12 +49,14 @@ text(10, 6, paste("Fitted y =", round(lmod$coefficients[1], 3),
 ```
 
 
-The fitted line describes the observed relationship. Under suitable model assumptions, an ANOVA or t-test can assess evidence against a zero slope. Neither test checks all those assumptions or establishes a causal relationship. We calculate the summaries first, then use the separate [assumptions walkthrough]({{ site.baseurl }}/unit05/unit05-03a_assumptions.html) to judge how cautiously they should be interpreted.
+Here the fitted line is approximately **y = 3 + 0.5x**: increasing x by one increases the fitted mean y by 0.5. The intercept is about 3, but x = 0 is outside the observed range of 4–14, so it is not a case represented in these data. Check your understanding: how much does the fitted mean change when x increases by two?
+
+Under suitable model assumptions, an analysis of variance (ANOVA) can assess evidence against a zero slope. This test does not check all those assumptions or establish a causal relationship. We calculate the summaries first, then use the separate [assumptions walkthrough]({{ site.baseurl }}/unit05/unit05-03a_assumptions.html) to judge how cautiously they should be interpreted.
 
 
 ### Testing a linear regression relationship by an analysis of variance
 
-Let's start with the ANOVA. Here we divide the variation in the response into variation described by the fitted line and variation left in the residuals.
+A **residual** is the observed response minus its fitted value. It is the vertical distance from a point to the fitted line. Let's start with the ANOVA. Here we divide the variation in the response into variation described by the fitted line and variation left in the residuals.
 
 Given a (linear) model, each actual data value can be calculated by adding the fitted value and the corresponding residual value:
 
@@ -66,7 +70,7 @@ The corresponding differences are:
 
 Square the differences and sum them to obtain the total, model and residual sums of squares. For this ordinary least-squares model with an intercept, the model and residual sums of squares add to the total sum of squares.
 
-In order to calculate the variances, one can use the lm class of the model since - among others - it contains the original independent and dependent values as well as the predicted ones:
+Calculate the sums of squares using the observed responses and fitted values stored in `lmod`:
 
 
 ```{r lesson-3}
@@ -75,11 +79,13 @@ ss_model <- sum((lmod$fitted.values - mean(lmod$model$dep))**2)
 ss_resid <- sum((lmod$model$dep - lmod$fitted.values)**2)
 ```
 
-Since the sum increases with increasing numbers of observations, the resulting sums of squares are normalized by the respective degrees of freedom. This gives us:
-* the mean observed sum of squares
-* the mean model sum of squares
-* the mean residual sum of squares, i.e. the mean squared error if the model is a simple linear regression model.
+Divide each sum of squares by its **degrees of freedom** (df) to obtain its **mean square**. Degrees of freedom count how many pieces of information can vary independently after accounting for what we have estimated from the data. Here `n` is the number of observations; the first Anscombe dataset has **11 pairs**.
 
+- **Total variation: `n - 1` = 10 df.** We measure each response's distance from the sample mean. Because that mean was calculated from the same responses, these differences must add to zero. Once ten differences are known, the eleventh is fixed: it must cancel their sum. Estimating the mean therefore leaves ten freely varying differences.
+- **Model variation: 1 df.** A horizontal line at the sample mean already estimates one quantity: the mean response. Our regression estimates two quantities, the intercept and slope. Allowing the line to slope adds **one** adjustable quantity compared with that horizontal line. The model sum of squares measures the extra variation described by this addition, so its divisor is one.
+- **Residual variation: `n - 2` = 9 df.** The fitted line uses the same eleven observations to estimate both its intercept and its slope. Accounting for these two estimated quantities leaves nine degrees of freedom for the variation around the line. All eleven observations still contribute to the fit; dividing by nine accounts for having estimated the line from them.
+
+The degrees of freedom follow the same split as the sums of squares: **total = model + residual**, here **10 = 1 + 9**. We therefore divide the total, model and residual sums of squares by 10, 1 and 9, respectively:
 
 ```{r lesson-4}
 mss_obsrv <- ss_obsrv / (length(lmod$model$dep) - 1)
@@ -87,7 +93,7 @@ mss_model <- ss_model / 1
 mss_resid <- ss_resid / (length(lmod$model$dep) - 2)
 ```
 
-Under the zero-slope null hypothesis and the usual model assumptions, both the model and residual mean squares estimate the error variance. Their ratio fluctuates around a reference distribution; it is not exactly one in every sample. A systematic relationship can make the model mean square larger relative to the residual mean square.
+Under the zero-slope null hypothesis and the usual model assumptions, both the model and residual mean squares estimate the error variance. Their ratio follows an F distribution; it is not exactly one in every sample. A systematic relationship can make the model mean square larger relative to the residual mean square.
 
 This provides us with the test statistic for the *null-hypothesis* that the true slope is not different from 0.
 
@@ -95,29 +101,15 @@ This provides us with the test statistic for the *null-hypothesis* that the true
 f_value <- mss_model / mss_resid
 ```
 
-The F-statistic quantifies how much larger the variation explained by the model is compared to the variation left unexplained (residuals).
-* A large F value indicates that the model explains a lot more variation than is left unexplained, suggesting that the slope is likely not 0.
-* A small F value indicates that the model doesn't explain much more variation than the residuals, suggesting that the slope might be 0.
+The F-statistic compares the model **mean square** with the residual **mean square**. A large value is evidence against a zero slope under the stated assumptions. It does not measure the fraction of variation explained; R² answers that question below.
 
-By comparing the computed F value to an F distribution with 1 numerator degree of freedom and (number of observations - 2) denominator degrees of freedom, the p value is determined. If the p value is very small, the null-hypothesis can be rejected.
+The **p-value** is the probability of an F-statistic at least this large if the true slope is zero and the model assumptions hold. We calculate it using an F distribution with 1 numerator degree of freedom and (number of observations - 2) denominator degrees of freedom. A small p-value is evidence against a zero slope; it is not the probability that the model is correct.
 
 ```{r lesson-6}
 p_value <- pf(f_value, 1, length(dep) - 2, lower.tail = FALSE)
 ```
 
-In summary, this gives us the following:
-
-```{r lesson-7}
-data.frame(Name = c("ind", "residuals"),
-           Deg_of_freedom = c(1, length(lmod$model$dep) - 2),
-           Sum_of_squares = c(ss_model, ss_resid),
-           Mean_sum_of_squares = c(mss_model, mss_resid),
-           F_value = f_value,
-           p_value = p_value)
-```
-
-
-Of course, one does not have to compute this every time. A simple call to the anova function will do it:
+The built-in `anova()` function assembles the result in one table. The F statistic and its p-value belong to the predictor row; there is no separate F test for the residual row:
 
 ```{r lesson-8}
 anova(lmod)
@@ -126,10 +118,10 @@ anova(lmod)
 
 ### Exercise: Recreate the regression plot
 
-Now you can check your knowledge and strengthen your plotting skills by writing code to rebuild the linear regression scatterplot from the previous page.
-When coding, think about the meaning of slope, intercept, observed variance, model variance, residual variance, and the different types of sums of squares.
-{: .notice--success}
+Recreate the **blue fitted line and red residual segments** in the graphic on the [basic-idea page]({{ site.baseurl }}/unit05/unit05-02_basic_idea_of_modelling.html#basic-idea-of-statistical-modeling), using `ind`, `dep` and `lmod` from this example. Develop your own plotting code: show the observations, the fitted line and a vertical segment from each fitted value to its observed value. You do not need to reproduce the equation label or exact formatting.
 
+Hint: `segments(x0, y0, x1, y1)` joins start and end coordinates. For vertical residuals, both x coordinates are `ind`; the y coordinates are `fitted(lmod)` and `dep`. Explain which segments would contribute most to the residual sum of squares and why.
+{: .notice--success}
 
 <!--
 ### Testing a linear regression relationship by a t-test
@@ -173,15 +165,13 @@ ss_model / ss_obsrv
 
 This R squared describes the fraction of observed response variation accounted for in the fitting data. For a comparison with held-out RMSE and AIC, see [which measure answers which question in Unit 07]({{ site.baseurl }}/unit07/unit07-02_variable_selection.html#which-measure-answers-which-question).
 
-**Convention**. p and r-squared often denote results of bivariate linear regressions while P and R-squared (capital letters) often denote results of multiple linear regressions.
-The letters *p* (*P*) and *r<sup>2</sup>* (*R*<sup>2</sup>) are often written in *italics*.
-{: .notice--info}
+
 
 
 
 
 ### Finished?
-Well, the above looks like a really good example of linear regression analysis, right? And the r-squared of about 0.67 is also quite OK not to mention the significance of the independent variable.
+The fitted line accounts for about 67% of the observed response variation. Is that enough to trust the model? R² alone cannot tell us whether a straight line is appropriate.
 
 Before we clap our hands, let's just have a look at the other variable combinations of the Anscombe data set.
 
@@ -196,13 +186,18 @@ for(i in seq(4)){
 
 Reading the panels from top left to bottom right: the first dataset is approximately linear; the second follows a curve; the third is approximately linear apart from one unusually high response; and the fourth has nearly all predictor values at the same position, with one point far to the right. These different patterns explain why similar regression summaries do not replace inspecting the observations.
 
-While x3/y3 might still justify a linear regression if we remove the outlier, the two plots on the right side do not. So what to do? Unfortunately, all of these data combinations result in almost the same regression statistics:
+Investigate the unusual observation in dataset three against its source and context before considering any exclusion. Dataset two shows curvature, while dataset four relies heavily on one isolated predictor value. Despite these differences, all four fits have almost the same intercept, slope and R²:
 
 ```{r lesson-15}
 lmodels <- lapply(seq(4), function(i){
   lm(anscombe[, i+4] ~ anscombe[, i])
 })
-lapply(lmodels, summary)
+data.frame(
+  Dataset = 1:4,
+  Intercept = unlist(lapply(lmodels, function(model) coef(model)[1])),
+  Slope = unlist(lapply(lmodels, function(model) coef(model)[2])),
+  R_squared = unlist(lapply(lmodels, function(model) summary(model)$r.squared))
+)
 ```
 
 

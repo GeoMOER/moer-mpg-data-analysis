@@ -14,19 +14,19 @@ Compute simple linear models to predict dependent data and assess performance us
 At the end of this session you should be able to
 * evaluate the prediction performance of a statistical regression model,
 * decide which cross-validation strategy to use, and
-* compute and interpret some prediction error metrics.
+* calculate one root mean squared error (RMSE) per validation run and interpret its variation across runs.
 
 
 ## Basic idea of statistical prediction
 
 We now shift our emphasis from interpreting fitted relationships to evaluating predictions for held-out observations. Recall the [distinction between description, inference, and prediction in Unit 05]({{ site.baseurl }}/unit05/unit05-02_basic_idea_of_modelling.html#what-do-we-want-to-learn-from-a-model).
 
-Use observation samples to build a model, which predicts the dependent variable based on one or more independent variables. 
+Use observation samples to build a model, which predicts the dependent variable based on one or more independent variables.
 
 {% include figure image_path="/assets/images/cross_validation.png" alt="Cross validation example using linear regressions" caption="Linear regression models computed with left-out data pairs." %}
 
-The graphic above shows a scatter plot of data pairs between an independent (X axis) and a dependent (Y axis) variable. 
-The red lines represent linear regression models, each computed on a different subset of the data pairs where one data pair has been removed. 
+The graphic above shows a scatter plot of data pairs between an independent (X axis) and a dependent (Y axis) variable.
+The red lines represent linear regression models, each computed on a different subset of the data pairs where one data pair has been removed.
 The difference between the left-out observation and its prediction by the model provides an estimate of prediction error.
 Such an error estimation strategy is generally called (leave-one-out) _cross validation_.
 
@@ -42,7 +42,7 @@ have a look at [Meyer et al. 2018.](https://www.sciencedirect.com/science/articl
 
 
 ## Comments?
-You can leave comments below if you have questions or remarks about any of the text or code in this unit. 
+You can leave comments below if you have questions or remarks about any of the text or code in this unit.
 Please copy the corresponding line into your comment to make it easier to answer your question.
 
-<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit06" theme="github-light" crossorigin="anonymous" async> </script> 
+<script src="https://utteranc.es/client.js" repo="GeoMOER/moer-mpg-data-analysis" issue-term="moer-mpg-data-analysis_unit06" theme="github-light" crossorigin="anonymous" async> </script>

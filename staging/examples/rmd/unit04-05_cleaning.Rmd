@@ -70,7 +70,7 @@ measurement_columns <- c("Settlement", "Recreation", "Agriculture", "Forest")
 lu$Year <- as.integer(lu$Year)
 ```
 
-These are English analysis names, not new measurements. `Settlement` includes transport; the four columns are percentages of total reporting area. They are not necessarily mutually exclusive categories to add together. `ID` stays character.
+These are English analysis names, not new measurements. `Settlement` includes transport and, in this historical classification, `Recreation` ([official category definitions](https://statistik.thueringen.de/datenbank/definitionen.asp?tabID=zt000534)). The four columns are percentages of total reporting area; do not add these overlapping categories together. `ID` stays character.
 
 ### Converting data types
 

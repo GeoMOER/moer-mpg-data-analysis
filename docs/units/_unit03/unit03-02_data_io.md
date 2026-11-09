@@ -1,4 +1,5 @@
 ---
+toc: TRUE
 title: Tabulated Data I/O
 header:
   image: "/assets/images/teaser/holz.jpg"

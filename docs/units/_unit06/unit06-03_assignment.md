@@ -1,5 +1,5 @@
 ---
-title: "Unmarked Assignment: Recreation vs. Settlement Revisited"
+title: "Unmarked Assignment: Forest vs. Agriculture Revisited"
 toc: true
 toc_label: In this worksheet
 header:
@@ -7,7 +7,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-This worksheet revisits the settlement vs. recreation model and examines to what extent the results describing the performance of the model differ between the "internal" model evaluation and a test against independent samples.
+This worksheet revisits the forest vs. agriculture model and examines to what extent the results describing the performance of the model differ between the "internal" model evaluation and a check against held-out observations.
 
 After completing this worksheet you should have gained some experience in applying cross-validation for estimating the performance of a model.
 
@@ -26,14 +26,14 @@ Reuse `Output/lu_clean.rds`, the wide land-use table from the [Unit 04 land-use 
 
 ## Prepare comparable observations
 
-Carry forward the **same cohort as Assignment 05**: **2014**, explicitly recorded `Admin_unit` of **`District` or `Urban district`**, and complete `Settlement`–`Recreation` pairs. Omit other levels and unresolved types, retain region IDs, report exclusions, and check that each region occurs once. Split this prepared cohort rather than the full mixed-year, mixed-level input.
+Carry forward the **same cohort as Assignment 05**: **2014**, explicitly recorded `Admin_unit` of **`District` or `Urban district`**, and complete `Agriculture`–`Forest` pairs. Omit other levels and unresolved types, retain region IDs, report exclusions, and check that each region occurs once. Split this prepared cohort rather than the full mixed-year, mixed-level input.
 
-Random splits assess prediction for held-out records within this historical district cohort. Nearby districts can still be related; this design does not establish transfer to an unseen geographic area or a future year.
+As in Assignment 05, both land uses are shares of a district's total area; predictions describe an association, not a causal effect. Random splits assess prediction for held-out records within this historical district cohort. Nearby districts can still be related; this design does not establish transfer to an unseen geographic area or a future year.
 
 ## Prediction error of a linear model
 Please write an R Markdown document,
-which helps you to statistically evaluate the performance of a simple linear model that predicts the percentage recreation area from the respective settlement area. 
-Choose and explain a repeated validation procedure: repeated random holdout or repeated complete fold partitions, as introduced in the [cross-validation example]({{ site.baseurl }}/unit06/unit06-02_cross_validation.html#leave-many-out-cross-validation). Implement it as a function. Set the seed once before random splitting, retain run and region IDs, and record your seed and R version.
+which helps you to statistically evaluate the performance of a simple linear model that predicts forest share (`Forest`, response) from agricultural share (`Agriculture`, predictor).
+Choose and explain a repeated validation procedure: repeated random holdout or repeated complete fold partitions, as introduced in the [cross-validation example]({{ site.baseurl }}/unit06/unit06-02_cross_validation.html#leave-many-out-cross-validation). Implement it as a function that returns one RMSE per run. Choose and document the number of repetitions and the training fraction (or number of folds); no fixed repetition count is prescribed here. Set the seed once before random splitting, retain run and region IDs, and record your seed and R version.
 
 Calculate **one RMSE per run** from that run's held-out predictions. For a fold-based design, pool the predictions from all folds within each complete run before calculating RMSE. Plot the resulting distribution across runs and report its mean and standard deviation. Label any additional pooled prediction metric separately. Overlapping runs are not independent replications; their SD describes split sensitivity rather than a standard error or confidence interval.
 

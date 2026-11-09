@@ -1,4 +1,5 @@
 ---
+toc: TRUE
 title: Analyze Your Temporal Data
 header:
   image: "/assets/images/teaser/air_temperature.png"

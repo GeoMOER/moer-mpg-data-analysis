@@ -1,4 +1,5 @@
 ---
+toc: TRUE
 title: Marburg Open Hackathon
 ---
 

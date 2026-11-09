@@ -7,136 +7,123 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-After fitting a regression, check whether its assumptions are a reasonable description of the observations. This page continues the [Anscombe regression example]({{ site.baseurl }}/unit05/unit05-03_linear_regression.html) and leads to [Assignment 05]({{ site.baseurl }}/unit05/unit05-04_assignment.html). QQ plots concern the fitted model's residuals; transformations are followed by a new fit and another diagnostic check.
+In the [previous example]({{ site.baseurl }}/unit05/unit05-03_linear_regression.html#finished), the Anscombe datasets had almost identical slopes and R² values but very different scatterplots. We now check whether the fitted lines and their F-tests are reasonable.
 
-## What to do on this page
+## What do we need to check? {#minimum-assumptions-for-bivariate-linear-regression-models}
 
-Work through this example before starting Assignment 05:
+<span id="what-to-do-on-this-page"></span>
+<span id="what-are-we-checking"></span>
 
-1. Run **Recreate the example models** below. The later code uses these objects.
-2. Follow the core checks: residuals versus fitted values, scale-location, residual QQ plots, the Shapiro–Wilk test and influential observations. Each four-panel figure shows datasets 1–4 from top left to bottom right. In `plot(model, which = ...)`, `which` selects the diagnostic plot explained in that section.
-3. For each dataset, note the main pattern you see, which assumption it calls into question and what that means for interpreting the line or its tests. Compare your notes with the explanations below the figures. Use the sampling information to discuss independence; the plots alone cannot establish it.
-4. Use **From this example to Assignment 05** to transfer the checks to the land-use data. The transformation, extra histogram/QQ comparison, scatterplot matrix and coplot are optional extensions.
+Recall the vertical segments in the regression plot: **residual = observed − fitted**. Their pattern helps us assess the model's unobserved errors. The normality assumption concerns those errors, not the distribution of x or y alone.
 
-Your result here is a set of diagnostic notes to support the assignment. There is no separate submission for this walkthrough.
+Follow these checks in order. For each, describe what you see and what it means for the model. There is no separate submission.
 
-## Recreate the example models
+| Question | How to check | What would raise a concern? |
+|---|---|---|
+| Does a straight line describe the mean response? | [1. Residuals versus fitted values](#start-with-residuals-versus-fitted-values) | A systematic curve in the residuals, as for dataset 2 below. |
+| Is the spread around the line roughly constant? | [2. Scale-location plot](#compare-spread-with-a-scale-location-plot) | Residuals become clearly more or less spread out. |
+| Is a normal-error assumption plausible for the F-test? | [3. Residual QQ plot](#qq-plots), then [Shapiro–Wilk](#use-a-normality-test-as-an-additional-diagnostic) | Strong departures from the reference line. |
+| Are observations independent? | [4. Sampling design](#independence) | Repeated observations or related neighboring regions. |
 
-The `anscombe` dataset is included with R. The following code recreates the first fitted model (`lmod`) and all four models (`lmodels`), so the page also works in a fresh R session without additional downloads:
+**Take-home message:** Check residual patterns and sampling design before interpreting the slope test.
 
-```r
-ind <- anscombe$x1
-dep <- anscombe$y1
-lmod <- lm(dep ~ ind)
-lmodels <- lapply(seq(4), function(i) {
+## Prepare the models {#recreate-the-example-models}
+
+Use **all four Anscombe datasets** from the previous page. This code recreates their models in a fresh R session. Each figure below shows datasets 1 and 2 in the top row, then 3 and 4 in the bottom row. In `plot()`, `which` selects the diagnostic view and `main` labels the dataset. Small numeric labels identify observations in the original data.
+
+
+``` r
+lmodels <- lapply(1:4, function(i) {
   lm(anscombe[, i+4] ~ anscombe[, i])
 })
 par_org <- par(no.readonly = TRUE)
 ```
 
-## Minimum assumptions for bivariate linear regression models {#minimum-assumptions-for-bivariate-linear-regression-models}
+**Result:** `lmodels` contains four fitted regressions, ready for the same diagnostic checks.
 
-Similar coefficients, p-values and R-squared values can describe very different patterns. Before interpreting a fitted model, ask whether a straight line and its uncertainty calculations are a reasonable description of these observations.
+## 1. Check the mean pattern {#start-with-residuals-versus-fitted-values}
 
-We start with a **graphical plausibility check**: describe patterns, consider their possible causes and record what remains uncertain. A reassuring plot supports a model; it does not prove that all assumptions hold.
+The previous page plotted **observed y against x**: x on the horizontal axis and y on the vertical axis. Here, each observation becomes a point with its **fitted y on the horizontal axis** and its **residual (observed − fitted) on the vertical axis**. A positive residual means the observation lies above the fitted regression line; a negative residual means it lies below.
 
-### What are we checking?
+Look for residuals scattered around the horizontal zero line without a systematic curve. The red line summarizes the residual pattern; it is not the fitted regression line from the original scatterplot.
 
-A residual is the observed response minus its fitted value: **residual = observed − fitted**. Positive residuals lie above the fitted line; negative residuals lie below it. The model's errors are unobserved. Residuals are estimates that help us examine them.
 
-```r
-diagnostics <- data.frame(
-  Predictor = ind,
-  Fitted = fitted(lmod),
-  Residual = residuals(lmod)
-)
-head(diagnostics, 3)
-```
-
-The assumptions concern the errors around the conditional mean relationship. **Neither the predictor nor the pooled response has to follow a normal distribution.** A histogram or QQ plot of raw land-use percentages therefore does not check the normality assumption of a regression fitted to those percentages.
-
-| Question | Useful starting point | What would need attention? |
-|---|---|---|
-| Is a straight line adequate for the mean relationship? | Scatterplot and residuals versus fitted values or predictor. | A curve or another systematic residual pattern. |
-| Is the error spread roughly constant (homoscedasticity)? | Residuals versus fitted values and scale-location plot. | A clear widening/narrowing of the residual band. |
-| Is a normal-error approximation plausible for the usual small-sample t/F tests and intervals? | Normal QQ plot of residuals. | Strong curvature, pronounced tails or isolated extreme points. |
-| Are observations reasonably independent for the analysis? | Sampling design, region/year identifiers and meaningful time/group information. | Repeated observations, overlapping areas or temporal/spatial dependence. |
-| Does one observation dominate the fitted line? | Original scatterplot, leverage and Cook's distance. | An isolated predictor value or a strongly influential observation. |
-
-Check the mean pattern before interpreting the spread or QQ plot. A misspecified mean can leave structure in the residuals that should not be explained away as a distribution problem. Independence also needs information about how the data were collected; a QQ plot cannot establish it.
-
-### Start with residuals versus fitted values
-
-```r
-par(par_org)
+``` r
 par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 1)
+for(i in 1:4){
+  plot(lmodels[[i]], which = 1, main = paste("Dataset", i))
 }
 ```
 
-![Residual-versus-fitted plots for the four Anscombe datasets; the second shows curvature and the third highlights one large residual.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-14-1.png)
+![Residual-versus-fitted plots for Anscombe datasets 1–4: roughly unstructured scatter, a curve, an unusual residual, and a cluster with one distant fitted value.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-14-1.png)
 
-Look for a band around zero without a clear curve. Compare the vertical spread across the horizontal axis. A curved trend suggests a problem with the mean relationship; a fan-shaped band suggests changing spread. They are different questions, even though one graph helps with both.
+Read the top row first, then the bottom row:
 
-In the second Anscombe dataset, the residual curve makes the straight-line mean questionable. The third has one conspicuous residual. The first is more compatible with a straight-line description, but eleven observations provide limited evidence. In the fourth, one isolated predictor value has a strong role in determining the line.
+- **Dataset 1:** residuals scatter around zero without a pronounced curve.
+- **Dataset 2:** residuals are negative at both ends and positive in the middle. The straight-line model overestimates y at the ends and underestimates it in the middle: it misses the curved mean relationship.
+- **Dataset 3:** one large positive residual stands out. That observation also pulls the fitted line away from the other points, leaving a pattern in their residuals. Investigate it rather than automatically deleting it.
+- **Dataset 4:** ten points share x = 8, while one lies at x = 19. The fitted line passes exactly through that distant point, so its residual is zero. With only two x values, we cannot assess whether the mean relationship is straight or curved. The slope depends entirely on that one distant observation.
 
-### Compare spread with a scale-location plot
+**Take-home message:** A suitable straight-line mean leaves no systematic curve in the residuals. The target here is scatter around zero, not points following a sloping line.
 
-```r
+## 2. Check the spread {#compare-spread-with-a-scale-location-plot}
+
+The **scale-location plot** shows residual sizes rescaled for comparison; it does not change the fitted model. Look for a roughly level red line and similar typical residual sizes across fitted values. A rising or falling pattern suggests changing error spread, which affects the usual F-test.
+
+
+``` r
 par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 3)
+for(i in 1:4){
+  plot(lmodels[[i]], which = 3, main = paste("Dataset", i))
 }
 ```
 
-![Scale-location plots for the Anscombe quartet compare the spread of standardized residuals across fitted values.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-15-1.png)
+```
+## Warning: not plotting observations with leverage one:
+##   8
+```
 
-`which = 3` plots the square root of the absolute standardized residual against the fitted value. Standardization accounts for the estimated error scale and leverage. A roughly level trend with similar spread is reassuring; a marked trend calls for investigation. These are diagnostic scales: the original response and fitted model have not been transformed.
+![Scale-location plots for Anscombe datasets 1–4 compare residual sizes across fitted values.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-15-1.png)
 
-For the fourth dataset, R can warn that a leverage-one observation is omitted from standardized diagnostic plots. That observation alone determines the fitted value at its predictor position, making its standardized residual undefined. The warning is useful evidence of the unusual design; an apparently quiet remaining plot does not resolve that problem.
+Dataset 1 has no obvious systematic spread change, but eleven observations provide limited evidence. In dataset 2, the curved mean distorts residual sizes; in dataset 3, the unusual observation affects the pattern. Neither provides a clean assessment of constant spread.
 
-### Read a residual QQ plot {#qq-plots}
+**Dataset 4 cannot support a spread comparison across x:** there is only one observation at x = 19. R warns that it cannot plot observation 8 with “leverage one”: the line is forced through that point, so its residual cannot be rescaled for this plot. It is also omitted from the QQ plot below; it remains in the fitted model.
 
-A normal QQ plot compares ordered residuals with theoretical normal quantiles. Approximate alignment with a straight reference line is compatible with a normal-error approximation. Strong curvature or isolated tail points deserve attention. Small departures are expected, especially with few observations.
+**Take-home message:** Check the mean pattern first; changing residual spread is another reason to question the usual F-test.
 
-```r
+## 3. Check the normal approximation {#qq-plots}
+
+A **normal QQ plot** compares the residual pattern with what a normal distribution would produce. Points roughly following the reference line support this approximation; strong departures raise concerns. Check residuals, not raw x or y values.
+
+
+``` r
 par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 2)
+for(i in 1:4){
+  plot(lmodels[[i]], which = 2, main = paste("Dataset", i))
 }
 ```
 
-![Normal QQ plots for the four Anscombe regression models show different residual patterns despite their similar summary statistics.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-16-1.png)
+```
+## Warning: not plotting observations with leverage one:
+##   8
+```
 
-```r
+![Normal QQ plots for Anscombe datasets 1–4; dataset 3 has a marked departure associated with its unusual observation.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-16-1.png)
+
+``` r
 par(par_org)
 ```
 
-`plot(model, which = 2)` uses standardized residuals. The marked departure in the third dataset is consistent with the unusual observation already seen in the scatterplot. Interpret the QQ plot together with those other views. A straight QQ pattern would not repair the curved mean in dataset two or the isolated predictor in dataset four.
+**Dataset 1** is reasonably close to the QQ reference line. **Dataset 2 is visually borderline:** its points show departures, but eleven observations give limited evidence about normality. **Dataset 3 has a marked departure**, consistent with its unusual observation. **Dataset 4** shows no strong departure among the ten displayed residuals; the omitted distant point and limited x values still prevent an overall endorsement of the model.
 
-To connect this plot with the simpler distribution plots from Unit 03, inspect one model directly:
+**Take-home message:** A roughly straight QQ pattern supports a normal-error approximation; it does not confirm that the mean relationship is linear.
 
-```r
-standardized_residuals <- rstandard(lmod)
-old_par <- par(no.readonly = TRUE)
-par(mfrow = c(1, 2))
-hist(standardized_residuals, main = "Residual distribution",
-     xlab = "Standardized residual")
-qqnorm(standardized_residuals, main = "Residual normal QQ plot")
-qqline(standardized_residuals, col = "red", lwd = 2)
-par(old_par)
-```
+### Add the Shapiro–Wilk test {#use-a-normality-test-as-an-additional-diagnostic}
 
-![Histogram and normal QQ plot of standardized residuals from the first Anscombe model; both show only eleven observations.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/minimum-residual-overview-1.png)
+The earlier ANOVA tested a zero slope. **Shapiro–Wilk asks a different question: is the distribution normal?** A p-value below 0.05 is evidence against normality; a larger value does not prove it. Use the test alongside the plots.
 
-The histogram gives a rough view of the shape; the QQ plot makes the normal reference explicit. With eleven residuals, neither provides a detailed description of the underlying error distribution. The red QQ line is a reference for residual quantiles, not the regression line relating the predictor to the response.
 
-### Use a normality test as an additional diagnostic
-
-The Shapiro–Wilk test has a normal-distribution null hypothesis. A small p-value is evidence against that hypothesis; a large p-value does not prove normality. Small samples can hide departures, while large samples can reveal small departures that require a judgment about practical relevance.
-
-```r
+``` r
 normality_p <- unlist(lapply(lmodels, function(model) {
   shapiro.test(residuals(model))$p.value
 }))
@@ -144,110 +131,71 @@ data.frame(Dataset = 1:4, p_value = normality_p,
            Below_0.05 = normality_p < 0.05)
 ```
 
-Here only the third dataset falls below 0.05. Yet the second and fourth already raised clear graphical concerns. A normality test answers one narrow question; it cannot certify the model. Fitted residuals also share constraints from the estimated model, so treat these p-values as diagnostic indicators rather than an exact test that all regression assumptions hold.
-
-In Assignment 05 you will repeat this diagnostic for different subsets. The fraction below 0.05 describes sensitivity to those subsets; it is not the probability that the model is wrong. Subsets drawn repeatedly from the same data can overlap and are not independent replications.
-
-### Investigate influential observations
-
-Plot labels identify observations, using the relevant diagnostic to select conspicuous cases. They are not a verdict that a record is erroneous. Cook's distance summarizes how strongly deleting an observation would change the fitted model:
-
-```r
-par(mfrow = c(2,2))
-for(i in seq(4)){
-  plot(lmodels[[i]], which = 4)
-}
-par(par_org)
+```
+##   Dataset     p_value Below_0.05
+## 1       1 0.545584685      FALSE
+## 2       2 0.092948814      FALSE
+## 3       3 0.001574055       TRUE
+## 4       4 0.780048488      FALSE
 ```
 
-![Cook distance plots for the Anscombe quartet identify observations with unusually strong influence on the fitted regressions.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/unnamed-chunk-17-1.png)
+Only dataset 3 falls below 0.05. **Dataset 2 still needs a curved mean, despite its larger p-value.** Small samples can hide departures; large samples can detect small ones. Fitted residuals share constraints from the estimated line, so treat these results as diagnostic indicators.
 
-The isolated predictor in dataset four is an important warning about the information supporting its slope. Check the source and scientific context before excluding any observation; changing a dataset just to obtain a better diagnostic plot needs justification.
+**Take-home message:** Read the p-value alongside the plots. Non-rejection does not establish that the model is adequate.
 
-### Transformations: refit and check again {#transformations}
+## 4. Check the sampling design {#independence}
 
-If the pattern suggests a different scale, transform an observed variable and **refit the model**, then inspect the new residuals. Transforming residuals alone cannot improve the unchanged model. A transformation also changes the meaning of the relationship and the scale on which errors are described.
+Independence means that observations do not share unexplained effects that link their errors. Recall Unit 04's region and year identifiers: repeated measurements of one region, overlapping administrative areas or neighboring districts can be related. Selecting one year and one administrative level helps, but does not remove spatial dependence.
 
-The following is a comparison, not an automatic improvement. All response values in the first Anscombe dataset are positive, so a logarithm is defined:
+**Take-home message:** Independence needs support from the sampling design; a reassuring residual plot cannot establish it.
 
-```r
-log_model <- lm(log(dep) ~ ind)
-old_par <- par(no.readonly = TRUE)
-par(mfrow = c(2, 2), oma = c(0, 0, 2, 0))
-plot(lmod, which = 1, main = "Original response", sub.caption = "")
-plot(log_model, which = 1, main = "Log response", sub.caption = "")
-plot(lmod, which = 2, main = "Original response", sub.caption = "")
-plot(log_model, which = 2, main = "Log response", sub.caption = "")
-par(old_par)
-```
+## State your conclusion {#no-alternatives}
 
-![Residual-versus-fitted and normal QQ plots compare models for the original and log-transformed response of the first Anscombe dataset.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/minimum-transformation-refit-1.png)
-
-Compare curvature, spread and tail behavior, then ask whether the log-response model makes sense for the question. There is no need to transform an otherwise adequate relationship merely to increase a normality-test p-value. R-squared values on different response scales are not directly comparable. A curved mean or dependent observations can require a different model or design; transformation is not a universal remedy.
-
-### Additional views of residual patterns
-
-The standard diagnostic plots above are sufficient preparation for Assignment 05. The following two views extend the exploration tools introduced in Unit 03.
-
-**Scatterplot matrix.** Each panel compares a pair of columns. Here the fitted value is a straight-line function of the predictor by construction; that relationship is not a new discovery. Focus on whether the residual panels show a pattern.
-
+<span id="investigate-influential-observations"></span>
+<span id="transformations"></span>
+<span id="additional-views-of-residual-patterns"></span>
 <span id="scatterplot-matrix"></span>
-
-```r
-plot(diagnostics, pch = 16)
-```
-
-![Scatterplot matrix of predictor, fitted values and residuals from the first Anscombe model; fitted values are a linear function of the predictor.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/minimum-scatterplot-matrix-1.png)
-
-**Conditional plots.** A coplot compares residual patterns in separate groups. Here the groups are the four Anscombe datasets, not intervals chosen from the response. Each row added below is one observation from one fitted model:
-
 <span id="coplot"></span>
 
-```r
-residual_groups <- data.frame()
-for (i in seq_along(lmodels)) {
-  residual_groups <- rbind(residual_groups, data.frame(
-    Dataset = factor(i),
-    Fitted = fitted(lmodels[[i]]),
-    Residual = residuals(lmodels[[i]])
-  ))
-}
-coplot(Residual ~ Fitted | Dataset, data = residual_groups)
-```
+**Are the assumptions met?** These small examples can reveal problems, but cannot prove that all assumptions hold. Independence is **not established for any of the four datasets**: these are constructed examples without a sampling design to assess.
 
-![Conditional residual-versus-fitted plots separate the four Anscombe datasets and show their different residual patterns.]({{ site.baseurl }}/assets/images/rmd_images/e05-02/minimum-coplot-1.png)
+| Dataset | What do the checks show? | Conclusion for the regression |
+|---|---|---|
+| **1** | No clear mean or spread problem; QQ pattern reasonably straight; Shapiro p ≈ 0.546. | **Reasonably compatible with the assumptions checked by the plots.** Minor irregularities with eleven observations are not clear violations. The usual slope test is reasonable if independence is justified. |
+| **2** | Clear residual curve; spread assessment is confounded by the wrong mean shape. Normality is visually borderline; Shapiro p ≈ 0.093 does not reject at 0.05. | **The straight-line mean assumption is not met.** The borderline normality result does not rescue the model; do not rely on its usual slope test. |
+| **3** | One unusual response distorts the fitted line and residual-size pattern. Strong QQ departure; Shapiro p ≈ 0.0016. | **The normal-error assumption is not plausible for this fit.** Investigate the unusual observation before relying on the usual slope test. |
+| **4** | Mean shape and constant spread cannot be adequately checked across just two x values. QQ and Shapiro (p ≈ 0.780) show no strong normality warning. | **The assumptions are not demonstrated.** This is insufficient evidence, not proof of a violation. The slope rests on one distant point; avoid treating it as a well-supported general relationship. |
 
-Read the panels from bottom left to bottom right, then top left to top right: datasets 1, 2, 3 and 4. The strips labeled “Given: Dataset” identify the conditioning groups. There are only eleven observations per group. Use these panels to ask questions about the mean relationship and spread; they do not establish independence or a normal error distribution.
+For Assignment 05, report the concern. No replacement model is required; do not remove observations or transform data just to make a test pass.
 
-### If a check raises concerns {#no-alternatives}
+**Take-home message:** Connect the **observed pattern → questionable assumption → consequence for your interpretation**.
 
-Turn the checks into a short assessment:
+## From one subset to Assignment 05 {#from-diagnostics-to-assignment-05}
 
-1. **Describe the evidence.** Name the plot or design feature and the pattern you see, such as a curved residual trend or neighboring regions.
-2. **State the consequence.** Explain which assumption is questionable and whether this limits interpretation of the fitted line, its tests or its uncertainty. Also say what cannot be assessed from the available information.
-3. **Choose a justified next step.** Check unusual records against their source. If a different scale makes sense, refit and repeat the diagnostics as shown above. If the concern remains, report it as a limitation. Assignment 05 asks you to diagnose and explain concerns; fitting a replacement model is not required.
+[Forest vs. Agriculture]({{ site.baseurl }}/unit05/unit05-04_assignment.html) applies these checks to the land-use table from Unit 04. It then asks whether the normality-test result changes across smaller samples.
 
-For example: “The second dataset has a curved residual trend, so a straight-line mean is questionable and I would not interpret its slope test as adequate evidence for that relationship, even though the normality test does not reject.” Do not remove observations or transform variables simply to obtain a reassuring plot or p-value. More flexible models and predictive evaluation follow in later units.
+First try **one subset** of Anscombe dataset 1: select eight rows, refit the model, and save the residual-test p-value. Selecting whole rows keeps the x–y pairs together.
 
-### From this example to Assignment 05 {#from-diagnostics-to-assignment-05}
 
-[Assignment 05: Recreation vs. Settlement]({{ site.baseurl }}/unit05/unit05-04_assignment.html) applies the same workflow to the wide `Output/lu_clean.rds` prepared in Unit 04:
-
-1. Define comparable observations and check missing values for the two measurements.
-2. Inspect the scatterplot, fit the line and inspect its residuals.
-3. Describe evidence about the mean pattern, spread and normal approximation, and discuss what the sampling design can tell you about independence.
-4. Compare the normality-test result across repeated random subsets, without treating it as a single model-quality score.
-
-For random subsets, `sample()` selects positions. This small example uses invented row numbers:
-
-```r
+``` r
 set.seed(42)
-chosen_rows <- sample(1:100, size = 10, replace = FALSE)
-chosen_rows
+chosen_rows <- sample(1:nrow(anscombe), size = 8, replace = FALSE)
+one_sample <- anscombe[chosen_rows, ]
+subset_model <- lm(one_sample$y1 ~ one_sample$x1)
+subset_p <- shapiro.test(residuals(subset_model))$p.value
+subset_p
 ```
 
-`replace = FALSE` prevents an observation from occurring twice within one draw. `set.seed()` makes the draw reproducible in the same R setup; record the seed and R version. Set it once before a repeated-sampling loop. Random selection cannot make dependent or incomparable source observations independent.
+```
+## [1] 0.6140661
+```
 
-The assignment specifies the regional cohort and retains its existing 100 repetitions of 50 pairs. Begin with the graphical checks; use the repeated test results to discuss sample sensitivity and limitations. You are not asked to force all diagnostic plots to look perfect or to implement the extra transformation/matrix/coplot examples.
+`replace = FALSE` prevents duplicates within this draw. `set.seed()` makes it reproducible in the same R setup; set it once before repeating draws and record the seed and R version. This subset's p-value is above 0.05, so the test does not reject normality.
 
-For further explanation, see the [NIST guide to graphical residual analysis](https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm), the [R diagnostic-plot documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/plot.lm.html) and [Shapiro–Wilk documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/shapiro.test.html).
+Repeat the workflow for the assignment's **100 subsets of 50 districts**. These subsets can overlap; they reuse the same observed data rather than providing new datasets.
+
+**Take-home message:** The rejection frequency describes sensitivity to the selected samples, not the probability that the model is correct.
+
+Here, fitting and diagnosis use the same rows. [Unit 06]({{ site.baseurl }}/unit06/unit06-02_cross_validation.html) instead predicts held-out rows to assess prediction error.
+
+References: [R diagnostic plots](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/plot.lm.html), [Shapiro–Wilk](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/shapiro.test.html), [NIST residual analysis](https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd44.htm).

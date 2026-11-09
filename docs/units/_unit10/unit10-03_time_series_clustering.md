@@ -1,6 +1,6 @@
 ---
 title: "Example: Time Series Clustering"
-toc: true
+toc: FALSE
 toc_label: In this example
 header:
   image: "/assets/images/teaser/air_temperature.png"

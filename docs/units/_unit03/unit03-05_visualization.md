@@ -1,4 +1,5 @@
 ---
+toc: TRUE
 title: Visualization
 permalink: /unit03/unit03-03_visualization.html
 header:

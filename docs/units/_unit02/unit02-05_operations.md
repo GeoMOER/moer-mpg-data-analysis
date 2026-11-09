@@ -1,4 +1,5 @@
 ---
+toc: TRUE
 title: Operations
 header:
   image: "/assets/images/title/title_1600_500.jpg"

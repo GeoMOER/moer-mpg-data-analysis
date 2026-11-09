@@ -17,7 +17,7 @@ We will compare three approaches:
 * **Repeated random holdout (leave-many-out):** repeatedly draw a training subset, such as 80% of the observations, and validate on the remaining observations. Some observations can be held out several times and others less often.
 * **Four-fold cross-validation:** divide the observations into four disjoint groups. Hold out each group once and fit on the other three. Each observation has one held-out prediction per complete four-fold run.
 
-These random splits illustrate the mechanics. They suit observations that can reasonably be treated as exchangeable for the prediction question. Repeated observations from the same region should stay together when assessing prediction for unseen regions; nested administrative aggregates should not be mixed with their component districts. Predicting future years requires chronological validation. A random split alone does not remove spatial or temporal dependence.
+These random splits illustrate the mechanics. Use them when the prediction question concerns other observations from the same population and collection process. Repeated observations from the same region should stay together when assessing prediction for unseen regions; nested administrative aggregates should not be mixed with their component districts. Predicting future years requires chronological validation. A random split alone does not remove spatial or temporal dependence.
 
 To illustrate the calculations, we use `x1` and `y1` from the [Anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html){:target='_blank'}. Its eleven observations make the loops easy to inspect, but such a small dataset gives unstable performance estimates.
 
@@ -30,51 +30,39 @@ plot(anscombe$x1, anscombe$y1)
 abline(lmod, col = "red")
 ```
 
-![First Anscombe dataset with its fitted linear regression, used as the starting model for cross-validation.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-1-1.png)<!-- -->
+![First Anscombe dataset with its fitted linear regression, used as the starting model for cross-validation.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-1-1.png)
 
 ``` r
-anova(lmod)
+summary(lmod)$r.squared
 ```
 
 ```
-## Analysis of Variance Table
-##
-## Response: y1
-##           Df Sum Sq Mean Sq F value  Pr(>F)
-## x1         1 27.510 27.5100   17.99 0.00217 **
-## Residuals  9 13.763  1.5292
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-``` r
-summary(lmod)
-```
-
-```
-##
-## Call:
-## lm(formula = y1 ~ x1, data = anscombe)
-##
-## Residuals:
-##      Min       1Q   Median       3Q      Max
-## -1.92127 -0.45577 -0.04136  0.70941  1.83882
-##
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)   3.0001     1.1247   2.667  0.02573 *
-## x1            0.5001     0.1179   4.241  0.00217 **
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Residual standard error: 1.237 on 9 degrees of freedom
-## Multiple R-squared:  0.6665,	Adjusted R-squared:  0.6295
-## F-statistic: 17.99 on 1 and 9 DF,  p-value: 0.00217
+## [1] 0.6665425
 ```
 
 ## Leave-one-out cross-validation
 
-For each observation, fit the same model without that observation and predict its response. Retain the observation ID so the prediction can be traced back to its input row.
+Start with **one observation**, row 1. Fit without it, then predict its response from its predictor value. `newdata` supplies the held-out rows and must contain the predictor column named in the model (`x1`). The held-out response `y1` is used only afterward to calculate the error.
+
+
+``` r
+i <- 1
+train <- anscombe[-i, ]
+test <- anscombe[i, ]
+fit <- lm(y1 ~ x1, data = train)
+pred <- predict(fit, newdata = test)
+data.frame(row_id = i, observed = test$y1, predicted = pred,
+           error = pred - test$y1)
+```
+
+```
+##   row_id observed predicted       error
+## 1      1     8.04  7.996667 -0.04333333
+```
+
+The prediction error is **predicted minus observed**; positive means overprediction. This differs from the fitted residual convention in Unit 05 (observed minus fitted).
+
+Now repeat those same steps for each row. `lapply()` returns one small table per row; `do.call(rbind, cv)` joins these tables. Retain the row ID so each prediction can be traced back to its observation.
 
 
 ``` r
@@ -87,28 +75,23 @@ cv <- lapply(seq_len(nrow(anscombe)), function(i) {
 })
 cv <- do.call(rbind, cv)
 
-plot(cv$obsv, (cv$obsv - cv$pred))
+plot(cv$obsv, cv$pred - cv$obsv,
+     xlab = "Observed response", ylab = "Prediction error")
+abline(h = 0, lty = 2)
 ```
 
-![Leave-one-out residuals, observed minus predicted response, plotted against observed values; errors fall on both sides of zero.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-2-1.png)<!-- -->
+![Leave-one-out prediction errors, predicted minus observed response, plotted against observed values; errors fall on both sides of zero.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/unnamed-chunk-2-1.png)
 
-Mean error (ME) uses **predicted minus observed** values: positive ME indicates overprediction on average. Mean absolute error (MAE) measures the typical absolute error. Root mean squared error (RMSE) gives more weight to large errors. All three use the response's units; smaller MAE and RMSE indicate smaller prediction errors.
-
-Here, RMSE uses held-out predictions to assess prediction error. For a comparison with training R squared and AIC, see [which measure answers which question in Unit 07]({{ site.baseurl }}/unit07/unit07-02_variable_selection.html#which-measure-answers-which-question).
+**Root mean squared error (RMSE)** summarizes the size of the errors: square them, take their mean, then take the square root. It has the response's units and gives greater weight to large errors. Smaller RMSE means smaller errors on these held-out observations.
 
 
 ``` r
-prediction_metrics <- function(observed, predicted) {
-  error <- predicted - observed
-  c(ME = mean(error), MAE = mean(abs(error)),
-    RMSE = sqrt(mean(error^2)))
-}
-round(prediction_metrics(cv$obsv, cv$pred), 3)
+error <- cv$pred - cv$obsv
+sqrt(mean(error^2))
 ```
 
 ```
-##    ME   MAE  RMSE
-## 0.037 1.025 1.368
+## [1] 1.367787
 ```
 
 Here, one leave-one-out run produces eleven held-out predictions and **one RMSE**. The individual errors are not eleven RMSE runs. We do not derive an ANOVA F-test from these predictions: each prediction comes from a different fitted model, so the usual single-model ANOVA decomposition does not apply.
@@ -122,7 +105,7 @@ plot(cv$obsv, cv$pred, xlab = "Observed response",
 abline(0, 1, col = "red")
 ```
 
-![Observed versus leave-one-out predicted Anscombe responses, with a diagonal reference line for perfect prediction.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/loo-predictions-1.png)<!-- -->
+![Observed versus leave-one-out predicted Anscombe responses, with a diagonal reference line for perfect prediction.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/loo-predictions-1.png)
 
 ## Leave-many-out cross-validation
 
@@ -156,7 +139,7 @@ head(cv_sample)
 ## 9    2      9 10.84  8.508998
 ```
 
-The table has one row per held-out observation in each run: 300 rows in total. Group those rows by run **before** calculating the distribution of run-level RMSE:
+The table has one row per held-out observation in each run: 300 rows in total. `split(cv_sample, cv_sample$run)` groups these rows by run. Calculate **one RMSE per group** before summarizing the distribution across runs:
 
 
 ``` r
@@ -198,21 +181,9 @@ hist(run_scores$RMSE, xlab = "RMSE per run", main = "100 random holdout runs")
 abline(v = mean(run_scores$RMSE), col = "red", lwd = 2)
 ```
 
-![Histogram of the 100 run-level RMSE values from repeated random holdout; the vertical line marks their mean.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/rmse-distribution-1.png)<!-- -->
+![Histogram of the 100 run-level RMSE values from repeated random holdout; the vertical line marks their mean.]({{ site.baseurl }}/assets/images/rmd_images/e06-02/rmse-distribution-1.png)
 
-We can also pool all held-out prediction rows and calculate overall prediction errors:
-
-
-``` r
-round(prediction_metrics(cv_sample$obsv, cv_sample$pred), 3)
-```
-
-```
-##    ME   MAE  RMSE
-## 0.009 1.074 1.374
-```
-
-**Pooled RMSE and mean run-level RMSE answer different questions.** Pooled RMSE takes the square root after averaging all squared errors; mean run-level RMSE takes a square root within each run before averaging. Even with equal validation-set sizes, these generally differ. Neither treats repeated predictions for the same observation as independent new observations. Label the chosen summary explicitly.
+Keep one RMSE per run for the assignment. Pooling all prediction rows across repeated runs and then calculating one RMSE gives a different summary: it takes the square root after averaging all squared errors. It is not the mean of the run-level RMSE values.
 
 ## Four-fold cross-validation
 
@@ -246,20 +217,19 @@ Pool the held-out predictions from the four folds and compute **one RMSE for the
 
 
 ``` r
-round(prediction_metrics(four_fold_predictions$obsv,
-                         four_fold_predictions$pred), 3)
+error <- four_fold_predictions$pred - four_fold_predictions$obsv
+round(sqrt(mean(error^2)), 3)
 ```
 
 ```
-##     ME    MAE   RMSE
-## -0.029  1.153  1.472
+## [1] 1.472
 ```
 
 Equivalently, add the four sums of squared prediction errors, divide by the total number of held-out observations, then take the square root. This weights folds by their sizes; it is not an unweighted mean of four fold RMSE values. If the complete partitioning procedure is repeated, retain one pooled RMSE per repetition before summarizing its distribution.
 
 ## Transfer to the regional data
 
-In Assignment 06, carry forward Assignment 05's 2014 district-level cohort and complete `Settlement`–`Recreation` pairs. Split records from this prepared cohort, retaining identifiers for checks. This prevents repeated years and nested administrative levels from entering the same comparison. Nearby districts can still be related, so random validation describes held-out districts within this historical cohort; it does not establish performance in a new geographic area or a future year.
+In Assignment 06, carry forward Assignment 05's 2014 district-level cohort and complete `Agriculture`–`Forest` pairs. Split records from this prepared cohort, retaining identifiers for checks. This prevents repeated years and nested administrative levels from entering the same comparison. Nearby districts can still be related, so random validation describes held-out districts within this historical cohort; it does not establish performance in a new geographic area or a future year.
 
 The assignment asks for a distribution across runs. Use a repeated holdout design or repeated complete fold partitions, document your choice, and return one RMSE per run from your function. One leave-one-out run alone does not supply that distribution.
 

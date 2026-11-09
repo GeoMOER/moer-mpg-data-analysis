@@ -10,17 +10,22 @@ header:
 So far, the models have only considered one explanatory (i.e. independent) variable.
 If a dependent variable should be explained or predicted by more than one independent variable, decisions have to be made regarding the best combination of independent variables.
 
-In the following, we will start with a short example, which illustrates one of the problems of multi-variable models. Afterwards, the two major concepts of variable selection will be briefly introduced:
+We will use **forward selection**: begin with a model that predicts only the mean, try adding each available predictor, keep the best improvement and repeat. Stop when no addition improves the chosen score. This finds a useful model along that search path; it does not guarantee the best of all possible combinations.
 
-* **Recursive aka backward feature selection**: in this case, a model is computed with all available explanatory variables.
-Afterwards, the variable with the least explanatory power is excluded from the model and this procedure is repeated until a quality criterion, e.g. maximum adjusted r squared or minimum AIC is reached.
-* **Forward feature selection**: in this case, a model is separately computed for each available/potential explanatory variable. The variable which has the best individual explanatory power is selected and added to the final model. Afterwards, all possible combinations between the selected and the remaining variables are tested and the variable that produces the largest increase in explanatory power is added to the final model. This procedure is repeated until a quality criterion is reached.
+## Which measure answers which question?
 
-To illustrate this concept, we stay with the [anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html) but modify variables x2, x3, and x4 (please note that the original variables x2 to x4 were of course not intended to be used for y1 in the anscombe data).
-The modification of x2 and x3 is necessary since x1 to x3 show a complete collinearity,
-which probably violates the most important restriction in multiple (linear) regression models.
+| Measure | What it describes | How to use it here |
+|---|---|---|
+| **R squared (R²)** | Fraction of response variation accounted for in the fitting data. | Describes training fit; adding predictors cannot decrease it on the same rows. |
+| **Adjusted R²** | Training fit adjusted for the number of predictors. | Can decrease when an added predictor contributes little; still a training summary. |
+| **Akaike information criterion (AIC)** | Balance between fit and the number of estimated parameters. | Prefer smaller values when comparing these linear models on the same response observations. It is a relative score, not an absolute quality rating. |
+| **Root mean squared error (RMSE)** | Size of prediction errors in response units. | Prefer smaller values calculated from the same held-out observations. |
 
-The following code recreates the small historical synthetic example using its original sampling algorithm and fixed seeds, then restores the previous sampling setting. These eleven rows illustrate model comparison, not a reliable independent prediction assessment. A larger simulated example later uses current sampling and separates selection from final evaluation:
+We use AIC first, then the held-out RMSE from Unit 06. A score used to select a model is a **selection score**; it is not an independent final evaluation. See the [R AIC documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/AIC.html) for comparison requirements.
+
+To illustrate multiple regression, we modify the [Anscombe dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/anscombe.html). Its original `x1`, `x2` and `x3` are identical. This is an extreme case of **collinearity**: predictors contain overlapping information, and exact duplicates prevent separate estimation of their effects.
+
+The following code recreates the small historical synthetic example using its original sampling algorithm and fixed seeds, then restores the previous sampling setting. These eleven rows illustrate model comparison, not a reliable independent prediction assessment. A larger simulated example later separates selection from final evaluation. Use the following as provided setup. In this toy example `x2` is constructed from the response `y`; do not do that when building a real predictor for an unknown response:
 
 
 ``` r
@@ -47,43 +52,23 @@ RNGkind(sample.kind = previous_sample_kind)
 ```
 
 ## Multiple linear regression model
-To illustrate a multiple linear regression model, the dependent variable y is predicted using the independent variables x2 and x1. As for the case of linear models, some test statistics can be computed but the number of independent variables has to be considered in the denominator. This gives us the adjusted R squared.
-We will not test for normal distribution of the residuals etc. in this example but of course, the same restrictions, which apply to bivariate linear models, are also relevant for multiple linear models.
+
+Adding a predictor to the formula gives it its own slope. The usual residual assumptions from Unit 05 still apply.
 
 
 ``` r
 lmod <- lm(y ~ x2 + x1, data = df)
-
-ss_obsrv <- sum((lmod$model$y - mean(lmod$model$y))**2)
-ss_model <- sum((lmod$fitted.values - mean(lmod$model$y))**2)
-ss_resid <- sum((lmod$model$y - lmod$fitted.values)**2)
-
-mss_obsrv <- ss_obsrv / (length(lmod$model$y) - 1)
-mss_model <- ss_model / 2
-mss_resid <- ss_resid / (length(lmod$model$y) - 2 -1)
-
-r_squared <- round(1 - ss_resid/ss_obsrv, 5)
-r_squared_adjusted <- round(1 -
-                             (ss_resid /
-                                (length(lmod$model$y) - (2+1))) /
-                             (ss_obsrv /
-                                (length(lmod$model$y) - 1)), 5)
-
-f_value <- round(mss_model / mss_resid, 2)
-
-print(data.frame(Name = c("r squared", "adj. r squared", "f value"),
-                 Value = c(r_squared, r_squared_adjusted, f_value)))
+summary(lmod)$coefficients
 ```
 
 ```
-##             Name    Value
-## 1      r squared  0.74606
-## 2 adj. r squared  0.68257
-## 3        f value 11.75000
+##              Estimate Std. Error  t value   Pr(>|t|)
+## (Intercept) 2.0979017  1.1869105 1.767531 0.11511842
+## x2          0.2022383  0.1277803 1.582704 0.15214663
+## x1          0.3480164  0.1454046 2.393434 0.04362144
 ```
 
-
-As for the linear model, there is no need to compute the test values by hand. One can use the `anova` or `summary` function for that. Let's start with the analysis of variance:
+Each coefficient test in `summary()` concerns that predictor **while holding the other predictors fixed**. In contrast, `anova()` on a single fitted model tests additions in formula order. Compare:
 
 
 ``` r
@@ -102,44 +87,8 @@ anova(lmod)
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-
-As one can see both x2 and x1 seem to be significant. Let's have a look at the result of the t statistics:
-
-
 ``` r
-summary(lmod)
-```
-
-```
-##
-## Call:
-## lm(formula = y ~ x2 + x1, data = df)
-##
-## Residuals:
-##     Min      1Q  Median      3Q     Max
-## -1.0000 -0.8098 -0.3079  0.6609  1.7982
-##
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)   2.0979     1.1869   1.768   0.1151
-## x2            0.2022     0.1278   1.583   0.1521
-## x1            0.3480     0.1454   2.393   0.0436 *
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Residual standard error: 1.145 on 8 degrees of freedom
-## Multiple R-squared:  0.7461,	Adjusted R-squared:  0.6826
-## F-statistic: 11.75 on 2 and 8 DF,  p-value: 0.004159
-```
-
-
-Please note that this time, only x1 is indicated as significant. What causes this difference? Before we go into details, we will compute the model again but this time with a changed order (i.e. x1 and x2):
-
-
-
-``` r
-lmod <- lm(y ~ x1 + x2, data = df)
-anova(lmod)
+anova(lm(y ~ x1 + x2, data = df))
 ```
 
 ```
@@ -154,39 +103,7 @@ anova(lmod)
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-
-
-``` r
-summary(lmod)
-```
-
-```
-##
-## Call:
-## lm(formula = y ~ x1 + x2, data = df)
-##
-## Residuals:
-##     Min      1Q  Median      3Q     Max
-## -1.0000 -0.8098 -0.3079  0.6609  1.7982
-##
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)
-## (Intercept)   2.0979     1.1869   1.768   0.1151
-## x1            0.3480     0.1454   2.393   0.0436 *
-## x2            0.2022     0.1278   1.583   0.1521
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-##
-## Residual standard error: 1.145 on 8 degrees of freedom
-## Multiple R-squared:  0.7461,	Adjusted R-squared:  0.6826
-## F-statistic: 11.75 on 2 and 8 DF,  p-value: 0.004159
-```
-
-
-Obviously order matters for analysis of variance results! This is because the null-hypothesis is different from the one from the `summary` function. While the latter checks if the slope of the regression line is significantly different from zero for each individual variable, the anova approach only checks if the slope of the added variable is different from zero. This means that if only one explanatory variable is added to the very basic model y = intercept + error, the variable is marked as significant if its associated slope is different from zero. If a second variable is added, the "baseline" model is the one with the first variable already included. Hence, it is not checked if both the slopes of the explanatory variables are still different from zero but only the slope of the added variable. In the above case, this leads to the situation that if x1 is added after x2, both variables are marked as significant while only x1 is significant if it is added prior to x2.
-
-The above example illustrates that the composition of multiple (regression) models is by far not as trivial as it might look in the first place.
-In general, there are two basic selection procedures to cope with this. These procedures compare candidate models using a criterion such as adjusted R squared, AIC, or held-out prediction error. Fitted criteria and prediction errors have different meanings; none of the scores used for selection is an independent final evaluation.
+The second predictor is tested after accounting for the first. Reversing their order can therefore change these sequential tests, even though the fitted predictions are the same. We will use the specified model-comparison score, rather than these sequential p-values, to select predictors.
 
 ## Compare models on the same observations
 
@@ -194,132 +111,31 @@ AIC and cross-validation scores can compare predictor sets only when the compari
 
 For the crop assignment, use the defined 2014 district cohort and keep only rows complete across `Winter_wheat` and the nine other crop yields. Report the exclusions. This makes comparisons consistent, but complete-case results apply to the retained records and may be biased if missingness is systematic. IDs, years and source-symbol records are not yield predictors; `Winter_wheat` must never appear among its own predictors.
 
-## Which measure answers which question?
-
-Recall the [distinction between description, inference, and prediction]({{ site.baseurl }}/unit05/unit05-02_basic_idea_of_modelling.html#what-do-we-want-to-learn-from-a-model). The following measures answer different questions about a model:
-
-| Measure | Question it helps answer | Interpretation and appropriate use |
-|---|---|---|
-| **R squared (R²)** | How much of the observed variation does the fitted model account for? | For ordinary linear regression with an intercept, training R² describes the fraction of response variation accounted for in the fitting data. Higher means closer fit. It does not establish causation or predictive accuracy on new observations. |
-| **Root mean squared error (RMSE)** | How large are the model's errors, in the response's units? | Lower means smaller errors, with greater weight given to large errors. To assess prediction, calculate it from observations held out of fitting. Training RMSE only describes training fit. |
-| **Akaike information criterion (AIC)** | Which candidate model offers a useful balance between fit and complexity? | Lower is preferred among comparable models fitted by maximum likelihood to the same response observations. AIC penalizes additional estimated parameters. It is a relative selection criterion, rather than an absolute measure of model quality. |
-
-Ordinary training R² cannot decrease when predictors are added to the same linear regression on the same observations. **Adjusted R²** accounts for the number of predictors, but still does not replace independent predictive evaluation. Keep the observations and response scale consistent when comparing models. The [R linear-model summary documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html) defines both versions of R²; [Forecasting: Principles and Practice](https://otexts.com/fpp3/toolbox.html) explains RMSE.
-
-**Parsimony** means avoiding unnecessary complexity. AIC balances likelihood fit against the number of estimated parameters; it does not simply favor the model with the fewest predictors. Under its assumptions, it estimates relative expected predictive information loss. It is therefore connected to prediction, but does not directly measure held-out RMSE. See the [R AIC documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/AIC.html) for comparison requirements and the [American Statistical Association abstract on AIC and predictive ability](https://ww2.amstat.org/meetings/jsm/2020/onlineprogram/AbstractDetails.cfm?abstractid=312533) for this connection.
-
-When AIC or cross-validation RMSE is used to choose a model, the winning score belongs to selection. Keep [final evaluation independent](#keep-final-evaluation-independent) of that choice.
-
 ## Recursive feature selection
-The idea of recursive feature selection is to start with the full model and then leave out one variable after another until the quality of the model does not increase further. The variables are taken out from the equation depending on their predictive power in the multi-variable model.
-To estimate this power, each of the available variables is left out once and the respective changes in the model quality are taken as the basis for the decision.
 
-To illustrate this, the following function is used:
-
-
-``` r
-recursive_feature_selection <- function(data, dep, vars) {
-  # Supply one common complete dataset for all candidate models.
-  stopifnot(all(complete.cases(data[c(dep, vars)])))
-  if (length(vars) == 0) return(character(0))
-
-  candidates <- c(list(vars), lapply(seq_along(vars), function(i) vars[-i]))
-  scores <- lapply(candidates, function(v) {
-    rhs <- if (length(v) == 0) "1" else paste(v, collapse = " + ")
-    fit <- lm(as.formula(paste(dep, "~", rhs)), data = data)
-    c(Adj_R_sqrd = summary(fit)$adj.r.squared, AIC = AIC(fit))
-  })
-  scores <- as.data.frame(do.call(rbind, scores))
-  rec_fs <- data.frame(Variable = c("all", vars), round(scores, 4))
-  rec_fs$Diff <- round(scores$AIC - scores$AIC[1], 4)
-  print(rec_fs)
-
-  # Compare unrounded scores; keep the current model unless AIC improves.
-  best <- which.min(scores$AIC)
-  if (scores$AIC[best] >= scores$AIC[1] - 1e-8) return(vars)
-  candidates[[best]]
-}
-```
-
-First, we start with all available explanatory variables. The function will print the quality of the model if all variables are used as well as the change of this quality if each of the variables is left out once. The variable which has been left out is included in the respective data row of the output (column "Variable"):
-
-
-``` r
-variables <- c("x1", "x2", "x3", "x4")
-next_vars <- recursive_feature_selection(data = df, dep = "y", vars = variables)
-```
-
-```
-##   Variable Adj_R_sqrd     AIC    Diff
-## 1      all     0.6199 41.5034  0.0000
-## 2       x1     0.6594 39.9925 -1.5109
-## 3       x2     0.5588 42.8367  1.3333
-## 4       x3     0.6728 39.5482 -1.9553
-## 5       x4     0.6410 40.5699 -0.9335
-```
-
-
-The table compares the current four-predictor model with each one-variable deletion. Dropping x3 gives the lowest AIC for this generated sample, so `next_vars` contains x1, x2 and x4. Use that reduced model for the next comparison:
-
-
-``` r
-next_vars
-```
-
-```
-## [1] "x1" "x2" "x4"
-```
-
-
-
-``` r
-next_vars <- recursive_feature_selection(data = df, dep = "y", vars = next_vars)
-```
-
-```
-##   Variable Adj_R_sqrd     AIC    Diff
-## 1      all     0.6728 39.5482  0.0000
-## 2       x1     0.5897 41.5066  1.9584
-## 3       x2     0.6067 41.0438  1.4956
-## 4       x4     0.6826 38.6849 -0.8632
-```
-
-
-The current model is now x1 + x2 + x4. Dropping x4 improves AIC, leaving x1 and x2:
-
-
-``` r
-next_vars
-```
-
-```
-## [1] "x1" "x2"
-```
-
-
-
-``` r
-next_vars <- recursive_feature_selection(data = df, dep = "y", vars = next_vars)
-```
-
-```
-##   Variable Adj_R_sqrd     AIC   Diff
-## 1      all     0.6826 38.6849 0.0000
-## 2       x1     0.5158 42.6253 3.9404
-## 3       x2     0.6295 39.6814 0.9965
-```
-
-
-In contrast to the first two runs, a further reduction of variables would not increase but decrease the model performance. The backward path therefore stops at x1 and x2 according to AIC on this sample. The function returns these variables unchanged when no deletion improves AIC; it also permits an intercept-only model if removing the last predictor improves AIC. Please note that - as already stated above - significance of the variables does not matter within this implementation of the recursive feature elimination so the order of x1 and x2 is not determined.
-
+Backward selection starts with all candidate predictors and tries removing one at a time. It uses the same compare-and-stop idea. We concentrate on forward selection below; implementing a backward search is not needed for Assignment 07.
 
 ## Forward feature selection
-An alternative approach to the recursive feature selection is the forward feature selection. It starts with an estimation of the individual performance of any explanatory variable.
-The variable with the greatest explanatory power is added to the model equation.
-Subsequently, the remaining variables are again added individually to the existing model equation.
-The variable which leads to the largest increase in the model quality is added to the model equation and the procedure is repeated until no further increase can be observed.
+First compare an **intercept-only baseline** with two possible first additions. `y ~ 1` predicts the same fitted mean for every observation. `AIC()` can compare several fitted models at once:
 
-Again, we will use a function to illustrate this approach. It compares each addition with the current model, including the intercept-only model at the first step. It returns the next variable to add, or `character(0)` when there is no improvement or no candidate remains.
+
+``` r
+baseline <- lm(y ~ 1, data = df)
+with_x1 <- lm(y ~ x1, data = df)
+with_x2 <- lm(y ~ x2, data = df)
+AIC(baseline, with_x1, with_x2)
+```
+
+```
+##          df      AIC
+## baseline  2 49.76201
+## with_x1   3 39.68137
+## with_x2   3 42.62529
+```
+
+`with_x1` has the lowest AIC here, so add `x1`. At the next step compare `y ~ x1` with models that each add one remaining predictor. Keep the current model if none improves AIC.
+
+The provided helper repeats this comparison for a supplied candidate list. It takes the data, response name, remaining predictor names and already selected names. It returns **one name to add**, or `character(0)` (an empty character vector) to signal **stop**. Read its comparison and stopping rule; the formula-building and input checks are supporting code. `as.formula()` converts the assembled text to a model formula, and `setdiff()` removes names already selected.
 
 
 ``` r
@@ -370,8 +186,8 @@ Technically, this is realized by excluding x1 from the variable `next_vars` and 
 
 
 ``` r
-next_vars <- next_vars[-which(next_vars == act_var)]
-selected_vars = act_var
+next_vars <- setdiff(next_vars, act_var)
+selected_vars <- act_var
 act_var <- forward_feature_selection(data = df, dep = "y", vars = next_vars,
                                      selected_vars = selected_vars)
 ```
@@ -390,8 +206,8 @@ Hence, x2 is added to the baseline model formula for the next run:
 
 
 ``` r
-next_vars <- next_vars[-which(next_vars == act_var)]
-selected_vars = c(selected_vars, act_var)
+next_vars <- setdiff(next_vars, act_var)
+selected_vars <- c(selected_vars, act_var)
 act_var <- forward_feature_selection(data = df, dep = "y", vars = next_vars,
                                      selected_vars = selected_vars)
 ```
@@ -404,19 +220,17 @@ act_var <- forward_feature_selection(data = df, dep = "y", vars = next_vars,
 ```
 
 
-Neither remaining addition improves AIC, so `act_var` is now `character(0)`, the stop signal. Retain `selected_vars`, which contains x1 and x2. Both functions prefer the current model when AIC is tied within the stated tolerance; a tie between improving candidates is resolved by their input order. Candidate choice uses unrounded AIC values. This example happens to reach the same variables along both paths.
+Neither remaining addition improves AIC, so `act_var` is now `character(0)`, the stop signal. Retain `selected_vars`, which contains x1 and x2. The helper prefers the current model when AIC is tied within the stated tolerance; a tie between improving candidates is resolved by their input order. Candidate choice uses unrounded AIC values.
 
 ## Which feature selection to choose?
 
 Backward and forward selection are greedy searches: each step takes the best available deletion or addition under the chosen criterion. They can reach different predictor sets, and neither guarantees the globally best model or protects against overfitting.
 
-Both simple searches can require a number of candidate fits proportional to the square of the number of predictors. A full forward path with ten candidates considers 10 + 9 + ... + 1 = 55 additions, plus baseline evaluations; stopping early reduces the work. Four-fold scoring requires four fitted models per candidate. The implementation and stopping rule determine the actual workload.
-
 Highly correlated predictors can make the selected set unstable. Any screening based on the data belongs inside the model-development process, before the independent final test. Do not interpret ordinary post-selection coefficient p-values as if the predictor set had been specified in advance.
 
 ## Compare candidates with four-fold validation
 
-The preceding functions use AIC. For a cross-validation criterion, replace candidate AIC scoring with held-out RMSE. The [four-fold example in Unit 06]({{ site.baseurl }}/unit06/unit06-02_cross_validation.html#four-fold-cross-validation) showed the partition and aggregation. Here we wrap that calculation in a function and compare just two specified candidate formulas; extending the selection loop is your assignment.
+The preceding helper uses AIC. For a cross-validation criterion, replace candidate AIC scoring with held-out RMSE. The [four-fold example in Unit 06]({{ site.baseurl }}/unit06/unit06-02_cross_validation.html#four-fold-cross-validation) showed the partition and aggregation. Here we wrap that calculation in a function and compare just two specified candidate formulas; extending the selection loop is your assignment.
 
 To make the selection/evaluation distinction visible, generate a larger independent synthetic sample. First reserve 20% as a final test set. All candidate comparison uses the remaining development data:
 
@@ -440,7 +254,7 @@ table(fold_id)
 ## 20 20 20 20
 ```
 
-This scorer gives each development observation exactly one held-out prediction and returns one pooled RMSE across the four folds. It requires a common complete dataset and four valid, nonempty folds; the caller creates the fold vector once and reuses it for every candidate.
+The following scorer is provided for reuse; you do not need to reproduce its input checks. It gives each development observation exactly one held-out prediction and returns one pooled RMSE across the four folds. It requires a common complete dataset and four valid, nonempty folds; the caller creates the fold vector once and reuses it for every candidate.
 
 
 ``` r
@@ -460,9 +274,9 @@ four_fold_rmse <- function(data, formula, fold_id) {
 }
 
 candidate_formulas <- list(y ~ x1, y ~ x1 + x2)
-candidate_rmse <- vapply(candidate_formulas, function(f) {
+candidate_rmse <- unlist(lapply(candidate_formulas, function(f) {
   four_fold_rmse(development, f, fold_id)
-}, numeric(1))
+}))
 data.frame(candidate = c("x1", "x1 + x2"),
            selection_RMSE = round(candidate_rmse, 3))
 ```
@@ -472,6 +286,8 @@ data.frame(candidate = c("x1", "x1 + x2"),
 ## 1        x1          0.880
 ## 2   x1 + x2          0.891
 ```
+
+In Assignment 07, your independent task is to implement the repeated forward-selection loop with the two requested scoring options: AIC and four-fold RMSE. This example supplies a single AIC step and a reusable RMSE scorer, not the complete assignment loop.
 
 The smaller score chooses between these candidates. Keep the same folds and rows for every predictor combination throughout a selection path so that changing partitions or missing values do not confound the comparison. Keep an intercept-only baseline and stop when no addition improves the chosen criterion.
 
@@ -508,8 +324,8 @@ plot(final_test$y, final_pred, xlab = "Observed final-test response",
 abline(0, 1, col = "red")
 ```
 
-![Observed versus predicted responses for the untouched synthetic final test set, with a diagonal reference line for perfect prediction.]({{ site.baseurl }}/assets/images/rmd_images/e07-02/final-evaluation-1.png)<!-- -->
+![Observed versus predicted responses for the untouched synthetic final test set, with a diagonal reference line for perfect prediction.]({{ site.baseurl }}/assets/images/rmd_images/e07-02/final-evaluation-1.png)
 
-Do not use this final score to change the formula or keep trying splits. If that happens, the test set becomes part of development and a new independent evaluation is needed. An alternative is nested cross-validation, where the entire selection process is repeated inside each outer training split; that extension is beyond this worked example. The [cross-validation guide](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation) explains the distinction between validation for model choice and a reserved final test.
+Do not use this final score to change the formula or keep trying splits. If that happens, the test set becomes part of development and a new independent evaluation is needed. The [cross-validation guide](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation) explains the distinction between validation for model choice and a reserved final test.
 
 In Assignment 07, label the reported AIC or four-fold RMSE as the **selection criterion**. The requested performance trajectory and final selected-model score describe the selection exercise; a separate final-test submission is not required. Do not present the minimum selection RMSE as independent predictive performance. Random district folds within 2014 do not assess transfer to another region or future year.
