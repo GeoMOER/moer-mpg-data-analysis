@@ -33,7 +33,7 @@ The course meets weekly in a synchronous hybrid format. You can attend in person
 
 ## ILIAS
 
-ILIAS is the University of Marburg's course platform. We use it to manage the course and share documents.
+ILIAS is the University of Marburg's course platform. We use it to manage the course and share documents. Data files for the regular lessons and assignments are linked directly on the relevant course pages; you do not need ILIAS to download them.
 Open the [ILIAS course space](https://ilias.uni-marburg.de/goto.php/crs/4717442){:target="_blank"} and sign in with your student account.
 The online meeting links for the weekly sessions and tutor sessions are available in ILIAS.
 

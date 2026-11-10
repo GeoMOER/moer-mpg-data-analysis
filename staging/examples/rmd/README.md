@@ -28,10 +28,10 @@ Unit 03 contains the basic exploration needed for Assignment 03. Further diagnos
 | `unit07-02_variable_selection.Rmd` | `_unit07/unit07-02_variable_selection.md` | Current executable source: one explicit AIC comparison before the guarded forward helper, fixed-fold scoring and independent final evaluation; portable `mpg.unit07.fig.path`. |
 | `unit08-02_generalized_additive_models.Rmd` | `_unit08/unit08-02_generalized_additive_models.md` | Current executable source: basis dimension versus penalty, one tuning fit before repetition, fitted/held-out metrics and separate tuning/final evaluation; portable `mpg.unit08.fig.path`. |
 | `unit09-01a_datetime.Rmd` | `_unit09/unit09-01a_datetime.md` | Dates, time zones and calendar components before DWD; moved from Unit 04. The old Unit-04 URL redirects outside the teaching collection. |
-| `unit09-02_time_series.Rmd` | `_unit09/unit09-02_time_series.md` | Historical source targets a 2015 DWD layout; published data handling is newer. Align in D4/M3 before rerendering. |
-| `unit09-03_arima.Rmd` | `_unit09/unit09-03_arima.md` | Historical source has a different time window and chunk layout; descriptions follow its own plot calls. Align in D4/M3. |
-| `unit10-02_time_series_analysis.Rmd` | `_unit10/unit10-02_time_series_analysis.md` | Historical source has an older time window; includes unpublished trend-test material. Align in D4/M3. |
-| `unit10-03_time_series_clustering.Rmd` | `_unit10/unit10-03_time_series_clustering.md` | Historical source has an older time window; descriptions do not assert unchanged group membership. Align in D4/M3. |
+| `unit09-02_time_series.Rmd` | `_unit09/unit09-02_time_series.md` | Current portable source: retain the hourly calendar, mark incomplete monthly means NA, and use complete 2010–2018 examples; `mpg.unit09.fig.path`. |
+| `unit09-03_arima.Rmd` | `_unit09/unit09-03_arima.md` | Current portable source: one explained seasonal ARIMA fit and chronological 2017–2018 comparison; explicit forecast setup; `mpg.unit09.fig.path`. |
+| `unit10-02_time_series_analysis.Rmd` | `_unit10/unit10-02_time_series_analysis.md` | Current portable source: complete 2010–2018 calendar, decomposition, descriptive trend and simple seasonal terms for the NAO assignment; `mpg.unit10.fig.path`. |
+| `unit10-03_time_series_clustering.Rmd` | Retired; previous URL redirects outside the teaching collection. | Optional detour removed; dated project archive retains the previous source and figures. |
 | `unit11-02_colours.Rmd` | `_unit12/unit12-02_colours.md` | Ready-made base R palettes and practical choice; the legacy `e11-02` image directory is intentional. |
 | `unit12-03_colour_maps.Rmd` | `_unit12/unit12-03_colour_maps.md` | Created from the current published lesson on 26.10.2026; no historical map Rmd was found. Uses Natural Earth boundaries and simulated values; class counts are bar charts. |
 

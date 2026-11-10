@@ -1,117 +1,111 @@
 ---
 title: "Example: Exploring a Temperature Time Series"
-author: "Thomas Nauss"
-date: "19 Oktober 2017"
-output: 
-  html_document: 
-    keep_md: yes
+output:
+  html_document:
+    keep_md: true
+    section_divs: false
 ---
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e09-02/')
-library(envimaR)
-root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/", 
-                              alt_env_id = "COMPUTERNAME",
-                              alt_env_value = "PCRZP", 
-                              alt_env_root_folder = "F:\\BEN\\edu")
-source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_environment.R"))
-
-```
-
-Before this example, work through [dates and times]({{ site.baseurl }}/unit09/unit09-01a_datetime.html) for explicit formats, time zones and calendar components.
-
-While we had already got in contact with some temporal datasets, we did not have a closer formal look on time series analysis. Time series datasets often inhibit some kind of autocorrelation which is a no go for the models we have used so far. The first more formal contact with time series will therefore highlight these characteristics. The structure of this example follows Zuur et al. 2007 to a certain degree.
-
-To illustrate time series analysis, an air temperature record of the weather station in Coelbe (which is closest to the Marburg university forest) will be used. The data has been supplied by the German weather service [German weather service](ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/).
-
-```{r, warning=FALSE, echo=FALSE}
-path_dwd <- file.path(envrmt$path_dwd,"3164_coelbe/")
-
-dwd <- read.table(file.path(path_dwd, "produkt_temp_Terminwerte_20060701_20151231_03164.txt"),
-                  header = TRUE, sep = ";", dec = ".")
-```
-
-### A first look on the time series
-The time series shows hourly recordings of air temperature measured at 2 m between July 1st 2006 and December 31st 2015.
-```{r, warning=FALSE}
-head(dwd)
-tail(dwd)
-```
-
-In order to plot the dataset in a correct manner (i.e. without large gaps at the end of the year when e.g. 2006123123 switches to 2007010100), the data can either be transformed to a timeseries ``ts`` object or the date column should be converted to some kind of actual date format. Since we will have a closer look on ``ts`` later, let's start with the date conversion. Therefore, it is necessary, to also supply minutes to the given date/hour information.
-```{r, warning=FALSE}
-dwd$DATUM <- strptime(paste0(dwd$MESS_DATUM, "00"), format = "%Y%m%d%H%M")
-head(dwd$DATUM)
-```
-
-Plotting is now easy:
-```{r, warning=FALSE, fig.alt = "Air-temperature observations over time show repeated annual warming and cooling cycles and short-term variability."}
-plot(dwd$DATUM, dwd$LUFTTEMPERATUR)
-```
-
-As one can see, there is a clear annual pattern (surprise, surprise). To have a closer look on this pattern, one simple option would be a set of boxplots which shows the variation within each month over the entire dataset. To do so, the data in the boxplot has to be grouped by the month which requires a list which indicates the class (i.e. month) each temperature record belongs to. The easiest way is to create an additional column in the data frame and copy the characters which define the month in the original date column to it.
-```{r, warning=FALSE, fig.alt = "Monthly air-temperature boxplots show low temperatures in winter and higher temperatures in summer."}
-dwd$AGG_M <- substr(dwd$MESS_DATUM, 5, 6)
-boxplot(dwd$LUFTTEMPERATUR ~ dwd$AGG_M)
-```
-
-If you wonder about the distribution, you can use what we learned so far:
-```{r, warning=FALSE, fig.alt = "Air-temperature histogram and normal QQ plot show the distribution and departures from a normal reference."}
-par_org <- par(no.readonly = TRUE)
-par(mfrow = c(1,2))
-hist(dwd$LUFTTEMPERATUR, prob = TRUE)
-lines(density(dwd$LUFTTEMPERATUR))
-qqnorm(dwd$LUFTTEMPERATUR)
-par(par_org)
-```
-
-### Auto-correlation
-So far, we always assumed that different observations are independent of each other - a concept which cannot be hold for many time series. Understanding auto-correlation is rather easy. It is the pearson correlation we already know but this time not computed based on two different datasets/variables but computed using the same time-series dataset but with a temporal lag. For example, the auto-correlation for a lag of 1 would compare each original value observed at time t with the observed value at time t+1. A lag of 10 indicates that observation at time t is correlated with observation t+10 and so on. Please note that the number of available data pairs decreases (e.g. if the dataset has 30 observations, one has 29 pairs for lag 1 but only 1 pair for lag 29). Therefore, it does not make sense to try any possible lag but restrict it to a few lags or to lags which one expect to be highly correlated (e.g. lag 12 for the monthly temperatures above).
-
-While one can have a look at the actual correlation values, a visualization is generally easier to analyze:
-```{r, warning=FALSE, fig.alt = "Autocorrelation of the high-frequency temperature series persists across many lags and has an oscillating pattern."}
-acf(dwd$LUFTTEMPERATUR, lag.max = 100)
-```
-
-Since we have more than 80.000 values available, we can use a maximum lag of 100 although this is done mainly for illustration purposes. Obviously, we have highest correlations at lags of 24 (i.e the correlation between hourly temperatures is highest if the temperatures are measured at the some time of day). While this holds true, the absolute correlation decreases if the number of days between the observation increases.
-
-Another example shows the auto-correlation of the monthly mean temperatures for which we define an aggregation variable like the one above but this time we include not only the month but also the year.
-```{r, warning=FALSE, fig.alt = "Autocorrelation of monthly mean temperature alternates between positive and negative values with an annual cycle."}
-dwd$AGG_JM <- substr(dwd$MESS_DATUM, 1, 6)
-tam <- aggregate(dwd$LUFTTEMPERATUR, by = list(dwd$AGG_JM), FUN = mean)
-colnames(tam) <- c("Date", "Ta")
-acf(tam$Ta)
-```
-
-Now the seasonal pattern becomes evident with negative correlations with a lag of around 6 months (summer/winter, spring/autumn) and positive correlations with lags around 12 months. The blue lines indicate the significance corresponding to a p value of 0.05 if normality can be assumed. The latter is generally the case for time series longer than 30 to 40 values for which the central limit theorem becomes effective.
-
-Aside from the auto-correlation, we could also look at the partial auto-correlation. The difference between those is that in the partial auto-correlation, the correlation between time lag t=0 and e.g. time lag t=t+10 is computed in such a manner that the influence of the auto-correlations in between is eliminated. This leads to quite different results since e.g. if you have a strong auto-correlation with lag 5, than it is not surprising that t=0 is not only related to t=t+5 but also to t=t+5+5. The partial auto-correlation of the dataset looks like this:
-```{r, warning=FALSE, fig.alt = "Partial autocorrelation of monthly mean temperature shows its strongest positive value at the first lag and several later negative values."}
-pacf(tam$Ta)
+knitr::opts_chunk$set(echo=TRUE, warning=TRUE, message=FALSE, fig.width=7, fig.height=5,
+  fig.path=getOption("mpg.unit09.fig.path", "figures/unit09/"))
 ```
 
 
-One can also used test statistics like a Box-Pierce or Ljung-Box test:
-```{r, warning=FALSE}
-Box.test(tam$Ta, lag = 10, type = "Box-Pierce")
-Box.test(tam$Ta, lag = 10, type = "Ljung-Box")
+Before this example, work through [dates and times]({{ site.baseurl }}/unit09/unit09-01a_datetime.html). A **time series** records a variable in time order. Nearby observations can be related; this is called **autocorrelation**. It matters when describing uncertainty and predicting future observations.
+
+We use hourly air temperature at DWD station 03164, Cölbe. Our first question is whether the observations form the hourly sequence that the analysis assumes.
+
+<span id="a-first-look-at-the-time-series"></span>
+<span id="auto-correlation"></span>
+
+## Download the data
+
+Save <a href="{{ site.baseurl }}/assets/data/time-series/stundenwerte_TU_03164_20060701_20251231_hist.zip" download>Cölbe hourly temperature (ZIP)</a> in `Data/`. The unchanged DWD archive includes station metadata; [source notes]({{ site.baseurl }}/assets/data/time-series/source.txt) describe the course copies. We use observations through 2022, so the example has a fixed end date.
+
+```{r unnamed-chunk-1}
+archive <- "Data/stundenwerte_TU_03164_20060701_20251231_hist.zip"
+data_file <- grep("^produkt_tu_stunde_.*_03164\\.txt$",
+                  unzip(archive, list = TRUE)$Name, value = TRUE)
+stopifnot(length(data_file) == 1)
+unzip(archive, files = data_file, exdir = "Data/dwd")
+dwd <- read.table(file.path("Data/dwd", data_file), header = TRUE, sep = ";")
+dwd$DATUM <- as.POSIXct(as.character(dwd$MESS_DATUM),
+                       format = "%Y%m%d%H", tz = "UTC")
 ```
 
-They both add up the correlation coefficients up to the given lag and compare them to a theoretical distribution.
+## Keep the hourly calendar
 
+DWD uses `-999` for missing measurements. A missing value is not a cold temperature or zero humidity. Some timestamps are absent entirely. Create the expected hourly calendar and join observations to it, using the `merge()` operation from Unit 04. `all.x = TRUE` retains every expected hour; an absent observation becomes `NA`.
 
-Of course, one can also have a look at cross-correlations including time lags. Just as an example, we use the relative humidity which is also part of the dataset.
-```{r, warning=FALSE, fig.alt = "Cross-correlation between monthly temperature and relative humidity alternates with lag; the correlation near zero lag is negative."}
-rhm <- aggregate(dwd$REL_FEUCHTE, by = list(dwd$AGG_JM), FUN = mean)
-colnames(rhm) <- c("Date", "rh")
-
-ccf(tam$Ta, rhm$rh)
+```{r unnamed-chunk-2}
+stopifnot(!anyNA(dwd$DATUM), !anyDuplicated(dwd$DATUM))
+calendar <- data.frame(DATUM = seq(
+  as.POSIXct("2006-07-01", tz = "UTC"),
+  as.POSIXct("2022-12-31 23:00:00", tz = "UTC"), by = "hour"))
+dwd <- merge(calendar, dwd, by = "DATUM", all.x = TRUE, sort = TRUE)
+dwd$TT_TU[dwd$TT_TU == -999 & !is.na(dwd$TT_TU)] <- NA_real_
+dwd$RF_TU[dwd$RF_TU == -999 & !is.na(dwd$RF_TU)] <- NA_real_
+colSums(is.na(dwd[c("TT_TU", "RF_TU")]))
 ```
 
-Similar. Air humidity is auto-correlated to air temperature. And this relationship is pretty much the same over all month (as you can find out if you still remember a plot type from the very beginning of this course):
-```{r, warning=FALSE, fig.alt = "Conditional scatterplots of temperature versus relative humidity show generally declining relationships within overlapping month ranges."}
-coplot(LUFTTEMPERATUR ~ REL_FEUCHTE | AGG_M, data = dwd)
+```{r unnamed-chunk-3, fig.alt="Hourly Cölbe temperatures through 2022, retaining gaps at missing observations."}
+plot(dwd$DATUM, dwd$TT_TU, type = "l",
+     xlab = "Date", ylab = "Air temperature (°C)")
 ```
 
-Auto-correlation analysis also provides an indication of stationarity. Stationarity is essential if one e.g. wants to predict future time series values based on auto-regressive or moving average models. It means that the time series has no trend and has similar variance over the entire time span. Something which is clearly not the case in the temperature data regardless of any long-term trend but just because of the strong seasonality.
+**Take home:** keep the position of a missing hour. Removing its row would make observations on either side appear one hour apart.
 
+## Autocorrelation at hourly lags
+
+A **lag** is a time separation. Here lag 1 means one hour and lag 24 means one day. `acf()` compares values separated by these lags. `na.action = na.pass` leaves the missing positions in place and estimates each comparison from available pairs.
+
+```{r unnamed-chunk-4, fig.alt="Temperature autocorrelation across hourly lags on the regular calendar, with missing positions retained."}
+acf(dwd$TT_TU, lag.max = 100, na.action = na.pass,
+    xlab = "Lag (hours)", main = "Hourly temperature autocorrelation")
+```
+
+The dashed lines are approximate reference limits for an uncorrelated series. They are not proof of normality, independence or a suitable forecasting model. Having many observations does not remove dependence or missing-data problems.
+
+## Check monthly coverage before averaging
+
+A monthly mean based on a short warm spell need not describe the whole month. For this teaching example, use a simple conservative rule: **a monthly mean is available only when every expected hourly temperature is observed**. This is our teaching rule, not a claim about DWD's official monthly processing.
+
+`mean()` returns `NA` when any input is missing. Do not add `na.rm = TRUE` here: that would quietly average an incomplete month. Count valid and expected hours to make the reason visible.
+
+```{r unnamed-chunk-5}
+month <- format(dwd$DATUM, "%Y%m", tz = "UTC")
+tam <- aggregate(dwd$TT_TU, by = list(Date = month), FUN = mean)
+names(tam)[2] <- "Ta"
+valid <- aggregate(!is.na(dwd$TT_TU), by = list(Date = month), FUN = sum)
+coverage <- data.frame(Date = valid$Date, Valid_hours = valid$x,
+                       Expected_hours = as.integer(table(month)))
+coverage[coverage$Valid_hours < coverage$Expected_hours, ]
+```
+
+August 2019, for example, has only 254 of 744 hourly temperatures. Its monthly value must remain missing under this rule. No missing temperature is replaced by zero or an invented value.
+
+```{r unnamed-chunk-6}
+write.table(tam, "tam.txt", sep = ";", row.names = FALSE, na = "NA")
+```
+
+The saved file keeps all 198 months from July 2006 to December 2022, including `NA` for incomplete months. A prepared <a href="{{ site.baseurl }}/assets/data/time-series/tam.txt" download>tam.txt</a> is available; save it beside `.Rproj` to match the following examples. The optional [preparation script]({{ site.baseurl }}/assets/data/time-series/prepare-tam.R) reproduces it from the ZIP.
+
+## Use a continuous complete period
+
+The following forecasting and decomposition examples use **January 2010–December 2018**: nine complete years with every hourly temperature available. Select by the recorded date, then check the sequence. Do not remove isolated missing months and relabel the remaining rows as consecutive months.
+
+```{r unnamed-chunk-7}
+tam_example <- tam[tam$Date >= "201001" & tam$Date <= "201812", ]
+expected_months <- format(seq(as.Date("2010-01-01"),
+                             as.Date("2018-12-01"), by = "month"), "%Y%m")
+stopifnot(identical(as.character(tam_example$Date), expected_months),
+          !anyNA(tam_example$Ta))
+```
+
+```{r unnamed-chunk-8, fig.alt="Autocorrelation of complete monthly temperatures, with a strong annual cycle at twelve-month lags."}
+acf(tam_example$Ta, xlab = "Lag (months)",
+    main = "Monthly temperature autocorrelation, 2010–2018")
+```
+
+Positive correlations around 12 months and negative correlations around six months reflect the annual temperature cycle. **Take home:** first establish the calendar and observational coverage; only then interpret the pattern.

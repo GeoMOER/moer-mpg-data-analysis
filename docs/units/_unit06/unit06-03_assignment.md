@@ -22,7 +22,7 @@ After completing this worksheet you should have gained some experience in applyi
 
 ## Input from Unit 04
 
-Reuse `Output/lu_clean.rds`, the wide land-use table from the [Unit 04 land-use exercise]({{ site.baseurl }}/unit04/unit04-05_cleaning.html#handoff-to-later-units), as in Assignment 05. Load it with `readRDS("Output/lu_clean.rds")` from your course project. Keep its region/year identifiers when designing validation; the input contains several administrative levels and repeated regions across years.
+Reuse `Output/lu_clean.rds` or download <a href="{{ site.baseurl }}/assets/data/unit04/lu_clean.rds" download="lu_clean.rds">lu_clean.rds</a> and save it in `Output/`. This is the wide land-use table from the [Unit 04 land-use exercise]({{ site.baseurl }}/unit04/unit04-05_cleaning.html#handoff-to-later-units), as in Assignment 05. Load it with `readRDS("Output/lu_clean.rds")` from your course project. Keep its region/year identifiers when designing validation; the input contains several administrative levels and repeated regions across years.
 
 ## Prepare comparable observations
 

@@ -1,71 +1,96 @@
 ---
 title: "Example: Time Series Decomposition"
-author: "Thomas Nauss"
-date: "19 Oktober 2017"
-output: 
-  html_document: 
-    keep_md: yes
+output:
+  html_document:
+    keep_md: true
+    section_divs: false
 ---
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.path='{{ site.baseurl }}/assets/images/rmd_images/e10-02/')
-library(envimaR)
-root_folder = alternativeEnvi(root_folder = "~/edu/mpg-data-analysis/", 
-                              alt_env_id = "COMPUTERNAME",
-                              alt_env_value = "PCRZP", 
-                              alt_env_root_folder = "F:\\BEN\\edu")
-source(file.path(root_folder, "moer-mpg-data-analysis/staging/examples/000_set_environment.R"))
-path_dwd <- file.path(envrmt$path_dwd,"3164_coelbe/")
+knitr::opts_chunk$set(echo=TRUE, warning=TRUE, message=FALSE, fig.width=7, fig.height=5,
+  fig.path=getOption("mpg.unit10.fig.path", "figures/unit10/"))
 ```
+
+
 
 The [Unit 09 date/time lesson]({{ site.baseurl }}/unit09/unit09-01a_datetime.html#extract-months-and-years) explains parsing and extracting calendar components. Here, the first day of each month is a plotting label for a monthly summary, not the date of an individual observation.
 
-After looking into time-series forecasting, we will now switch to some basics of describing time series. To illustrate this, we will again use the (mean monthly) air temperature record of the weather station in Coelbe (which is closest to the Marburg university forest). The data has been supplied by the German weather service [German weather service](ftp://ftp-cdc.dwd.de/pub/CDC/observations_germany/). For simplicity, we will remove the first 6 entries (July to December 2006 to have full years).
-```{r, warning=FALSE, echo=FALSE, message= FALSE}
-dwd <- read.table(file.path(path_dwd, "produkt_temp_Terminwerte_20060701_20151231_03164.txt"),
-                  header = TRUE, sep = ";", dec = ".")
-dwd$AGG_JM <- substr(dwd$MESS_DATUM, 1, 6)
-tam <- aggregate(dwd$LUFTTEMPERATUR, by = list(dwd$AGG_JM), FUN = mean)
-colnames(tam) <- c("Date", "Ta")
+We reuse the complete **January 2010–December 2018** temperature period from Unit 09. The full checkpoint retains missing months; select the agreed complete interval before applying decomposition, which requires regularly spaced observations without gaps.
+
+Use `tam.txt` from the [Unit 09 preparation]({{ site.baseurl }}/unit09/unit09-02_time_series.html), or download <a href="{{ site.baseurl }}/assets/data/time-series/tam.txt" download>tam.txt</a> beside `.Rproj`. [Source and coverage notes]({{ site.baseurl }}/assets/data/time-series/source.txt).
+
+```{r unnamed-chunk-1}
+# read data we saved in unit 9
+tam <- read.table("tam.txt", header = TRUE, sep = ";")
+tam <- tam[tam$Date >= 201001 & tam$Date <= 201812, ]
+expected <- format(seq(as.Date("2010-01-01"), as.Date("2018-12-01"),
+                       by = "month"), "%Y%m")
+stopifnot(identical(as.character(tam$Date), expected), !anyNA(tam$Ta))
+head(tam)
 ```
 
 
-```{r, warning=FALSE, fig.alt = "Monthly mean air temperature shows repeated summer peaks and winter troughs across the teaching period."}
-tam <- tam[-(1:6),]
-tam$Date <- strptime(paste0(tam$Date, "010000"), format = "%Y%m%d%H%M", tz = "UTC")
+
+```{r unnamed-chunk-2, fig.alt = 'Monthly mean air temperature shows repeated summer peaks and winter troughs over 2010–2018.'}
+# convert Date column to POSIXlt Date; added day 01 for the conversion
+tam$Date <- strptime(paste0(tam$Date, "01"), format = "%Y%m%d", tz = "Europe/Berlin")
+
 plot(tam$Date, tam$Ta, type = "l")
 ```
 
-### Seasonality of the time series
-The time series shows a clear seasonality. In this case, we know already that monthly mid-latitude temperature shows a seasonality of 12 months. In case we are not certain, we could also have a look at the spectrum using e.g. the ``spectrum`` functions which estimates the (seasonal) frequencies of a data set using an auto-regressive model.
 
-The smallest frequency which is checked is 1 divided by the length of the time series. Hence, in order to convert frequency back to the original time units, we divide 1 by the frequency:
-```{r, warning=FALSE, fig.alt = c("Raw periodogram of monthly temperature has a prominent peak near one cycle per twelve observations.", "Spectral power plotted against period has a dominant peak near twelve months.")}
+
+### Seasonality of time series
+The time series shows clear seasonality. In this case, we already know that monthly mid-latitude temperature shows a seasonality of 12 months.
+In case we are not certain, we could also have a look at the spectrum using e.g. the ``spectrum`` function, which estimates the (seasonal) frequencies of a data set using an auto-regressive model.
+
+The smallest frequency which is checked is 1 divided by the length of the time series.
+Hence, in order to convert frequency back to the original time units, we divide 1 by the frequency:
+
+```{r unnamed-chunk-3, fig.alt = 'Raw periodogram of monthly temperature has a prominent peak near one cycle per twelve observations.'}
 spec <- spectrum(tam$Ta)
-plot(1/spec$freq, spec$spec, type = "h")
-1/spec$freq[spec$spe == max(spec$spec)]
 ```
+
+
+
+```{r unnamed-chunk-4, fig.alt = 'Spectral power plotted against period has a dominant peak near twelve months.'}
+plot(1/spec$freq, spec$spec, type = "h")
+```
+
+
+
+```{r unnamed-chunk-5}
+1/spec$freq[spec$spec == max(spec$spec)]
+```
+
+
 
 The frequency of 12 months dominates the spectral density.
 
-### Decomposition of a time series
-Once we are certain about the seasonal frequency, we can start with the decomposition of the time series which is assumed to be the sum of
+### Decomposition of time series
+Once we are certain about the seasonal frequency, we can start with the decomposition of the time series, which is assumed to be the sum of
 
-* an annual trend
-* a seasonal component
-* a non-correlated reminder component (i.e. white noise)
+* an annual trend,
+* a seasonal component, and
+* a non-correlated remainder component (i.e. white noise).
 
-To start with the annual component or "trend", we could use a 12 month running mean filter. In the following example, we will use the ``rollapply`` function for that:
-```{r, warning=FALSE, fig.alt = "Monthly temperature with a twelve-month moving-average trend, which varies more slowly than the seasonal cycle."}
+To start with the annual component or "trend", we could use a 12-month running mean filter.
+In the following example, we will use the ``rollapply`` function for that:
+
+```{r unnamed-chunk-6, fig.alt = 'Monthly temperature with a twelve-month moving-average trend, which varies more slowly than the seasonal cycle.'}
 annual_trend <- zoo::rollapply(tam$Ta, 12, mean, align = "center", fill = NA)
 plot(tam$Date, tam$Ta, type = "l")
 lines(tam$Date, annual_trend, col = "red")
 ```
 
+
+
 The annual trend shows some fluctuations but it is certainly not very strong or even hardly different from zero.
 
-Once this trend is identified, we can subtract it from the original time series in order to get a de-trended seasonal signal which will be averaged in a second step. The average of each  will finally form the seasonal signal:
-```{r, warning=FALSE, fig.alt = "Detrended temperature and the repeating estimated seasonal cycle show similar annual oscillations."}
+Once this trend is identified, we can subtract it from the original time series in order to get a de-trended seasonal signal, which will be averaged in the second step.
+The average of each will finally form the seasonal signal:
+
+```{r unnamed-chunk-7, fig.alt = 'Detrended temperature and the repeating estimated seasonal cycle show similar annual oscillations.'}
 seasonal <- tam$Ta - annual_trend
 month <- as.integer(format(tam$Date, "%m"))
 seasonal_mean <- aggregate(seasonal, by = list(month),
@@ -75,84 +100,126 @@ plot(tam$Date, seasonal, type = "l")
 lines(tam$Date, seasonal_cycle, col = "blue")
 ```
 
-The blue line shows the average seasonal signal over the time series.
+
+
+The blue line shows the average seasonal signal of the time series.
 
 The only thing remaining is the remainder, i.e. the component explained by neither the trend nor the seasonal signal:
-```{r, warning=FALSE, fig.alt = "Temperature remainder after removing trend and seasonality fluctuates around zero, with a few larger departures."}
+
+```{r unnamed-chunk-8, fig.alt = 'Temperature remainder after removing trend and seasonality fluctuates around zero, with a few larger departures.'}
 remainder <- tam$Ta - annual_trend - seasonal_cycle
 plot(tam$Date, remainder, type = "l")
 ```
 
-As one can see, it is not auto-correlated:
-```{r, warning=FALSE, fig.alt = "Autocorrelation of the remainder is much smaller than in the original seasonal temperature series."}
+
+
+As we can see, it is slightly autocorrelated:
+
+```{r unnamed-chunk-9, fig.alt = 'Autocorrelation of the remainder is much smaller than in the original seasonal temperature series.'}
 acf(remainder, na.action = na.pass)
 ```
 
-Alternatively to the workflow above, one could (and should) of course use existing functions, like ``decompose`` which handles the decomposition in one step. Since the function requires a time series, this has to be done first. Remember that the frequency parameter in the time series does not correspond to the seasonal component but to the number of sub-observations within each major time step (i.e. monthly values within annual major time steps in our case):
-```{r, warning=FALSE, fig.alt = "Trend component from classical decomposition changes slowly over the monthly temperature record."}
-tam_ts <- ts(tam$Ta, start = c(2007, 1), end = c(2015, 12), 
-             frequency = 12)
+
+
+As an alternative to the workflow above, we could (and should) of course use existing functions, like ``decompose``, which handles the decomposition in one step.
+Since this function requires a time series, this data type has to be created first.
+Note that the frequency argument in the time series function does not correspond to the seasonal component but to the number of sub-observations within each major time step (i.e. monthly values within annual major time steps in our case):
+
+```{r unnamed-chunk-10, fig.alt = 'Trend component from classical decomposition changes slowly over the monthly temperature record.'}
+tam_ts <- ts(tam$Ta, start = c(2010, 1), end = c(2018, 12), frequency = 12)
 tam_ts_dec <- decompose(tam_ts)
 plot(tam_ts_dec$trend)
 ```
 
-While the above shows the plotting of the trend component, one can also plot everything in one plot:
-```{r, warning=FALSE, fig.alt = "Classical additive decomposition separates observed monthly temperature, trend, seasonal cycle, and remainder into four panels."}
+
+
+While the above shows the plotting of the trend component, we can also plot everything in one plot:
+
+```{r unnamed-chunk-11, fig.alt = 'Classical additive decomposition separates observed monthly temperature, trend, seasonal cycle, and remainder into four panels.'}
 plot(tam_ts_dec)
 ```
 
 
-But - again - it is not as static as it seems. While ``decompose`` computes the (annual/long-term) trend using a moving average, the ``stl`` function uses a loess smoother. Here's one realization using "periodic" as the smoothing window, for which - according to the function description - "smoothing is effectively replaced by taking the mean" (the visualization shows the different long-term trends retrieved by the two approaches, there are more tuning parameters):
-```{r, warning=FALSE, fig.alt = "Trend estimates from classical decomposition and STL mostly agree, with differences near some peaks and endpoints."}
+
+
+But - again - it is not as static as it seems.
+While ``decompose`` computes the (annual/long-term) trend using a moving average, the ``stl`` function uses a loess smoother.
+Here is one realization using "periodic" as the smoothing window, for which - according to the function description - "smoothing is effectively replaced by taking the mean".
+The visualization shows the different long-term trends retrieved by the two approaches:
+
+```{r unnamed-chunk-12, fig.alt = 'Trend estimates from classical decomposition and STL mostly agree, with differences near some peaks and endpoints.'}
 tam_ts_stl <- stl(tam_ts, "periodic")
 plot(tam_ts_dec$trend, col = "red")
 lines(tam_ts_stl$time.series[, 2], col = "blue")
-legend(2014, 9, c("decompose", "stl"), col = c("red", "blue"), lty=c(1,1))
+legend("topleft", c("decompose", "stl"), col = c("red", "blue"), lty=c(1,1))
 ```
 
-The entire stl result would look like this:
-```{r, warning=FALSE, fig.alt = "STL decomposition displays observed temperature, repeating seasonality, a slowly varying trend, and a short-term remainder."}
+
+
+The entire result from the ``stl`` function call looks like this:
+
+```{r unnamed-chunk-13, fig.alt = 'STL decomposition displays observed temperature, repeating seasonality, a slowly varying trend, and a short-term remainder.'}
 plot(tam_ts_stl)
 ```
 
 
+
+
 # Trend estimation
-While the above helps us in decomposing a time series into several components, one is sometimes also interested in some kind of linear trend over time. Since seasonal signals strongly influence such trends, one generally removes the seasonal signal and analyzes the anomalies. In order to remove the seasonal signal, one can average over all values for each month and subtract it from the original time series:
-```{r, warning=FALSE, fig.alt = "Deseasonalized temperature shows departures from the average monthly cycle rather than the original annual oscillation."}
-monthly_mean <- aggregate(tam$Ta, by = list(substr(tam$Date, 6, 7)), FUN = mean)
-tam$Ta_ds <- tam$Ta - monthly_mean$x
-plot(tam$Date, tam$Ta_ds, type = "h")
+While the above helps us decompose a time series into several components, we are sometimes also interested in linear trends over time.
+Since seasonal signals strongly influence such trends, we generally remove the seasonal signal and analyze the anomalies.
+In order to remove the seasonal signal, we can average over all values for each month and subtract it from the original time series:
+
+```{r unnamed-chunk-14, fig.alt = 'Deseasonalized temperature shows departures from the average monthly cycle rather than the original annual oscillation.'}
+month <- as.integer(format(tam$Date, "%m"))
+monthly_mean <- aggregate(tam$Ta, by = list(Month = month), FUN = mean)
+tam$Ta_ds <- tam$Ta - monthly_mean$x[match(month, monthly_mean$Month)]
+plot(tam$Date, tam$Ta_ds, type = "l")
 ```
 
+
+
 Once this is done, a linear model could be used. In this context, it is important to understand the meaning of the independent (i.e. time) variable. The following shows the slope of the trend per month since the time is just supplied as a sequence of natural numbers:
-```{r, warning=FALSE}
+
+```{r unnamed-chunk-15}
 lmod <- lm(tam$Ta_ds ~ seq(nrow(tam)))
 summary(lmod)
 ```
 
-If one is interested in annual trends, one can either multiply the above slope of the time variable by 12 or define the time variable in such a manner, that each month is counted as a fraction of 1 (e.g. January 2007 = 2007; February 2007 ≈ 2007.0833 etc.):
-```{r, warning=FALSE, fig.alt = "Deseasonalized temperature with a gently upward-sloping fitted line across the teaching period."}
+
+
+If we were interested in annual trends, we could multiply the above slope of the time variable by 12 or define the time variable in such a way that each month is counted as a fraction of 1 (e.g. January 2010 = 2010; February 2010 ≈ 2010.0833 etc.):
+
+```{r unnamed-chunk-16}
 ts <- as.numeric(format(tam$Date, "%Y")) +
       (as.numeric(format(tam$Date, "%m")) - 1) / 12
 lmod <- lm(tam$Ta_ds ~ ts)
 summary(lmod)
+```
 
+
+
+```{r unnamed-chunk-17, fig.alt = 'Deseasonalized temperature with a fitted fitted line over 2010–2018.'}
 plot(ts, tam$Ta_ds, type = "l")
 abline(lmod, col = "red")
 ```
 
-A commonly used alternative or additional information is the Mann-Kendall trend which is a measure of how often a time series dataset increases/decreases from one time step to the next. If you have a look in the literature, there is quite some discussion if and when the time series should be pre-whitened prior to applying a Kendall test. For this example we follow [von Storch (1995)](http://link.springer.com/chapter/10.1007%2F978-3-662-03167-4_2) and use an auto-regression-based pre-whitening for the time series. The Kendall trend can then be computed e.g. the ``Kendall::MannKendall`` function (but also e.g. ``cor`` - see the help of this function).
-```{r, warning=FALSE, fig.alt = "Pre-whitened and original deseasonalized temperature series overlaid for the historical trend-test draft."}
-acf_lag_01 <- acf(tam$Ta_ds)$acf[1]
 
-ta_ds_pw <- lapply(seq(2, length(tam$Ta_ds)), function(i){
-  tam$Ta_ds[i] - acf_lag_01 * tam$Ta_ds[i-1]
-})
-ta_ds_pw <- unlist(ta_ds_pw)
 
-plot(ta_ds_pw, type = "h")
-points(tam$Ta_ds, type = "h", col = "red")
+The fitted slope is `r round(coef(lmod)[2], 3)` °C per year over this selected period. The reported p value assumes independent errors; serial dependence and the short time window limit that interpretation. This descriptive fit is not, by itself, evidence of a long-term climate trend.
 
-Kendall::MannKendall(ta_ds_pw)
-Kendall::MannKendall(tam$Ta_ds)
+**Take home:** retain the actual calendar, remove the seasonal pattern explicitly, and distinguish the fitted trend from the assumptions needed for its uncertainty.
+
+### A simple seasonal model for the assignment
+
+A sine and a cosine can describe one smooth annual cycle. Together they allow the warmest month to occur at different positions in the year; their coefficients determine its timing and amplitude. These two columns are called the **first Fourier frequency** here. They provide a simple seasonal starting point, not a perfect fit to every month.
+
+```{r unnamed-chunk-18, fig.alt = 'Seasonal temperature model over the complete 2010–2018 interval.'}
+season_sin <- sin(2 * pi * (month - 1) / 12)
+season_cos <- cos(2 * pi * (month - 1) / 12)
+season_model <- lm(tam$Ta ~ season_sin + season_cos)
+plot(tam$Date, tam$Ta, type = "l", ylab = "Air temperature (°C)")
+lines(tam$Date, fitted(season_model), col = "blue")
 ```
+
+Assignment 10 adds a two-category NAO indicator to these seasonal terms. As in Unit 05, a small regression p value needs to be considered alongside residual patterns and the observation design.

@@ -1,0 +1,10 @@
+Hessen wood harvest teaching dataset, 2003-2025
+
+Source: Federal Statistical Office (Destatis), GENESIS-Online table 41261-0010.
+https://genesis.destatis.de/datenbank/online/statistic/41261/table/41261-0010
+English source export: 2026-10-23 14:05:37.
+Course CSV: unchanged copy of the instructor-supplied file, now hosted with the course.
+23 calendar years; four wood type groups and the official total; 1000 cubic metres without bark.
+Four introductory lines, header line 5, semicolons, decimal points, Latin-1, CRLF.
+Values, precision and quality-code notes are retained. No student data or solution code.
+SHA-256: c69e04d25d6f6b9263358d2b47531949ecefc4f8fd0d5e19cd22b0d99d338d2d

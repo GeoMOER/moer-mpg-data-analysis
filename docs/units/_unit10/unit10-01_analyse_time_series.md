@@ -17,13 +17,17 @@ At the end of this session you should be able to
 * use e.g. linear models for explaining trends.
 
 
+## How this unit is organized
+
+Use the complete temperature interval from Unit 09 to [separate seasonality and trend]({{ site.baseurl }}/unit10/unit10-02_time_series_analysis.html), then apply a simple seasonal model in the [NAO and Cölbe assignment]({{ site.baseurl }}/unit10/unit10-04_assignment.html). Keep calendar dates and data-quality limits visible throughout.
+
 ## Time series decomposition
 Dynamics of environmental variables are often composed of short-term, intermediate (seasonal), and long-term (trend) variations.
 When analyzing time series data, the decomposition into the respective components offers insights into driver-response relationships as a basis for further analyses.
 
 {% include figure image_path="/assets/images/time_series_decomposition.png" alt="Illustration of time series decomposition using the R CO2 dataset as an example." %}
 
-The above graphic shows the decomposition of the CO<sub>2</sub> dataset from R's ``forecast`` library (Mauna Loa atmospheric CO<sub>2</sub> concentration).
+The above graphic shows the decomposition of R's built-in ``co2`` series (Mauna Loa atmospheric CO<sub>2</sub> concentration).
 
 
 ## Comments?

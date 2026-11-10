@@ -11,7 +11,7 @@ header:
 
 Combine the individual operations from this unit into a traceable workflow. The input is the English teaching translation of the historical Regional Atlas/GENESIS table **AI001**, with land-use shares for German reporting areas in 1996–2014. It retains the original cleaning problems: introductory lines, indentation, compound region labels, decimal commas and source symbols.
 
-<a href="{{ site.baseurl }}/assets/data/unit04/regional-land-use-1996-2014.txt" download="regional-land-use-1996-2014.txt">Download regional-land-use-1996-2014.txt</a> (also available on ILIAS) and save it in your existing project's `Data/` folder. Keep your Rmd beside the `.Rproj` file so knitting uses the same relative paths as the console. The [file guide]({{ site.baseurl }}/unit04/unit04-01a_introduction.html#data-for-units-04-07) explains coverage and units. This file is separate from Unit 03's 2024 state table.
+<a href="{{ site.baseurl }}/assets/data/unit04/regional-land-use-1996-2014.txt" download="regional-land-use-1996-2014.txt">Download regional-land-use-1996-2014.txt</a> and save it in your existing project's `Data/` folder. Keep your Rmd beside the `.Rproj` file so knitting uses the same relative paths as the console. The [file guide]({{ site.baseurl }}/unit04/unit04-01a_introduction.html#data-for-units-04-07) explains coverage and units. This file is separate from Unit 03's 2024 state table.
 
 Our analysis output is a **wide table**: one row per `ID`–`Year`, four numerical percentage columns and regional metadata. A long view demonstrates reshaping; it does not replace the wide output used in Units 05–06.
 
@@ -194,6 +194,6 @@ The save-and-reload check should be `TRUE`. Keep the original source entries and
 
 ## Handoff to later units
 
-`Output/lu_clean.rds` contains `ID`, `Year`, `Place`, `Admin_unit`, `Admin_misc`, `Settlement`, `Recreation`, `Agriculture` and `Forest`. IDs/place names are text, years are integers and measurement columns are numerical percentages. Units 05–06 reuse this wide table. A prepared instructor file is an alternative checkpoint; its metadata/types must agree with this workflow before it can substitute for your output.
+`Output/lu_clean.rds` contains `ID`, `Year`, `Place`, `Admin_unit`, `Admin_misc`, `Settlement`, `Recreation`, `Agriculture` and `Forest`. IDs/place names are text, years are integers and measurement columns are numerical percentages. Units 05–06 reuse this wide table. If you need a prepared checkpoint, download <a href="{{ site.baseurl }}/assets/data/unit04/lu_clean.rds" download="lu_clean.rds">lu_clean.rds</a> and save it in `Output/`. It follows this workflow.
 
 The crop assignment uses a different raw file and produces `Output/cp_clean.rds` for **Unit 07**. Its yields have different units and source symbols, so copying every conversion rule without checking would be inappropriate.

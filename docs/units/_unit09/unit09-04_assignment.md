@@ -19,17 +19,18 @@ After completing this worksheet you should have gained some first experience wit
 
 
 ## DWD station 3164 Coelbe
-The required station data can be downloaded directly from the German Weather Service (DWD) via its [Server](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/){:target="_blank"}.
-In addition to Cölbe, you will also find all stations available for Germany.
+Download <a href="{{ site.baseurl }}/assets/data/time-series/stundenwerte_RR_03164_20060701_20251231_hist.zip" download="stundenwerte_RR_03164_20060701_20251231_hist.zip">Cölbe hourly precipitation (ZIP)</a> and save it in `Data/`. This unchanged DWD archive includes the observations for July 2006–December 2025 and the station metadata. [Source notes]({{ site.baseurl }}/assets/data/time-series/source.txt) and the [DWD directory](https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/precipitation/historical/) provide provenance and current releases.
 
 The station recordings are divided by variable into historical and recent records. Historical records generally extend to near the end of the previous year; recent records cover the period since then.
 
-From the data provided, we will require the dataset starting from July 2006.
+Use **January 2010–December 2019** from this archive. This continuous ten-year interval has every expected hourly precipitation observation; other parts of the archive contain gaps. Keep the original timestamps in **UTC**, check that each hour occurs once and that precipitation `R1` has no missing (`-999`) or negative values in the selected interval.
+
+Compute one **monthly precipitation total in millimeters** by summing hourly `R1`, not by taking a mean. Compare valid and expected hours before summing. A month with any absent hour or missing value must be marked `NA`, never treated as zero or reported as a complete total. The selected interval should produce **120 complete monthly totals**. If your checks disagree, resolve the import or interval selection before fitting; do not drop isolated months or interpolate values.
 
 
 ## Predicting precipitation
 In this first time series exercise, we will try to find an ARIMA model for predicting monthly precipitation data.
-The model should be selected based on its capability measured by the RMSE for predicting the last two years of the provided time series.
+Fit on **January 2010–December 2017** and predict **January 2018–December 2019**, without using those final 24 months during fitting. Select the model with the smallest RMSE across those same 24 monthly totals. The [worked forecast]({{ site.baseurl }}/unit09/unit09-03_arima.html#predict-the-held-out-period) demonstrates one comparison before repetition.
 
 For the model selection, any ARIMA parameter combination of p, d, q and the corresponding seasonal components ps, ds, qs should be tested for
 
@@ -43,11 +44,11 @@ For the model selection, any ARIMA parameter combination of p, d, q and the corr
 
 Please write an R Markdown (.Rmd) document with HTML output in which the performance for predicting monthly precipitation of an ARIMA model with all of the possible parameter combinations above is tested.
 
-The performance should be tested using the RMSE between predicted and observed monthly precipitation for the last two full years of the dataset.
-Please print the parameters (i.e. p, d, q...) as well as the AIC and RMSE of your optimal model and compare them with the corresponding values retrieved using the ``forecast::auto.arima`` function
-(for the latter you can just use the summary function although it gives more information than necessary).
+Retain all **2,916 combinations**. Use monthly frequency 12 and `forecast::Arima(..., method = "CSS-ML")`. Record each combination and its convergence status. Record errors/warnings; exclude failed or nonconverged fits and nonfinite forecasts from selection, and report how many were excluded. Do not silently omit them or change the evaluation months.
+
+Print the selected parameters, AIC and held-out RMSE. Fit `forecast::auto.arima()` to the **same training period**, forecast the same 24 months, and calculate its held-out RMSE in the same way. Its printed training errors are not comparable with the grid's held-out RMSE. Report AIC as a fitted-model statistic; use held-out RMSE for selection, since the grid includes different differencing orders.
 Please also visualize the prediction of your model and the automatically retrieved one in a simple plot (one for each model) and add the actually observed values to the plot.
-Write a one-sentence statement about the differences.
+Write a one-sentence statement about the differences. These evaluation months are used to select a model, so the minimum RMSE is a selection score, not an independent final performance estimate; no additional test-period submission is required.
 
 Save your R Markdown (.Rmd) document in your course repository, knit it, update (i.e. commit) your local repository and publish (i.e. push) it to GitHub.
 Make sure that the created HTML file is also part of your course repository on GitHub.

@@ -176,7 +176,7 @@ defaults:
       path: ""
       type: unit05
     values:
-      category: "05 Describe Your Linear Data"
+      category: "05 Explain Variation in Your Data"
       tags: "Unit 05"
       layout: single
       sidebar:

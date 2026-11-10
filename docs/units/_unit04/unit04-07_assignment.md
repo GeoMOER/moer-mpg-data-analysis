@@ -12,7 +12,7 @@ The crop file provides a second historical regional dataset with real import and
 ## Things you need for this worksheet
 
 - Your existing RStudio course project, R Markdown workflow and personal course repository.
-- <a href="{{ site.baseurl }}/assets/data/unit04/regional-crop-yields-1999-2015.txt" download="regional-crop-yields-1999-2015.txt">regional-crop-yields-1999-2015.txt</a>, the English teaching copy (also available on ILIAS), saved in `Data/`.
+- <a href="{{ site.baseurl }}/assets/data/unit04/regional-crop-yields-1999-2015.txt" download="regional-crop-yields-1999-2015.txt">regional-crop-yields-1999-2015.txt</a>, the English teaching copy, saved in `Data/`.
 - The [Unit 04 file guide]({{ site.baseurl }}/unit04/unit04-01a_introduction.html#data-for-units-04-07) and the focused text, reshaping and merging examples.
 
 ## Inspect and plan

@@ -15,7 +15,7 @@ Use your existing course project with [R](https://cran.r-project.org/){:target="
 
 ## Input from Unit 04
 
-Read `Output/lu_clean.rds` from the [Unit 04 land-use exercise]({{ site.baseurl }}/unit04/unit04-05_cleaning.html#handoff-to-later-units) with `readRDS("Output/lu_clean.rds")`. Use **`Agriculture` as the predictor (x)** and **`Forest` as the response (y)**. Both columns give percentages of a district's total area.
+Use your own `Output/lu_clean.rds` or <a href="{{ site.baseurl }}/assets/data/unit04/lu_clean.rds" download="lu_clean.rds">lu_clean.rds</a> (prepared checkpoint; save it in `Output/`). Read the wide table from the [Unit 04 land-use exercise]({{ site.baseurl }}/unit04/unit04-05_cleaning.html#handoff-to-later-units) with `readRDS("Output/lu_clean.rds")`. Use **`Agriculture` as the predictor (x)** and **`Forest` as the response (y)**. Both columns give percentages of a district's total area.
 
 <span id="prepare-comparable-observations"></span>
 

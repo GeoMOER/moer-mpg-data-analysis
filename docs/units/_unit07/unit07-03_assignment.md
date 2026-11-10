@@ -21,7 +21,7 @@ After completing this worksheet you should have gained some experience in design
 
 ## Input from Unit 04
 
-Use `Output/cp_clean.rds`, the wide crop-yield table created in the [Unit 04 cleaning assignment]({{ site.baseurl }}/unit04/unit04-07_assignment.html#output-schema). Load it with `readRDS("Output/cp_clean.rds")` from your existing course project. `Winter_wheat` is the response; the ten crop columns contain yields in `dt/ha`. The linked schema explains full crop meanings and retained legacy column spellings. Use the other nine numerical crop columns as candidate predictors, excluding `Winter_wheat` itself; region identifiers and source-symbol records are not additional crop yields. A prepared instructor checkpoint must match the current workflow before substituting for your output.
+Use `Output/cp_clean.rds` or download <a href="{{ site.baseurl }}/assets/data/unit04/cp_clean.rds" download="cp_clean.rds">cp_clean.rds</a> and save it in `Output/`. This is the wide crop-yield table created in the [Unit 04 cleaning assignment]({{ site.baseurl }}/unit04/unit04-07_assignment.html#output-schema). Load it with `readRDS("Output/cp_clean.rds")` from your existing course project. `Winter_wheat` is the response; the ten crop columns contain yields in `dt/ha`. The linked schema explains full crop meanings and retained legacy column spellings. Use the other nine numerical crop columns as candidate predictors, excluding `Winter_wheat` itself; region identifiers and source-symbol records are not additional crop yields. The download is a prepared checkpoint from the same cleaning workflow.
 
 ## Prepare comparable observations
 

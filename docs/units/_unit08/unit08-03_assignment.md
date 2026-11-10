@@ -16,7 +16,7 @@ After completing this worksheet you should have improved your skills in using cr
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
   * [Git](https://git-scm.com/downloads){:target="_blank"} installed and available to RStudio. [GitHub Desktop](https://desktop.github.com/){:target="_blank"} is an optional graphical client.
-  * The file `hessen_holzeinschlag_2003-2025.csv` from ILIAS, used in [Assignment 03]({{ site.baseurl }}/unit03/unit03-07_assignment.html).
+  * The file <a href="{{ site.baseurl }}/assets/data/hessen_holzeinschlag_2003-2025.csv" download="hessen_holzeinschlag_2003-2025.csv">hessen_holzeinschlag_2003-2025.csv</a>, saved in `Data/` and also used in [Assignment 03]({{ site.baseurl }}/unit03/unit03-07_assignment.html).
 
 
 ## Model tuning

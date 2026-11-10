@@ -43,7 +43,7 @@ Additional explanations are available in [sorting and combining data in Base R](
 
 We retain two historical regional datasets because they provide real cleaning problems and support the later modeling tasks. The English teaching copies translate headings, introductory text and regional descriptors while retaining the source values, IDs, years, indentation, decimal commas and symbols. They are teaching translations, not newer official English exports. Proper place names remain in their source spelling.
 
-Download the English file specified by the exercise or assignment into `Data/`, keeping its filename. The same files are available on ILIAS. If your browser displays a text file, use **Save As** and move it into `Data/`.
+Download the English file specified by the exercise or assignment into `Data/`, keeping its filename. If your browser displays a text file, use **Save As** and move it into `Data/`.
 
 | Input | Coverage and role | File layout |
 |---|---|---|

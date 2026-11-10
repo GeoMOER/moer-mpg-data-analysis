@@ -8,7 +8,7 @@ header:
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-You have downloaded `example.txt` and saved it in your project's `Data/` folder on the [previous page]({{ site.baseurl }}/unit03/unit03-02a_organize_your_data_files.html). Keep your project folder as the working directory. Here you will use R's documentation to choose the import settings for that file and inspect the result.
+Use <a href="{{ site.baseurl }}/assets/data/example.txt" download="example.txt">example.txt</a>, saved in your project's `Data/` folder on the [previous page]({{ site.baseurl }}/unit03/unit03-02a_organize_your_data_files.html). Keep your project folder as the working directory. Here you will use R's documentation to choose the import settings for that file and inspect the result.
 
 ## Open the help page
 

@@ -1,11 +1,11 @@
 ---
-title: Describe Your Linear Data
+title: Explain Variation in Your Data
 header:
   image: "/assets/images/teaser/linear_5_1.png"
   caption: 'Image: [**Environmental Informatics Marburg**](https://www.uni-marburg.de/en/fb19/disciplines/physisch/environmentalinformatics)'
 ---
 
-Compute simple statistical linear regression models that relate a dependent to an independent variable.
+Use linear regression to explain variation statistically, assess the fitted relationship and check its assumptions. Statistical explanation does not establish causation.
 
 <!--more-->
 

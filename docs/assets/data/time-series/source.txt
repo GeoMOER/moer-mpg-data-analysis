@@ -1,0 +1,52 @@
+Time-series teaching inputs: DWD station 03164 (Coelbe) and NOAA NAO
+Retrieved: 2026-11-10
+
+DWD Climate Data Center: unchanged source ZIP archives, including metadata.
+Attribution: Deutscher Wetterdienst (DWD), Climate Data Center (CDC).
+License: CC BY 4.0; https://opendata.dwd.de/climate_environment/CDC/Nutzungsbedingungen_German.pdf
+
+stundenwerte_TU_03164_20060701_20251231_hist.zip
+Source: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_03164_20060701_20251231_hist.zip
+SHA-256: b45f241d07d39abf91643ae2f5405d83b94d1f99206ecb4b20eb21a08ce0b003
+
+stundenwerte_RR_03164_20060701_20251231_hist.zip
+Source: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/precipitation/historical/stundenwerte_RR_03164_20060701_20251231_hist.zip
+SHA-256: 2e1faf3e19013ef1758f2839f997e3b40d22623829610633e043d18fefa373ed
+
+monatswerte_KL_03164_18810101_20251231_hist.zip
+Source: https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/monthly/kl/historical/monatswerte_KL_03164_18810101_20251231_hist.zip
+SHA-256: dcf96ca1735b9c7078edee9512bbe3ba4f6136fee51fbd3d021bc498393b228b
+
+NOAA Climate Prediction Center: unchanged monthly NAO index.
+File: nao_index.tim
+Source: https://ftp.cpc.ncep.noaa.gov/wd52dg/data/indices/nao_index.tim
+Description: https://www.cpc.ncep.noaa.gov/data/teledoc/nao.shtml
+SHA-256: 7c34cccb62d6d22eea24f5f41188cc9f50d07afd69dc5407b5c44045ed94c44b
+The source header documents its normalization and missing-value code.
+For Assignment 10, select January 1950 through December 1990 from both sources.
+The DWD archive has 491 records in this period: May 1965 is absent.
+The NAO index has all 492 months. Match by year/month; do not align by row position.
+
+Derived teaching checkpoint: tam.txt (coverage correction, 2026-11-10)
+198 calendar months, July 2006-December 2022; columns Date (YYYYMM), Ta (degrees Celsius).
+Semicolon-separated, with a header; NA means that the monthly mean is unavailable.
+Prepared from the temperature archive above by joining every expected UTC hour,
+converting -999 to NA, then averaging temperature by year-month. Keep missing rows.
+Teaching rule: require every expected hourly temperature; mean() propagates NA.
+This conservative rule is not a description of DWD's official monthly processing.
+Incomplete months: 200607, 200907, 201907, 201908, 202009 and 202108.
+No temperature is filled or zero-imputed; humidity missingness does not delete temperature.
+Examples in Units09/10 use January2010-December2018: 108 consecutive complete months.
+Reproduce with prepare-tam.R (supply archive/output paths or run beside the ZIP).
+Save tam.txt beside .Rproj to match the examples; ZIP inputs belong in Data/.
+
+Assignment09: sum hourly precipitation R1 into monthly totals in millimeters.
+Use January2010-December2019: all expected hours are present and valid.
+Train January2010-December2017; compare forecasts for January2018-December2019.
+Elsewhere the rainfall archive has incomplete months: 200607, 200907, 202009,
+202106, 202107, 202108, 202301, 202311 and 202312. A partial sum is not a complete total.
+Do not delete isolated months or silently fill missing rainfall with zero.
+
+Assignment10: NAO >= 0 is classified as nonnegative, NAO < 0 as negative.
+The exact zeros in December1956 and August1970 belong to nonnegative.
+Keep May1965 absent from the matched data and retain real year/month coordinates.

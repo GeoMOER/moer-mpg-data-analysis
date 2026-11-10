@@ -53,7 +53,7 @@ The course consists of 13 sessions, running from 13 October 2026 to 9 February 2
 | [03](/moer-mpg-data-analysis/unit03/unit03-01_look_at_your_data.html) | 27.10.2026 | Look at your data            | Local files and function help, tabular data I/O, visual exploration, and descriptive statistics |
 | [04](/moer-mpg-data-analysis/unit04/unit04-01a_introduction.html) | 03.11.2026 | Clean your data              | Missing values and source codes, text cleaning, reshaping, grouped summaries, and matching tables by keys |
 ||| **Data modeling** |
-| [05](/moer-mpg-data-analysis/unit05/unit05-01_linear_regression.html) | 10.11.2026 | Describe Your Linear Data    | Linear regression, residual checks, and analysis of variance |
+| [05](/moer-mpg-data-analysis/unit05/unit05-01_linear_regression.html) | 10.11.2026 | Explain Variation in Your Data | Linear regression, residual checks, and analysis of variance |
 | [06](/moer-mpg-data-analysis/unit06/unit06-01_predict_linear_data.html) | 17.11.2026 | Predict your data            | Cross-validation |
 | [07](/moer-mpg-data-analysis/unit07/unit07-01_select_variables.html) | 24.11.2026 | Select your variables        | Multiple linear models and feature selection |
 | [08](/moer-mpg-data-analysis/unit08/unit08-01_tune_models.html) | 01.12.2026 | Tune Your Models             | Generalized additive models |

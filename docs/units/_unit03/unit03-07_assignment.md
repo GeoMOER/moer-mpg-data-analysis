@@ -13,12 +13,12 @@ This worksheet will guide you in getting a first overview of the wood harvest in
   * [R](https://cran.r-project.org/){:target="_blank"} — the interpreter can be installed on any operating system.
   * [RStudio](https://www.rstudio.com/){:target="_blank"} — we recommend using RStudio for (interactive) programming with R.
   * [Git](https://git-scm.com/downloads){:target="_blank"} installed and available to RStudio. [GitHub Desktop](https://desktop.github.com/){:target="_blank"} is an optional graphical client.
-  * Wood harvest data from Hesse provided by the course instructors on ILIAS.
+  * The wood harvest CSV linked below.
 
 ## Harvest in Hesse {#harvest-in-hessen}
-We will use the file `hessen_holzeinschlag_2003-2025.csv` provided on ILIAS. It is prepared from the Federal Statistical Office's [GENESIS-Online table 41261-0010](https://genesis.destatis.de/datenbank/online/statistic/41261/table/41261-0010), exported on October 23, 2026. It contains 23 calendar years and four wood type groups, plus the official total, in **1,000 m³ without bark**. We start in 2003 because the earlier observations use forestry years or, for Hesse in 2002, a mixture of forestry years and calendar years.
+Download <a href="{{ site.baseurl }}/assets/data/hessen_holzeinschlag_2003-2025.csv" download="hessen_holzeinschlag_2003-2025.csv">hessen_holzeinschlag_2003-2025.csv</a>. It is prepared from the Federal Statistical Office's [GENESIS-Online table 41261-0010](https://genesis.destatis.de/datenbank/online/statistic/41261/table/41261-0010), exported on October 23, 2026. It contains 23 calendar years and four wood type groups, plus the official total, in **1,000 m³ without bark**. We start in 2003 because the earlier observations use forestry years or, for Hesse in 2002, a mixture of forestry years and calendar years.
 
-Download the file into the same project `Data/` folder used for the examples. Keep the original filename and use a relative path when importing it.
+[Source notes]({{ site.baseurl }}/assets/data/hessen_holzeinschlag_2003-2025-source.txt) identify the teaching copy. Download the file into the same project `Data/` folder used for the examples. Keep the original filename and use a relative path when importing it.
 
 The CSV has four introductory lines, a header in line 5, semicolon separators, decimal points, Latin-1 encoding, and notes below the annual observations. Each harvest column represents a wood type group, rather than an individual species:
 
